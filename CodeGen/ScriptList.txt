@@ -1,0 +1,2 @@
+CBackgroundScript
+CPlayerScript
