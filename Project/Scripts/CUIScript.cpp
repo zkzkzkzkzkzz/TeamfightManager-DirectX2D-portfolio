@@ -1,9 +1,15 @@
 #include "pch.h"
 #include "CUIScript.h"
-#include <Engine/CKeyMgr.h>
+
+#include <Engine\CEngine.h>
+#include <Engine\CKeyMgr.h>
+#include <Engine\CAssetMgr.h>
 
 CUIScript::CUIScript()
 	: CScript(UISCRIPT)
+	, m_NormalImg(nullptr)
+	, m_PressedImg(nullptr)
+	, m_Clicked(false)
 {
 }
 
@@ -17,11 +23,21 @@ CUIScript::~CUIScript()
 }
 
 
+void CUIScript::begin()
+{
+	m_NormalImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_NewGame_Idle.png", L"texture\\Title\\Title_NewGame_Idle.png");
+	m_PressedImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_NewGame_Over.png", L"texture\\Title\\Title_NewGame_Over.png");
+}
+
 void CUIScript::tick()
 {
 	if (KEY_TAP(LBTN))
 	{
 		Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+		Vec2 vResolution = CEngine::GetInst()->GetResolution();
+
+		vMousePos.x -= vResolution.x / 2.f;
+		vMousePos.y = -(vMousePos.y - vResolution.y / 2.f);
 
 		Vec3 vWorldPos = GetOwner()->Transform()->GetWorldPos();
 		Vec3 vWorldScale = GetOwner()->Transform()->GetWorldScale();
@@ -52,10 +68,10 @@ void CUIScript::LBtnClicked()
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_PressedImg);
 	m_Clicked = true;
 
-	// CallBack Á¸Àç ½Ã È£Ãâ
+	// CallBack
 	if (m_CallBackFunc) m_CallBackFunc();
 
-	// Delegate Á¸Àç ½Ã È£Ãâ
+	// Delegate
 	if (m_Inst != nullptr && m_Delegate != nullptr)
 		(m_Inst->*m_Delegate)();
 

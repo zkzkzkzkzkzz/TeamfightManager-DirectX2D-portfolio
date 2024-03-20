@@ -34,6 +34,7 @@ public:
     void SetDeletage(CEntity* _Inst, DelegateFunc _Func) { m_Inst = _Inst; m_Delegate = _Func; }
 
 public:
+    virtual void begin() override;
     virtual void tick() override;
 
 public:

@@ -150,17 +150,34 @@ void TitleLevel::CreateTempLevel()
 	NewGameBtn->AddComponent(new CMeshRender);
 	NewGameBtn->AddComponent(new CUIScript);
 
-	NewGameBtn->Transform()->SetRelativePos(Vec3(0.f, 16.f, 100.f));
-	NewGameBtn->Transform()->SetRelativeScale(Vec3(66.f, 21.f, 1.f));
+	NewGameBtn->Transform()->SetRelativePos(Vec3(0.f, 32.f, 100.f));
+	NewGameBtn->Transform()->SetRelativeScale(Vec3(66.f, 23.f, 1.f));
 
 	NewGameBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	NewGameBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DMtrl"));
+	NewGameBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"NewGameMtrl"));
 	NewGameBtn->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
 
 	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_NewGame_Idle.png", L"texture\\Title\\Title_NewGame_Idle.png");
 	NewGameBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(NewGameBtn, 2);
 
+	// 종료하기 버튼
+	CGameObject* EndGameBtn = new CGameObject;
+	EndGameBtn->SetName(L"EndGameBtn");
+	EndGameBtn->AddComponent(new CTransform);
+	EndGameBtn->AddComponent(new CMeshRender);
+
+	EndGameBtn->Transform()->SetRelativePos(Vec3(0.f, -16.f, 100.f));
+	EndGameBtn->Transform()->SetRelativeScale(Vec3(78.f, 23.f, 1.f));
+
+	EndGameBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	EndGameBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"EndGameMtrl"));
+	EndGameBtn->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
+
+	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_Exit_Idle.png", L"texture\\Title\\Title_Exit_Idle.png");
+	EndGameBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
+	pTempLevel->AddObject(EndGameBtn, 2);
+
 	// 레벨 플레이
-	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
+	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
 }
