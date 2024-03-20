@@ -10,7 +10,6 @@
 #include <Engine\components.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CPrefab.h>
-#include <Engine\CFSM.h>
 
 #include <Engine\CMesh.h>
 #include <Engine\CGraphicsShader.h>

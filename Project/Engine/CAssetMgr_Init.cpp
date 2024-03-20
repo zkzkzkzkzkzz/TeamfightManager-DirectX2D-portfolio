@@ -323,46 +323,13 @@ void CAssetMgr::CreateDefaultMaterial()
 
 
 	// === 타이틀 레벨 =============================================
-	
-	// 타이틀배경 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"BackgroundMtrl", pMtrl);
+	CreateTitleLevelMaterial();
 
-	// 스타디움 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"StadiumMtrl", pMtrl);
+	// === 로비 레벨 =============================================
+	CreateLobbyLevelMaterial();
 
-	// 하늘 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"SkyMtrl", pMtrl);
 
-	// 게임 타이틀 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"TitleMtrl", pMtrl);
 
-	// 새 게임 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"NewGameMtrl", pMtrl);
-
-	// 종료하기 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"EndGameMtrl", pMtrl);
-
-	// 왼칼 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"LeftSwordMtrl", pMtrl);
-
-	// 오른칼 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"RightSwordMtrl", pMtrl);
 
 	// ============================================================
 
@@ -408,6 +375,73 @@ void CAssetMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"DebugShapeShader"));
 	AddAsset<CMaterial>(L"DebugShapeMtrl", pMtrl);
+}
+
+void CAssetMgr::CreateTitleLevelMaterial()
+{
+	CMaterial* pMtrl = nullptr;
+
+	// 타이틀배경 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"BackgroundMtrl", pMtrl);
+
+	// 스타디움 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"StadiumMtrl", pMtrl);
+
+	// 하늘 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"SkyMtrl", pMtrl);
+
+	// 게임 타이틀 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"TitleMtrl", pMtrl);
+
+	// 새 게임 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"NewGameMtrl", pMtrl);
+
+	// 종료하기 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"EndGameMtrl", pMtrl);
+
+	// 왼칼 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"LeftSwordMtrl", pMtrl);
+
+	// 오른칼 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"RightSwordMtrl", pMtrl);
+}
+
+void CAssetMgr::CreateLobbyLevelMaterial()
+{
+	CMaterial* pMtrl = nullptr;
+
+	// 로비 하우스 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"HouseMtrl", pMtrl);
+
+	// 로비(하늘) 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"LobbySkyMtrl", pMtrl);	
+	
+	// 로비(땅) 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"LobbyGroundMtrl", pMtrl);
+
+	
 }
 
 
