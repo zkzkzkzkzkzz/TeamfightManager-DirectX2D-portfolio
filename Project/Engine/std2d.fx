@@ -85,8 +85,8 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
             
             
             // saturate : 0 ~ 1을 넘지않게 보정
-            float fAlpha = 1.f - saturate(dot(vColor.rb, vColor.rb) / 2.f);
-
+            //float fAlpha = 1.f - saturate(dot(vColor.rgb, vColor.rgb) / 2.f);
+            float fAlpha = 1.f;
             if (fAlpha < 0.1f)
             {
                 // 픽셀 셰이더를 중간에 폐기 처리
