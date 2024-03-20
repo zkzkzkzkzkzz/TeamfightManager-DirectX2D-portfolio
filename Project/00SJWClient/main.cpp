@@ -32,6 +32,7 @@
 #include "CLevelSaveLoad.h"
 #include "CCreateTempLevel.h"
 
+#include "TitleLevel.h"
 
 //#define _RELEASE_GAME
 
@@ -82,10 +83,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
     CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;
 
+    TitleLevel::CreateTempLevel();
+
 #ifndef _RELEASE_GAME
     // 임시레벨 생성
-    CCreateTempLevel::Init();
-    CCreateTempLevel::CreateTempLevel();
+    //CCreateTempLevel::Init();
+    //CCreateTempLevel::CreateTempLevel();
 
     // EditorObjectManager 초기화
     CEditorObjMgr::GetInst()->init();
@@ -174,7 +177,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   hWnd = CreateWindowW(L"MyWindow", L"SJWClient", WS_OVERLAPPEDWINDOW,
+   hWnd = CreateWindowW(L"MyWindow", L"TeamFight Manager", WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
