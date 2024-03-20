@@ -181,5 +181,5 @@ void TitleLevel::CreateTempLevel()
 	pTempLevel->AddObject(EndGameBtn, 2);
 
 	// 레벨 플레이
-	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
+	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
 }

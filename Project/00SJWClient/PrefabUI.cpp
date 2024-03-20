@@ -30,7 +30,8 @@ void PrefabUI::render_update()
 	if (ImGui::Button("Spawn"))
 	{
 		CGameObject* pNewObj = pPrefab->Instatiate();
-		pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 100.f));
+		Vec3 vPos = pNewObj->Transform()->GetRelativePos();
+		pNewObj->Transform()->SetRelativePos(vPos);
 		GamePlayStatic::SpawnGameObject(pNewObj, 0);
 	}
 }
