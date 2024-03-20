@@ -21,6 +21,7 @@ CNewBtnScript::CNewBtnScript()
 	, m_bMouseOn_Prev(false)
 	, m_bMouseLBtnDown(false)
 {
+
 }
 
 CNewBtnScript::CNewBtnScript(const CNewBtnScript& _Other)
@@ -34,6 +35,7 @@ CNewBtnScript::CNewBtnScript(const CNewBtnScript& _Other)
 	, m_bMouseOn_Prev(false)
 	, m_bMouseLBtnDown(false)
 {
+
 }
 
 CNewBtnScript::~CNewBtnScript()
@@ -52,6 +54,8 @@ void CNewBtnScript::begin()
 	m_HoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_NewGame_Over.png", L"texture\\Title\\Title_NewGame_Over.png");
 	m_CurImg = m_NormalImg;
 
+	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+
 	m_LeftSword = new CGameObject;
 	m_LeftSword->SetName(L"LeftSword");
 	m_LeftSword->AddComponent(new CTransform);
@@ -62,6 +66,7 @@ void CNewBtnScript::begin()
 	m_LeftSword->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
 	m_LeftSword->Animator2D()->LoadAnimation(L"animdata\\LeftSword.txt");
 	m_LeftSword->SetActive(false);
+	pLevel->AddObject(m_LeftSword, 2);
 
 	m_RightSword = new CGameObject;
 	m_RightSword->SetName(L"RightSword");
@@ -73,6 +78,7 @@ void CNewBtnScript::begin()
 	m_RightSword->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
 	m_RightSword->Animator2D()->LoadAnimation(L"animdata\\RightSword.txt");
 	m_RightSword->SetActive(false);
+	pLevel->AddObject(m_RightSword, 2);
 }
 
 void CNewBtnScript::tick()
@@ -138,7 +144,7 @@ void CNewBtnScript::tick()
 void CNewBtnScript::render()
 {
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
-	if (m_HoverImg == m_CurImg)
+	if (m_HoverImg == m_CurImg && nullptr != m_CurImg)
 	{
 		CursorAnim();
 	}
@@ -201,14 +207,11 @@ void CNewBtnScript::CursorAnim()
 
 	Vec3 vLeftSword = Vec3(vWorldPos.x - vWorldScale.x / 2.f - 30.f, vWorldPos.y, vWorldPos.z);
 	Vec3 vRightSword = Vec3(vWorldPos.x + vWorldScale.x / 2.f + 30.f, vWorldPos.y, vWorldPos.z);
-	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 
 	m_LeftSword->Transform()->SetRelativePos(vLeftSword);
 	m_LeftSword->Transform()->SetRelativeScale(Vec3(36.f, 14.f, 1.f));
-	pLevel->AddObject(m_LeftSword, 2);
 	m_RightSword->Transform()->SetRelativePos(vRightSword);
 	m_RightSword->Transform()->SetRelativeScale(Vec3(36.f, 14.f, 1.f));
-	pLevel->AddObject(m_RightSword, 2);
 	m_LeftSword->Animator2D()->Play(L"LeftSword");
 	m_RightSword->Animator2D()->Play(L"RightSword");
 }
