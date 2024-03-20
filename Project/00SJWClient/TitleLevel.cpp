@@ -17,7 +17,8 @@
 #include <Engine\CTexture.h>
 #include <Engine\CSetColorShader.h>
 
-#include <Scripts\CUIScript.h>
+#include <Scripts\CNewBtnScript.h>
+#include <Scripts\CEndBtnScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -148,7 +149,7 @@ void TitleLevel::CreateTempLevel()
 	NewGameBtn->SetName(L"NewGameBtn");
 	NewGameBtn->AddComponent(new CTransform);
 	NewGameBtn->AddComponent(new CMeshRender);
-	NewGameBtn->AddComponent(new CUIScript);
+	NewGameBtn->AddComponent(new CNewBtnScript);
 
 	NewGameBtn->Transform()->SetRelativePos(Vec3(0.f, 32.f, 100.f));
 	NewGameBtn->Transform()->SetRelativeScale(Vec3(66.f, 23.f, 1.f));
@@ -166,6 +167,7 @@ void TitleLevel::CreateTempLevel()
 	EndGameBtn->SetName(L"EndGameBtn");
 	EndGameBtn->AddComponent(new CTransform);
 	EndGameBtn->AddComponent(new CMeshRender);
+	EndGameBtn->AddComponent(new CEndBtnScript);
 
 	EndGameBtn->Transform()->SetRelativePos(Vec3(0.f, -16.f, 100.f));
 	EndGameBtn->Transform()->SetRelativeScale(Vec3(78.f, 23.f, 1.f));
@@ -177,19 +179,6 @@ void TitleLevel::CreateTempLevel()
 	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_Exit_Idle.png", L"texture\\Title\\Title_Exit_Idle.png");
 	EndGameBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(EndGameBtn, 2);
-
-	//// Left Sword
-	//CGameObject* LeftSword = new CGameObject;
-	//LeftSword->SetName(L"LeftSword");
-	//LeftSword->AddComponent(new CTransform);
-	//LeftSword->AddComponent(new CMeshRender);
-	//LeftSword->AddComponent(new CAnimator2D);
-
-	//LeftSword->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	//LeftSword->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LeftSwordMtrl"));
-	//LeftSword->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
-
-	//LeftSword->Animator2D()->LoadAnimation(L"animdata\\LeftSword.txt");
 
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);

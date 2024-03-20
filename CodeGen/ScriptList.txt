@@ -1,3 +1,2 @@
-CBackgroundScript
-CMonsterScript
-CPlayerScript
+CEndBtnScript
+CNewBtnScript
