@@ -25,6 +25,10 @@
 
 #include "LobbyLevel.h"
 
+
+void TestFunc();
+INT_PTR CALLBACK CreateTempLevel();
+
 void CCreateTempLevel::Init()
 {	
 
@@ -32,7 +36,7 @@ void CCreateTempLevel::Init()
 
 void CCreateTempLevel::CreateTempLevel()
 {
-/*	Ptr<CMaterial> pSkyMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"SkyMtrl"); 
+	Ptr<CMaterial> pSkyMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"SkyMtrl"); 
 	Ptr<CMaterial> pStadiumMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl");
 	Ptr<CMaterial> pBackgroudMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BackgroundMtrl");
 	Ptr<CMaterial> pTitleMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TitleMtrl");
@@ -47,11 +51,15 @@ void CCreateTempLevel::CreateTempLevel()
 	pEGBtnMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_Exit_Idle.png", L"texture\\Title\\Title_Exit_Idle.png"));
 
 	CLevel* pLevel = CLevelSaveLoad::LoadLevel(L"level\\temptitlelevel.lv");
-	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);*/	
+	pLevel->FindObjectByName(L"NewGameBtn")->GetScript<CNewBtnScript>()->SetCallBack(TestFunc);
 
-	LobbyLevel::CreateTempLevel();
+	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::STOP);	
 }
 
+void TestFunc()
+{
+	LobbyLevel::CreateTempLevel();
+}
 
 
 //{

@@ -10,6 +10,7 @@
 #include <Engine\components.h>
 #include <Engine\CAnim.h>
 
+
 CNewBtnScript::CNewBtnScript()
 	: CScript(NEWBTNSCRIPT)
 	, m_NormalImg(nullptr)
