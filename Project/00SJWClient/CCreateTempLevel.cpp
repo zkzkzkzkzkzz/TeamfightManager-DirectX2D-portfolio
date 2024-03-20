@@ -17,10 +17,6 @@
 #include <Engine\CTexture.h>
 #include <Engine\CSetColorShader.h>
 
-#include <Scripts\CPlayerScript.h>
-#include <Scripts\CBackgroundScript.h>
-#include <Scripts\CMonsterScript.h>
-
 #include "CLevelSaveLoad.h"
 
 #include "CIdleState.h"
@@ -110,7 +106,6 @@ void CCreateTempLevel::CreateTempLevel()
 	pObj->AddComponent(new CMeshRender);
 	pObj->AddComponent(new CCollider2D);
 	pObj->AddComponent(new CAnimator2D);
-	pObj->AddComponent(new CPlayerScript);
 
 	pObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 300.f));
 	pObj->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 1.f));
@@ -167,7 +162,6 @@ void CCreateTempLevel::CreateTempLevel()
 	pObj->AddComponent(new CMeshRender);
 	pObj->AddComponent(new CCollider2D);
 	pObj->AddComponent(new CStateMachine);
-	pObj->AddComponent(new CMonsterScript);
 
 	pObj->Transform()->SetRelativePos(Vec3(500.f, 0.f, 500.f));
 	pObj->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 1.f));

@@ -12,6 +12,7 @@ private:
 
 public:
 	HWND GetMainWind() { return m_hMainWnd; }
+	Vec2 GetResolution() { return m_vResolution; }
 	
 private:
 	void DebugFunctionCheck();

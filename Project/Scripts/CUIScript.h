@@ -10,9 +10,12 @@ class CUIScript :
 {
 private:
     Ptr<CTexture>   m_NormalImg;
-    Ptr<CTexture>   m_PressedImg;
+    Ptr<CTexture>   m_HoverImg;
+    Ptr<CTexture>   m_CurImg;
 
-    bool            m_Clicked;
+    bool    m_bMouseOn;
+    bool    m_bMouseOn_Prev;
+    bool    m_bMouseLBtnDown;
 
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
@@ -26,7 +29,7 @@ private:
 
 public:
     void SetNormalImg(Ptr<CTexture> _NormalImg) { m_NormalImg = _NormalImg; }
-    void SetPressedImg(Ptr<CTexture> _PressedImg) { m_PressedImg = _PressedImg; }
+    void SetHoverImg(Ptr<CTexture> _HoverImg) { m_HoverImg = _HoverImg; }
 
     void SetCallBack(BtnCallBack _CallBack) { m_CallBackFunc = _CallBack; }
 
@@ -36,10 +39,18 @@ public:
 public:
     virtual void begin() override;
     virtual void tick() override;
+    void render();
 
 public:
+    void OnHovered();
+    void OnUnHovered();
+
+    void LBtnDown();
+    void LBtnUp();
+
     void LBtnReleased();
     void LBtnClicked();
+
 
 
 public:

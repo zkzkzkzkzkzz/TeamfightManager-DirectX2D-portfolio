@@ -344,6 +344,16 @@ void CAssetMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"TitleMtrl", pMtrl);
 
+	// 새 게임 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"NewGameMtrl", pMtrl);
+
+	// 종료하기 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"EndGameMtrl", pMtrl);
+
 	// ============================================================
 
 	// 타일맵 머테리얼 생성
