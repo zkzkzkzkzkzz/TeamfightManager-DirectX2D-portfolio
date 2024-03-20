@@ -34,7 +34,7 @@
 
 #include "TitleLevel.h"
 
-#define _RELEASE_GAME
+//#define _RELEASE_GAME
 
 
 #define MAX_LOADSTRING 100

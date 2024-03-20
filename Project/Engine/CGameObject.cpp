@@ -18,6 +18,7 @@ CGameObject::CGameObject()
 	, m_Parent(nullptr)
 	, m_iLayerIdx(-1) // 어떠한 레벨 및 레이어에도 소속되어 있지 않다
 	, m_bDead(false)
+	, m_Active(true)
 {
 }
 
@@ -28,6 +29,7 @@ CGameObject::CGameObject(const CGameObject& _OriginObject)
 	, m_Parent(nullptr)
 	, m_iLayerIdx(-1)
 	, m_bDead(false)
+	, m_Active(true)
 {
 	for (UINT i = 0; i < (UINT)COMPONENT_TYPE::END; ++i)
 	{
@@ -85,22 +87,25 @@ void CGameObject::begin()
 
 void CGameObject::tick()
 {
-	for (UINT i = 0; i < UINT(COMPONENT_TYPE::END); ++i)
+	if (m_Active)
 	{
-		if (nullptr != m_arrCom[i])
+		for (UINT i = 0; i < UINT(COMPONENT_TYPE::END); ++i)
 		{
-			m_arrCom[i]->tick();
+			if (nullptr != m_arrCom[i])
+			{
+				m_arrCom[i]->tick();
+			}
 		}
-	}
 
-	for (size_t i = 0; i < m_vecScript.size(); ++i)
-	{
-		m_vecScript[i]->tick();
-	}
+		for (size_t i = 0; i < m_vecScript.size(); ++i)
+		{
+			m_vecScript[i]->tick();
+		}
 
-	for (size_t i = 0; i < m_vecChild.size(); ++i)
-	{
-		m_vecChild[i]->tick();
+		for (size_t i = 0; i < m_vecChild.size(); ++i)
+		{
+			m_vecChild[i]->tick();
+		}
 	}
 }
 
@@ -140,9 +145,12 @@ void CGameObject::finaltick()
 
 void CGameObject::render()
 {
-	if (nullptr != m_RenderCom)
+	if (m_Active)
 	{
-		m_RenderCom->render();
+		if (nullptr != m_RenderCom)
+		{
+			m_RenderCom->render();
+		}
 	}
 }
 

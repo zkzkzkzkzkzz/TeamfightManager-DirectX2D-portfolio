@@ -354,6 +354,16 @@ void CAssetMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"EndGameMtrl", pMtrl);
 
+	// 왼칼 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"LeftSwordMtrl", pMtrl);
+
+	// 오른칼 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"RightSwordMtrl", pMtrl);
+
 	// ============================================================
 
 	// 타일맵 머테리얼 생성

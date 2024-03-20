@@ -26,6 +26,7 @@ private:
     int                     m_iLayerIdx;    // 오브젝트가 소속되어있는 레이어의 인덱스
 
     bool                    m_bDead;
+    bool                    m_Active;
 
 public:
     void begin();
@@ -70,12 +71,11 @@ public:
         }
     }
 
-    //void DisconnectWithParent();
-    //void DisconnectWithLayer();
-
     int DisconnectWithParent();
     int DisconnectWithLayer();
 
+    void SetActive(bool _active) { m_Active = _active; }
+    bool IsActive() { return m_Active; }
     bool IsDead() { return m_bDead; }
 
     void Destroy();

@@ -5,6 +5,8 @@
 typedef  void(*BtnCallBack)(void);
 typedef  void(CEntity::* DelegateFunc)(void);
 
+class CGameObject;
+
 class CUIScript :
     public CScript
 {
@@ -12,6 +14,9 @@ private:
     Ptr<CTexture>   m_NormalImg;
     Ptr<CTexture>   m_HoverImg;
     Ptr<CTexture>   m_CurImg;
+
+    CGameObject* m_LeftSword;
+    CGameObject* m_RightSword;
 
     bool    m_bMouseOn;
     bool    m_bMouseOn_Prev;
@@ -51,7 +56,7 @@ public:
     void LBtnReleased();
     void LBtnClicked();
 
-
+    void CursorAnim();
 
 public:
     CLONE(CUIScript);

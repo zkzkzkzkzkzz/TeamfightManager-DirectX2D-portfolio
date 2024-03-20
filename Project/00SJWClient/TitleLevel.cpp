@@ -178,6 +178,19 @@ void TitleLevel::CreateTempLevel()
 	EndGameBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(EndGameBtn, 2);
 
+	//// Left Sword
+	//CGameObject* LeftSword = new CGameObject;
+	//LeftSword->SetName(L"LeftSword");
+	//LeftSword->AddComponent(new CTransform);
+	//LeftSword->AddComponent(new CMeshRender);
+	//LeftSword->AddComponent(new CAnimator2D);
+
+	//LeftSword->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	//LeftSword->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LeftSwordMtrl"));
+	//LeftSword->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
+
+	//LeftSword->Animator2D()->LoadAnimation(L"animdata\\LeftSword.txt");
+
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
 }
