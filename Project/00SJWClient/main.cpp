@@ -83,12 +83,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
     CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;
 
-    TitleLevel::CreateTempLevel();
+    //TitleLevel::CreateTempLevel();
 
 #ifndef _RELEASE_GAME
     // 임시레벨 생성
     //CCreateTempLevel::Init();
-    //CCreateTempLevel::CreateTempLevel();
+    CCreateTempLevel::CreateTempLevel();
 
     // EditorObjectManager 초기화
     CEditorObjMgr::GetInst()->init();
