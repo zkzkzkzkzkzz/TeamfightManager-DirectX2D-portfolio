@@ -14,6 +14,7 @@ CNewBtnScript::CNewBtnScript()
 	: CScript(NEWBTNSCRIPT)
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
+	, m_CurImg(nullptr)
 	, m_LeftSword(nullptr)
 	, m_RightSword(nullptr)
 	, m_bMouseOn(false)
@@ -26,6 +27,9 @@ CNewBtnScript::CNewBtnScript(const CNewBtnScript& _Other)
 	: CScript(NEWBTNSCRIPT)
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
+	, m_CurImg(nullptr)
+	, m_LeftSword(nullptr)
+	, m_RightSword(nullptr)
 	, m_bMouseOn(false)
 	, m_bMouseOn_Prev(false)
 	, m_bMouseLBtnDown(false)
@@ -35,10 +39,10 @@ CNewBtnScript::CNewBtnScript(const CNewBtnScript& _Other)
 CNewBtnScript::~CNewBtnScript()
 {
 	if (nullptr != m_LeftSword)
-		m_LeftSword = nullptr;
+		m_LeftSword->Destroy();
 
 	if (nullptr != m_RightSword)
-		m_RightSword = nullptr;
+		m_RightSword->Destroy();
 }
 
 
@@ -113,6 +117,10 @@ void CNewBtnScript::tick()
 			{
 				LBtnClicked();
 			}
+		}
+		else if (bLBtnTap)
+		{
+			m_bMouseLBtnDown = true;
 		}
 
 		if (bLbtnReleased)

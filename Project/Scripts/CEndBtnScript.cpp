@@ -14,6 +14,7 @@ CEndBtnScript::CEndBtnScript()
 	: CScript(ENDBTNSCRIPT)
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
+	, m_CurImg(nullptr)
 	, m_LeftSword(nullptr)
 	, m_RightSword(nullptr)
 	, m_bMouseOn(false)
@@ -26,6 +27,9 @@ CEndBtnScript::CEndBtnScript(const CEndBtnScript& _Other)
 	: CScript(ENDBTNSCRIPT)
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
+	, m_CurImg(nullptr)
+	, m_LeftSword(nullptr)
+	, m_RightSword(nullptr)
 	, m_bMouseOn(false)
 	, m_bMouseOn_Prev(false)
 	, m_bMouseLBtnDown(false)
@@ -35,10 +39,10 @@ CEndBtnScript::CEndBtnScript(const CEndBtnScript& _Other)
 CEndBtnScript::~CEndBtnScript()
 {
 	if (nullptr != m_LeftSword)
-		m_LeftSword = nullptr;
+		m_LeftSword->Destroy();
 
 	if (nullptr != m_RightSword)
-		m_RightSword = nullptr;
+		m_RightSword->Destroy();
 }
 
 
@@ -114,6 +118,10 @@ void CEndBtnScript::tick()
 				LBtnClicked();
 			}
 		}
+		else if (bLBtnTap)
+		{
+			m_bMouseLBtnDown = true;
+		}
 
 		if (bLbtnReleased)
 			m_bMouseLBtnDown = false;
@@ -178,12 +186,14 @@ void CEndBtnScript::LBtnClicked()
 	m_LeftSword->SetActive(false);
 	m_RightSword->SetActive(false);
 
-	// CallBack
-	if (m_CallBackFunc) m_CallBackFunc();
+	DestroyWindow(CEngine::GetInst()->GetMainWind());
 
-	// Delegate
-	if (m_Inst != nullptr && m_Delegate != nullptr)
-		(m_Inst->*m_Delegate)();
+	//// CallBack
+	//if (m_CallBackFunc) m_CallBackFunc();
+
+	//// Delegate
+	//if (m_Inst != nullptr && m_Delegate != nullptr)
+	//	(m_Inst->*m_Delegate)();
 }
 
 void CEndBtnScript::CursorAnim()
