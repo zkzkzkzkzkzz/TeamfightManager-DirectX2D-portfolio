@@ -19,3 +19,5 @@
 //#include "Decal.h"
 //#include "Landscape.h"
 #include "CParticleSystem.h"
+
+#include "CStateMachine.h"

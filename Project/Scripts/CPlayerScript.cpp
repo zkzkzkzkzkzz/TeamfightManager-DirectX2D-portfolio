@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CPlayerScript.h"
 
 #include <Engine\CAssetMgr.h>
@@ -6,6 +6,7 @@
 
 #include <Engine\CMaterial.h>
 #include <Engine\CRenderComponent.h>
+#include <Engine\CFontMgr.h>
 
 CPlayerScript::CPlayerScript()
 	: CScript(SCRIPT_TYPE::PLAYERSCRIPT)
@@ -111,7 +112,7 @@ void CPlayerScript::tick()
 
 	if (KEY_TAP(SPACE))
 	{
-		GamePlayStatic::Play2DSound(L"sound\\DM.wav", 1, 0.5f, true);
+		//GamePlayStatic::Play2DSound(L"sound\\DM.wav", 1, 0.5f, true);
 	}
 
 	Transform()->SetRelativePos(vPos);

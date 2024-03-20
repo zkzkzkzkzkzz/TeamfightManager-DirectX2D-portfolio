@@ -20,6 +20,9 @@ private:
 
 	bool			m_bLock;
 
+	wchar_t			m_szText[256];
+	LPCWSTR			m_font;
+
 public:
 	double GetDeltaTime() { return m_DeltaTime; }
 	double GetEngineDeltaTime() { return m_EngineDeltaTime; }
@@ -29,5 +32,6 @@ public:
 public:
 	void init();
 	void tick();
+	void render();
 };
 

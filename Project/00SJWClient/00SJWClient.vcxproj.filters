@@ -110,6 +110,21 @@
     <Filter Include="02.UI\3.Inspector\AssetUI\Prefab">
       <UniqueIdentifier>{550fa30a-28ca-48a0-a282-a62fc51be2f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04.State">
+      <UniqueIdentifier>{0fa80225-a488-4cd8-a035-e8d0277d5937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.State\IdleState">
+      <UniqueIdentifier>{4d51c6f6-ee87-47cd-abd1-83519c517875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.State\TraceState">
+      <UniqueIdentifier>{7d82923f-4278-4b90-b023-d8bae74cc4ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\3.Inspector\AssetUI\FSMUI">
+      <UniqueIdentifier>{cf760644-c200-482c-9c39-810dfba3d311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.UI\3.Inspector\ComponentUI\Script">
+      <UniqueIdentifier>{1b3a8bdb-e5a0-4710-8bb9-e23eba6b663d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="00SJWClient.h">
@@ -247,6 +262,18 @@
     <ClInclude Include="PrefabUI.h">
       <Filter>02.UI\3.Inspector\AssetUI\Prefab</Filter>
     </ClInclude>
+    <ClInclude Include="FSMUI.h">
+      <Filter>02.UI\3.Inspector\AssetUI\FSMUI</Filter>
+    </ClInclude>
+    <ClInclude Include="CTraceState.h">
+      <Filter>04.State\TraceState</Filter>
+    </ClInclude>
+    <ClInclude Include="CIdleState.h">
+      <Filter>04.State\IdleState</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptUI.h">
+      <Filter>02.UI\3.Inspector\ComponentUI\Script</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="00SJWClient.rc">
@@ -382,6 +409,18 @@
     </ClCompile>
     <ClCompile Include="PrefabUI.cpp">
       <Filter>02.UI\3.Inspector\AssetUI\Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="FSMUI.cpp">
+      <Filter>02.UI\3.Inspector\AssetUI\FSMUI</Filter>
+    </ClCompile>
+    <ClCompile Include="CTraceState.cpp">
+      <Filter>04.State\TraceState</Filter>
+    </ClCompile>
+    <ClCompile Include="CIdleState.cpp">
+      <Filter>04.State\IdleState</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptUI.cpp">
+      <Filter>02.UI\3.Inspector\ComponentUI\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

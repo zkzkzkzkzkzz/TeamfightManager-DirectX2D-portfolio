@@ -11,6 +11,7 @@
 #include "CMaterial.h"
 #include "CPrefab.h"
 #include "CSound.h"
+#include "CFSM.h"
 
 class CAssetMgr :
 	public CSingleton<CAssetMgr>
@@ -90,6 +91,9 @@ ASSET_TYPE GetAssetType()
 
 	if constexpr (std::is_same_v<CSound, T>)
 		Type = ASSET_TYPE::SOUND;
+
+	if constexpr (std::is_same_v<CFSM, T>)
+		Type = ASSET_TYPE::FSM;
 
 	return Type;
 }

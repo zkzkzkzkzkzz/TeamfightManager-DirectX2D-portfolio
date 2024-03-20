@@ -18,7 +18,7 @@ void Animator2DUI::render_update()
 {
 	ComponentUI::render_update();
 
-	if (ImGui::Button("Edit Animation", ImVec2(130, 20)))
+	if (ImGui::Button("Create Animation", ImVec2(130, 20)))
 	{
 		EditAnimator* pEdit = (EditAnimator*)CImGuiMgr::GetInst()->FindUI("##EditAnimation");
 		CGameObject* pTarget = GetTargetObject();
@@ -96,21 +96,38 @@ void Animator2DUI::render_update()
 
 void Animator2DUI::OpenFildDialog()
 {
-	OPENFILENAME ofn;
 	wchar_t szFile[MAX_PATH] = L"";
+	//OPENFILENAME ofn;
 
-	ZeroMemory(&ofn, sizeof(ofn));
+	//ZeroMemory(&ofn, sizeof(ofn));
+	//ofn.lStructSize = sizeof(ofn);
+	//ofn.hwndOwner = NULL;
+	//ofn.lpstrFile = szFile;
+	//ofn.lpstrFile[0] = '\0';
+	//ofn.nMaxFile = sizeof(szFile) / sizeof(*szFile);
+	//ofn.lpstrFilter = L"All Files\0*.*\0";
+	//ofn.nFilterIndex = 1;
+	//ofn.lpstrFileTitle = NULL;
+	//ofn.nMaxFileTitle = 0;
+	//ofn.lpstrInitialDir = NULL;
+	//ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	OPENFILENAME ofn = {};
+
 	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = NULL;
+	ofn.hwndOwner = nullptr;
 	ofn.lpstrFile = szFile;
 	ofn.lpstrFile[0] = '\0';
-	ofn.nMaxFile = sizeof(szFile) / sizeof(*szFile);
-	ofn.lpstrFilter = L"All Files\0*.*\0";
+	ofn.nMaxFile = sizeof(szFile);
+	ofn.lpstrFilter = L"ALL\0*.*\0Animdata\0*.lv";
 	ofn.nFilterIndex = 1;
 	ofn.lpstrFileTitle = NULL;
 	ofn.nMaxFileTitle = 0;
-	ofn.lpstrInitialDir = NULL;
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	// 탐색창 초기 위치 지정
+	wstring strInitPath = CPathMgr::GetContentPath();
+	strInitPath += L"animdata\\";
+	ofn.lpstrInitialDir = strInitPath.c_str();
 
 	if (GetOpenFileName(&ofn))
 	{

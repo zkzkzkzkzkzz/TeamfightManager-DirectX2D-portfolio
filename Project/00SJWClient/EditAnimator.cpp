@@ -25,12 +25,13 @@ EditAnimator::EditAnimator()
 	, m_textureID(nullptr)
 	, m_imTexId(nullptr)
 	, m_ImageSize(0, 0)
-	, m_width(1.f)
-	, m_height(1.f)
+	, m_width(0.f)
+	, m_height(0.f)
 	, m_IsPlaying(false)
 	, m_AccTime(0.f)
 	, m_CurFrame(0)
 	, m_Loop(true)
+	, m_IsEdit(false)
 {
 	Deactivate();
 	SetModal(true);
@@ -51,8 +52,8 @@ void EditAnimator::render_update()
 		OpenFildDialog();
 	}
 
-	float Childwidth = 600;
-	float Childheight = 520;
+	float Childwidth = 800;
+	float Childheight = 650;
 
 	float tapheight = ImGui::GetTextLineHeightWithSpacing();
 	float scrollwidth = ImGui::GetStyle().ScrollbarSize;
@@ -67,11 +68,13 @@ void EditAnimator::render_update()
 		zoomFactor = max(0.1f, min(zoomFactor, 2.f));
 	}
 
-
 	if (m_textureID != nullptr)
 	{
 		float width = m_pAtlasTex->GetWidth();
 		float height = m_pAtlasTex->GetHeight();
+
+		ImGui::Text("Width: %.2f", width);
+		ImGui::Text("Height: %.2f", height);
 
 		m_ImageSize = ImVec2(width * zoomFactor, height * zoomFactor);
 		ImGui::Image(m_imTexId, m_ImageSize);
@@ -91,6 +94,62 @@ void EditAnimator::render_update()
 	ImGui::Text("LeftTop");
 	ImGui::SameLine(0, 31); ImGui::PushItemWidth(120.f);
 	ImGui::InputFloat2("##vLeftTop", &selectedRegion.x, "%.0f");
+	ImGui::SameLine();
+	if (ImGui::Button("Add Width"))
+	{
+		selectedRegion.x += sliceSize.x;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Sub Width"))
+	{
+		selectedRegion.x -= sliceSize.x;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Add Height"))
+	{
+		selectedRegion.y += sliceSize.y;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Sub Height"))
+	{
+		selectedRegion.y -= sliceSize.y;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Reset Region"))
+	{
+		selectedRegion.x = 0.f;
+		selectedRegion.y = 0.f;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Test"))
+	{
+		tAnimFrm frm = {};
+
+		frm.vLeftTop = Vec2(0, 0);
+		frm.vSlice = Vec2(120, 130);
+		frm.vOffset = Vec2(0, 0);
+		frm.vBackground = Vec2(200, 200);
+		frm.Duration = 0.f;
+
+		m_vecAnimFrm.push_back(frm);
+
+		frm.vLeftTop = Vec2(120, 0);
+		frm.vSlice = Vec2(120, 130);
+		frm.vOffset = Vec2(0, 0);
+		frm.vBackground = Vec2(200, 200);
+		frm.Duration = 0.f;
+
+		m_vecAnimFrm.push_back(frm);
+
+		frm.vLeftTop = Vec2(240, 0);
+		frm.vSlice = Vec2(120, 130);
+		frm.vOffset = Vec2(0, 0);
+		frm.vBackground = Vec2(200, 200);
+		frm.Duration = 0.f;
+
+		m_vecAnimFrm.push_back(frm);
+	}
+
 
 	ImGui::Text("SliceSize");
 	ImGui::SameLine(0, 17); ImGui::PushItemWidth(120.f);
@@ -198,19 +257,53 @@ void EditAnimator::render_update()
 			if (m_CurFrame >= (int)m_vecAnimFrm.size())
 			{
 				if (m_Loop)
-				{
 					m_CurFrame = 0;
-				}
 				else
-				{
 					m_IsPlaying = false;
-				}
 			}
 		}
 	}
 
+	ImGui::Checkbox("Edit Animation", &m_IsEdit);
+	if (!m_vecAnimFrm.empty() && m_IsEdit)
+	{
+		int size = (int)m_vecAnimFrm.size();
+		ImGui::Text("Selected Frame"); ImGui::SameLine(); ImGui::PushItemWidth(30);
+		ImGui::SliderInt("##Selected Frame", &m_CurFrame, 0, size - 1);
+		ImGui::SameLine();
+		if (ImGui::Button("Load Frame"))
+		{
+			selectedRegion = ImVec2(m_vecAnimFrm[m_CurFrame].vLeftTop.x, m_vecAnimFrm[m_CurFrame].vLeftTop.y);
+			sliceSize = ImVec2(m_vecAnimFrm[m_CurFrame].vSlice.x, m_vecAnimFrm[m_CurFrame].vSlice.y);
+			offset = ImVec2(m_vecAnimFrm[m_CurFrame].vOffset.x, m_vecAnimFrm[m_CurFrame].vOffset.y);
+			vBackground = ImVec2(m_vecAnimFrm[m_CurFrame].vBackground.x, m_vecAnimFrm[m_CurFrame].vBackground.y);
+			Duration = m_vecAnimFrm[m_CurFrame].Duration;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Edit"))
+		{
+			// 좌상단 좌표 수정
+			m_vecAnimFrm[m_CurFrame].vLeftTop.x = selectedRegion.x;
+			m_vecAnimFrm[m_CurFrame].vLeftTop.y = selectedRegion.y;
 
-	ImGui::BeginChild("Selected Region", ImVec2(vBackground.x +scrollwidth, vBackground.y + tapheight), true, ImGuiWindowFlags_NoScrollbar);
+			// 슬라이스 사이즈 수정
+			m_vecAnimFrm[m_CurFrame].vSlice.x = sliceSize.x;
+			m_vecAnimFrm[m_CurFrame].vSlice.y = sliceSize.y;
+
+			// 오프셋 수정
+			m_vecAnimFrm[m_CurFrame].vOffset.x = offset.x;
+			m_vecAnimFrm[m_CurFrame].vOffset.y = offset.y;
+
+			// 백그라운드 사이즈 수정
+			m_vecAnimFrm[m_CurFrame].vBackground.x = vBackground.x;
+			m_vecAnimFrm[m_CurFrame].vBackground.y = vBackground.y;
+
+			// 재생시간 수정
+			m_vecAnimFrm[m_CurFrame].Duration = Duration;
+		}	
+	}
+
+	ImGui::BeginChild("Selected Region", ImVec2(vBackground.x + scrollwidth, vBackground.y + tapheight), true, ImGuiWindowFlags_NoScrollbar);
 	ImVec2 uv0 = ImVec2(selectedRegion.x / m_width, selectedRegion.y / m_height);
 	ImVec2 uv1 = ImVec2((selectedRegion.x + sliceSize.x) / m_width, (selectedRegion.y + sliceSize.y) / m_height);
 	ImVec2 regionSize = sliceSize;
@@ -256,7 +349,6 @@ void EditAnimator::render_update()
 		}
 	}
 
-	
 	if (m_IsPlaying && !m_vecAnimFrm.empty())
 	{
 		selectedRegion = ImVec2(m_vecAnimFrm[m_CurFrame].vLeftTop.x, m_vecAnimFrm[m_CurFrame].vLeftTop.y);
@@ -287,25 +379,28 @@ void EditAnimator::SetTaretObject(CGameObject* _Object)
 
 void EditAnimator::OpenFildDialog()
 {
-	OPENFILENAME ofn;
-	wchar_t szFile[MAX_PATH] = L"";
+	wchar_t szSelect[256] = {};
 
-	ZeroMemory(&ofn, sizeof(ofn));
+	OPENFILENAME ofn = {};
+
 	ofn.lStructSize = sizeof(ofn);
-	ofn.hwndOwner = NULL;
-	ofn.lpstrFile = szFile;
+	ofn.hwndOwner = nullptr;
+	ofn.lpstrFile = szSelect;
 	ofn.lpstrFile[0] = '\0';
-	ofn.nMaxFile = sizeof(szFile) / sizeof(*szFile);
-	ofn.lpstrFilter = L"All Files\0*.*\0";
+	ofn.nMaxFile = sizeof(szSelect);
+	ofn.lpstrFilter = L"ALL\0*.*\0Texture\0*.lv";
 	ofn.nFilterIndex = 1;
 	ofn.lpstrFileTitle = NULL;
 	ofn.nMaxFileTitle = 0;
-	ofn.lpstrInitialDir = NULL;
-	ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+	// 탐색창 초기 위치 지정
+	wstring strInitPath = CPathMgr::GetContentPath();
+	strInitPath += L"texture\\";
+	ofn.lpstrInitialDir = strInitPath.c_str();
 
 	if (GetOpenFileName(&ofn))
 	{
-		const wstring filePath = szFile;
+		const wstring filePath = szSelect;
 		LoadSpriteFromFile(filePath);
 	}
 }

@@ -13,6 +13,7 @@
 #include "CTaskMgr.h"
 #include "CGC.h"
 #include "CSound.h"
+#include "CFontMgr.h"
 
 CEngine::CEngine()
 	: m_hMainWnd(nullptr)
@@ -54,6 +55,7 @@ int CEngine::init(HWND _hWnd, Vec2 _vResolution)
 	CAssetMgr::GetInst()->init();
 	CRenderMgr::GetInst()->init();
 	CLevelMgr::GetInst()->init();
+	CFontMgr::GetInst()->init();
 
 	return S_OK;
 }
@@ -69,6 +71,7 @@ void CEngine::progress()
 
 	// Level Update
 	CLevelMgr::GetInst()->tick();
+	CTimeMgr::GetInst()->render();
 
 	// GC
 	CGC::GetInst()->tick();

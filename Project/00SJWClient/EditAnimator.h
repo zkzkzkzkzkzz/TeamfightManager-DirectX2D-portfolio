@@ -31,6 +31,7 @@ private:
 
     bool    m_IsPlaying;
     bool    m_Loop;
+    bool    m_IsEdit;
     float   m_AccTime;
     int     m_CurFrame;
 

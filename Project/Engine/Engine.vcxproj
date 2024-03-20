@@ -172,6 +172,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CAnimator2D.h" />
     <ClInclude Include="CAsset.h" />
     <ClInclude Include="CAssetMgr.h" />
+    <ClInclude Include="CBlackboard.h" />
     <ClInclude Include="CCamera.h" />
     <ClInclude Include="CCollider2D.h" />
     <ClInclude Include="CCollisionMgr.h" />
@@ -181,6 +182,8 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CDevice.h" />
     <ClInclude Include="CEngine.h" />
     <ClInclude Include="CEntity.h" />
+    <ClInclude Include="CFontMgr.h" />
+    <ClInclude Include="CFSM.h" />
     <ClInclude Include="CGameObject.h" />
     <ClInclude Include="CGC.h" />
     <ClInclude Include="CGraphicsShader.h" />
@@ -203,6 +206,8 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CSetColorShader.h" />
     <ClInclude Include="CShader.h" />
     <ClInclude Include="CSound.h" />
+    <ClInclude Include="CState.h" />
+    <ClInclude Include="CStateMachine.h" />
     <ClInclude Include="CStructuredBuffer.h" />
     <ClInclude Include="CTaskMgr.h" />
     <ClInclude Include="CTexture.h" />
@@ -225,6 +230,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CAsset.cpp" />
     <ClCompile Include="CAssetMgr.cpp" />
     <ClCompile Include="CAssetMgr_Init.cpp" />
+    <ClCompile Include="CBlackboard.cpp" />
     <ClCompile Include="CCamera.cpp" />
     <ClCompile Include="CCollider2D.cpp" />
     <ClCompile Include="CCollisionMgr.cpp" />
@@ -234,6 +240,8 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CDevice.cpp" />
     <ClCompile Include="CEngine.cpp" />
     <ClCompile Include="CEntity.cpp" />
+    <ClCompile Include="CFontMgr.cpp" />
+    <ClCompile Include="CFSM.cpp" />
     <ClCompile Include="CGameObject.cpp" />
     <ClCompile Include="CGC.cpp" />
     <ClCompile Include="CGraphicsShader.cpp" />
@@ -256,6 +264,8 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CSetColorShader.cpp" />
     <ClCompile Include="CShader.cpp" />
     <ClCompile Include="CSound.cpp" />
+    <ClCompile Include="CState.cpp" />
+    <ClCompile Include="CStateMachine.cpp" />
     <ClCompile Include="CStructuredBuffer.cpp" />
     <ClCompile Include="CTaskMgr.cpp" />
     <ClCompile Include="CTexture.cpp" />

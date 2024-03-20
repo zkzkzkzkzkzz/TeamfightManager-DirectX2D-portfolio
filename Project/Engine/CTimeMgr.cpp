@@ -1,7 +1,9 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CTimeMgr.h"
 
 #include "CEngine.h"
+#include "CFontMgr.h"
+
 
 CTimeMgr::CTimeMgr()
 	: m_Frequency{}
@@ -9,6 +11,8 @@ CTimeMgr::CTimeMgr()
 	, m_CurCount{}
 	, m_fTime(0.f)
 	, m_bLock(true)
+	, m_szText{}
+	, m_font{}
 {	
 
 }
@@ -44,12 +48,10 @@ void CTimeMgr::tick()
 
 
 	// 시간 누적 ==> 1초마다 if 구문 실행
-	m_fTime += m_DeltaTime;
+	m_fTime += m_EngineDeltaTime;
 	if (1.f <= m_fTime)
 	{
-		wchar_t szText[50] = {};
-		swprintf_s(szText, 50, L"DeltaTime : %f, FPS : %d", m_DeltaTime, m_iCall);
-		SetWindowText(CEngine::GetInst()->GetMainWind(), szText);
+		swprintf_s(m_szText, 256, L"DeltaTime : %f, FPS : %d, 폰트 : %s", m_DeltaTime, m_iCall, m_font);
 
 		m_iCall = 0;
 		m_fTime = 0.f;
@@ -59,4 +61,11 @@ void CTimeMgr::tick()
 
 	g_global.g_dt = m_DeltaTime;
 	g_global.g_time += m_DeltaTime;
+}
+
+void CTimeMgr::render()
+{
+	m_font = L"Comic Sans MS";
+	// 폰트 출력
+	CFontMgr::GetInst()->DrawFont(m_szText, L"Comic Sans MS", 10.f, 30.f, 16, FONT_RGBA(255, 30, 30, 255));
 }

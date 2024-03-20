@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CTaskMgr.h"
 
+#include "CRenderMgr.h"
 #include "CAssetMgr.h"
 #include "CLevelMgr.h"
 #include "CLevel.h"
@@ -102,6 +103,7 @@ void CTaskMgr::tick()
 		{
 			CLevel* pNextLevel = (CLevel*)m_vecTask[i].Param_1;
 			LEVEL_STATE State = (LEVEL_STATE)m_vecTask[i].Param_2;
+			CRenderMgr::GetInst()->ClearCamera();
 			CLevelMgr::GetInst()->ChangeLevel_Task(pNextLevel, State);
 			m_bCreateObject = true;
 		}

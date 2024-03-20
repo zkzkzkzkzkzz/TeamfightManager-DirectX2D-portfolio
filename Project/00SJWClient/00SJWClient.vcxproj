@@ -160,14 +160,17 @@
     <ClInclude Include="CCreateTempLevel.h" />
     <ClInclude Include="CEditorObjMgr.h" />
     <ClInclude Include="CGameObjectEx.h" />
+    <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CImGuiMgr.h" />
     <ClInclude Include="CLevelSaveLoad.h" />
     <ClInclude Include="Collider2DUI.h" />
     <ClInclude Include="ComponentUI.h" />
     <ClInclude Include="ComputeShaderUI.h" />
     <ClInclude Include="Content.h" />
+    <ClInclude Include="CTraceState.h" />
     <ClInclude Include="EditAnimator.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="FSMUI.h" />
     <ClInclude Include="GraphicsShaderUI.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
@@ -190,6 +193,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="PrefabUI.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ScriptUI.h" />
     <ClInclude Include="SoundUI.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="targetver.h" />
@@ -206,13 +210,16 @@
     <ClCompile Include="CCreateTempLevel.cpp" />
     <ClCompile Include="CEditorObjMgr.cpp" />
     <ClCompile Include="CGameObjectEx.cpp" />
+    <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CImGuiMgr.cpp" />
     <ClCompile Include="CLevelSaveLoad.cpp" />
     <ClCompile Include="Collider2DUI.cpp" />
     <ClCompile Include="ComponentUI.cpp" />
     <ClCompile Include="ComputeShaderUI.cpp" />
     <ClCompile Include="Content.cpp" />
+    <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="EditAnimator.cpp" />
+    <ClCompile Include="FSMUI.cpp" />
     <ClCompile Include="GraphicsShaderUI.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
@@ -238,6 +245,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="PrefabUI.cpp" />
+    <ClCompile Include="ScriptUI.cpp" />
     <ClCompile Include="SoundUI.cpp" />
     <ClCompile Include="TextureUI.cpp" />
     <ClCompile Include="TransformUI.cpp" />

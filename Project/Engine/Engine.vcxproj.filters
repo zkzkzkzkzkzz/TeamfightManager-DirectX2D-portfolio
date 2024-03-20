@@ -145,6 +145,21 @@
     <Filter Include="06.Asset\Prefab">
       <UniqueIdentifier>{ad0d36d0-a59d-42b5-b08a-2270ead18587}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Module\Blackboard">
+      <UniqueIdentifier>{aff7c13d-c377-4e73-b190-9917e57b089a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="08.Component\09.StateMachine">
+      <UniqueIdentifier>{574da7db-836c-4ede-a712-03eaef27657c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Asset\FSM">
+      <UniqueIdentifier>{432f0440-b2e5-4383-bfaf-7d00105235ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06.Asset\FSM\State">
+      <UniqueIdentifier>{d806843c-5d38-4d5a-96d9-31b03cc4f1fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Manager\FontMgr">
+      <UniqueIdentifier>{a1693beb-b25f-49e8-9979-86998b106149}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -297,6 +312,21 @@
     <ClInclude Include="CSound.h">
       <Filter>06.Asset\Sound</Filter>
     </ClInclude>
+    <ClInclude Include="CStateMachine.h">
+      <Filter>08.Component\09.StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="CFSM.h">
+      <Filter>06.Asset\FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="CState.h">
+      <Filter>06.Asset\FSM\State</Filter>
+    </ClInclude>
+    <ClInclude Include="CBlackboard.h">
+      <Filter>Module\Blackboard</Filter>
+    </ClInclude>
+    <ClInclude Include="CFontMgr.h">
+      <Filter>04.Manager\FontMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -436,6 +466,21 @@
     </ClCompile>
     <ClCompile Include="CSound.cpp">
       <Filter>06.Asset\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="CStateMachine.cpp">
+      <Filter>08.Component\09.StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="CFSM.cpp">
+      <Filter>06.Asset\FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="CState.cpp">
+      <Filter>06.Asset\FSM\State</Filter>
+    </ClCompile>
+    <ClCompile Include="CBlackboard.cpp">
+      <Filter>Module\Blackboard</Filter>
+    </ClCompile>
+    <ClCompile Include="CFontMgr.cpp">
+      <Filter>04.Manager\FontMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@
 #include "Animator2DUI.h"
 
 #include "AssetUI.h"
+#include "ScriptUI.h"
 
 Inspector::Inspector()
 	: UI("Inspector", "##Inspector")
@@ -64,6 +65,28 @@ void Inspector::SetTargetObject(CGameObject* _Object)
 		}
 	}
 
+	// 해당 오브젝트가 보유하고 있는 Script에 맞춰서 ScriptUI 활성화
+	if (nullptr == _Object)
+	{
+		for (size_t i = 0; i < m_vecScriptUI.size(); ++i)
+		{
+			m_vecScriptUI[i]->Deactivate();
+		}
+	}
+	else
+	{
+		if (m_vecScriptUI.size() < _Object->GetScripts().size())
+		{
+			ResizeScriptUI(_Object->GetScripts().size());
+		}
+
+		const vector<CScript*>& vecScripts = _Object->GetScripts();
+		for (size_t i = 0; i < vecScripts.size(); ++i)
+		{
+			m_vecScriptUI[i]->SetScript(vecScripts[i]);
+		}
+	}
+
 	for (UINT i = 0; i < (UINT)ASSET_TYPE::END; ++i)
 	{
 		m_arrAssetUI[i]->Deactivate();
@@ -85,5 +108,17 @@ void Inspector::SetTargetAsset(Ptr<CAsset> _Asset)
 	{
 		m_arrAssetUI[(UINT)m_TargetAsset->GetType()]->Activate();
 		m_arrAssetUI[(UINT)m_TargetAsset->GetType()]->SetAsset(_Asset);
+	}
+}
+
+void Inspector::ResizeScriptUI(UINT _Size)
+{
+	int AddSize = _Size - m_vecScriptUI.size();
+
+	for (int i = 0; i < AddSize; ++i)
+	{
+		ScriptUI* pScriptUI = new ScriptUI;
+		AddChildUI(pScriptUI);
+		m_vecScriptUI.push_back(pScriptUI);
 	}
 }

@@ -30,10 +30,10 @@ void MeshRenderUI::render_update()
 	Ptr<CMesh> pMesh = pMeshRender->GetMesh();
 	Ptr<CMaterial> pMtrl = pMeshRender->GetMaterial();
 
-	if (pMesh == nullptr || pMtrl == nullptr)
-	{
-		return;
-	}
+	//if (pMesh == nullptr || pMtrl == nullptr)
+	//{
+	//	return;
+	//}
 
 	string meshname, mtrlname;
 

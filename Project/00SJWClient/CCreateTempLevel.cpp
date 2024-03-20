@@ -10,6 +10,7 @@
 #include <Engine\components.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CPrefab.h>
+#include <Engine\CFSM.h>
 
 #include <Engine\CMesh.h>
 #include <Engine\CGraphicsShader.h>
@@ -18,9 +19,23 @@
 
 #include <Scripts\CPlayerScript.h>
 #include <Scripts\CBackgroundScript.h>
+#include <Scripts\CMonsterScript.h>
 
 #include "CLevelSaveLoad.h"
 
+#include "CIdleState.h"
+#include "CTraceState.h"
+
+void CCreateTempLevel::Init()
+{	
+	// 임시 FSM 객체 에셋 하나 생성하기
+	Ptr<CFSM> pFSM = new CFSM(true);
+
+	pFSM->AddState(L"IdleState", new CIdleState);
+	pFSM->AddState(L"TraceState", new CTraceState);
+
+	CAssetMgr::GetInst()->AddAsset<CFSM>(L"NormalMonsterFSM", pFSM.Get());
+}
 
 void CCreateTempLevel::CreateTempLevel()
 {
@@ -144,8 +159,33 @@ void CCreateTempLevel::CreateTempLevel()
 
 	pTempLevel->AddObject(pBObj, 1, false);
 
-	// 레벨 플레이
-	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
+	// 몬스터 생성
+	pObj = new CGameObject;
+	pObj->SetName(L"MonsterObj");
 
-	CLevelSaveLoad::SaveLevel(pTempLevel, L"level\\temp.lv");
+	pObj->AddComponent(new CTransform);
+	pObj->AddComponent(new CMeshRender);
+	pObj->AddComponent(new CCollider2D);
+	pObj->AddComponent(new CStateMachine);
+	pObj->AddComponent(new CMonsterScript);
+
+	pObj->Transform()->SetRelativePos(Vec3(500.f, 0.f, 500.f));
+	pObj->Transform()->SetRelativeScale(Vec3(200.f, 200.f, 1.f));
+
+	pObj->Collider2D()->SetAbsolute(true);
+	pObj->Collider2D()->SetOffsetScale(Vec2(120.f, 120.f));
+	pObj->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+
+	pObj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pObj->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DMtrl"));
+	pObj->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Fighter.bmp", L"texture\\Fighter.bmp"));
+
+	pObj->StateMachine()->SetFSM(CAssetMgr::GetInst()->FindAsset<CFSM>(L"NormalMonsterFSM"));
+
+	pTempLevel->AddObject(pObj, L"Monster", false);
+
+	// 레벨 플레이
+	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
+
+	//CLevelSaveLoad::SaveLevel(pTempLevel, L"level\\temp.lv");
 }

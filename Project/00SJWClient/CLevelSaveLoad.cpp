@@ -16,6 +16,7 @@
 void CLevelSaveLoad::SaveLevel(CLevel* _Level, const wstring& _strLevelPath)
 {
 	assert(_Level);
+	assert(LEVEL_STATE::STOP == _Level->GetState() || LEVEL_STATE::NONE == _Level->GetState());
 
 	// Level을 저장할 경로
 	wstring strLevelPath = CPathMgr::GetContentPath();
@@ -187,6 +188,9 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 			break;
 		case COMPONENT_TYPE::CAMERA:
 			pComponent = new CCamera;
+			break;
+		case COMPONENT_TYPE::STATEMACHINE:
+			pComponent = new CStateMachine;
 			break;
 		case COMPONENT_TYPE::MESHRENDER:
 			pComponent = new CMeshRender;

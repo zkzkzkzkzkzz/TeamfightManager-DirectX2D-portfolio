@@ -57,7 +57,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_ int       nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(588);
+    //_CrtSetBreakAlloc(1022);
 
     MyRegisterClass(hInstance);
 
@@ -81,9 +81,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // 임시 레벨 생성
     CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
     CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;
-    CCreateTempLevel::CreateTempLevel();
 
 #ifndef _RELEASE_GAME
+    // 임시레벨 생성
+    CCreateTempLevel::Init();
+    CCreateTempLevel::CreateTempLevel();
+
     // EditorObjectManager 초기화
     CEditorObjMgr::GetInst()->init();
 

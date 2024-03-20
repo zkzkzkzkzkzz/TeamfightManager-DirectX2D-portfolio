@@ -34,6 +34,7 @@ enum class ASSET_TYPE
 	SOUND,
 	COMPUTE_SHADER,
 	GRAPHICS_SHADER,
+	FSM,
 	END,
 };
 
@@ -53,6 +54,8 @@ enum class COMPONENT_TYPE
 	LIGHT3D,	// 3차원 광원
 
 	CAMERA,		// 카메라 기능
+
+	STATEMACHINE, // 상태머신
 
 	// Render Component
 	MESHRENDER,
@@ -173,6 +176,16 @@ enum class TEX_PARAM
 	TEXARR_1,
 
 	END,
+};
+
+enum class SCRIPT_PARAM
+{
+	INT,
+	FLOAT,
+	VEC2,
+	VEC3,
+	VEC4,
+	OBJECT,
 };
 
 enum class DEBUG_SHAPE

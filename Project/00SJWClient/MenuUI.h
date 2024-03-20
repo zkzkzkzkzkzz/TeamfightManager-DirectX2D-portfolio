@@ -11,6 +11,7 @@ private:
     void Level();
     void GameObject();
     void Asset();
+    void Prefab();
 
 public:
     virtual void render() override;
