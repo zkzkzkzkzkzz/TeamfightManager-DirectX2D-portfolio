@@ -75,6 +75,11 @@ void Inspector::SetTargetObject(CGameObject* _Object)
 	}
 	else
 	{
+		for (size_t i = 0; i < m_vecScriptUI.size(); ++i)
+		{
+			m_vecScriptUI[i]->Deactivate();
+		}
+
 		if (m_vecScriptUI.size() < _Object->GetScripts().size())
 		{
 			ResizeScriptUI(_Object->GetScripts().size());
