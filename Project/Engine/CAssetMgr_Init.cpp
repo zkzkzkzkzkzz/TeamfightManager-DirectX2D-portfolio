@@ -321,10 +321,30 @@ void CAssetMgr::CreateDefaultMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"Std2DMtrl", pMtrl);
 
-	// 배경 머테리얼 생성
+
+	// === 타이틀 레벨 =============================================
+	
+	// 타이틀배경 머테리얼
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"BackgroundMtrl", pMtrl);
+
+	// 스타디움 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"StadiumMtrl", pMtrl);
+
+	// 하늘 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"SkyMtrl", pMtrl);
+
+	// 게임 타이틀 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"TitleMtrl", pMtrl);
+
+	// ============================================================
 
 	// 타일맵 머테리얼 생성
 	pMtrl = new CMaterial(true);

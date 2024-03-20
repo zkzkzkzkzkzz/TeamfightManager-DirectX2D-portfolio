@@ -17,6 +17,8 @@
 #include <Engine\CTexture.h>
 #include <Engine\CSetColorShader.h>
 
+#include <Scripts\CUIScript.h>
+
 #include "CLevelSaveLoad.h"
 
 void TitleLevel::Init()
@@ -73,12 +75,91 @@ void TitleLevel::CreateTempLevel()
 
 	pTempLevel->AddObject(pLight, 1);
 
-	// Background 추가
+	// Sky 추가
 	CGameObject* pBG = new CGameObject;
+	pBG->SetName(L"TitleSky");
+	pBG->AddComponent(new CTransform);
+	pBG->AddComponent(new CMeshRender);
+
+	pBG->Transform()->SetRelativePos(Vec3(0.f, 0.f, 500.f));
+	pBG->Transform()->SetRelativeScale(Vec3(1088.f, 752.f, 1.f));
+
+	pBG->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pBG->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"SkyMtrl"));
+	pBG->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
+
+	Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\sky.png", L"texture\\Title\\sky.png");
+	pBG->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
+	pTempLevel->AddObject(pBG, 2);
+
+	// Stadium 추가
+	pBG = new CGameObject;
+	pBG->SetName(L"TitleStadium");
+	pBG->AddComponent(new CTransform);
+	pBG->AddComponent(new CMeshRender);
+
+	pBG->Transform()->SetRelativePos(Vec3(0.f, 0.f, 400.f));
+	pBG->Transform()->SetRelativeScale(Vec3(1427.f, 1029.f, 1.f));
+
+	pBG->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pBG->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl"));
+	pBG->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
+
+	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\stadium.png", L"texture\\Title\\stadium.png");
+	pBG->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
+	pTempLevel->AddObject(pBG, 2);
+
+	// Background 추가
+	pBG = new CGameObject;
 	pBG->SetName(L"TitleBG");
 	pBG->AddComponent(new CTransform);
-	
+	pBG->AddComponent(new CMeshRender);
+
+	pBG->Transform()->SetRelativePos(Vec3(0.f, 0.f, 300.f));
+	pBG->Transform()->SetRelativeScale(Vec3(1280.f, 768.f, 1.f));
+
+	pBG->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pBG->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BackgroundMtrl"));
+	pBG->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
+
+	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\titleBG.png", L"texture\\Title\\titleBG.png");
+	pBG->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(pBG, 2);
+
+	// Title 추가
+	pBG = new CGameObject;
+	pBG->SetName(L"Title");
+	pBG->AddComponent(new CTransform);
+	pBG->AddComponent(new CMeshRender);
+
+	pBG->Transform()->SetRelativePos(Vec3(0.f, 203.f, 300.f));
+	pBG->Transform()->SetRelativeScale(Vec3(550.f, 205.f, 1.f));
+
+	pBG->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	pBG->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TitleMtrl"));
+	pBG->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
+
+	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\title.png", L"texture\\Title\\title.png");
+	pBG->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
+	pTempLevel->AddObject(pBG, 2);
+
+	// 새 게임 버튼
+	CGameObject* NewGameBtn = new CGameObject;
+	NewGameBtn->SetName(L"NewGameBtn");
+	NewGameBtn->AddComponent(new CTransform);
+	NewGameBtn->AddComponent(new CMeshRender);
+	NewGameBtn->AddComponent(new CUIScript);
+
+	NewGameBtn->Transform()->SetRelativePos(Vec3(0.f, 16.f, 100.f));
+	NewGameBtn->Transform()->SetRelativeScale(Vec3(66.f, 21.f, 1.f));
+
+	NewGameBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	NewGameBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"Std2DMtrl"));
+	NewGameBtn->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
+
+	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_NewGame_Idle.png", L"texture\\Title\\Title_NewGame_Idle.png");
+	NewGameBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
+	pTempLevel->AddObject(NewGameBtn, 2);
 
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
