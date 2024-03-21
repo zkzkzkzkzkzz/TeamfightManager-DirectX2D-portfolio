@@ -154,4 +154,18 @@ void CLobbyBtnScript::LBtnClicked()
 {
 	m_isOpen = true;
 	m_CurImg = m_PressedImg;
+
+	vector<CGameObject*> vChild = GetOwner()->GetChild();
+
+	for (size_t i = 0; i < vChild.size(); ++i)
+	{
+		vChild[i]->SetActive(true);
+	}
+
+	// CallBack
+	if (m_CallBackFunc) m_CallBackFunc();
+
+	// Delegate
+	if (m_Inst != nullptr && m_Delegate != nullptr)
+		(m_Inst->*m_Delegate)();
 }
