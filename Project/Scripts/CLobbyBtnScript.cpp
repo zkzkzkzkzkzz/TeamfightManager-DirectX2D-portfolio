@@ -85,7 +85,10 @@ void CLobbyBtnScript::tick()
 		}
 		else
 		{
-			LBtnReleased();
+			if (!CheckChildBtnPos(vMousePos))
+			{
+				LBtnReleased();
+			}
 		}
 	}
 
@@ -168,4 +171,28 @@ void CLobbyBtnScript::LBtnClicked()
 	// Delegate
 	if (m_Inst != nullptr && m_Delegate != nullptr)
 		(m_Inst->*m_Delegate)();
+}
+
+bool CLobbyBtnScript::CheckChildBtnPos(Vec2 _MousePos)
+{
+	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+	Vec3 vScale = GetOwner()->Transform()->GetRelativeScale();
+
+	vector<CGameObject*> vChild = GetOwner()->GetChild();
+
+	for (size_t i = 0; i < vChild.size(); ++i)
+	{
+		Vec3 vChildPos = vChild[i]->Transform()->GetRelativePos();
+
+		Vec2 vLT = Vec2(vPos.x - vScale.x / 2, (vPos.y + vChildPos.y) - vScale.y / 2);
+		Vec2 vRB = Vec2(vPos.x + vScale.x / 2, (vPos.y + vChildPos.y) + vScale.y / 2);
+
+		if (vLT.x < _MousePos.x && _MousePos.x < vRB.x
+			&& vLT.y < _MousePos.y && _MousePos.y < vRB.y)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

@@ -17,7 +17,8 @@ private:
     bool    m_bMouseOn_Prev;
     bool    m_bMouseLBtnDown;
 
-    bool    m_isOpen;
+    bool    m_isBtnOpen;    // 부모 버튼이 눌렸는가
+    bool    m_isOpen;       // 자기 자신이 눌렸는가
 
     float   m_Time;
     float   m_Duration;
@@ -51,7 +52,8 @@ public:
     void LBtnReleased();
     void LBtnClicked();
 
-    void MoveBtn();
+    void OpenBtn();
+    void CloseBtn();
 
 public:
     virtual void begin() override;

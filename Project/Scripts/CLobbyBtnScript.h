@@ -50,6 +50,8 @@ public:
     void LBtnReleased();
     void LBtnClicked();
 
+    bool CheckChildBtnPos(Vec2 _MousePos);
+
 public:
     virtual void begin() override;
     virtual void tick() override;
@@ -60,5 +62,7 @@ public:
     CLobbyBtnScript();
     CLobbyBtnScript(const CLobbyBtnScript& _Other);
     ~CLobbyBtnScript();
+
+    friend class CLobbyChildBtnScript;
 };
 
