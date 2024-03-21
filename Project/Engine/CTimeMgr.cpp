@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "CTimeMgr.h"
 
 #include "CEngine.h"
@@ -51,7 +51,7 @@ void CTimeMgr::tick()
 	m_fTime += m_EngineDeltaTime;
 	if (1.f <= m_fTime)
 	{
-		swprintf_s(m_szText, 256, L"DeltaTime : %f, FPS : %d, 폰트 : %s", m_DeltaTime, m_iCall, m_font);
+		swprintf_s(m_szText, 256, L"DeltaTime : %f, FPS : %d, Font : %s", m_DeltaTime, m_iCall, m_font);
 
 		m_iCall = 0;
 		m_fTime = 0.f;
@@ -65,7 +65,7 @@ void CTimeMgr::tick()
 
 void CTimeMgr::render()
 {
-	m_font = L"Comic Sans MS";
+	m_font = L"Galmuri14";
 	// 폰트 출력
-	CFontMgr::GetInst()->DrawFont(m_szText, L"Comic Sans MS", 10.f, 30.f, 16, FONT_RGBA(255, 30, 30, 255));
+	CFontMgr::GetInst()->DrawFont(m_szText, m_font, 10.f, 30.f, 16, FONT_RGBA(255, 30, 30, 255));
 }

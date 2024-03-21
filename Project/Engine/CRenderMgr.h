@@ -7,6 +7,7 @@ class CCamera;
 class CGameObject;
 class CStructuredBuffer;
 class CLight2D;
+class CText;
 
 class CRenderMgr :
     public CSingleton<CRenderMgr>
@@ -27,6 +28,8 @@ private:
     bool                    m_DebugPosition;
 
     vector<Ptr<CTexture>>   m_vecNoiseTex;
+
+    CText*                  m_Text;
 
     // render function pointer
     typedef void(CRenderMgr::* RENDER_FUNC)(void);

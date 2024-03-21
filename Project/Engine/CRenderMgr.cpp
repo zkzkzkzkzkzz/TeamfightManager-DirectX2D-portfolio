@@ -16,6 +16,7 @@ CRenderMgr::CRenderMgr()
 	, m_DebugPosition(true)
 	, m_EditorCam(nullptr)
 	, m_RenderFunc(nullptr)
+	, m_Text(nullptr)
 {
 	m_RenderFunc = &CRenderMgr::render_play;
 }

@@ -43,7 +43,6 @@ public:
     GET_COMPONENT(Light2D, LIGHT2D);
     GET_COMPONENT(TileMap, TILEMAP);
     GET_COMPONENT(StateMachine, STATEMACHINE);
-    GET_COMPONENT(Text, TEXT);
     
 public:
     void AddComponent(CComponent* _Component);

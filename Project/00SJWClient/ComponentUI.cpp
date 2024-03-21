@@ -38,14 +38,4 @@ void ComponentUI::SetTargetObject(CGameObject* _Target)
 void ComponentUI::render_update()
 {
 	ImGui::SeparatorText(m_ComponentTitle.c_str());
-
-	//ImGui::PushID(0);
-	//ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.f, 0.6f, 0.6f));
-	//ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.f, 0.6f, 0.6f));
-	//ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.f, 0.6f, 0.6f));
-
-	//ImGui::Button(m_ComponentTitle.c_str());
-
-	//ImGui::PopStyleColor(3);
-	//ImGui::PopID();
 }

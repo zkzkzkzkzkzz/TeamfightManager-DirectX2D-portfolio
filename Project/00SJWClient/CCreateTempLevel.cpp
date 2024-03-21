@@ -23,6 +23,7 @@
 #include <Scripts\CNewBtnScript.h>
 #include <Scripts\CEndBtnScript.h>
 
+#include "TitleLevel.h"
 #include "LobbyLevel.h"
 
 
@@ -55,6 +56,7 @@ void CCreateTempLevel::CreateTempLevel()
 
 	//CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::STOP);	
 
+	//TitleLevel::CreateTempLevel();
 	LobbyLevel::CreateTempLevel();
 }
 

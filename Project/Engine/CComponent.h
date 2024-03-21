@@ -19,11 +19,14 @@ public:
     virtual void tick() {}
     virtual void finaltick() = 0;
     virtual void UpdateData() {}
+    virtual void render() {}
 
 public:
     COMPONENT_TYPE GetType() { return m_Type; }
     CGameObject* GetOwner() { return m_Owner; }
     CRenderComponent* GetRenderComponent() { return m_Owner->GetRenderComponent(); }
+
+    virtual void SetOwner(CGameObject* _Owner) { m_Owner = _Owner; }
 
     GET_OTHER_COMPONENT(Transform);
     GET_OTHER_COMPONENT(MeshRender);
