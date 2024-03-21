@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include "CFontMgr.h"
 
 #include "CDevice.h"
@@ -6,6 +6,7 @@
 CFontMgr::CFontMgr()
 	: m_pFW1Factory(nullptr)
 	, m_pFontWrapper(nullptr)
+	, m_FontInfo{}
 {
 }
 
@@ -25,7 +26,7 @@ void CFontMgr::init()
 		assert(NULL);
 	}
 
-	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"바탕", &m_pFontWrapper)))
+	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Silver", &m_pFontWrapper)))
 	{
 		assert(NULL);
 	}
@@ -42,5 +43,19 @@ void CFontMgr::DrawFont(const wchar_t* _pStr, LPCWSTR _font, float _fPosX, float
 		_fPosY,// Y position
 		_Color,// Text color, 0xAaBbGgRr
 		FW1_RESTORESTATE      // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
+	);
+}
+
+void CFontMgr::DrawFont(const wchar_t* _pStr, LPCWSTR _font, float _fPosX, float _fPosY, float _fFontSize, UINT _Color, UINT _flags)
+{
+	m_pFontWrapper->DrawString(
+		CONTEXT,
+		_pStr, // String
+		_font, // FontFamily
+		_fFontSize,// Font size
+		_fPosX,// X position
+		_fPosY,// Y position
+		_Color,// Text color, 0xAaBbGgRr
+		FW1_RESTORESTATE | _flags     // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
 	);
 }
