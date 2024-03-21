@@ -177,25 +177,25 @@ void CRecruitmentBtnScript::OpenBtn()
 
 	float BtwTime = m_Duration - m_Time;
 
-	if (m_Time < 0.2f)
+	if (m_Time < 0.15f)
 	{
-		vPos.y += 500.f * DT * BtwTime;
-		if (vPos.y >= 63.f)
-			vPos.y = 63.f;
+		vPos.y += 900.f * DT * BtwTime;
+		if (vPos.y >= 60.f)
+			vPos.y = 60.f;
 
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
-	else if (m_Time >= 0.2f && m_Time < m_Duration && BtwTime >= 0.f)
+	else if (m_Time >= 0.15f && m_Time < m_Duration)
 	{
-		vPos.y -= 20.f * DT * BtwTime;
-		if (vPos.y <= 62.f)
-			vPos.y = 62.f;
+		vPos.y -= 400.f * DT * BtwTime;
+		if (vPos.y <= 58.f)
+			vPos.y = 58.f;
 
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
 	else
 	{
-		vPos.y = 62.f;
+		vPos.y = 58.f;
 		GetOwner()->Transform()->SetRelativePos(vPos);
 
 		m_isBtnOpen = true;
@@ -214,12 +214,12 @@ void CRecruitmentBtnScript::CloseBtn()
 
 	if (m_Time < 0.2f)
 	{
-		vPos.y += 5.f * DT * BtwTime;
+		vPos.y += 20.f * DT * BtwTime;
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
 	else if (m_Time >= 0.2f && m_Time < m_Duration && BtwTime >= 0.f)
 	{
-		vPos.y -= 500.f * DT * BtwTime;
+		vPos.y -= 1000.f * DT * BtwTime;
 		if (vPos.y <= 0.f)
 			vPos.y = 0.f;
 

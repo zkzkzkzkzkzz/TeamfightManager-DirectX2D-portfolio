@@ -177,25 +177,25 @@ void CTrainningBtnScript::OpenBtn()
 
 	float BtwTime = m_Duration - m_Time;
 
-	if (m_Time < 0.2f)
+	if (m_Time < 0.15f)
 	{
-		vPos.y += 1000.f * DT * BtwTime;
-		if (vPos.y >= 125.f)
-			vPos.y = 125.f;
+		vPos.y += 1800.f * DT * BtwTime;
+		if (vPos.y >= 118.f)
+			vPos.y = 118.f;
 
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
-	else if (m_Time >= 0.2f && m_Time < m_Duration && BtwTime >= 0.f)
+	else if (m_Time >= 0.15f && m_Time < m_Duration)
 	{
-		vPos.y -= 40.f * DT * BtwTime;
-		if (vPos.y <= 124.f)
-			vPos.y = 124.f;
+		vPos.y -= 400.f * DT * BtwTime;
+		if (vPos.y <= 116.f)
+			vPos.y = 116.f;
 
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
 	else
 	{
-		vPos.y = 124.f;
+		vPos.y = 116.f;
 		GetOwner()->Transform()->SetRelativePos(vPos);
 
 		m_isBtnOpen = true;
@@ -214,12 +214,12 @@ void CTrainningBtnScript::CloseBtn()
 
 	if (m_Time < 0.2f)
 	{
-		vPos.y += 10.f * DT * BtwTime;
+		vPos.y += 20.f * DT * BtwTime;
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
 	else if (m_Time >= 0.2f && m_Time < m_Duration && BtwTime >= 0.f)
 	{
-		vPos.y -= 1000.f * DT * BtwTime;
+		vPos.y -= 2000.f * DT * BtwTime;
 		if (vPos.y <= 0.f)
 			vPos.y = 0.f;
 

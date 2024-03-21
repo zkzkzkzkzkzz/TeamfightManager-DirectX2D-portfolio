@@ -177,25 +177,25 @@ void CSquadBtnScript::OpenBtn()
 
 	float BtwTime = m_Duration - m_Time;
 
-	if (m_Time < 0.2f)
+	if (m_Time < 0.15f)
 	{
-		vPos.y += 1500.f * DT * BtwTime;
-		if (vPos.y >= 187.f)
-			vPos.y = 187.f;
+		vPos.y += 2700.f * DT * BtwTime;
+		if (vPos.y >= 176.f)
+			vPos.y = 176.f;
 
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
-	else if (m_Time >= 0.2f && m_Time < m_Duration && BtwTime >= 0.f)
+	else if (m_Time >= 0.15f && m_Time < m_Duration)
 	{
-		vPos.y -= 60.f * DT * BtwTime;
-		if (vPos.y <= 186.f)
-			vPos.y = 186.f;
+		vPos.y -= 400.f * DT * BtwTime;
+		if (vPos.y <= 174.f)
+			vPos.y = 174.f;
 
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
 	else
 	{
-		vPos.y = 186.f;
+		vPos.y = 174.f;
 		GetOwner()->Transform()->SetRelativePos(vPos);
 
 		m_isBtnOpen = true;
@@ -214,12 +214,12 @@ void CSquadBtnScript::CloseBtn()
 
 	if (m_Time < 0.2f)
 	{
-		vPos.y += 15.f * DT * BtwTime;
+		vPos.y += 20.f * DT * BtwTime;
 		GetOwner()->Transform()->SetRelativePos(vPos);
 	}
 	else if (m_Time >= 0.2f && m_Time < m_Duration && BtwTime >= 0.f)
 	{
-		vPos.y -= 1500.f * DT * BtwTime;
+		vPos.y -= 3000.f * DT * BtwTime;
 		if (vPos.y <= 0.f)
 			vPos.y = 0.f;
 
