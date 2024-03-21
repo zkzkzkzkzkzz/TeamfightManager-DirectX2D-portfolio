@@ -17,6 +17,8 @@
 
 #include "CLevelSaveLoad.h"
 
+#include <Scripts\CLobbyHdScript.h>
+
 void LobbyLevel::Init()
 {
 }
@@ -128,6 +130,7 @@ void LobbyLevel::CreateTempLevel()
 	Header->SetName(L"Header");
 	Header->AddComponent(new CTransform);
 	Header->AddComponent(new CMeshRender);
+	Header->AddComponent(new CLobbyHdScript);
 
 	Header->Transform()->SetRelativePos(Vec3(0.f, 330.f, 300.f));
 	Header->Transform()->SetRelativeScale(Vec3(1280.f, 74.f, 1.f));

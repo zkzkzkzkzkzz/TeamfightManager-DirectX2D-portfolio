@@ -1,6 +1,5 @@
 #pragma once
 #include <Engine/CScript.h>
-#include <Engine/global.h>
 
 typedef  void(*BtnCallBack)(void);
 typedef  void(CEntity::* DelegateFunc)(void);
