@@ -19,7 +19,9 @@
 
 #include <Scripts\CLobbyHdScript.h>
 #include <Scripts\CLobbyBtnScript.h>
-#include <Scripts\CLobbyChildBtnScript.h>
+#include <Scripts\CTrainningBtnScript.h>
+#include <Scripts\CRecruitmentBtnScript.h>
+#include <Scripts\CSquadBtnScript.h>
 
 void LobbyLevel::Init()
 {
@@ -208,10 +210,10 @@ void LobbyLevel::CreateTempLevel()
 	LobbyBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 
 	CGameObject* ChildBtn = new CGameObject;
-	ChildBtn->SetName(L"Squad");
+	ChildBtn->SetName(L"Recruitment");
 	ChildBtn->AddComponent(new CTransform);
 	ChildBtn->AddComponent(new CMeshRender);
-	ChildBtn->AddComponent(new CLobbyChildBtnScript);
+	ChildBtn->AddComponent(new CRecruitmentBtnScript);
 	ChildBtn->Transform()->SetRelativePos(Vec3(0.f, 0.f, 10.f));
 	ChildBtn->Transform()->SetRelativeScale(Vec3(180.f, 57.f, 1.f));
 	ChildBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
@@ -224,7 +226,7 @@ void LobbyLevel::CreateTempLevel()
 	ChildBtn->SetName(L"Traning");
 	ChildBtn->AddComponent(new CTransform);
 	ChildBtn->AddComponent(new CMeshRender);
-	ChildBtn->AddComponent(new CLobbyChildBtnScript);
+	ChildBtn->AddComponent(new CTrainningBtnScript);
 	ChildBtn->Transform()->SetRelativePos(Vec3(0.f, 0.f, 10.f));
 	ChildBtn->Transform()->SetRelativeScale(Vec3(180.f, 57.f, 1.f));
 	ChildBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
@@ -234,10 +236,10 @@ void LobbyLevel::CreateTempLevel()
 	LobbyBtn->AddChild(ChildBtn);
 
 	ChildBtn = new CGameObject;
-	ChildBtn->SetName(L"Recruitment");
+	ChildBtn->SetName(L"Squad");
 	ChildBtn->AddComponent(new CTransform);
 	ChildBtn->AddComponent(new CMeshRender);
-	ChildBtn->AddComponent(new CLobbyChildBtnScript);
+	ChildBtn->AddComponent(new CSquadBtnScript);
 	ChildBtn->Transform()->SetRelativePos(Vec3(0.f, 0.f, 10.f));
 	ChildBtn->Transform()->SetRelativeScale(Vec3(180.f, 57.f, 1.f));
 	ChildBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));

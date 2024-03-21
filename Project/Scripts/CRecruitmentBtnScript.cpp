@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CLobbyChildBtnScript.h"
+#include "CRecruitmentBtnScript.h"
 
 #include <Engine\CEngine.h>
 #include <Engine\CKeyMgr.h>
@@ -7,8 +7,8 @@
 
 #include "CLobbyBtnScript.h"
 
-CLobbyChildBtnScript::CLobbyChildBtnScript()
-	: CScript(LOBBYCHILDBTNSCRIPT)
+CRecruitmentBtnScript::CRecruitmentBtnScript()
+	: CScript(RECRUITMENTBTNSCRIPT)
 	, m_CurImg(nullptr)
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
@@ -22,8 +22,8 @@ CLobbyChildBtnScript::CLobbyChildBtnScript()
 {
 }
 
-CLobbyChildBtnScript::CLobbyChildBtnScript(const CLobbyChildBtnScript& _Other)
-	: CScript(LOBBYCHILDBTNSCRIPT)
+CRecruitmentBtnScript::CRecruitmentBtnScript(const CRecruitmentBtnScript& _Other)
+	: CScript(RECRUITMENTBTNSCRIPT)
 	, m_CurImg(nullptr)
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
@@ -37,19 +37,19 @@ CLobbyChildBtnScript::CLobbyChildBtnScript(const CLobbyChildBtnScript& _Other)
 {
 }
 
-CLobbyChildBtnScript::~CLobbyChildBtnScript()
+CRecruitmentBtnScript::~CRecruitmentBtnScript()
 {
 }
 
 
-void CLobbyChildBtnScript::begin()
+void CRecruitmentBtnScript::begin()
 {
 	m_NormalImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png");
 	m_HoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_1.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_1.png");
 	m_CurImg = m_NormalImg;
 }
 
-void CLobbyChildBtnScript::tick()
+void CRecruitmentBtnScript::tick()
 {
 	if (GetOwner()->GetParent()->GetScript<CLobbyBtnScript>()->m_isOpen && !m_isBtnOpen)
 		OpenBtn();
@@ -137,39 +137,39 @@ void CLobbyChildBtnScript::tick()
 	render();
 }
 
-void CLobbyChildBtnScript::render()
+void CRecruitmentBtnScript::render()
 {
 	if (nullptr != m_CurImg)
 		GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
 }
 
-void CLobbyChildBtnScript::OnHovered()
+void CRecruitmentBtnScript::OnHovered()
 {
 	m_CurImg = m_HoverImg;
 }
 
-void CLobbyChildBtnScript::OnUnHovered()
+void CRecruitmentBtnScript::OnUnHovered()
 {
 	m_CurImg = m_NormalImg;
 }
 
-void CLobbyChildBtnScript::LBtnUp()
+void CRecruitmentBtnScript::LBtnUp()
 {
 	m_CurImg = m_NormalImg;
 }
 
-void CLobbyChildBtnScript::LBtnReleased()
+void CRecruitmentBtnScript::LBtnReleased()
 {
 	m_CurImg = m_NormalImg;
 }
 
-void CLobbyChildBtnScript::LBtnClicked()
+void CRecruitmentBtnScript::LBtnClicked()
 {
 	m_CurImg = m_HoverImg;
 }
 
 
-void CLobbyChildBtnScript::OpenBtn()
+void CRecruitmentBtnScript::OpenBtn()
 {
 	m_Time += DT;
 
@@ -204,7 +204,7 @@ void CLobbyChildBtnScript::OpenBtn()
 }
 
 
-void CLobbyChildBtnScript::CloseBtn()
+void CRecruitmentBtnScript::CloseBtn()
 {
 	m_Time += DT;
 

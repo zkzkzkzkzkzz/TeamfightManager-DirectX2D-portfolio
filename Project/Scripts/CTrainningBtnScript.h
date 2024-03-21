@@ -5,7 +5,7 @@ typedef  void(*BtnCallBack)(void);
 typedef  void(CEntity::* DelegateFunc)(void);
 
 
-class CLobbyChildBtnScript :
+class CTrainningBtnScript :
     public CScript
 {
 private:
@@ -61,9 +61,9 @@ public:
     void render();
 
 public:
-    CLONE(CLobbyChildBtnScript);
-    CLobbyChildBtnScript();
-    CLobbyChildBtnScript(const CLobbyChildBtnScript& _Other);
-    ~CLobbyChildBtnScript();
+    CLONE(CTrainningBtnScript);
+    CTrainningBtnScript();
+    CTrainningBtnScript(const CTrainningBtnScript& _Other);
+    ~CTrainningBtnScript();
 };
 

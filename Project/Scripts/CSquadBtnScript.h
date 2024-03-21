@@ -5,20 +5,23 @@ typedef  void(*BtnCallBack)(void);
 typedef  void(CEntity::* DelegateFunc)(void);
 
 
-class CLobbyBtnScript :
+class CSquadBtnScript :
     public CScript
 {
 private:
     Ptr<CTexture>   m_NormalImg;
     Ptr<CTexture>   m_HoverImg;
-    Ptr<CTexture>   m_PressedImg;
     Ptr<CTexture>   m_CurImg;
 
     bool    m_bMouseOn;
     bool    m_bMouseOn_Prev;
     bool    m_bMouseLBtnDown;
 
-    bool    m_isOpen;
+    bool    m_isBtnOpen;    // 부모 버튼이 눌렸는가
+    bool    m_isOpen;       // 자기 자신이 눌렸는가
+
+    float   m_Time;
+    float   m_Duration;
 
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
@@ -34,7 +37,6 @@ public:
 public:
     void SetNormalImg(Ptr<CTexture> _NormalImg) { m_NormalImg = _NormalImg; }
     void SetHoverImg(Ptr<CTexture> _HoverImg) { m_HoverImg = _HoverImg; }
-    void SetPressedImg(Ptr<CTexture> _PressedImg) { m_PressedImg = _PressedImg; }
 
     void SetCallBack(BtnCallBack _CallBack) { m_CallBackFunc = _CallBack; }
 
@@ -50,7 +52,8 @@ public:
     void LBtnReleased();
     void LBtnClicked();
 
-    bool CheckChildBtnPos(Vec2 _MousePos);
+    void OpenBtn();
+    void CloseBtn();
 
 public:
     virtual void begin() override;
@@ -58,13 +61,8 @@ public:
     void render();
 
 public:
-    CLONE(CLobbyBtnScript);
-    CLobbyBtnScript();
-    CLobbyBtnScript(const CLobbyBtnScript& _Other);
-    ~CLobbyBtnScript();
-
-    friend class CRecruitmentBtnScript;
-    friend class CTrainningBtnScript;
-    friend class CSquadBtnScript;
+    CLONE(CSquadBtnScript);
+    CSquadBtnScript();
+    CSquadBtnScript(const CSquadBtnScript& _Other);
+    ~CSquadBtnScript();
 };
-
