@@ -195,9 +195,9 @@ void LobbyLevel::CreateTempLevel()
 	pTempLevel->AddObject(Header, 2);
 
 
-	// 로비 버튼
+	// 팀관리 버튼
 	CGameObject* LobbyBtn = new CGameObject;
-	LobbyBtn->SetName(L"LobbyBtn");
+	LobbyBtn->SetName(L"Team");
 	LobbyBtn->AddComponent(new CTransform);
 	LobbyBtn->AddComponent(new CMeshRender);
 	LobbyBtn->AddComponent(new CLobbyBtnScript);
@@ -248,7 +248,12 @@ void LobbyLevel::CreateTempLevel()
 	ChildBtn->SetActive(false);
 	LobbyBtn->AddChild(ChildBtn);
 
+	pTempLevel->AddObject(LobbyBtn, 2);
 
+
+	LobbyBtn = LobbyBtn->Clone();
+	LobbyBtn->SetName(L"Management");
+	LobbyBtn->Transform()->SetRelativePos(Vec3(-330.f, -330.f, 250.f));
 	pTempLevel->AddObject(LobbyBtn, 2);
 
 	// 레벨 플레이
