@@ -441,7 +441,45 @@ void CAssetMgr::CreateLobbyLevelMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"LobbyGroundMtrl", pMtrl);
 
-	
+	// 헤더 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"HeaderMtrl", pMtrl);
+
+	// 헤더 슬롯 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"HeaderSlotMtrl", pMtrl);
+
+	// 달력 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"CalenderMtrl", pMtrl);
+
+	// 코인 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"CoinMtrl", pMtrl);
+
+	// 텍스트 UI 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"TextUIMtrl", pMtrl);
+
+	// 로고 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"LogoMtrl", pMtrl);
+
+	// 로비 버튼 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"LobbyBtnMtrl", pMtrl);
+
+	// 진행 버튼 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"PlayBtnMtrl", pMtrl);
 }
 
 
