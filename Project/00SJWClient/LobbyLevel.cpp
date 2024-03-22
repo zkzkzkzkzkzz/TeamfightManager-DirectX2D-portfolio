@@ -23,6 +23,7 @@
 #include <Scripts\CRecruitmentBtnScript.h>
 #include <Scripts\CSquadBtnScript.h>
 #include <Scripts\CTextScript.h>
+#include <Scripts\CCursorScript.h>
 
 void LobbyLevel::Init()
 {
@@ -37,7 +38,15 @@ void LobbyLevel::CreateTempLevel()
 	pTempLevel->GetLayer(2)->SetName(L"Background");
 	pTempLevel->GetLayer(3)->SetName(L"Gamer");
 	pTempLevel->GetLayer(4)->SetName(L"Text");
+	pTempLevel->GetLayer(5)->SetName(L"Cursor");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
+
+	CGameObject* pCursor = new CGameObject;
+	pCursor->SetName(L"Cursor");
+	pCursor->AddComponent(new CTransform);
+	pCursor->AddComponent(new CMeshRender);
+	pCursor->AddComponent(new CCursorScript);
+	pTempLevel->AddObject(pCursor, 5);
 
 	// Main Camera 생성
 	CGameObject* pCamObj = new CGameObject;
