@@ -4,6 +4,10 @@
 #include <Engine\CEngine.h>
 #include <Engine\CKeyMgr.h>
 #include <Engine\CTimeMgr.h>
+#include <Engine\CGameObject.h>
+#include <Engine\CAssetMgr.h>
+#include <Engine\components.h>
+#include <Engine\CFontMgr.h>
 
 #include "CLobbyBtnScript.h"
 
@@ -19,6 +23,7 @@ CRecruitmentBtnScript::CRecruitmentBtnScript()
 	, m_isBtnOpen(false)
 	, m_Time(0.f)
 	, m_Duration(0.7f)
+	, m_BtnText(nullptr)
 {
 }
 
@@ -34,6 +39,7 @@ CRecruitmentBtnScript::CRecruitmentBtnScript(const CRecruitmentBtnScript& _Other
 	, m_isBtnOpen(false)
 	, m_Time(0.f)
 	, m_Duration(0.7f)
+	, m_BtnText(nullptr)
 {
 }
 
@@ -47,6 +53,17 @@ void CRecruitmentBtnScript::begin()
 	m_NormalImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png");
 	m_HoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_1.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_1.png");
 	m_CurImg = m_NormalImg;
+
+	m_BtnText = new CGameObject;
+	m_BtnText->AddComponent(new CTransform);
+	m_BtnText->AddComponent(new CTextRender);
+	m_BtnText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	m_BtnText->TextRender()->SetString(L"선수 영입");
+	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
+	m_BtnText->TextRender()->SetOffsetPos(Vec3(-40.f, -8.f, 1.f));
+	GetOwner()->AddChild(m_BtnText);
+	m_BtnText->SetLayerIdx(5);
+	m_BtnText->SetActive(false);
 }
 
 void CRecruitmentBtnScript::tick()
@@ -184,6 +201,9 @@ void CRecruitmentBtnScript::OpenBtn()
 			vPos.y = 60.f;
 
 		GetOwner()->Transform()->SetRelativePos(vPos);
+
+		if (!m_BtnText->IsActive())
+			m_BtnText->SetActive(true);
 	}
 	else if (m_Time >= 0.15f && m_Time < m_Duration)
 	{
@@ -224,6 +244,9 @@ void CRecruitmentBtnScript::CloseBtn()
 			vPos.y = 0.f;
 
 		GetOwner()->Transform()->SetRelativePos(vPos);
+
+		if (m_BtnText->IsActive())
+			m_BtnText->SetActive(false);
 	}
 	else
 	{

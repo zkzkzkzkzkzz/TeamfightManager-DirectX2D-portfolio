@@ -21,7 +21,7 @@ CTextRender::~CTextRender()
 
 void CTextRender::finaltick()
 {
-	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
+	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetWorldPos();
 
 	Vec2 vResolution = CEngine::GetInst()->GetResolution();
 
