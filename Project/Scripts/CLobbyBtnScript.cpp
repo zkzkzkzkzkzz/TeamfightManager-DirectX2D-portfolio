@@ -1,13 +1,15 @@
 #include "pch.h"
 #include "CLobbyBtnScript.h"
 
-
 #include <Engine\CEngine.h>
 #include <Engine\CKeyMgr.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
+#include <Engine\CGameObject.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\components.h>
+#include <Engine\CFontMgr.h>
+
 
 CLobbyBtnScript::CLobbyBtnScript()
 	: CScript(LOBBYBTNSCRIPT)
@@ -19,6 +21,11 @@ CLobbyBtnScript::CLobbyBtnScript()
 	, m_bMouseOn_Prev(false)
 	, m_bMouseLBtnDown(false)
 	, m_isOpen(false)
+	, m_BtnText(nullptr)
+	, m_NormalIcon(nullptr)
+	, m_PressedIcon(nullptr)
+	, m_CurIcon(nullptr)
+	, m_Icon(nullptr)
 {
 }
 
@@ -32,6 +39,11 @@ CLobbyBtnScript::CLobbyBtnScript(const CLobbyBtnScript& _Other)
 	, m_bMouseOn_Prev(false)
 	, m_bMouseLBtnDown(false)
 	, m_isOpen(false)
+	, m_BtnText(nullptr)
+	, m_NormalIcon(nullptr)
+	, m_PressedIcon(nullptr)
+	, m_CurIcon(nullptr)
+	, m_Icon(nullptr)
 {
 }
 
@@ -45,6 +57,29 @@ void CLobbyBtnScript::begin()
 	m_HoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_1.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_1.png");
 	m_PressedImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_2.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_2.png");
 	m_CurImg = m_NormalImg;
+
+	m_NormalIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_0.png", L"texture\\Lobby\\icon\\main_button_icon_0.png");
+	m_PressedIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_0_1.png", L"texture\\Lobby\\icon\\main_button_icon_0_1.png");
+	m_CurIcon = m_NormalIcon;
+
+	m_BtnText = new CGameObject;
+	m_BtnText->AddComponent(new CTransform);
+	m_BtnText->AddComponent(new CTextRender);
+	m_BtnText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+	m_BtnText->TextRender()->SetString(L"ÆÀ °ü¸®");
+	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
+	m_BtnText->TextRender()->SetOffsetPos(Vec3(-50.f, -8.f, 0.f));
+	GetOwner()->AddChild(m_BtnText);
+	m_BtnText->SetLayerIdx(5);
+
+	m_Icon = new CGameObject;
+	m_Icon->AddComponent(new CTransform);
+	m_Icon->AddComponent(new CMeshRender);
+	m_Icon->Transform()->SetRelativePos(Vec3(-65.f, 0.f, -10.f));
+	m_Icon->Transform()->SetRelativeScale(Vec3(22.f, 22.f, 1.f));
+	m_Icon->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	m_Icon->MeshRender()->SetMaterial(GetOwner()->MeshRender()->GetDynamicMaterial());
+	GetOwner()->AddChild(m_Icon);
 }
 
 void CLobbyBtnScript::tick()
@@ -126,13 +161,17 @@ void CLobbyBtnScript::tick()
 void CLobbyBtnScript::render()
 {
 	if (nullptr != m_CurImg)
-	GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
+		GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
+
+	if (nullptr != m_CurIcon)
+		m_Icon->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurIcon);
 }
 
 void CLobbyBtnScript::OnHovered()
 {
 	if (!m_isOpen)
 		m_CurImg = m_HoverImg;
+
 }
 
 void CLobbyBtnScript::OnUnHovered()
@@ -151,12 +190,18 @@ void CLobbyBtnScript::LBtnReleased()
 {
 	m_isOpen = false;
 	m_CurImg = m_NormalImg;
+	m_CurIcon = m_NormalIcon;
+
+	m_BtnText->TextRender()->SetFontColor(255, 255, 255, 255);
 }
 
 void CLobbyBtnScript::LBtnClicked()
 {
 	m_isOpen = true;
 	m_CurImg = m_PressedImg;
+	m_CurIcon = m_PressedIcon;
+
+	m_BtnText->TextRender()->SetFontColor(0, 0, 0, 255);
 
 	vector<CGameObject*> vChild = GetOwner()->GetChild();
 

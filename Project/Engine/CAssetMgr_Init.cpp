@@ -479,15 +479,15 @@ void CAssetMgr::CreateLobbyLevelMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"CoinMtrl", pMtrl);
 
-	// 텍스트 UI 머테리얼
-	pMtrl = new CMaterial(true);
-	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"TextUIMtrl", pMtrl);
-
 	// 로고 머테리얼
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"LogoMtrl", pMtrl);
+
+	// 아이콘 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"IconMtrl", pMtrl);
 
 	// 로비 버튼 머테리얼
 	pMtrl = new CMaterial(true);

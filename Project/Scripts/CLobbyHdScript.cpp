@@ -54,7 +54,7 @@ void CLobbyHdScript::begin()
 	m_TeamText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -100.f));
 	m_TeamText->TextRender()->SetString(L"팀이졌지나는진적없다");
 	m_TeamText->TextRender()->TextInit(L"Galmuri11", 40.f, FONT_RGBA(255, 255, 255, 255));
-	m_TeamText->TextRender()->SetOffsetPos(Vec3(80.f, 25.f, 0.f));
+	m_TeamText->TextRender()->SetOffsetPos(Vec3(-550.f, -25.f, 0.f));
 	GetOwner()->AddChild(m_TeamText);
 	m_TeamText->SetLayerIdx(5);
 
@@ -64,7 +64,7 @@ void CLobbyHdScript::begin()
 	m_ScoreText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -100.f));
 	m_ScoreText->TextRender()->SetString(L"1위 0승 0패 +0");
 	m_ScoreText->TextRender()->TextInit(L"Silver", 23.f, FONT_RGBA(255, 255, 255, 255));
-	m_ScoreText->TextRender()->SetOffsetPos(Vec3(80.f, 62.f, 0.f));
+	m_ScoreText->TextRender()->SetOffsetPos(Vec3(-550.f, 10.f, 0.f));
 	GetOwner()->AddChild(m_ScoreText);
 	m_ScoreText->SetLayerIdx(5);
 }

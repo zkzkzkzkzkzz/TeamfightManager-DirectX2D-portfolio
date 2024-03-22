@@ -4,6 +4,8 @@
 typedef  void(*BtnCallBack)(void);
 typedef  void(CEntity::* DelegateFunc)(void);
 
+class CGameObject;
+
 class CLobbyBtnScript :
     public CScript
 {
@@ -18,6 +20,12 @@ private:
     bool    m_bMouseLBtnDown;
 
     bool    m_isOpen;
+
+    CGameObject*    m_BtnText;
+    CGameObject*    m_Icon;
+    Ptr<CTexture>   m_NormalIcon;
+    Ptr<CTexture>   m_PressedIcon;
+    Ptr<CTexture>   m_CurIcon;
 
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
