@@ -10,6 +10,7 @@ CGamer::CGamer()
 	, m_GamerATK(0)
 	, m_GamerDEF(0)
 	, m_GamerAge(0)
+	, m_IsManager(false)
 {
 }
 
@@ -20,6 +21,7 @@ CGamer::CGamer(const CGamer& _Origin)
 	, m_GamerATK(_Origin.m_GamerATK)
 	, m_GamerDEF(_Origin.m_GamerDEF)
 	, m_GamerAge(_Origin.m_GamerAge)
+	, m_IsManager(_Origin.m_IsManager)
 {
 }
 
@@ -41,4 +43,11 @@ void CGamer::finaltick()
 
 void CGamer::render()
 {
+}
+
+void CGamer::SetGamerData(int _ATK, int _DEF, int _Age)
+{
+	m_GamerATK = _ATK;
+	m_GamerDEF = _DEF;
+	m_GamerAge = _Age;
 }
