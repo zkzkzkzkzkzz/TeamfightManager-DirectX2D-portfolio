@@ -58,9 +58,9 @@ void CRecruitmentBtnScript::begin()
 	m_BtnText->AddComponent(new CTransform);
 	m_BtnText->AddComponent(new CTextRender);
 	m_BtnText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	m_BtnText->TextRender()->SetString(L"선수 영입");
+	m_BtnText->TextRender()->SetString(L"Recruitment");
 	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
-	m_BtnText->TextRender()->SetOffsetPos(Vec3(-40.f, -8.f, 1.f));
+	m_BtnText->TextRender()->SetOffsetPos(Vec3(-53.f, -8.f, 1.f));
 	GetOwner()->AddChild(m_BtnText);
 	m_BtnText->SetLayerIdx(5);
 	m_BtnText->SetActive(false);

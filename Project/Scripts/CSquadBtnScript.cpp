@@ -58,7 +58,7 @@ void CSquadBtnScript::begin()
 	m_BtnText->AddComponent(new CTransform);
 	m_BtnText->AddComponent(new CTextRender);
 	m_BtnText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	m_BtnText->TextRender()->SetString(L"¼±¼ö´Ü");
+	m_BtnText->TextRender()->SetString(L"Squad");
 	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
 	m_BtnText->TextRender()->SetOffsetPos(Vec3(-27.f, -8.f, 1.f));
 	GetOwner()->AddChild(m_BtnText);

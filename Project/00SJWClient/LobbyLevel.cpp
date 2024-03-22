@@ -25,6 +25,7 @@
 #include <Scripts\CSquadBtnScript.h>
 #include <Scripts\CCursorScript.h>
 #include <Scripts\CProceedBtnScript.h>
+#include <Scripts\CMgrBtnScript.h>
 
 void LobbyLevel::Init()
 {
@@ -237,10 +238,17 @@ void LobbyLevel::CreateTempLevel()
 	pTempLevel->AddObject(LobbyBtn, 2);
 
 
-	LobbyBtn = LobbyBtn->Clone();
-	LobbyBtn->SetName(L"Management");
-	LobbyBtn->Transform()->SetRelativePos(Vec3(-330.f, -330.f, 250.f));
-	pTempLevel->AddObject(LobbyBtn, 2);
+	// 운영
+	CGameObject* MgrBtn = new CGameObject;
+	MgrBtn->SetName(L"Management");
+	MgrBtn->AddComponent(new CTransform);
+	MgrBtn->AddComponent(new CMeshRender);
+	MgrBtn->AddComponent(new CMgrBtnScript);
+	MgrBtn->Transform()->SetRelativePos(Vec3(-330.f, -330.f, 250.f));
+	MgrBtn->Transform()->SetRelativeScale(Vec3(180.f, 57.f, 1.f));
+	MgrBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	MgrBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyBtnMtrl"));
+	pTempLevel->AddObject(MgrBtn, 2);
 
 	// Proceed Button
 	CGameObject* proceedBtn = new CGameObject;

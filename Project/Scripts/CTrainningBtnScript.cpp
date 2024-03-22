@@ -58,9 +58,9 @@ void CTrainningBtnScript::begin()
 	m_BtnText->AddComponent(new CTransform);
 	m_BtnText->AddComponent(new CTextRender);
 	m_BtnText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	m_BtnText->TextRender()->SetString(L"ศฦทร");
+	m_BtnText->TextRender()->SetString(L"Training");
 	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
-	m_BtnText->TextRender()->SetOffsetPos(Vec3(-18.f, -8.f, 1.f));
+	m_BtnText->TextRender()->SetOffsetPos(Vec3(-35.f, -8.f, 1.f));
 	GetOwner()->AddChild(m_BtnText);
 	m_BtnText->SetLayerIdx(5);
 	m_BtnText->SetActive(false);

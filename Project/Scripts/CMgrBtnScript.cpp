@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CLobbyBtnScript.h"
+#include "CMgrBtnScript.h"
 
 #include <Engine\CEngine.h>
 #include <Engine\CKeyMgr.h>
@@ -10,9 +10,8 @@
 #include <Engine\components.h>
 #include <Engine\CFontMgr.h>
 
-
-CLobbyBtnScript::CLobbyBtnScript()
-	: CScript(LOBBYBTNSCRIPT)
+CMgrBtnScript::CMgrBtnScript()
+	: CScript(MGRBTNSCRIPT)
 	, m_CurImg(nullptr)
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
@@ -29,44 +28,33 @@ CLobbyBtnScript::CLobbyBtnScript()
 {
 }
 
-CLobbyBtnScript::CLobbyBtnScript(const CLobbyBtnScript& _Other)
-	: CScript(LOBBYBTNSCRIPT)
-	, m_CurImg(nullptr)
-	, m_NormalImg(nullptr)
-	, m_HoverImg(nullptr)
-	, m_PressedImg(nullptr)
-	, m_bMouseOn(false)
-	, m_bMouseOn_Prev(false)
-	, m_bMouseLBtnDown(false)
-	, m_isOpen(false)
-	, m_BtnText(nullptr)
-	, m_NormalIcon(nullptr)
-	, m_PressedIcon(nullptr)
-	, m_CurIcon(nullptr)
-	, m_Icon(nullptr)
+CMgrBtnScript::~CMgrBtnScript()
 {
 }
 
-CLobbyBtnScript::~CLobbyBtnScript()
+
+
+bool CMgrBtnScript::CheckChildBtnPos(Vec2 _MousePos)
 {
+    return false;
 }
 
-void CLobbyBtnScript::begin()
+void CMgrBtnScript::begin()
 {
 	m_NormalImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png");
 	m_HoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_1.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_1.png");
 	m_PressedImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_2.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_2.png");
 	m_CurImg = m_NormalImg;
 
-	m_NormalIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_0.png", L"texture\\Lobby\\icon\\main_button_icon_0.png");
-	m_PressedIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_0_1.png", L"texture\\Lobby\\icon\\main_button_icon_0_1.png");
+	m_NormalIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_1.png", L"texture\\Lobby\\icon\\main_button_icon_1.png");
+	m_PressedIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_1_1.png", L"texture\\Lobby\\icon\\main_button_icon_1_1.png");
 	m_CurIcon = m_NormalIcon;
 
 	m_BtnText = new CGameObject;
 	m_BtnText->AddComponent(new CTransform);
 	m_BtnText->AddComponent(new CTextRender);
 	m_BtnText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
-	m_BtnText->TextRender()->SetString(L"Team");
+	m_BtnText->TextRender()->SetString(L"Management");
 	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
 	m_BtnText->TextRender()->SetOffsetPos(Vec3(-50.f, -8.f, 0.f));
 	GetOwner()->AddChild(m_BtnText);
@@ -82,7 +70,7 @@ void CLobbyBtnScript::begin()
 	GetOwner()->AddChild(m_Icon);
 }
 
-void CLobbyBtnScript::tick()
+void CMgrBtnScript::tick()
 {
 	m_bMouseOn_Prev = m_bMouseOn;
 
@@ -158,7 +146,7 @@ void CLobbyBtnScript::tick()
 	render();
 }
 
-void CLobbyBtnScript::render()
+void CMgrBtnScript::render()
 {
 	if (nullptr != m_CurImg)
 		GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
@@ -167,26 +155,26 @@ void CLobbyBtnScript::render()
 		m_Icon->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurIcon);
 }
 
-void CLobbyBtnScript::OnHovered()
+void CMgrBtnScript::OnHovered()
 {
 	if (!m_isOpen)
 		m_CurImg = m_HoverImg;
 
 }
 
-void CLobbyBtnScript::OnUnHovered()
+void CMgrBtnScript::OnUnHovered()
 {
 	if (!m_isOpen)
 		m_CurImg = m_NormalImg;
 }
 
-void CLobbyBtnScript::LBtnUp()
+void CMgrBtnScript::LBtnUp()
 {
 	if (!m_isOpen)
 		m_CurImg = m_NormalImg;
 }
 
-void CLobbyBtnScript::LBtnReleased()
+void CMgrBtnScript::LBtnReleased()
 {
 	m_isOpen = false;
 	m_CurImg = m_NormalImg;
@@ -195,7 +183,7 @@ void CLobbyBtnScript::LBtnReleased()
 	m_BtnText->TextRender()->SetFontColor(255, 255, 255, 255);
 }
 
-void CLobbyBtnScript::LBtnClicked()
+void CMgrBtnScript::LBtnClicked()
 {
 	m_isOpen = true;
 	m_CurImg = m_PressedImg;
@@ -216,28 +204,4 @@ void CLobbyBtnScript::LBtnClicked()
 	// Delegate
 	if (m_Inst != nullptr && m_Delegate != nullptr)
 		(m_Inst->*m_Delegate)();
-}
-
-bool CLobbyBtnScript::CheckChildBtnPos(Vec2 _MousePos)
-{
-	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
-	Vec3 vScale = GetOwner()->Transform()->GetRelativeScale();
-
-	vector<CGameObject*> vChild = GetOwner()->GetChild();
-
-	for (size_t i = 0; i < vChild.size(); ++i)
-	{
-		Vec3 vChildPos = vChild[i]->Transform()->GetRelativePos();
-
-		Vec2 vLT = Vec2(vPos.x - vScale.x / 2, (vPos.y + vChildPos.y) - vScale.y / 2);
-		Vec2 vRB = Vec2(vPos.x + vScale.x / 2, (vPos.y + vChildPos.y) + vScale.y / 2);
-
-		if (vLT.x < _MousePos.x && _MousePos.x < vRB.x
-			&& vLT.y < _MousePos.y && _MousePos.y < vRB.y)
-		{
-			return true;
-		}
-	}
-
-	return false;
 }
