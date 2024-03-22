@@ -24,6 +24,7 @@ private:
     CGameObject*    m_BtnText;
     CGameObject*    m_Icon;
     Ptr<CTexture>   m_NormalIcon;
+    Ptr<CTexture>   m_HoverIcon;
     Ptr<CTexture>   m_PressedIcon;
     Ptr<CTexture>   m_CurIcon;
 

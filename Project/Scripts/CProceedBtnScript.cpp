@@ -8,6 +8,8 @@
 #include <Engine\CTransform.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CMeshRender.h>
+#include <Engine\CTextRender.h>
+#include <Engine\CFontMgr.h>
 
 CProceedBtnScript::CProceedBtnScript()
     : CScript(PROCEEDBTNSCRIPT)
@@ -21,6 +23,8 @@ CProceedBtnScript::CProceedBtnScript()
 	, m_AnimImg(nullptr)
 	, m_Time(0.f)
 	, m_Duration(0.9f)
+	, m_MainText(nullptr)
+	, m_SubText(nullptr)
 {	  
 }
 
@@ -51,6 +55,27 @@ void CProceedBtnScript::begin()
 	m_Arrow->MeshRender()->SetMaterial(GetOwner()->MeshRender()->GetDynamicMaterial());
 	m_Arrow->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_AnimImg);
 	GetOwner()->AddChild(m_Arrow);
+
+
+	m_MainText = new CGameObject;
+	m_MainText->AddComponent(new CTransform);
+	m_MainText->AddComponent(new CTextRender);
+	m_MainText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+	m_MainText->TextRender()->SetString(L"Proceed");
+	m_MainText->TextRender()->TextInit(L"Galmuri14", 22.f, FONT_RGBA(0, 0, 0, 255));
+	m_MainText->TextRender()->SetOffsetPos(Vec3(-90.f, -28.f, 1.f));
+	GetOwner()->AddChild(m_MainText);
+	m_MainText->SetLayerIdx(5);
+
+	m_SubText = new CGameObject;
+	m_SubText->AddComponent(new CTransform);
+	m_SubText->AddComponent(new CTextRender);
+	m_SubText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+	m_SubText->TextRender()->SetString(L"Proceed to the next schedule");
+	m_SubText->TextRender()->TextInit(L"Galmuri14", 13.f, FONT_RGBA(0, 0, 0, 255));
+	m_SubText->TextRender()->SetOffsetPos(Vec3(-110.f, 15.f, 1.f));
+	GetOwner()->AddChild(m_SubText);
+	m_SubText->SetLayerIdx(5);
 }
 
 void CProceedBtnScript::tick()
@@ -135,11 +160,15 @@ void CProceedBtnScript::render()
 void CProceedBtnScript::OnHovered()
 {
     m_CurImg = m_HoverImg;
+	m_MainText->TextRender()->SetFontColor(255, 255, 255, 255);
+	m_SubText->TextRender()->SetFontColor(255, 255, 255, 255);
 }
 
 void CProceedBtnScript::OnUnHovered()
 {
     m_CurImg = m_NormalImg;
+	m_MainText->TextRender()->SetFontColor(0, 0, 0, 255);
+	m_SubText->TextRender()->SetFontColor(0, 0, 0, 255);
 }
 
 void CProceedBtnScript::LBtnUp()
@@ -150,6 +179,8 @@ void CProceedBtnScript::LBtnUp()
 void CProceedBtnScript::LBtnClicked()
 {
     m_CurImg = m_HoverImg;
+	m_MainText->TextRender()->SetFontColor(0, 0, 0, 255);
+	m_SubText->TextRender()->SetFontColor(0, 0, 0, 255);
 }
 
 void CProceedBtnScript::MoveArrow()

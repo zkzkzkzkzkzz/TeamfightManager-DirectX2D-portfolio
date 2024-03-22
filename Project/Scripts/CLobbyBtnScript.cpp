@@ -23,6 +23,7 @@ CLobbyBtnScript::CLobbyBtnScript()
 	, m_isOpen(false)
 	, m_BtnText(nullptr)
 	, m_NormalIcon(nullptr)
+	, m_HoverIcon(nullptr)
 	, m_PressedIcon(nullptr)
 	, m_CurIcon(nullptr)
 	, m_Icon(nullptr)
@@ -41,6 +42,7 @@ CLobbyBtnScript::CLobbyBtnScript(const CLobbyBtnScript& _Other)
 	, m_isOpen(false)
 	, m_BtnText(nullptr)
 	, m_NormalIcon(nullptr)
+	, m_HoverIcon(nullptr)
 	, m_PressedIcon(nullptr)
 	, m_CurIcon(nullptr)
 	, m_Icon(nullptr)
@@ -60,6 +62,7 @@ void CLobbyBtnScript::begin()
 
 	m_NormalIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_0.png", L"texture\\Lobby\\icon\\main_button_icon_0.png");
 	m_PressedIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_0_1.png", L"texture\\Lobby\\icon\\main_button_icon_0_1.png");
+	m_HoverIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_0_1_2.png", L"texture\\Lobby\\icon\\main_button_icon_0_1_2.png");
 	m_CurIcon = m_NormalIcon;
 
 	m_BtnText = new CGameObject;
@@ -68,7 +71,7 @@ void CLobbyBtnScript::begin()
 	m_BtnText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
 	m_BtnText->TextRender()->SetString(L"Team");
 	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
-	m_BtnText->TextRender()->SetOffsetPos(Vec3(-50.f, -8.f, 0.f));
+	m_BtnText->TextRender()->SetOffsetPos(Vec3(-50.f, -8.f, 1.f));
 	GetOwner()->AddChild(m_BtnText);
 	m_BtnText->SetLayerIdx(5);
 
@@ -170,14 +173,21 @@ void CLobbyBtnScript::render()
 void CLobbyBtnScript::OnHovered()
 {
 	if (!m_isOpen)
+	{
 		m_CurImg = m_HoverImg;
-
+		m_CurIcon = m_HoverIcon;
+		m_BtnText->TextRender()->SetFontColor(103, 255, 103, 255);
+	}
 }
 
 void CLobbyBtnScript::OnUnHovered()
 {
 	if (!m_isOpen)
+	{
 		m_CurImg = m_NormalImg;
+		m_CurIcon = m_NormalIcon;
+		m_BtnText->TextRender()->SetFontColor(255, 255, 255, 255);
+	}
 }
 
 void CLobbyBtnScript::LBtnUp()

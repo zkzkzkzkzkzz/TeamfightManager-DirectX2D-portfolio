@@ -163,11 +163,13 @@ void CRecruitmentBtnScript::render()
 void CRecruitmentBtnScript::OnHovered()
 {
 	m_CurImg = m_HoverImg;
+	m_BtnText->TextRender()->SetFontColor(103, 255, 103, 255);
 }
 
 void CRecruitmentBtnScript::OnUnHovered()
 {
 	m_CurImg = m_NormalImg;
+	m_BtnText->TextRender()->SetFontColor(255, 255, 255, 255);
 }
 
 void CRecruitmentBtnScript::LBtnUp()

@@ -22,6 +22,7 @@ CMgrBtnScript::CMgrBtnScript()
 	, m_isOpen(false)
 	, m_BtnText(nullptr)
 	, m_NormalIcon(nullptr)
+	, m_HoverIcon(nullptr)
 	, m_PressedIcon(nullptr)
 	, m_CurIcon(nullptr)
 	, m_Icon(nullptr)
@@ -48,6 +49,7 @@ void CMgrBtnScript::begin()
 
 	m_NormalIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_1.png", L"texture\\Lobby\\icon\\main_button_icon_1.png");
 	m_PressedIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_1_1.png", L"texture\\Lobby\\icon\\main_button_icon_1_1.png");
+	m_HoverIcon = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\icon\\main_button_icon_1_2.png", L"texture\\Lobby\\icon\\main_button_icon_1_2.png");
 	m_CurIcon = m_NormalIcon;
 
 	m_BtnText = new CGameObject;
@@ -158,14 +160,21 @@ void CMgrBtnScript::render()
 void CMgrBtnScript::OnHovered()
 {
 	if (!m_isOpen)
+	{
 		m_CurImg = m_HoverImg;
-
+		m_CurIcon = m_HoverIcon;
+		m_BtnText->TextRender()->SetFontColor(103, 255, 103, 255);
+	}
 }
 
 void CMgrBtnScript::OnUnHovered()
 {
 	if (!m_isOpen)
+	{
 		m_CurImg = m_NormalImg;
+		m_CurIcon = m_NormalIcon;
+		m_BtnText->TextRender()->SetFontColor(255, 255, 255, 255);
+	}
 }
 
 void CMgrBtnScript::LBtnUp()

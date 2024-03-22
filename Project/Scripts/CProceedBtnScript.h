@@ -21,6 +21,10 @@ private:
     CGameObject*    m_Arrow;
     Ptr<CTexture>   m_AnimImg;
 
+    CGameObject* m_MainText;
+    CGameObject* m_SubText;
+
+
     float   m_Time;
     float   m_Duration;
 

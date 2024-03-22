@@ -252,7 +252,7 @@ void LobbyLevel::CreateTempLevel()
 
 	// Proceed Button
 	CGameObject* proceedBtn = new CGameObject;
-	proceedBtn->SetName(L"PreceedBtn");
+	proceedBtn->SetName(L"ProceedBtn");
 	proceedBtn->AddComponent(new CTransform);
 	proceedBtn->AddComponent(new CMeshRender);
 	proceedBtn->AddComponent(new CProceedBtnScript);
