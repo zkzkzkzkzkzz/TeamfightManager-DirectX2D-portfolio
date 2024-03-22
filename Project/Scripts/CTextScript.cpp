@@ -14,8 +14,17 @@ CTextScript::CTextScript()
 	, m_FontSize(100.f)
 	, m_FontColor(0)
 	, m_Flags(0)
+	, m_Time(0.f)
+	, m_Duration(0.f)
 {
 	m_FontColor = FONT_RGBA(255, 255, 255, 255);
+
+	m_Fonts[(UINT)Font_Type::Galmuri9] = L"Galmuri9";
+	m_Fonts[(UINT)Font_Type::Galmuri11] = L"Galmuri11";
+	m_Fonts[(UINT)Font_Type::Galmuri14] = L"Galmuri14";
+	m_Fonts[(UINT)Font_Type::Silver] = L"Silver";
+
+	SetFont(Font_Type::Silver);
 }
 
 CTextScript::CTextScript(const CTextScript& _Origin)
@@ -27,23 +36,27 @@ CTextScript::CTextScript(const CTextScript& _Origin)
 	, m_FontSize(_Origin.m_FontSize)
 	, m_FontColor(_Origin.m_FontColor)
 	, m_Flags(_Origin.m_Flags)
-{
-}
-
-CTextScript::~CTextScript()
+	, m_Time(0.f)
+	, m_Duration(0.f)
 {
 	m_FontColor = FONT_RGBA(255, 255, 255, 255);
-}
 
-
-void CTextScript::begin()
-{
 	m_Fonts[(UINT)Font_Type::Galmuri9] = L"Galmuri9";
 	m_Fonts[(UINT)Font_Type::Galmuri11] = L"Galmuri11";
 	m_Fonts[(UINT)Font_Type::Galmuri14] = L"Galmuri14";
 	m_Fonts[(UINT)Font_Type::Silver] = L"Silver";
 
 	SetFont(Font_Type::Silver);
+}
+
+CTextScript::~CTextScript()
+{
+}
+
+
+void CTextScript::begin()
+{
+
 }
 
 void CTextScript::tick()

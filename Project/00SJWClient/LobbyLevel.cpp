@@ -22,6 +22,7 @@
 #include <Scripts\CTrainningBtnScript.h>
 #include <Scripts\CRecruitmentBtnScript.h>
 #include <Scripts\CSquadBtnScript.h>
+#include <Scripts\CTextScript.h>
 
 void LobbyLevel::Init()
 {
@@ -35,9 +36,10 @@ void LobbyLevel::CreateTempLevel()
 	pTempLevel->GetLayer(1)->SetName(L"Light");
 	pTempLevel->GetLayer(2)->SetName(L"Background");
 	pTempLevel->GetLayer(3)->SetName(L"Gamer");
+	pTempLevel->GetLayer(4)->SetName(L"Text");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
 
-	// Main Camera »ý¼º
+	// Main Camera ìƒì„±
 	CGameObject* pCamObj = new CGameObject;
 	pCamObj->SetName(L"MainCamera");
 	pCamObj->AddComponent(new CTransform);
@@ -49,7 +51,7 @@ void LobbyLevel::CreateTempLevel()
 	pCamObj->Camera()->LayerCheck(31, false);
 	pTempLevel->AddObject(pCamObj, 0);
 
-	// UI Camera »ý¼º
+	// UI Camera ìƒì„±
 	pCamObj = new CGameObject;
 	pCamObj->SetName(L"UICamera");
 	pCamObj->AddComponent(new CTransform);
@@ -60,7 +62,7 @@ void LobbyLevel::CreateTempLevel()
 	pCamObj->Camera()->LayerCheck(31, true);
 	pTempLevel->AddObject(pCamObj, 0);
 
-	// ±¤¿ø Ãß°¡
+	// ê´‘ì› ì¶”ê°€
 	CGameObject* pLight = new CGameObject;
 	pLight->SetName(L"Light2D");
 	pLight->AddComponent(new CTransform);
@@ -69,7 +71,7 @@ void LobbyLevel::CreateTempLevel()
 	pLight->Light2D()->SetAmbient(Vec3(0.8f, 0.8f, 0.8f));
 	pTempLevel->AddObject(pLight, 1);
 
-	// ·Îºñ ÇÏ¿ì½º
+	// ë¡œë¹„ í•˜ìš°ìŠ¤
 	CGameObject* house = new CGameObject;
 	house->SetName(L"House");
 	house->AddComponent(new CTransform);
@@ -83,7 +85,7 @@ void LobbyLevel::CreateTempLevel()
 	house->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(house, 2);
 
-	// ·Îºñ ¹è°æ(ÇÏ´Ã)
+	// ë¡œë¹„ ë°°ê²½(í•˜ëŠ˜)
 	CGameObject* LobbySky = new CGameObject;
 	LobbySky->SetName(L"LobbySky");
 	LobbySky->AddComponent(new CTransform);
@@ -97,7 +99,7 @@ void LobbyLevel::CreateTempLevel()
 	LobbySky->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(LobbySky, 2);
 	
-	// ·Îºñ ¹è°æ(¶¥)
+	// ë¡œë¹„ ë°°ê²½(ë•…)
 	CGameObject* LobbyGround = new CGameObject;
 	LobbyGround->SetName(L"LobbyGround");
 	LobbyGround->AddComponent(new CTransform);
@@ -111,7 +113,7 @@ void LobbyLevel::CreateTempLevel()
 	LobbyGround->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(LobbyGround, 2);
 
-	// Çì´õ
+	// í—¤ë”
 	CGameObject* Header = new CGameObject;
 	Header->SetName(L"Header");
 	Header->AddComponent(new CTransform);
@@ -125,7 +127,7 @@ void LobbyLevel::CreateTempLevel()
 	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_bg.png", L"texture\\Lobby\\header\\header_bg.png");
 	Header->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	
-	// ÅØ½ºÆ®UI ½½·Ô
+	// í…ìŠ¤íŠ¸UI ìŠ¬ë¡¯
 	CGameObject* TextUI = new CGameObject;
 	TextUI->SetName(L"TextUI");
 	TextUI->AddComponent(new CTransform);
@@ -139,7 +141,7 @@ void LobbyLevel::CreateTempLevel()
 	TextUI->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	Header->AddChild(TextUI);
 
-	// Çì´õ ½½·Ô
+	// í—¤ë” ìŠ¬ë¡¯
 	CGameObject* HeaderSlot = new CGameObject;
 	HeaderSlot->SetName(L"HeaderSlot");
 	HeaderSlot->AddComponent(new CTransform);
@@ -153,7 +155,7 @@ void LobbyLevel::CreateTempLevel()
 	HeaderSlot->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	Header->AddChild(HeaderSlot);
 
-	// ´Þ·Â ¾ÆÀÌÄÜ
+	// ë‹¬ë ¥ ì•„ì´ì½˜
 	CGameObject* Coin = new CGameObject;
 	Coin->SetName(L"Coin");
 	Coin->AddComponent(new CTransform);
@@ -167,7 +169,7 @@ void LobbyLevel::CreateTempLevel()
 	Coin->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	HeaderSlot->AddChild(Coin);
 
-	// Çì´õ ½½·Ô 2
+	// í—¤ë” ìŠ¬ë¡¯ 2
 	CGameObject* HeaderSlot2 = new CGameObject;
 	HeaderSlot2->SetName(L"HeaderSlot2");
 	HeaderSlot2->AddComponent(new CTransform);
@@ -179,7 +181,7 @@ void LobbyLevel::CreateTempLevel()
 	HeaderSlot2->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
 	Header->AddChild(HeaderSlot2);
 
-	// ´Þ·Â ¾ÆÀÌÄÜ
+	// ë‹¬ë ¥ ì•„ì´ì½˜
 	CGameObject* Calender = new CGameObject;
 	Calender->SetName(L"Calender");
 	Calender->AddComponent(new CTransform);
@@ -195,7 +197,7 @@ void LobbyLevel::CreateTempLevel()
 	pTempLevel->AddObject(Header, 2);
 
 
-	// ÆÀ°ü¸® ¹öÆ°
+	// íŒ€ê´€ë¦¬ ë²„íŠ¼
 	CGameObject* LobbyBtn = new CGameObject;
 	LobbyBtn->SetName(L"Team");
 	LobbyBtn->AddComponent(new CTransform);
@@ -256,6 +258,20 @@ void LobbyLevel::CreateTempLevel()
 	LobbyBtn->Transform()->SetRelativePos(Vec3(-330.f, -330.f, 250.f));
 	pTempLevel->AddObject(LobbyBtn, 2);
 
-	// ·¹º§ ÇÃ·¹ÀÌ
+
+
+	// Text
+	CGameObject* pText = new CGameObject;
+	pText->SetName(L"TempText");
+	pText->AddComponent(new CTransform);
+	pText->AddComponent(new CTextScript);
+	pText->Transform()->SetRelativePos(Vec3(0.f, 0.f, 150.f));
+	pText->Transform()->SetRelativeScale(Vec3(30.f, 30.f, 1.f));
+	pText->GetScript<CTextScript>()->SetString(L"Test Text");
+	pText->GetScript<CTextScript>()->TextInit(Font_Type::Galmuri11, Vec3(0.f, 0.f, 0.f), 30.f, 0);
+	pTempLevel->AddObject(pText, 4);
+
+
+	// ë ˆë²¨ í”Œë ˆì´
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
 }

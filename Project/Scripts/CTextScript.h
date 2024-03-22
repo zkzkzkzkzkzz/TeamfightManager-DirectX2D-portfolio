@@ -39,6 +39,8 @@ public:
 	void SetFontSize(float _Size) { m_FontSize = _Size; }
 	void SetOffsetPos(Vec3 _Offset) { m_OffsetPos = _Offset; }
 	void SetString(const wstring& _str) { m_String = _str; }
+	void SetFlags(UINT _flags) { m_Flags = _flags; }
+	void SetDuration(float _duration) { m_Duration = _duration; }
 
 	float GetFontSize() { return m_FontSize; }
 	Vec3 GetOffsetPos() { return m_OffsetPos; }
