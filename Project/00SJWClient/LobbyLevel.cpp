@@ -24,6 +24,7 @@
 #include <Scripts\CSquadBtnScript.h>
 #include <Scripts\CTextScript.h>
 #include <Scripts\CCursorScript.h>
+#include <Scripts\CProceedBtnScript.h>
 
 void LobbyLevel::Init()
 {
@@ -267,7 +268,13 @@ void LobbyLevel::CreateTempLevel()
 	LobbyBtn->Transform()->SetRelativePos(Vec3(-330.f, -330.f, 250.f));
 	pTempLevel->AddObject(LobbyBtn, 2);
 
-
+	// Proceed Button
+	CGameObject* proceedBtn = new CGameObject;
+	proceedBtn->SetName(L"PreceedBtn");
+	proceedBtn->AddComponent(new CTransform);
+	proceedBtn->AddComponent(new CMeshRender);
+	proceedBtn->AddComponent(new CProceedBtnScript);
+	pTempLevel->AddObject(proceedBtn, 2);
 
 	// Text
 	CGameObject* pText = new CGameObject;

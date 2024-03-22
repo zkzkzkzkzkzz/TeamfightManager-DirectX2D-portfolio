@@ -322,7 +322,10 @@ void CAssetMgr::CreateDefaultMaterial()
 	AddAsset<CMaterial>(L"Std2DMtrl", pMtrl);
 
 
-	// === 타이틀 레벨 =============================================
+	// === 공용 오브젝트 ==========================================
+	CreateDefaultGameMaterial();
+
+	// === 타이틀 레벨 ============================================
 	CreateTitleLevelMaterial();
 
 	// === 로비 레벨 =============================================
@@ -375,6 +378,16 @@ void CAssetMgr::CreateDefaultMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"DebugShapeShader"));
 	AddAsset<CMaterial>(L"DebugShapeMtrl", pMtrl);
+}
+
+void CAssetMgr::CreateDefaultGameMaterial()
+{
+	CMaterial* pMtrl = nullptr;
+
+	// 커서 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"CursorMtrl", pMtrl);
 }
 
 void CAssetMgr::CreateTitleLevelMaterial()
@@ -479,7 +492,7 @@ void CAssetMgr::CreateLobbyLevelMaterial()
 	// 진행 버튼 머테리얼
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
-	AddAsset<CMaterial>(L"PlayBtnMtrl", pMtrl);
+	AddAsset<CMaterial>(L"ProceedBtnMtrl", pMtrl);
 }
 
 
