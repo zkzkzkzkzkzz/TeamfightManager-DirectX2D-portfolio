@@ -4,6 +4,7 @@
 typedef  void(*BtnCallBack)(void);
 typedef  void(CEntity::* DelegateFunc)(void);
 
+class CGameObject;
 
 class CProceedBtnScript :
     public CScript
@@ -11,12 +12,17 @@ class CProceedBtnScript :
 private:
     Ptr<CTexture>   m_NormalImg;
     Ptr<CTexture>   m_HoverImg;
-    Ptr<CTexture>   m_PressedImg;
     Ptr<CTexture>   m_CurImg;
 
     bool    m_bMouseOn;
     bool    m_bMouseOn_Prev;
     bool    m_bMouseLBtnDown;
+
+    CGameObject*    m_Arrow;
+    Ptr<CTexture>   m_AnimImg;
+
+    float   m_Time;
+    float   m_Duration;
 
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
@@ -32,7 +38,6 @@ public:
 public:
     void SetNormalImg(Ptr<CTexture> _NormalImg) { m_NormalImg = _NormalImg; }
     void SetHoverImg(Ptr<CTexture> _HoverImg) { m_HoverImg = _HoverImg; }
-    void SetPressedImg(Ptr<CTexture> _PressedImg) { m_PressedImg = _PressedImg; }
 
     void SetCallBack(BtnCallBack _CallBack) { m_CallBackFunc = _CallBack; }
 
@@ -42,10 +47,11 @@ public:
 public:
     void OnHovered();
     void OnUnHovered();
-
     void LBtnUp();
-
     void LBtnClicked();
+
+    void MoveArrow();
+    void ResetArrow();
 
 public:
     virtual void begin() override;

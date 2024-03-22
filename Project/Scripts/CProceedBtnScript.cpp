@@ -2,7 +2,9 @@
 #include "CProceedBtnScript.h"
 
 #include <Engine\CEngine.h>
+#include <Engine\CTimeMgr.h>
 #include <Engine\CKeyMgr.h>
+#include <Engine\CGameObject.h>
 #include <Engine\CTransform.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CMeshRender.h>
@@ -15,7 +17,11 @@ CProceedBtnScript::CProceedBtnScript()
     , m_bMouseOn(false)
     , m_bMouseOn_Prev(false)
     , m_bMouseLBtnDown(false)
-{
+	, m_Arrow(nullptr)
+	, m_AnimImg(nullptr)
+	, m_Time(0.f)
+	, m_Duration(0.9f)
+{	  
 }
 
 CProceedBtnScript::~CProceedBtnScript()
@@ -34,6 +40,17 @@ void CProceedBtnScript::begin()
 
 	GetOwner()->Transform()->SetRelativePos(Vec3(491.f, -295.f, 200.f));
 	GetOwner()->Transform()->SetRelativeScale(Vec3(258.f, 88.f, 1.f));
+
+	m_AnimImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\proceed\\proceed_button_2.png", L"texture\\Lobby\\btn\\proceed\\proceed_button_2.png");
+	m_Arrow = new CGameObject;
+	m_Arrow->AddComponent(new CTransform);
+	m_Arrow->AddComponent(new CMeshRender);
+	m_Arrow->Transform()->SetRelativePos(Vec3(65.f, 0.f, -1.f));
+	m_Arrow->Transform()->SetRelativeScale(Vec3(126.f, 88.f, 1.f));
+	m_Arrow->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	m_Arrow->MeshRender()->SetMaterial(GetOwner()->MeshRender()->GetDynamicMaterial());
+	m_Arrow->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_AnimImg);
+	GetOwner()->AddChild(m_Arrow);
 }
 
 void CProceedBtnScript::tick()
@@ -100,6 +117,18 @@ void CProceedBtnScript::render()
 {
     if (nullptr != m_CurImg)
         GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
+
+	if (nullptr != m_CurImg)
+	{
+		if (m_CurImg == m_HoverImg)
+		{
+			MoveArrow();
+		}
+		else
+		{
+			ResetArrow();
+		}
+	}
 }
 
 
@@ -121,4 +150,41 @@ void CProceedBtnScript::LBtnUp()
 void CProceedBtnScript::LBtnClicked()
 {
     m_CurImg = m_HoverImg;
+}
+
+void CProceedBtnScript::MoveArrow()
+{
+	m_Time += DT;
+
+	float BtwTime = m_Duration - m_Time;
+
+	Vec3 vPos = m_Arrow->Transform()->GetRelativePos();
+
+	if (0.7 > m_Time)
+	{
+		if (vPos.x >= 65.f)
+			vPos.x = 30.f;
+
+		vPos.x += 130.f * DT * BtwTime;
+
+		if (vPos.x >= 64.f)
+			vPos.x = 64.f;
+	}
+	else if (m_Time < m_Duration && m_Time >= 0.7f && vPos.x >= 65.f)
+	{
+		vPos.x = 65.f;
+	}
+	else if (m_Time >= m_Duration)
+	{
+		vPos.x = 65.f;
+		m_Time = 0.f;
+	}
+
+	m_Arrow->Transform()->SetRelativePos(vPos);
+}
+
+void CProceedBtnScript::ResetArrow()
+{
+	m_Time = 0.f;
+	m_Arrow->Transform()->SetRelativePos(Vec3(65.f, 0.f, -1.f));
 }
