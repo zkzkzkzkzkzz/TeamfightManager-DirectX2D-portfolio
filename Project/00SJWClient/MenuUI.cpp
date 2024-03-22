@@ -211,6 +211,15 @@ void MenuUI::GameObject()
                 }
             }
 
+            if (ImGui::MenuItem("TextRender"))
+            {
+                Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
+                if (nullptr != inspector->GetTargetObject())
+                {
+                    inspector->GetTargetObject()->AddComponent(new CTextRender);
+                }
+            }
+
             if (ImGui::MenuItem("Animator2D"))
             {
                 Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");

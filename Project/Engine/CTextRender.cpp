@@ -21,7 +21,12 @@ CTextRender::~CTextRender()
 
 void CTextRender::finaltick()
 {
-	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetWorldPos();
+	Vec3 vPos = Vec3(0.f, 0.f, 0.f);
+
+	if (GetOwner()->GetParent())
+		vPos = GetOwner()->GetParent()->Transform()->GetWorldPos();
+	else
+		vPos = GetOwner()->Transform()->GetWorldPos();
 
 	Vec2 vResolution = CEngine::GetInst()->GetResolution();
 
@@ -57,8 +62,10 @@ void CTextRender::TextInit(wstring _FontType, float _FontSize, UINT _FontColor, 
 
 void CTextRender::SaveToFile(FILE* _File)
 {
+	fwrite(&m_TextInfo, sizeof(tTextInfo), 1, _File);
 }
 
 void CTextRender::LoadFromFile(FILE* _File)
 {
+	fread(&m_TextInfo, sizeof(tTextInfo), 1, _File);
 }

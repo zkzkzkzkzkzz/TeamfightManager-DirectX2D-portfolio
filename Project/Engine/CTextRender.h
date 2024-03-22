@@ -17,6 +17,10 @@ public:
 
 	float GetFontSize() { return m_TextInfo.m_FontSize; }
 	Vec3 GetOffsetPos() { return m_TextInfo.m_OffsetPos; }
+	UINT GetFlags() { return m_TextInfo.m_Flags; }
+	UINT GetFontColor() { return m_TextInfo.m_FontColor; }
+	const wstring& GetString() { return m_TextInfo.m_String; }
+	const wstring& GetFont() { return m_TextInfo.m_Font; }
 
 	void SetFontColor(UINT R, UINT G, UINT B, UINT A);
 	void TextInit(wstring _FontType, float _FontSize, UINT _FontColor, UINT _flags = 0);
