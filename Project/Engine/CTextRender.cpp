@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CTextRender.h"
 
+#include "CEngine.h"
 #include "CGameObject.h"
 #include "CTransform.h"
 
@@ -20,9 +21,12 @@ CTextRender::~CTextRender()
 
 void CTextRender::finaltick()
 {
-	Vec3 vPos = GetOwner()->Transform()->GetRelativePos();
+	Vec3 vPos = GetOwner()->GetParent()->Transform()->GetRelativePos();
 
-	Vec3 vParentPos = Vec3(0.f, 0.f, 0.f);
+	Vec2 vResolution = CEngine::GetInst()->GetResolution();
+
+	vPos.x += vResolution.x / 2.f;
+	vPos.y = -(vPos.y - vResolution.y / 2.f);
 
 	m_TextInfo.m_FontPos.x = vPos.x + m_TextInfo.m_OffsetPos.x;
 	m_TextInfo.m_FontPos.y = vPos.y + m_TextInfo.m_OffsetPos.y;
