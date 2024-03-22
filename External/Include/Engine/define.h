@@ -61,6 +61,7 @@ enum class COMPONENT_TYPE
 	MESHRENDER,
 	TILEMAP,
 	PARTICLESYSTEM,
+	GAMETEXT,	// 텍스트
 	SKYBOX,
 	DECAL,
 	LANDSCAPE,
@@ -86,6 +87,7 @@ enum class CB_TYPE
 	ANIM2D_DATA,
 	GLOBAL_DATA,
 	ANIMATION,
+	TEXT_DATA,
 
 	END,
 };
@@ -236,4 +238,14 @@ enum class LEVEL_STATE
 	PAUSE,
 	STOP,
 	NONE,
+};
+
+
+enum class FONT_TYPE
+{
+	Galmuri9,
+	Galmuri11,
+	Galmuri14,
+	Silver,
+	END,
 };

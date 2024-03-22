@@ -122,6 +122,11 @@ void CCamera::SortObject()
 				&& vecObjects[j]->GetRenderComponent()->GetMaterial().Get()
 				&& vecObjects[j]->GetRenderComponent()->GetMaterial()->GetShader().Get()))
 			{
+				if (vecObjects[j]->GetRenderComponent() && vecObjects[j]->GetRenderComponent()->GetType() == COMPONENT_TYPE::GAMETEXT)
+				{
+					m_vecMasked.push_back(vecObjects[j]);
+				}
+
 				continue;
 			}
 

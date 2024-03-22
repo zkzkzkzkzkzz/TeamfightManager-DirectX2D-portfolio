@@ -36,6 +36,7 @@ public:
     GET_OTHER_COMPONENT(Light2D);
     GET_OTHER_COMPONENT(TileMap);
     GET_OTHER_COMPONENT(StateMachine);
+    GET_OTHER_COMPONENT(TextRender);
 
 
     virtual void SaveToFile(FILE* _File) = 0;

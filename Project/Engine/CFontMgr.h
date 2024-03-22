@@ -41,4 +41,5 @@ public:
     void init();
     void DrawFont(const wchar_t* _pStr, LPCWSTR _font, float _fPosX, float _fPosY, float _fFontSize, UINT _Color);
     void DrawFont(const wchar_t* _pStr, LPCWSTR _font, float _fPosX, float _fPosY, float _fFontSize, UINT _Color, UINT _flags);
+    void DrawFont(tTextInfo _info);
 };

@@ -9,6 +9,7 @@
 #include "CAnimator2D.h"
 #include "CTransform.h"
 #include "CMaterial.h"
+#include "CTextRender.h"
 
 CMeshRender::CMeshRender()
 	: CRenderComponent(COMPONENT_TYPE::MESHRENDER)
@@ -52,6 +53,9 @@ void CMeshRender::render()
 	{
 		Animator2D()->Clear();
 	}
+
+	if (TextRender())
+		TextRender()->render();
 
 	UpdateData();
 

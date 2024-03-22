@@ -21,3 +21,4 @@
 #include "CParticleSystem.h"
 
 #include "CStateMachine.h"
+#include "CTextRender.h"

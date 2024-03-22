@@ -4,7 +4,6 @@
 typedef  void(*BtnCallBack)(void);
 typedef  void(CEntity::* DelegateFunc)(void);
 
-
 class CLobbyBtnScript :
     public CScript
 {

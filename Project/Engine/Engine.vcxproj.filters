@@ -160,6 +160,9 @@
     <Filter Include="04.Manager\FontMgr">
       <UniqueIdentifier>{a1693beb-b25f-49e8-9979-86998b106149}</UniqueIdentifier>
     </Filter>
+    <Filter Include="08.Component\RenderComponent\04.TextRender">
+      <UniqueIdentifier>{0897824f-8b04-439a-b400-c6032d79fd8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -327,6 +330,9 @@
     <ClInclude Include="CFontMgr.h">
       <Filter>04.Manager\FontMgr</Filter>
     </ClInclude>
+    <ClInclude Include="CTextRender.h">
+      <Filter>08.Component\RenderComponent\04.TextRender</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -481,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="CFontMgr.cpp">
       <Filter>04.Manager\FontMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CTextRender.cpp">
+      <Filter>08.Component\RenderComponent\04.TextRender</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

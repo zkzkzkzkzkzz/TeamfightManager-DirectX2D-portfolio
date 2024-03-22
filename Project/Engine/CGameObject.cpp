@@ -87,6 +87,9 @@ void CGameObject::begin()
 
 void CGameObject::tick()
 {
+	if (CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"TextUI"))
+		int a = 0;
+
 	if (m_Active)
 	{
 		for (UINT i = 0; i < UINT(COMPONENT_TYPE::END); ++i)
@@ -185,37 +188,6 @@ void CGameObject::AddComponent(CComponent* _Component)
 		}
 	}
 }
-
-//void CGameObject::DisconnectWithParent()
-//{
-//	vector<CGameObject*>::iterator iter = m_Parent->m_vecChild.begin();
-//
-//	for (; iter != m_Parent->m_vecChild.end(); ++iter)
-//	{
-//		if (*iter == this)
-//		{
-//			m_Parent->m_vecChild.erase(iter);
-//			m_Parent = nullptr;
-//			return;
-//		}
-//	}
-//
-//	// 부모가 없는 오브젝트에 해당 함수를 호출했거나
-//	// 부모는 자식을 가리키지 않고 있는데, 자식은 부모를 가리키고 있는 경우
-//	assert(nullptr);
-//}
-//
-//void CGameObject::DisconnectWithLayer()
-//{
-//	if (-1 == m_iLayerIdx)
-//	{
-//		return;
-//	}
-//
-//	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-//	CLayer* pCurLayer = pCurLevel->GetLayer(m_iLayerIdx);
-//	pCurLayer->DetachGameObject(this);
-//}
 
 int CGameObject::DisconnectWithParent()
 {

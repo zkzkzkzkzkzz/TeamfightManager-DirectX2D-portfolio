@@ -10,7 +10,6 @@ class CCamera;
 class CCollider2D;
 class CLight2D;
 class CStateMachine;
-class CText;
 
 class CGameObject :
     public CEntity
@@ -43,6 +42,7 @@ public:
     GET_COMPONENT(Light2D, LIGHT2D);
     GET_COMPONENT(TileMap, TILEMAP);
     GET_COMPONENT(StateMachine, STATEMACHINE);
+    GET_COMPONENT(TextRender, GAMETEXT);
     
 public:
     void AddComponent(CComponent* _Component);

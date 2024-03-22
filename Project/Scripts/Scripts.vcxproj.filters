@@ -10,6 +10,27 @@
     <Filter Include="ScriptMgr">
       <UniqueIdentifier>{9637a74c-6c52-4665-b8e0-7c002af737ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scripts\TitleScript">
+      <UniqueIdentifier>{60bb191f-b7a9-444c-93fe-01edb9c848bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\LobbyScript">
+      <UniqueIdentifier>{6c2b9246-94c2-4203-8275-268db08c390f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\LobbyScript\Header">
+      <UniqueIdentifier>{61f70624-ad29-4af7-bcb2-5182165fcf38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\LobbyScript\LobbyBtn">
+      <UniqueIdentifier>{ceb8e4be-456f-45d6-b639-e6f3b8118797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\LobbyScript\LobbyBtn\LobbyChildBtn">
+      <UniqueIdentifier>{85a1d934-e5d4-4484-bfeb-dedf34a2de59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\CursorScript">
+      <UniqueIdentifier>{99a9f93d-a61d-485b-96d6-be2b603f0be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\LobbyScript\ProceedBtn">
+      <UniqueIdentifier>{90da0ae1-41ef-4560-b4ad-d7868a7f753c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -18,14 +39,35 @@
     <ClInclude Include="pch.h">
       <Filter>Default</Filter>
     </ClInclude>
-    <ClInclude Include="CPlayerScript.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="CScriptMgr.h">
       <Filter>ScriptMgr</Filter>
     </ClInclude>
-    <ClInclude Include="CMonsterScript.h">
-      <Filter>Scripts</Filter>
+    <ClInclude Include="CNewBtnScript.h">
+      <Filter>Scripts\TitleScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CEndBtnScript.h">
+      <Filter>Scripts\TitleScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CLobbyHdScript.h">
+      <Filter>Scripts\LobbyScript\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CLobbyBtnScript.h">
+      <Filter>Scripts\LobbyScript\LobbyBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="CRecruitmentBtnScript.h">
+      <Filter>Scripts\LobbyScript\LobbyBtn\LobbyChildBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="CTrainningBtnScript.h">
+      <Filter>Scripts\LobbyScript\LobbyBtn\LobbyChildBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="CSquadBtnScript.h">
+      <Filter>Scripts\LobbyScript\LobbyBtn\LobbyChildBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="CCursorScript.h">
+      <Filter>Scripts\CursorScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CProceedBtnScript.h">
+      <Filter>Scripts\LobbyScript\ProceedBtn</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -35,14 +77,35 @@
     <ClCompile Include="Scripts.cpp">
       <Filter>Default</Filter>
     </ClCompile>
-    <ClCompile Include="CPlayerScript.cpp">
-      <Filter>Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>ScriptMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterScript.cpp">
-      <Filter>Scripts</Filter>
+    <ClCompile Include="CNewBtnScript.cpp">
+      <Filter>Scripts\TitleScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CEndBtnScript.cpp">
+      <Filter>Scripts\TitleScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CLobbyHdScript.cpp">
+      <Filter>Scripts\LobbyScript\Header</Filter>
+    </ClCompile>
+    <ClCompile Include="CLobbyBtnScript.cpp">
+      <Filter>Scripts\LobbyScript\LobbyBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="CRecruitmentBtnScript.cpp">
+      <Filter>Scripts\LobbyScript\LobbyBtn\LobbyChildBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="CTrainningBtnScript.cpp">
+      <Filter>Scripts\LobbyScript\LobbyBtn\LobbyChildBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="CSquadBtnScript.cpp">
+      <Filter>Scripts\LobbyScript\LobbyBtn\LobbyChildBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="CCursorScript.cpp">
+      <Filter>Scripts\CursorScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CProceedBtnScript.cpp">
+      <Filter>Scripts\LobbyScript\ProceedBtn</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

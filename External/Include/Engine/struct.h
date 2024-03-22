@@ -182,3 +182,18 @@ struct tSpawnCount
 	int	SpawnCount;
 	int	iPadding[3];
 };
+
+
+
+struct tTextInfo
+{
+	wstring		m_String;	// 텍스트
+	wstring		m_Font;		// 폰트 종류
+
+	Vec3	m_FontPos;		// 폰트 위치
+	Vec3	m_OffsetPos;	// 폰트 오프셋
+
+	float	m_FontSize;		// 폰트 크기
+	UINT	m_FontColor;	// 폰트 색상
+	UINT	m_Flags;
+};

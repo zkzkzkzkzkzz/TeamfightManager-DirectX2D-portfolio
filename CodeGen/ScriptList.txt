@@ -1,2 +1,9 @@
+CCursorScript
 CEndBtnScript
+CLobbyBtnScript
+CLobbyHdScript
 CNewBtnScript
+CProceedBtnScript
+CRecruitmentBtnScript
+CSquadBtnScript
+CTrainningBtnScript

@@ -210,6 +210,7 @@ call EngineCopy.bat</Command>
     <ClInclude Include="CStateMachine.h" />
     <ClInclude Include="CStructuredBuffer.h" />
     <ClInclude Include="CTaskMgr.h" />
+    <ClInclude Include="CTextRender.h" />
     <ClInclude Include="CTexture.h" />
     <ClInclude Include="CTileMap.h" />
     <ClInclude Include="CTimeMgr.h" />
@@ -268,6 +269,7 @@ call EngineCopy.bat</Command>
     <ClCompile Include="CStateMachine.cpp" />
     <ClCompile Include="CStructuredBuffer.cpp" />
     <ClCompile Include="CTaskMgr.cpp" />
+    <ClCompile Include="CTextRender.cpp" />
     <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CTileMap.cpp" />
     <ClCompile Include="CTimeMgr.cpp" />

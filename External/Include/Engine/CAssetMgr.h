@@ -28,6 +28,10 @@ private:
 	void CreateDefaultComputeShader();
 	void CreateDefaultMaterial();
 
+	void CreateDefaultGameMaterial();
+	void CreateTitleLevelMaterial();
+	void CreateLobbyLevelMaterial();
+
 public:
 	void init();
 

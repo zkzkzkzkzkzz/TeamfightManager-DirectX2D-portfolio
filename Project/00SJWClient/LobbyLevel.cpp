@@ -14,6 +14,7 @@
 #include <Engine\CGraphicsShader.h>
 #include <Engine\CTexture.h>
 #include <Engine\CSetColorShader.h>
+#include <Engine\CFontMgr.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -22,7 +23,6 @@
 #include <Scripts\CTrainningBtnScript.h>
 #include <Scripts\CRecruitmentBtnScript.h>
 #include <Scripts\CSquadBtnScript.h>
-#include <Scripts\CTextScript.h>
 #include <Scripts\CCursorScript.h>
 #include <Scripts\CProceedBtnScript.h>
 
@@ -58,18 +58,6 @@ void LobbyLevel::CreateTempLevel()
 	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	pCamObj->Camera()->SetCameraPriority(0);
 	pCamObj->Camera()->LayerCheckAll();
-	pCamObj->Camera()->LayerCheck(31, false);
-	pTempLevel->AddObject(pCamObj, 0);
-
-	// UI Camera 생성
-	pCamObj = new CGameObject;
-	pCamObj->SetName(L"UICamera");
-	pCamObj->AddComponent(new CTransform);
-	pCamObj->AddComponent(new CCamera);
-	pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
-	pCamObj->Camera()->SetCameraPriority(1);
-	pCamObj->Camera()->LayerCheck(31, true);
 	pTempLevel->AddObject(pCamObj, 0);
 
 	// 광원 추가
@@ -136,20 +124,6 @@ void LobbyLevel::CreateTempLevel()
 	Header->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
 	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_bg.png", L"texture\\Lobby\\header\\header_bg.png");
 	Header->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
-	
-	// 텍스트UI 슬롯
-	CGameObject* TextUI = new CGameObject;
-	TextUI->SetName(L"TextUI");
-	TextUI->AddComponent(new CTransform);
-	TextUI->AddComponent(new CMeshRender);
-	TextUI->Transform()->SetRelativePos(Vec3(-506.f, -54.f, 10.f));
-	TextUI->Transform()->SetRelativeScale(Vec3(272.f, 48.f, 1.f));
-	TextUI->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	TextUI->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TextUIMtrl"));
-	TextUI->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
-	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\notification_bg_header.png", L"texture\\Lobby\\header\\notification_bg_header.png");
-	TextUI->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
-	Header->AddChild(TextUI);
 
 	// 헤더 슬롯
 	CGameObject* HeaderSlot = new CGameObject;
@@ -275,17 +249,6 @@ void LobbyLevel::CreateTempLevel()
 	proceedBtn->AddComponent(new CMeshRender);
 	proceedBtn->AddComponent(new CProceedBtnScript);
 	pTempLevel->AddObject(proceedBtn, 2);
-
-	// Text
-	CGameObject* pText = new CGameObject;
-	pText->SetName(L"TempText");
-	pText->AddComponent(new CTransform);
-	pText->AddComponent(new CTextScript);
-	pText->Transform()->SetRelativePos(Vec3(0.f, 0.f, 150.f));
-	pText->Transform()->SetRelativeScale(Vec3(30.f, 30.f, 1.f));
-	pText->GetScript<CTextScript>()->SetString(L"Test Text");
-	pText->GetScript<CTextScript>()->TextInit(Font_Type::Galmuri11, Vec3(0.f, 0.f, 0.f), 30.f, 0);
-	pTempLevel->AddObject(pText, 4);
 
 
 	// 레벨 플레이

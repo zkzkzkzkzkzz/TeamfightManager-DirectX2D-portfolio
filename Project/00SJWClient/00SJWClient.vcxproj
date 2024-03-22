@@ -160,6 +160,7 @@
     <ClInclude Include="CCreateTempLevel.h" />
     <ClInclude Include="CEditorObjMgr.h" />
     <ClInclude Include="CGameObjectEx.h" />
+    <ClInclude Include="CGamer.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CImGuiMgr.h" />
     <ClInclude Include="CLevelSaveLoad.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="EditAnimator.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="FSMUI.h" />
+    <ClInclude Include="GameTextUI.h" />
     <ClInclude Include="GraphicsShaderUI.h" />
     <ClInclude Include="imconfig.h" />
     <ClInclude Include="imgui.h" />
@@ -183,6 +185,7 @@
     <ClInclude Include="Inspector.h" />
     <ClInclude Include="Light2DUI.h" />
     <ClInclude Include="ListUI.h" />
+    <ClInclude Include="LobbyLevel.h" />
     <ClInclude Include="MaterialUI.h" />
     <ClInclude Include="MenuUI.h" />
     <ClInclude Include="MeshDataUI.h" />
@@ -198,6 +201,8 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TextureUI.h" />
+    <ClInclude Include="TGMgr.h" />
+    <ClInclude Include="TitleLevel.h" />
     <ClInclude Include="TransformUI.h" />
     <ClInclude Include="TreeUI.h" />
     <ClInclude Include="UI.h" />
@@ -210,6 +215,7 @@
     <ClCompile Include="CCreateTempLevel.cpp" />
     <ClCompile Include="CEditorObjMgr.cpp" />
     <ClCompile Include="CGameObjectEx.cpp" />
+    <ClCompile Include="CGamer.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CImGuiMgr.cpp" />
     <ClCompile Include="CLevelSaveLoad.cpp" />
@@ -220,6 +226,7 @@
     <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="EditAnimator.cpp" />
     <ClCompile Include="FSMUI.cpp" />
+    <ClCompile Include="GameTextUI.cpp" />
     <ClCompile Include="GraphicsShaderUI.cpp" />
     <ClCompile Include="imgui.cpp" />
     <ClCompile Include="imgui_demo.cpp" />
@@ -232,6 +239,7 @@
     <ClCompile Include="Inspector_init.cpp" />
     <ClCompile Include="Light2DUI.cpp" />
     <ClCompile Include="ListUI.cpp" />
+    <ClCompile Include="LobbyLevel.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MaterialUI.cpp" />
     <ClCompile Include="MenuUI.cpp" />
@@ -248,6 +256,8 @@
     <ClCompile Include="ScriptUI.cpp" />
     <ClCompile Include="SoundUI.cpp" />
     <ClCompile Include="TextureUI.cpp" />
+    <ClCompile Include="TGMgr.cpp" />
+    <ClCompile Include="TitleLevel.cpp" />
     <ClCompile Include="TransformUI.cpp" />
     <ClCompile Include="TreeUI.cpp" />
     <ClCompile Include="UI.cpp" />

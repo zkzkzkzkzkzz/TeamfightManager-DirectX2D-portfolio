@@ -170,16 +170,30 @@ call CodeGen.exe</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CMonsterScript.h" />
-    <ClInclude Include="CPlayerScript.h" />
+    <ClInclude Include="CCursorScript.h" />
+    <ClInclude Include="CLobbyBtnScript.h" />
+    <ClInclude Include="CProceedBtnScript.h" />
+    <ClInclude Include="CSquadBtnScript.h" />
+    <ClInclude Include="CTrainningBtnScript.h" />
+    <ClInclude Include="CRecruitmentBtnScript.h" />
+    <ClInclude Include="CLobbyHdScript.h" />
     <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CNewBtnScript.h" />
+    <ClInclude Include="CEndBtnScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CMonsterScript.cpp" />
-    <ClCompile Include="CPlayerScript.cpp" />
+    <ClCompile Include="CCursorScript.cpp" />
+    <ClCompile Include="CLobbyBtnScript.cpp" />
+    <ClCompile Include="CProceedBtnScript.cpp" />
+    <ClCompile Include="CSquadBtnScript.cpp" />
+    <ClCompile Include="CTrainningBtnScript.cpp" />
+    <ClCompile Include="CRecruitmentBtnScript.cpp" />
+    <ClCompile Include="CLobbyHdScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CNewBtnScript.cpp" />
+    <ClCompile Include="CEndBtnScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

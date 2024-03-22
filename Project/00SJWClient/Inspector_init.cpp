@@ -17,6 +17,7 @@ void Inspector::CreateChildUI()
 #include "Light2DUI.h"
 #include "CameraUI.h"
 #include "Animator2DUI.h"
+#include "GameTextUI.h"
 
 
 void Inspector::CreateComponentUI()
@@ -44,6 +45,11 @@ void Inspector::CreateComponentUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D] = new Animator2DUI;
 	m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]->Deactivate();
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::ANIMATOR2D]);
+
+
+	m_arrComUI[(UINT)COMPONENT_TYPE::GAMETEXT] = new GameTextUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::GAMETEXT]->Deactivate();
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::GAMETEXT]);
 }
 
 #include "TextureUI.h"

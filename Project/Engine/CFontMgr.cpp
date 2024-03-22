@@ -59,3 +59,17 @@ void CFontMgr::DrawFont(const wchar_t* _pStr, LPCWSTR _font, float _fPosX, float
 		FW1_RESTORESTATE | _flags     // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
 	);
 }
+
+void CFontMgr::DrawFont(tTextInfo _info)
+{
+	m_pFontWrapper->DrawString(
+		CONTEXT,
+		_info.m_String.c_str(), // String
+		_info.m_Font.c_str(), // FontFamily
+		_info.m_FontSize,// Font size
+		_info.m_OffsetPos.x,// X position
+		_info.m_OffsetPos.y,// Y position
+		_info.m_FontColor,// Text color, 0xAaBbGgRr
+		FW1_RESTORESTATE | _info.m_Flags     // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
+	);
+}
