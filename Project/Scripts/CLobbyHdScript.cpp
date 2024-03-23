@@ -40,12 +40,12 @@ void CLobbyHdScript::begin()
 	m_Logo->AddComponent(new CMeshRender);
 	m_Logo->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	m_Logo->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LogoMtrl"));
-	m_Logo->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
+	m_Logo->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	m_Logo->Transform()->SetRelativePos(Vec3(-600.f, 2.f, -10.f));
 	m_Logo->Transform()->SetRelativeScale(Vec3(60.f, 60.f, 0.f));
 
-	m_LogoTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\captains.png", L"texture\\Lobby\\header\\captains.png");
-	m_Logo->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_LogoTex);
+	//m_LogoTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\captains.png", L"texture\\Lobby\\header\\captains.png");
+	//m_Logo->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_LogoTex);
 	GetOwner()->AddChild(m_Logo);
 
 	m_TeamText = new CGameObject;

@@ -173,8 +173,13 @@ void CAssetMgr::CreateDefaultGraphicsShader()
 	pShader->SetDomain(SHADER_DOMAIN::DOMAIN_MASKED);
 
 	// Parameter
-	//pShader->AddScalarParam(SCALAR_PARAM::INT_0, "Test Parameter");
-	//pShader->AddTexParam(TEX_PARAM::TEX_0, "Output Texture");
+	pShader->AddScalarParam(SCALAR_PARAM::INT_0, "INT_0");
+	pShader->AddTexParam(TEX_PARAM::TEX_0, "Texture 0");
+	pShader->AddTexParam(TEX_PARAM::TEX_1, "Texture 1");
+	pShader->AddTexParam(TEX_PARAM::TEX_2, "Texture 2");
+	pShader->AddTexParam(TEX_PARAM::TEX_3, "Texture 3");
+	pShader->AddTexParam(TEX_PARAM::TEX_4, "Texture 4");
+	pShader->AddTexParam(TEX_PARAM::TEX_5, "Texture 5");
 
 	AddAsset(L"Std2DShader", pShader.Get());
 
@@ -488,6 +493,11 @@ void CAssetMgr::CreateLobbyLevelMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"IconMtrl", pMtrl);
+
+	// 텍스트UI 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"TextUIMtrl", pMtrl);
 
 	// 로비 버튼 머테리얼
 	pMtrl = new CMaterial(true);

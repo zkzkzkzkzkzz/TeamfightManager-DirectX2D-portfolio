@@ -259,6 +259,16 @@ void LobbyLevel::CreateTempLevel()
 	pTempLevel->AddObject(proceedBtn, 2);
 
 
+	Ptr<CMaterial> pTextUI = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TextUIMtrl");
+	pTextUI->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\notification_bg_header.png", L"texture\\Lobby\\header\\notification_bg_header.png"));
+	
+	
+	Ptr<CMaterial> pLogo = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LogoMtrl");
+	pLogo->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	pLogo->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\captains.png", L"texture\\Lobby\\header\\captains.png"));
+	pLogo->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+	pLogo->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\league_icon_custom.png", L"texture\\Lobby\\league_icon_custom.png"));
+
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
 }
