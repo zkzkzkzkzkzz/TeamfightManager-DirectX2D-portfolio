@@ -199,6 +199,11 @@ void TreeUI::SetSelectedNode(TreeNode* _SelectedNode)
 {
 	if (m_Selected)
 	{
+		if (nullptr == m_Selected->m_Owner)
+		{
+			return;
+		}
+
 		m_Selected->m_bSelected = false;
 	}
 
