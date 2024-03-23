@@ -87,6 +87,11 @@ void CCameraMoveScript::MoveOrthographic()
 		vPos.x += DT_ENGINE * m_CamSpeed;
 	}
 
+	if (KEY_TAP(ESC))
+	{
+		vPos = Vec3(0.f, 0.f, 0.f);
+	}
+
 	Transform()->SetRelativePos(vPos);
 }
 
