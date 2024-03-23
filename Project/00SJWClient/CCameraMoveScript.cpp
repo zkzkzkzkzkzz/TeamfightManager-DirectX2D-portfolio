@@ -90,6 +90,7 @@ void CCameraMoveScript::MoveOrthographic()
 	if (KEY_TAP(ESC))
 	{
 		vPos = Vec3(0.f, 0.f, 0.f);
+		Camera()->SetScale(1.f);
 	}
 
 	Transform()->SetRelativePos(vPos);

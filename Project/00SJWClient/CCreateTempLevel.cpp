@@ -54,7 +54,7 @@ void CCreateTempLevel::CreateTempLevel()
 	CLevel* pLevel = CLevelSaveLoad::LoadLevel(L"level\\TitleLV1.lv");
 	pLevel->FindObjectByName(L"NewGameBtn")->GetScript<CNewBtnScript>()->SetCallBack(TestFunc);
 
-	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);	
+	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);
 
 	//TitleLevel::CreateTempLevel();
 	//LobbyLevel::CreateTempLevel();
@@ -109,7 +109,7 @@ void TestFunc()
 	//pMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\house_bg_custom.png", L"texture\\Lobby\\house_bg_custom.png"));
 
 	CLevel* pLevel = CLevelSaveLoad::LoadLevel(L"level\\LobbyLV2.lv");
-	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);
+	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::STOP);
 }
 
 
