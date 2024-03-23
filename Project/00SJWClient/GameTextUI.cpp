@@ -50,7 +50,7 @@ void GameTextUI::render_update()
 	GetTargetObject()->TextRender()->SetFontColor((UINT)R, (UINT)G, (UINT)B, 255);
 
 	ImGui::Text("Text");
-	static char Text[256] = {};
+	char Text[256] = {};
 	string temp = ToString(GetTargetObject()->TextRender()->GetString());
 	
 	for (size_t i = 0; i < temp.length(); ++i)
