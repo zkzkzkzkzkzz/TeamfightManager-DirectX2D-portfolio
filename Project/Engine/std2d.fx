@@ -55,9 +55,6 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
     
     float4 vColor = float4(1.f, 0.f, 1.f, 1.f);
     
-    if (g_float_0)
-        return float4(1.f, 1.f, 0.f, 1.f);
-    
     if(g_UseAnim2D)
     {
         // vBackground의 좌상단 좌표
@@ -79,18 +76,88 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
     }
     else
     {
-        if (g_btex_0)
+        if (g_int_0 == 0)
         {
-            vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
-            
-            
-            // saturate : 0 ~ 1을 넘지않게 보정
-            //float fAlpha = 1.f - saturate(dot(vColor.rgb, vColor.rgb) / 2.f);
-            float fAlpha = 1.f;
-            if (fAlpha < 0.1f)
+            if (g_btex_0)
             {
+                vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
+            
+                float fAlpha = 1.f;
+                if (fAlpha < 0.1f)
+                {
+                    // 픽셀 셰이더를 중간에 폐기 처리
+                    discard; // clip(-1)로도 동일하게 작동 가능
+                }
+            }
+        }
+        else if (g_int_0 == 1)
+        {
+            if (g_btex_1)
+            {
+                vColor = g_tex_1.Sample(g_sam_1, _in.vUV);
+            
+                float fAlpha = 1.f;
+                if (fAlpha < 0.1f)
+                {
                 // 픽셀 셰이더를 중간에 폐기 처리
-                discard; // clip(-1)로도 동일하게 작동 가능
+                    discard; // clip(-1)로도 동일하게 작동 가능
+                }
+            }
+        }
+        else if (g_int_0 == 2)
+        {
+            if (g_btex_2)
+            {
+                vColor = g_tex_2.Sample(g_sam_1, _in.vUV);
+            
+                float fAlpha = 1.f;
+                if (fAlpha < 0.1f)
+                {
+                // 픽셀 셰이더를 중간에 폐기 처리
+                    discard; // clip(-1)로도 동일하게 작동 가능
+                }
+            }
+        }
+        else if (g_int_0 == 3)
+        {
+            if (g_btex_3)
+            {
+                vColor = g_tex_3.Sample(g_sam_1, _in.vUV);
+            
+                float fAlpha = 1.f;
+                if (fAlpha < 0.1f)
+                {
+                // 픽셀 셰이더를 중간에 폐기 처리
+                    discard; // clip(-1)로도 동일하게 작동 가능
+                }
+            }
+        }
+        else if (g_int_0 == 4)
+        {
+            if (g_btex_4)
+            {
+                vColor = g_tex_4.Sample(g_sam_1, _in.vUV);
+            
+                float fAlpha = 1.f;
+                if (fAlpha < 0.1f)
+                {
+                // 픽셀 셰이더를 중간에 폐기 처리
+                    discard; // clip(-1)로도 동일하게 작동 가능
+                }
+            }
+        }
+        else if (g_int_0 == 5)
+        {
+            if (g_btex_5)
+            {
+                vColor = g_tex_5.Sample(g_sam_1, _in.vUV);
+            
+                float fAlpha = 1.f;
+                if (fAlpha < 0.1f)
+                {
+                // 픽셀 셰이더를 중간에 폐기 처리
+                    discard; // clip(-1)로도 동일하게 작동 가능
+                }
             }
         }
     }
