@@ -21,28 +21,39 @@ CTextRender::~CTextRender()
 
 void CTextRender::finaltick()
 {
-	Vec3 vPos = Vec3(0.f, 0.f, 0.f);
-
 	if (GetOwner()->GetParent())
-		vPos = GetOwner()->GetParent()->Transform()->GetWorldPos();
-	else
-		vPos = GetOwner()->Transform()->GetWorldPos();
+	{
+		Vec3 vPos = GetOwner()->GetParent()->Transform()->GetWorldPos();
 
-	Vec2 vResolution = CEngine::GetInst()->GetResolution();
+		Vec2 vResolution = CEngine::GetInst()->GetResolution();
 
-	vPos.x += vResolution.x / 2.f;
-	vPos.y = -(vPos.y - vResolution.y / 2.f);
+		vPos.x += vResolution.x / 2.f;
+		vPos.y = -(vPos.y - vResolution.y / 2.f);
 
-	m_TextInfo.m_FontPos.x = vPos.x + m_TextInfo.m_OffsetPos.x;
-	m_TextInfo.m_FontPos.y = vPos.y + m_TextInfo.m_OffsetPos.y;
+		m_TextInfo.m_FontPos.x = vPos.x + m_TextInfo.m_OffsetPos.x;
+		m_TextInfo.m_FontPos.y = vPos.y + m_TextInfo.m_OffsetPos.y;
+	}
+	else if (GetOwner() && nullptr == GetOwner()->GetParent())
+	{
+		Vec3 vPos = GetOwner()->Transform()->GetWorldPos();
+
+		Vec2 vResolution = CEngine::GetInst()->GetResolution();
+
+		vPos.x += vResolution.x / 2.f;
+		vPos.y = -(vPos.y - vResolution.y / 2.f);
+
+		m_TextInfo.m_FontPos.x = vPos.x + m_TextInfo.m_OffsetPos.x;
+		m_TextInfo.m_FontPos.y = vPos.y + m_TextInfo.m_OffsetPos.y;
+	}
+	//	vPos = GetOwner()->Transform()->GetWorldPos();
 }
 
 void CTextRender::render()
 {
 	if (0 != m_TextInfo.m_String.size())
-		CFontMgr::GetInst()->DrawFont(m_TextInfo.m_String.c_str(), m_TextInfo.m_Font.c_str(),
-									m_TextInfo.m_FontPos.x, m_TextInfo.m_FontPos.y, m_TextInfo.m_FontSize,
-									m_TextInfo.m_FontColor, m_TextInfo.m_Flags);
+		CFontMgr::GetInst()->DrawFont(m_TextInfo.m_String.c_str(), m_TextInfo.m_Font,
+			m_TextInfo.m_FontPos.x, m_TextInfo.m_FontPos.y, m_TextInfo.m_FontSize,
+			m_TextInfo.m_FontColor, m_TextInfo.m_Flags);
 }
 
 
@@ -62,10 +73,40 @@ void CTextRender::TextInit(wstring _FontType, float _FontSize, UINT _FontColor, 
 
 void CTextRender::SaveToFile(FILE* _File)
 {
-	fwrite(&m_TextInfo, sizeof(tTextInfo), 1, _File);
+	wstring GameText;
+	GameText = m_TextInfo.m_String;
+	SaveWString(GameText, _File);
+
+	wstring GameFont;
+	GameFont = m_TextInfo.m_Font;
+	SaveWString(GameFont, _File);
+
+	fwrite(&m_TextInfo.m_FontPos, sizeof(Vec3), 1, _File);
+	fwrite(&m_TextInfo.m_OffsetPos, sizeof(Vec3), 1, _File);
+	fwrite(&m_TextInfo.m_FontSize, sizeof(float), 1, _File);
+	fwrite(&m_TextInfo.m_FontColor, sizeof(UINT), 1, _File);
+	fwrite(&m_TextInfo.m_Flags, sizeof(UINT), 1, _File);	
 }
 
 void CTextRender::LoadFromFile(FILE* _File)
 {
-	fread(&m_TextInfo, sizeof(tTextInfo), 1, _File);
+	wstring GameText;
+	LoadWString(GameText, _File);
+	if (!GameText.empty())
+	{
+		m_TextInfo.m_String = GameText;
+	}
+
+	wstring GameFont;
+	LoadWString(GameFont, _File);
+	if (!GameFont.empty())
+	{
+		m_TextInfo.m_Font = GameFont;
+	}
+
+	fread(&m_TextInfo.m_FontPos, sizeof(Vec3), 1, _File);
+	fread(&m_TextInfo.m_OffsetPos, sizeof(Vec3), 1, _File);
+	fread(&m_TextInfo.m_FontSize, sizeof(float), 1, _File);
+	fread(&m_TextInfo.m_FontColor, sizeof(UINT), 1, _File);
+	fread(&m_TextInfo.m_Flags, sizeof(UINT), 1, _File);
 }

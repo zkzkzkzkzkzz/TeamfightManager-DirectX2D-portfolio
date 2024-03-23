@@ -60,6 +60,20 @@ void CFontMgr::DrawFont(const wchar_t* _pStr, LPCWSTR _font, float _fPosX, float
 	);
 }
 
+void CFontMgr::DrawFont(const wchar_t* _pStr, wstring _font, float _fPosX, float _fPosY, float _fFontSize, UINT _Color, UINT _flags)
+{
+	m_pFontWrapper->DrawString(
+		CONTEXT,
+		_pStr, // String
+		_font.c_str(), // FontFamily
+		_fFontSize,// Font size
+		_fPosX,// X position
+		_fPosY,// Y position
+		_Color,// Text color, 0xAaBbGgRr
+		FW1_RESTORESTATE | _flags     // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
+	);
+}
+
 void CFontMgr::DrawFont(tTextInfo _info)
 {
 	m_pFontWrapper->DrawString(
