@@ -195,6 +195,9 @@ CGameObject* CLevelSaveLoad::LoadGameObject(FILE* _File)
 		case COMPONENT_TYPE::MESHRENDER:
 			pComponent = new CMeshRender;
 			break;
+		case COMPONENT_TYPE::GAMETEXT:
+			pComponent = new CTextRender;
+			break;
 		case COMPONENT_TYPE::TILEMAP:
 			pComponent = new CTileMap;
 			break;

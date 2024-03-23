@@ -21,7 +21,14 @@ void GameTextUI::render_update()
 
 	Vec3 vPos = GetTargetObject()->TextRender()->GetOffsetPos();
 	float size = GetTargetObject()->TextRender()->GetFontSize();
-	static Vec3 fontcolor = Vec3(0.f, 0.f, 0.f);
+	static int FontColor = GetTargetObject()->TextRender()->GetFontColor();
+
+	static int R = FontColor & 255;
+	FontColor >> 8;
+	static int G = FontColor & 255;
+	FontColor >> 8;
+	static int B = FontColor & 255;
+	FontColor >> 8;
 
 	ImGui::Text("Font Offset");
 	ImGui::SameLine(0, 13);	ImGui::PushItemWidth(70);
@@ -34,16 +41,16 @@ void GameTextUI::render_update()
 
 	ImGui::Text("Font Color");
 	ImGui::SameLine(0, 20); ImGui::PushItemWidth(70);
-	ImGui::Text("r"); ImGui::SameLine(); ImGui::InputFloat("##r", &fontcolor.x, 0.f, 0.f, "%.0f"); ImGui::SameLine();
-	ImGui::Text("g"); ImGui::SameLine(); ImGui::InputFloat("##g", &fontcolor.y, 0.f, 0.f, "%.0f"); ImGui::SameLine();
-	ImGui::Text("b"); ImGui::SameLine(); ImGui::InputFloat("##b", &fontcolor.z, 0.f, 0.f, "%.0f");
+	ImGui::Text("r"); ImGui::SameLine(); ImGui::DragInt("##r", &R); ImGui::SameLine();
+	ImGui::Text("g"); ImGui::SameLine(); ImGui::DragInt("##g", &G); ImGui::SameLine();
+	ImGui::Text("b"); ImGui::SameLine(); ImGui::DragInt("##b", &B);
 
 	GetTargetObject()->TextRender()->SetOffsetPos(vPos);
 	GetTargetObject()->TextRender()->SetFontSize(size);
-	GetTargetObject()->TextRender()->SetFontColor((UINT)fontcolor.x, (UINT)fontcolor.y, (UINT)fontcolor.z, 255);
+	GetTargetObject()->TextRender()->SetFontColor((UINT)R, (UINT)G, (UINT)B, 255);
 
 	ImGui::Text("Text");
-	char Text[256] = {};
+	static char Text[256] = {};
 	string temp = ToString(GetTargetObject()->TextRender()->GetString());
 	
 	for (size_t i = 0; i < temp.length(); ++i)
