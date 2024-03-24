@@ -19,6 +19,10 @@ CRecruitSlotScript::CRecruitSlotScript()
 	, m_bMouseOn(false)
 	, m_bMouseOn_Prev(false)
 	, m_bMouseLBtnDown(false)
+	, m_RecruitBtn(nullptr)
+	, m_NormalImg(nullptr)
+	, m_HoverImg(nullptr)
+	, m_CurImg(nullptr)
 {
 }
 
@@ -31,6 +35,10 @@ CRecruitSlotScript::CRecruitSlotScript(const CRecruitSlotScript& _Origin)
 	, m_bMouseOn(false)
 	, m_bMouseOn_Prev(false)
 	, m_bMouseLBtnDown(false)
+	, m_RecruitBtn(nullptr)
+	, m_NormalImg(_Origin.m_NormalImg)
+	, m_HoverImg(_Origin.m_HoverImg)
+	, m_CurImg(_Origin.m_CurImg)
 {
 }
 
@@ -56,7 +64,6 @@ void CRecruitSlotScript::begin()
 	GetOwner()->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl"));
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
 
-
 	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
@@ -68,9 +75,88 @@ void CRecruitSlotScript::begin()
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
 	pNewObj->SetActive(false);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain1.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain2.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain3.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain4.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain5.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitTime.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitCost.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
 }
 
 void CRecruitSlotScript::tick()
+{
+	CheckMousePos();
+
+	render();
+}
+
+void CRecruitSlotScript::render()
+{
+	if (nullptr != m_SlotCurTex)
+		GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_1, m_SlotCurTex);
+
+	if (nullptr != m_CurImg)
+		GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
+}
+
+
+void CRecruitSlotScript::OnHovered()
+{
+	m_SlotCurTex = m_SlotHTex;
+}
+
+void CRecruitSlotScript::OnUnHovered()
+{
+	m_SlotCurTex = m_SlotNTex;
+}
+
+void CRecruitSlotScript::LBtnUp()
+{
+	m_SlotCurTex = m_SlotHTex;
+}
+
+void CRecruitSlotScript::LBtnReleased()
+{
+	m_SlotCurTex = m_SlotHTex;
+}
+
+void CRecruitSlotScript::LBtnClicked()
+{
+	m_SlotCurTex = m_SlotHTex;
+}
+
+void CRecruitSlotScript::CheckMousePos()
 {
 	m_bMouseOn_Prev = m_bMouseOn;
 
@@ -83,7 +169,6 @@ void CRecruitSlotScript::tick()
 	Vec3 vRelativePos = GetOwner()->Transform()->GetRelativePos();
 	Vec3 vWorldPos = GetOwner()->Transform()->GetWorldPos();
 	Vec3 vWorldScale = GetOwner()->Transform()->GetRelativeScale();
-
 
 	Vec2 vLT = Vec2(vWorldPos.x - vWorldScale.x / 2, (vWorldPos.y + vRelativePos.y) - vWorldScale.y / 2);
 	Vec2 vRB = Vec2(vWorldPos.x + vWorldScale.x / 2, (vWorldPos.y + vRelativePos.y) + vWorldScale.y / 2);
@@ -128,38 +213,4 @@ void CRecruitSlotScript::tick()
 		if (m_bMouseOn_Prev != m_bMouseOn)
 			OnUnHovered();
 	}
-
-	render();
-}
-
-void CRecruitSlotScript::render()
-{
-	if (nullptr != m_SlotCurTex)
-		GetOwner()->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_1, m_SlotCurTex);
-}
-
-
-void CRecruitSlotScript::OnHovered()
-{
-	m_SlotCurTex = m_SlotHTex;
-}
-
-void CRecruitSlotScript::OnUnHovered()
-{
-	m_SlotCurTex = m_SlotNTex;
-}
-
-void CRecruitSlotScript::LBtnUp()
-{
-	m_SlotCurTex = m_SlotHTex;
-}
-
-void CRecruitSlotScript::LBtnReleased()
-{
-	m_SlotCurTex = m_SlotHTex;
-}
-
-void CRecruitSlotScript::LBtnClicked()
-{
-	m_SlotCurTex = m_SlotHTex;
 }

@@ -19,9 +19,18 @@ private:
     Ptr<CTexture>   m_HoverImg;
     Ptr<CTexture>   m_CurImg;
 
+    CGameObject*    m_RecruitBtn;
+    Ptr<CTexture>   m_RNormalImg;
+    Ptr<CTexture>   m_RHoverImg;
+    Ptr<CTexture>   m_RCurImg;
+
     bool    m_bMouseOn;
     bool    m_bMouseOn_Prev;
     bool    m_bMouseLBtnDown;
+
+    bool    m_RbMouseOn;
+    bool    m_RbMouseOn_Prev;
+    bool    m_RbMouseLBtnDown;
 
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
@@ -49,7 +58,17 @@ public:
     void LBtnReleased();
     void LBtnClicked();
 
+public:
+    void ROnHovered();
+    void ROnUnHovered();
+
+    void RLBtnUp();
+
+    void RLBtnReleased();
+    void RLBtnClicked();
+
     void CheckMousePos();
+    void CheckRecruitBtnPos();
 
 public:
     virtual void begin() override;

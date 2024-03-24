@@ -195,8 +195,8 @@ void LobbyLevel::CreateTempLevel()
 	LobbyBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	LobbyBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyBtnMtrl"));
 	LobbyBtn->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
-	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png");
-	LobbyBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
+	//pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png");
+	//LobbyBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 
 	CGameObject* ChildBtn = new CGameObject;
 	ChildBtn->SetName(L"Recruitment");
@@ -278,6 +278,16 @@ void LobbyLevel::CreateTempLevel()
 
 	pTempLevel->AddObject(Recruit, 2);
 
+	Ptr<CMaterial> pBtn = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BtnMtrl");
+	pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	pBtn->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\important_button_0.png",
+																			L"texture\\Lobby\\recruitment\\btn\\important_button_0.png"));
+	pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+	pBtn->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\important_button_1.png",
+																			L"texture\\Lobby\\recruitment\\btn\\important_button_1.png"));
+	//pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+	//pBtn->SetTexParam(TEX_PARAM::TEX_2, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\default_button_4.png",
+	//																		L"texture\\Lobby\\recruitment\\btn\\default_button_4.png"));
 
 	Ptr<CMaterial> pRecruit = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl");
 	pRecruit->SetScalarParam(SCALAR_PARAM::INT_0, 0);

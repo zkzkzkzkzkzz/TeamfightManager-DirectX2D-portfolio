@@ -504,6 +504,11 @@ void CAssetMgr::CreateLobbyLevelMaterial()
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"LobbyBtnMtrl", pMtrl);
 
+	// 일반 버튼 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"BtnMtrl", pMtrl);
+
 	// 진행 버튼 머테리얼
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));

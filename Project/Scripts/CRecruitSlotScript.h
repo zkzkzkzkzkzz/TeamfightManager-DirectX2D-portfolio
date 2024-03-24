@@ -20,6 +20,11 @@ private:
     bool    m_bMouseOn_Prev;
     bool    m_bMouseLBtnDown;
 
+    CGameObject*    m_RecruitBtn;
+    Ptr<CTexture>   m_NormalImg;
+    Ptr<CTexture>   m_HoverImg;
+    Ptr<CTexture>   m_CurImg;
+
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
 
@@ -45,6 +50,8 @@ public:
 
     void LBtnReleased();
     void LBtnClicked();
+
+    void CheckMousePos();
 
 public:
     virtual void begin() override;
