@@ -508,6 +508,11 @@ void CAssetMgr::CreateLobbyLevelMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"ProceedBtnMtrl", pMtrl);
+
+	// 영입 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"RecruitmentMtrl", pMtrl);
 }
 
 

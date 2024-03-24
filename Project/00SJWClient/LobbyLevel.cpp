@@ -26,6 +26,8 @@
 #include <Scripts\CCursorScript.h>
 #include <Scripts\CProceedBtnScript.h>
 #include <Scripts\CMgrBtnScript.h>
+#include <Scripts\CRecruitmentScript.h>
+#include <Scripts\CRecruitSlotScript.h>
 
 void LobbyLevel::Init()
 {
@@ -258,16 +260,48 @@ void LobbyLevel::CreateTempLevel()
 	proceedBtn->AddComponent(new CProceedBtnScript);
 	pTempLevel->AddObject(proceedBtn, 2);
 
+	// Recruitment
+	CGameObject* Recruit = new CGameObject;
+	Recruit->SetName(L"RecruitmentUI");
+	Recruit->AddComponent(new CTransform);
+	Recruit->AddComponent(new CMeshRender);
+	Recruit->AddComponent(new CRecruitmentScript);
+	
+	CGameObject* RecruitSlot = new CGameObject;
+	RecruitSlot->SetName(L"RecruitSlot");
+	RecruitSlot->AddComponent(new CTransform);
+	RecruitSlot->AddComponent(new CMeshRender);
+	RecruitSlot->AddComponent(new CRecruitSlotScript);
+	Recruit->AddChild(RecruitSlot);
+	RecruitSlot->SetActive(false);
+	Recruit->SetActive(false);
+
+	pTempLevel->AddObject(Recruit, 2);
+
+
+	Ptr<CMaterial> pRecruit = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl");
+	pRecruit->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	pRecruit->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruitment_ui_bg.png",
+																				L"texture\\Lobby\\recruitment\\recruitment_ui_bg.png"));
+	pRecruit->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+	pRecruit->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruit_slot_bg.png",
+																				L"texture\\Lobby\\recruitment\\recruit_slot_bg.png"));
+	pRecruit->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+	pRecruit->SetTexParam(TEX_PARAM::TEX_2, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruit_player_slot_bg.png",
+																				L"texture\\Lobby\\recruitment\\recruit_player_slot_bg.png"));
 
 	Ptr<CMaterial> pTextUI = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TextUIMtrl");
-	pTextUI->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\notification_bg_header.png", L"texture\\Lobby\\header\\notification_bg_header.png"));
+	pTextUI->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\notification_bg_header.png",
+																				L"texture\\Lobby\\header\\notification_bg_header.png"));
 	
 	
 	Ptr<CMaterial> pLogo = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LogoMtrl");
 	pLogo->SetScalarParam(SCALAR_PARAM::INT_0, 0);
-	pLogo->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\captains.png", L"texture\\Lobby\\header\\captains.png"));
+	pLogo->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\captains.png", 
+																			L"texture\\Lobby\\header\\captains.png"));
 	pLogo->SetScalarParam(SCALAR_PARAM::INT_0, 1);
-	pLogo->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\league_icon_custom.png", L"texture\\Lobby\\league_icon_custom.png"));
+	pLogo->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\league_icon_custom.png",
+																			L"texture\\Lobby\\league_icon_custom.png"));
 
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);

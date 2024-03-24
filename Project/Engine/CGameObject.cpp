@@ -87,9 +87,6 @@ void CGameObject::begin()
 
 void CGameObject::tick()
 {
-	if (CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"TextUI"))
-		int a = 0;
-
 	if (m_Active)
 	{
 		for (UINT i = 0; i < UINT(COMPONENT_TYPE::END); ++i)
@@ -233,7 +230,6 @@ int CGameObject::DisconnectWithLayer()
 	pCurLayer->DetachGameObject(this);
 	return LayerIdx;
 }
-
 
 void CGameObject::AddChild(CGameObject* _Child)
 {

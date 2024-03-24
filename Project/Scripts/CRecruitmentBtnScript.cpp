@@ -2,6 +2,8 @@
 #include "CRecruitmentBtnScript.h"
 
 #include <Engine\CEngine.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
 #include <Engine\CKeyMgr.h>
 #include <Engine\CTimeMgr.h>
 #include <Engine\CGameObject.h>
@@ -64,6 +66,8 @@ void CRecruitmentBtnScript::begin()
 	GetOwner()->AddChild(m_BtnText);
 	m_BtnText->SetLayerIdx(5);
 	m_BtnText->SetActive(false);
+
+	SetDeletage(this, (DelegateFunc)&CRecruitmentBtnScript::ActiveRecruitUI);
 }
 
 void CRecruitmentBtnScript::tick()
@@ -265,4 +269,11 @@ void CRecruitmentBtnScript::CloseBtn()
 		m_isBtnOpen = false;
 		m_Time = 0.f;
 	}
+}
+
+void CRecruitmentBtnScript::ActiveRecruitUI()
+{
+	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+	CGameObject* pObj = pLevel->FindObjectByName(L"RecruitmentUI");
+	pObj->SetActive(true);
 }

@@ -48,7 +48,7 @@ void CRecruitSlotScript::begin()
 
 	m_SlotCurTex = m_SlotNTex;
 
-	GetOwner()->Transform()->SetRelativePos(Vec3(-380.f, 0.f, -1.f));
+	GetOwner()->Transform()->SetRelativePos(Vec3(-437.f, 0.f, -1.f));
 	GetOwner()->Transform()->SetRelativeScale(Vec3(302.f, 392.f, 1.f));
 
 	GetOwner()->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));

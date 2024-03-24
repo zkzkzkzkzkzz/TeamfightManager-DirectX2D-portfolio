@@ -57,6 +57,8 @@ public:
     void OpenBtn();
     void CloseBtn();
 
+    void ActiveRecruitUI();
+
 public:
     virtual void begin() override;
     virtual void tick() override;
