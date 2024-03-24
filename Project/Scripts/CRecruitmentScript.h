@@ -6,6 +6,15 @@ typedef  void(CEntity::* DelegateFunc)(void);
 
 class CGameObject;
 
+enum class RECRUIT_STATE
+{
+    NONE,
+    SEARCH,
+    DONE,
+    CLOSE,
+    END,
+};
+
 class CRecruitmentScript :
     public CScript
 {
@@ -22,7 +31,10 @@ private:
     CGameObject*    m_RecruitBtn;
     Ptr<CTexture>   m_RNormalImg;
     Ptr<CTexture>   m_RHoverImg;
+    Ptr<CTexture>   m_DNormalImg;
+    Ptr<CTexture>   m_DHoverImg;
     Ptr<CTexture>   m_RCurImg;
+    CGameObject*    m_RText;
 
     bool    m_bMouseOn;
     bool    m_bMouseOn_Prev;
@@ -31,6 +43,9 @@ private:
     bool    m_RbMouseOn;
     bool    m_RbMouseOn_Prev;
     bool    m_RbMouseLBtnDown;
+
+    RECRUIT_STATE   m_RState;
+    bool            m_bStateChange;
 
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
@@ -71,6 +86,13 @@ public:
     void CheckRecruitBtnPos();
 
 public:
+    void SetState(RECRUIT_STATE _state) { m_RState = _state; }
+    RECRUIT_STATE GetState() { return m_RState; }
+    bool IsChange() { return m_bStateChange; }
+
+    void RecruitGamer();
+
+public:
     virtual void begin() override;
     virtual void tick() override;
     void render();
@@ -79,5 +101,7 @@ public:
     CLONE_DISABLE(CRecruitmentScript);
     CRecruitmentScript();
     ~CRecruitmentScript();
+
+    friend class CRecruitmentBtnScript;
 };
 

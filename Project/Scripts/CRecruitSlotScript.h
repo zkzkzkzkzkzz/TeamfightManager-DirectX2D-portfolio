@@ -14,6 +14,10 @@ private:
     CGameObject*    m_Slot;
     Ptr<CTexture>   m_SlotNTex;
     Ptr<CTexture>   m_SlotHTex;
+    Ptr<CTexture>   m_SlotSTex;
+    Ptr<CTexture>   m_SlotSHTex;
+    Ptr<CTexture>   m_SlotDTex;
+    Ptr<CTexture>   m_SlotDHTex;
     Ptr<CTexture>   m_SlotCurTex;
 
     bool    m_bMouseOn;
@@ -24,6 +28,8 @@ private:
     Ptr<CTexture>   m_NormalImg;
     Ptr<CTexture>   m_HoverImg;
     Ptr<CTexture>   m_CurImg;
+
+    vector<CGameObject*>    m_vecText;
 
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;

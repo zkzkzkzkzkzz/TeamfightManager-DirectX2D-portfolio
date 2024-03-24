@@ -10,11 +10,17 @@
 #include <Engine\components.h>
 #include <Engine\CFontMgr.h>
 
+#include "CRecruitmentScript.h"
+
 CRecruitSlotScript::CRecruitSlotScript()
 	: CScript(RECRUITSLOTSCRIPT)
 	, m_Slot(nullptr)
 	, m_SlotNTex(nullptr)
 	, m_SlotHTex(nullptr)
+	, m_SlotSTex(nullptr)
+	, m_SlotSHTex(nullptr)
+	, m_SlotDTex(nullptr)
+	, m_SlotDHTex(nullptr)
 	, m_SlotCurTex(nullptr)
 	, m_bMouseOn(false)
 	, m_bMouseOn_Prev(false)
@@ -23,6 +29,8 @@ CRecruitSlotScript::CRecruitSlotScript()
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
 	, m_CurImg(nullptr)
+	, m_vecText{}
+
 {
 }
 
@@ -31,6 +39,10 @@ CRecruitSlotScript::CRecruitSlotScript(const CRecruitSlotScript& _Origin)
 	, m_Slot(nullptr)
 	, m_SlotNTex(_Origin.m_SlotNTex)
 	, m_SlotHTex(_Origin.m_SlotHTex)
+	, m_SlotSTex(_Origin.m_SlotSTex)
+	, m_SlotSHTex(_Origin.m_SlotSHTex)
+	, m_SlotDTex(_Origin.m_SlotDTex)
+	, m_SlotDHTex(_Origin.m_SlotDHTex)
 	, m_SlotCurTex(_Origin.m_SlotCurTex)
 	, m_bMouseOn(false)
 	, m_bMouseOn_Prev(false)
@@ -39,6 +51,7 @@ CRecruitSlotScript::CRecruitSlotScript(const CRecruitSlotScript& _Origin)
 	, m_NormalImg(_Origin.m_NormalImg)
 	, m_HoverImg(_Origin.m_HoverImg)
 	, m_CurImg(_Origin.m_CurImg)
+	, m_vecText{}
 {
 }
 
@@ -51,10 +64,16 @@ void CRecruitSlotScript::begin()
 {
 	m_SlotNTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruit_slot_bg.png",
 													L"texture\\Lobby\\recruitment\\recruit_slot_bg.png");
-
+	m_SlotSTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruit_search.png",
+													L"texture\\Lobby\\recruitment\\recruit_search.png");
+	m_SlotSHTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruit_search_hover.png",
+													L"texture\\Lobby\\recruitment\\recruit_search_hover.png");
 	m_SlotHTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruit_slot_bg_hover.png",
 													L"texture\\Lobby\\recruitment\\recruit_slot_bg_hover.png");
-
+	m_SlotDTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruit_player_slot_bg.png",
+													L"texture\\Lobby\\recruitment\\recruit_player_slot_bg.png");
+	m_SlotDHTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruit_player_slot_bg_hover.png",
+													L"texture\\Lobby\\recruitment\\recruit_player_slot_bg_hover.png");
 	m_SlotCurTex = m_SlotNTex;
 
 	GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
@@ -64,58 +83,156 @@ void CRecruitSlotScript::begin()
 	GetOwner()->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl"));
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
 
-	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameText.prefab")->Instatiate();
+	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitmentText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
+	GetOwner()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitClose.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
 
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameSlotIndex.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false);	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameText.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);	m_vecText.push_back(pNewObj);
 
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain1.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain2.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false);	m_vecText.push_back(pNewObj);
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain3.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain4.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain5.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
 
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitTime.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitCost.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitSearchText.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingText1.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingText2.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingTime.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SkipText.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\DepositText.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\AcceptRecruitText.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
 }
 
 void CRecruitSlotScript::tick()
 {
+	bool bChange = GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->IsChange();
+
+
+	if (RECRUIT_STATE::NONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		for (size_t i = 0; i < m_vecText.size(); i++)
+		{
+			m_vecText[i]->SetActive(false);
+		}
+		for (size_t i = 0; i < 12; ++i)
+		{
+			m_vecText[i]->SetActive(true);
+		}
+	}
+	else if (RECRUIT_STATE::SEARCH == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState() && bChange)
+	{
+		for (size_t i = 4; i < m_vecText.size(); i++)
+		{
+			m_vecText[i]->SetActive(false);
+		}
+		for (size_t i = 12; i < 16; ++i)
+		{
+			m_vecText[i]->SetActive(true);
+		}
+	}
+	else if (RECRUIT_STATE::DONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState() && bChange)
+	{
+		for (size_t i = 2; i < 16; ++i)
+		{
+			m_vecText[i]->SetActive(false);
+		}
+		for (size_t i = 16; i <= 17; ++i)
+		{
+			m_vecText[i]->SetActive(true);
+		}
+	}
+	else if (RECRUIT_STATE::CLOSE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState() && bChange)
+	{
+		for (size_t i = 0; i < m_vecText.size(); ++i)
+		{
+			m_vecText[i]->SetActive(false);
+		}
+	}
+
 	CheckMousePos();
 
 	render();
@@ -133,27 +250,82 @@ void CRecruitSlotScript::render()
 
 void CRecruitSlotScript::OnHovered()
 {
-	m_SlotCurTex = m_SlotHTex;
+	if (RECRUIT_STATE::NONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotHTex;
+	}
+	else if (RECRUIT_STATE::SEARCH == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotSHTex;
+	}
+	else if (RECRUIT_STATE::DONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotDHTex;
+	}
 }
 
 void CRecruitSlotScript::OnUnHovered()
 {
-	m_SlotCurTex = m_SlotNTex;
+	if (RECRUIT_STATE::NONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotNTex;
+	}
+	else if (RECRUIT_STATE::SEARCH == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotSTex;
+	}
+	else if (RECRUIT_STATE::DONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotDTex;
+	}
 }
 
 void CRecruitSlotScript::LBtnUp()
 {
-	m_SlotCurTex = m_SlotHTex;
+	if (RECRUIT_STATE::NONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotHTex;
+	}
+	else if (RECRUIT_STATE::SEARCH == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotSHTex;
+	}
+	else if (RECRUIT_STATE::DONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotDHTex;
+	}
 }
 
 void CRecruitSlotScript::LBtnReleased()
 {
-	m_SlotCurTex = m_SlotHTex;
+	if (RECRUIT_STATE::NONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotHTex;
+	}
+	else if (RECRUIT_STATE::SEARCH == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotSHTex;
+	}
+	else if (RECRUIT_STATE::DONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotDHTex;
+	}
 }
 
 void CRecruitSlotScript::LBtnClicked()
 {
-	m_SlotCurTex = m_SlotHTex;
+	if (RECRUIT_STATE::NONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotHTex;
+	}
+	else if (RECRUIT_STATE::SEARCH == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotSHTex;
+	}
+	else if (RECRUIT_STATE::DONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
+	{
+		m_SlotCurTex = m_SlotDHTex;
+	}
 }
 
 void CRecruitSlotScript::CheckMousePos()

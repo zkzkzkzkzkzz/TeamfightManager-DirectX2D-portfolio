@@ -12,6 +12,7 @@
 #include <Engine\CFontMgr.h>
 
 #include "CLobbyBtnScript.h"
+#include "CRecruitmentScript.h"
 
 CRecruitmentBtnScript::CRecruitmentBtnScript()
 	: CScript(RECRUITMENTBTNSCRIPT)
@@ -276,4 +277,6 @@ void CRecruitmentBtnScript::ActiveRecruitUI()
 	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 	CGameObject* pObj = pLevel->FindObjectByName(L"RecruitmentUI");
 	pObj->SetActive(true);
+	pObj->GetScript<CRecruitmentScript>()->m_bStateChange = true;
+	pObj->GetScript<CRecruitmentScript>()->SetState(RECRUIT_STATE::NONE);
 }

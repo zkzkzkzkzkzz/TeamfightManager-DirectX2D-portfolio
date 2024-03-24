@@ -23,17 +23,21 @@ CRecruitmentScript::CRecruitmentScript()
 	, m_RecruitBtn(nullptr)
 	, m_RNormalImg(nullptr)
 	, m_RHoverImg(nullptr)
+	, m_DNormalImg(nullptr)
+	, m_DHoverImg(nullptr)
 	, m_RCurImg(nullptr)
 	, m_RbMouseOn(false)
 	, m_RbMouseOn_Prev(false)
 	, m_RbMouseLBtnDown(false)
+	, m_RText(nullptr)
+	, m_RState(RECRUIT_STATE::NONE)
+	, m_bStateChange(false)
 {
 }
 
 CRecruitmentScript::~CRecruitmentScript()
 {
 }
-
 
 void CRecruitmentScript::begin()
 {
@@ -67,6 +71,10 @@ void CRecruitmentScript::begin()
 														L"texture\\Lobby\\recruitment\\btn\\important_button_0.png");
 	m_RHoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\important_button_1.png",
 														L"texture\\Lobby\\recruitment\\btn\\important_button_1.png");
+	m_DNormalImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\default_button_4.png",
+														L"texture\\Lobby\\recruitment\\btn\\default_button_4.png");
+	m_DHoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\default_button_5.png",
+														L"texture\\Lobby\\recruitment\\btn\\default_button_5.png");
 	m_RCurImg = m_RNormalImg;
 
 	m_RCurImg = m_RNormalImg;
@@ -80,24 +88,6 @@ void CRecruitmentScript::begin()
 	m_RecruitBtn->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	GetOwner()->AddChild(m_RecruitBtn);
 	m_RecruitBtn->SetActive(false);
-
-	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitmentText.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
-
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitClose.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
-
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitSearchText.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);
 }
 
 void CRecruitmentScript::tick()
@@ -106,9 +96,35 @@ void CRecruitmentScript::tick()
 	
 	if (GetOwner()->IsActive())
 	{
-		for (size_t i = 0; i < pchild.size(); ++i)
+		if (RECRUIT_STATE::NONE == GetState() && m_bStateChange)
 		{
-			pchild[i]->SetActive(true);
+			for (size_t i = 0; i < pchild.size(); ++i)
+			{
+				pchild[i]->SetActive(true);
+			}
+
+			m_bStateChange = false;
+		}
+		else if (RECRUIT_STATE::SEARCH == GetState() && m_bStateChange)
+		{
+			m_bStateChange = false;
+		}
+		else if (RECRUIT_STATE::DONE == GetState() && m_bStateChange)
+		{
+			m_bStateChange = false;
+		}
+		else if (RECRUIT_STATE::CLOSE == GetState() && m_bStateChange)
+		{
+			m_bStateChange = false;
+
+			vector<CGameObject*> pChild = GetOwner()->GetChild();
+
+			for (size_t i = 0; i < pChild.size(); ++i)
+			{
+				pChild[i]->SetActive(false);
+			}
+			
+			GetOwner()->SetActive(false);
 		}
 	}
 	else
@@ -162,14 +178,8 @@ void CRecruitmentScript::LBtnClicked()
 {
 	m_CurImg = m_HoverImg;
 
-	vector<CGameObject*> pChild = GetOwner()->GetChild();
-
-	for (size_t i = 0; i < pChild.size(); ++i)
-	{
-		pChild[i]->SetActive(false);
-	}
-
-	GetOwner()->SetActive(false);
+	SetState(RECRUIT_STATE::CLOSE);
+	m_bStateChange = true;
 }
 
 void CRecruitmentScript::CheckMousePos()
@@ -239,27 +249,61 @@ void CRecruitmentScript::CheckMousePos()
 
 void CRecruitmentScript::ROnHovered()
 {
-	m_RCurImg = m_RHoverImg;
+	if (RECRUIT_STATE::NONE == GetState())
+		m_RCurImg = m_RHoverImg;
+	else if (RECRUIT_STATE::SEARCH == GetState())
+		m_RCurImg = m_DHoverImg;
+	else if (RECRUIT_STATE::DONE == GetState())
+		m_RCurImg = m_RHoverImg;
 }
 
 void CRecruitmentScript::ROnUnHovered()
 {
-	m_RCurImg = m_RNormalImg;
+	if (RECRUIT_STATE::NONE == GetState())
+		m_RCurImg = m_RNormalImg;
+	else if (RECRUIT_STATE::SEARCH == GetState())
+		m_RCurImg = m_DNormalImg;
+	else if (RECRUIT_STATE::DONE == GetState())
+		m_RCurImg = m_RNormalImg;
 }
 
 void CRecruitmentScript::RLBtnUp()
 {
-	m_RCurImg = m_RNormalImg;
+	if (RECRUIT_STATE::NONE == GetState())
+		m_RCurImg = m_RNormalImg;
+	else if (RECRUIT_STATE::SEARCH == GetState())
+		m_RCurImg = m_DNormalImg;
+	else if (RECRUIT_STATE::DONE == GetState())
+		m_RCurImg = m_RNormalImg;
 }
 
 void CRecruitmentScript::RLBtnReleased()
 {
-	m_RCurImg = m_RNormalImg;
+	if (RECRUIT_STATE::NONE == GetState())
+		m_RCurImg = m_RNormalImg;
+	else if (RECRUIT_STATE::SEARCH == GetState())
+		m_RCurImg = m_DNormalImg;
+	else if (RECRUIT_STATE::DONE == GetState())
+		m_RCurImg = m_RNormalImg;
 }
 
 void CRecruitmentScript::RLBtnClicked()
 {
-	m_RCurImg = m_RHoverImg;
+	if (RECRUIT_STATE::NONE == GetState())
+		m_RCurImg = m_RHoverImg;
+	else if (RECRUIT_STATE::SEARCH == GetState())
+		m_RCurImg = m_DHoverImg;
+	else if (RECRUIT_STATE::DONE == GetState())
+		m_RCurImg = m_RHoverImg;
+
+	if (RECRUIT_STATE::NONE == GetState())
+		SetState(RECRUIT_STATE::SEARCH);
+	else if (RECRUIT_STATE::SEARCH == GetState())
+		SetState(RECRUIT_STATE::DONE);
+	else if (RECRUIT_STATE::DONE == GetState())
+		RecruitGamer();
+
+	m_bStateChange = true;
 }
 
 
@@ -321,4 +365,9 @@ void CRecruitmentScript::CheckRecruitBtnPos()
 		if (m_RbMouseOn_Prev != m_RbMouseOn)
 			ROnUnHovered();
 	}
+}
+
+void CRecruitmentScript::RecruitGamer()
+{
+	
 }
