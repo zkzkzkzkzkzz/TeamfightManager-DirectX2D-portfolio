@@ -14,7 +14,7 @@ TransformUI::TransformUI()
 	: ComponentUI("Transform", "##Transform", COMPONENT_TYPE::TRANSFORM)
 	, m_LayerIdx(OBJECTLAYER::END)
 {
-	SetSize(ImVec2(0.f, 165.f));
+	SetSize(ImVec2(0.f, 185.f));
 	SetComponentTitle("Transform");
 }
 
@@ -125,6 +125,13 @@ void TransformUI::render_update()
 	}
 
 	GetTargetObject()->SetLayerIdx((int)m_LayerIdx);
+
+	// 오브젝트 활성화 체크
+	bool active = GetTargetObject()->IsActive();
+	ImGui::Text("Active");
+	ImGui::SameLine();
+	ImGui::Checkbox("##ObjectActive", &active);
+	GetTargetObject()->SetActive(active);
 }
 
 
