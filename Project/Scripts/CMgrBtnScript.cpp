@@ -83,7 +83,7 @@ void CMgrBtnScript::tick()
 	vMousePos.y = -(vMousePos.y - vResolution.y / 2.f);
 
 	Vec3 vWorldPos = GetOwner()->Transform()->GetWorldPos();
-	Vec3 vWorldScale = GetOwner()->Transform()->GetWorldScale();
+	Vec3 vWorldScale = GetOwner()->Transform()->GetRelativeScale();
 
 	Vec2 vLT = Vec2(vWorldPos.x - vWorldScale.x / 2, vWorldPos.y - vWorldScale.y / 2);
 	Vec2 vRB = Vec2(vWorldPos.x + vWorldScale.x / 2, vWorldPos.y + vWorldScale.y / 2);

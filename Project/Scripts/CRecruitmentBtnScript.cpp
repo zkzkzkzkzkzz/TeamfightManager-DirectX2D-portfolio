@@ -86,7 +86,7 @@ void CRecruitmentBtnScript::tick()
 
 		Vec3 vRelativePos = GetOwner()->Transform()->GetRelativePos();
 		Vec3 vWorldPos = GetOwner()->GetParent()->Transform()->GetWorldPos();
-		Vec3 vWorldScale = GetOwner()->GetParent()->Transform()->GetWorldScale();
+		Vec3 vWorldScale = GetOwner()->GetParent()->Transform()->GetRelativeScale();
 
 
 		Vec2 vLT = Vec2(vWorldPos.x - vWorldScale.x / 2, (vWorldPos.y + vRelativePos.y) - vWorldScale.y / 2);
@@ -185,6 +185,13 @@ void CRecruitmentBtnScript::LBtnReleased()
 void CRecruitmentBtnScript::LBtnClicked()
 {
 	m_CurImg = m_HoverImg;
+
+	// CallBack
+	if (m_CallBackFunc) m_CallBackFunc();
+
+	// Delegate
+	if (m_Inst != nullptr && m_Delegate != nullptr)
+		(m_Inst->*m_Delegate)();
 }
 
 
