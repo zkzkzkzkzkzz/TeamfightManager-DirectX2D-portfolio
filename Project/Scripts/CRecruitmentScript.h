@@ -14,6 +14,15 @@ private:
     CGameObject*    m_Panel;
     Ptr<CTexture>   m_PanelTex;
 
+    CGameObject*    m_CloseBtn;
+    Ptr<CTexture>   m_NormalImg;
+    Ptr<CTexture>   m_HoverImg;
+    Ptr<CTexture>   m_CurImg;
+
+    bool    m_bMouseOn;
+    bool    m_bMouseOn_Prev;
+    bool    m_bMouseLBtnDown;
+
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
 
@@ -39,6 +48,8 @@ public:
 
     void LBtnReleased();
     void LBtnClicked();
+
+    void CheckMousePos();
 
 public:
     virtual void begin() override;
