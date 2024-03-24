@@ -6,6 +6,7 @@
 #include <Engine\CTimeMgr.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CAssetMgr.h>
+#include <Engine\CPrefab.h>
 #include <Engine\components.h>
 #include <Engine\CFontMgr.h>
 
@@ -54,6 +55,19 @@ void CRecruitSlotScript::begin()
 	GetOwner()->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	GetOwner()->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl"));
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+
+
+	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameText.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameSlotIndex.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->GetParent()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
 }
 
 void CRecruitSlotScript::tick()

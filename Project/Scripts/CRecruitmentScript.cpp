@@ -55,6 +55,18 @@ void CRecruitmentScript::begin()
 	m_CloseBtn->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	GetOwner()->AddChild(m_CloseBtn);
 	m_CloseBtn->SetActive(false);
+
+	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitmentText.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
+
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitClose.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	pNewObj->SetActive(false);
 }
 
 void CRecruitmentScript::tick()
