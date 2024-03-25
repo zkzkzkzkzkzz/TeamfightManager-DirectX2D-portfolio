@@ -285,9 +285,9 @@ void LobbyLevel::CreateTempLevel()
 	pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 1);
 	pBtn->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\important_button_1.png",
 																			L"texture\\Lobby\\recruitment\\btn\\important_button_1.png"));
-	//pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 2);
-	//pBtn->SetTexParam(TEX_PARAM::TEX_2, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\default_button_4.png",
-	//																		L"texture\\Lobby\\recruitment\\btn\\default_button_4.png"));
+	pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+	pBtn->SetTexParam(TEX_PARAM::TEX_2, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\default_button_4.png",
+																			L"texture\\Lobby\\recruitment\\btn\\default_button_4.png"));
 
 	Ptr<CMaterial> pRecruit = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl");
 	pRecruit->SetScalarParam(SCALAR_PARAM::INT_0, 0);
@@ -315,4 +315,5 @@ void LobbyLevel::CreateTempLevel()
 
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
+
 }

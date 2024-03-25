@@ -29,7 +29,11 @@ private:
     Ptr<CTexture>   m_HoverImg;
     Ptr<CTexture>   m_CurImg;
 
-    vector<CGameObject*>    m_vecText;
+    CGameObject*    m_Text;
+    vector<CGameObject*>    m_DefaultText;
+    vector<CGameObject*>    m_NoneText;
+    vector<CGameObject*>    m_SearchText;
+    vector<CGameObject*>    m_DoneText;
 
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;

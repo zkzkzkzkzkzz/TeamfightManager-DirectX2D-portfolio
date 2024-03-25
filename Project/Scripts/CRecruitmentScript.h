@@ -36,6 +36,8 @@ private:
     Ptr<CTexture>   m_RCurImg;
     CGameObject*    m_RText;
 
+    vector<CGameObject*>    m_vecText;
+
     bool    m_bMouseOn;
     bool    m_bMouseOn_Prev;
     bool    m_bMouseLBtnDown;

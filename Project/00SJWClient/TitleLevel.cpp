@@ -18,6 +18,7 @@
 
 #include <Scripts\CNewBtnScript.h>
 #include <Scripts\CEndBtnScript.h>
+#include <Scripts\CCursorScript.h>
 
 #include "CLevelSaveLoad.h"
 
@@ -32,8 +33,15 @@ void TitleLevel::CreateTempLevel()
 	pTempLevel->GetLayer(0)->SetName(L"Default");
 	pTempLevel->GetLayer(1)->SetName(L"Light");
 	pTempLevel->GetLayer(2)->SetName(L"Background");
-
+	pTempLevel->GetLayer(5)->SetName(L"Cursor");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
+
+	CGameObject* pCursor = new CGameObject;
+	pCursor->SetName(L"Cursor");
+	pCursor->AddComponent(new CTransform);
+	pCursor->AddComponent(new CMeshRender);
+	pCursor->AddComponent(new CCursorScript);
+	pTempLevel->AddObject(pCursor, 5);
 
 	// Main Camera 생성
 	CGameObject* pCamObj = new CGameObject;

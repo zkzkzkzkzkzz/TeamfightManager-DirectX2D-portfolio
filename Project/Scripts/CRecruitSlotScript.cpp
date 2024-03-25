@@ -4,6 +4,8 @@
 #include <Engine\CEngine.h>
 #include <Engine\CKeyMgr.h>
 #include <Engine\CTimeMgr.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CPrefab.h>
@@ -29,8 +31,9 @@ CRecruitSlotScript::CRecruitSlotScript()
 	, m_NormalImg(nullptr)
 	, m_HoverImg(nullptr)
 	, m_CurImg(nullptr)
-	, m_vecText{}
-
+	, m_NoneText{}
+	, m_SearchText{}
+	, m_DoneText{}
 {
 }
 
@@ -51,7 +54,9 @@ CRecruitSlotScript::CRecruitSlotScript(const CRecruitSlotScript& _Origin)
 	, m_NormalImg(_Origin.m_NormalImg)
 	, m_HoverImg(_Origin.m_HoverImg)
 	, m_CurImg(_Origin.m_CurImg)
-	, m_vecText{}
+	, m_NoneText{}
+	, m_SearchText{}
+	, m_DoneText{}
 {
 }
 
@@ -83,153 +88,254 @@ void CRecruitSlotScript::begin()
 	GetOwner()->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl"));
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
 
-	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitmentText.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
 
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitClose.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	//m_Text = new CGameObject;
+	//m_Text->AddComponent(new CTransform);
+	//m_Text->AddComponent(new CTextRender);
+	//m_Text->TextRender()->SetString(L"Local Talent");
+	//m_Text->TextRender()->SetOffsetPos(Vec3(-65.f, -178.f, 0.f));
+	//m_Text->TextRender()->SetFont(L"Galmuri14");
+	//m_Text->TextRender()->SetFontSize(19.f);
+	//pLevel->AddObject(m_Text, 5);
+	//m_DefaultText.push_back(m_Text);
 
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameSlotIndex.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);	m_vecText.push_back(pNewObj);
+	//m_Text = new CGameObject;
+	//m_Text->AddComponent(new CTransform);
+	//m_Text->AddComponent(new CTextRender);
+	//m_Text->TextRender()->SetString(L"Find players in the local");
+	//m_Text->TextRender()->SetOffsetPos(Vec3(-134.f, -92.f, 0.f));
+	//m_Text->TextRender()->SetFont(L"Galmuri14");
+	//m_Text->TextRender()->SetFontSize(18.f);
+	//pLevel->AddObject(m_Text, 5);
+	//m_NoneText.push_back(m_Text);
 
+	//m_Text = new CGameObject;
+	//m_Text->AddComponent(new CTransform);
+	//m_Text->AddComponent(new CTextRender);
+	//m_Text->TextRender()->SetString(L"area with outstanding skills");
+	//m_Text->TextRender()->SetOffsetPos(Vec3(-134.f, -65.f, 0.f));
+	//m_Text->TextRender()->SetFont(L"Galmuri14");
+	//m_Text->TextRender()->SetFontSize(18.f);
+	//pLevel->AddObject(m_Text, 5);
+	//m_NoneText.push_back(m_Text);
+	//m_Text = new CGameObject;
+	//m_Text->AddComponent(new CTransform);
+	//m_Text->AddComponent(new CTextRender);
+	//m_Text->TextRender()->SetString(L"Time:               2");
+	//m_Text->TextRender()->SetOffsetPos(Vec3(-117.f, 64.f, 0.f));
+	//m_Text->TextRender()->SetFont(L"Galmuri14");
+	//m_Text->TextRender()->SetFontSize(19.f);
+	//pLevel->AddObject(m_Text, 5);
+	//m_NoneText.push_back(m_Text);
+	//m_Text = new CGameObject;
+	//m_Text->AddComponent(new CTransform);
+	//m_Text->AddComponent(new CTextRender);
+	//m_Text->TextRender()->SetString(L"Cost:              10");
+	//m_Text->TextRender()->SetOffsetPos(Vec3(-117.f, 98.f, 0.f));
+	//m_Text->TextRender()->SetFont(L"Galmuri14");
+	//m_Text->TextRender()->SetFontSize(19.f);
+	//pLevel->AddObject(m_Text, 5);
+	//m_NoneText.push_back(m_Text);
+	//m_Text = new CGameObject;
+	//m_Text->AddComponent(new CTransform);
+	//m_Text->AddComponent(new CTextRender);
+	//m_Text->TextRender()->SetString(L"Search");
+	//m_Text->TextRender()->SetOffsetPos(Vec3(-40.f, 146.f, 0.f));
+	//m_Text->TextRender()->SetFont(L"Galmuri14");
+	//m_Text->TextRender()->SetFontSize(19.f);
+	//pLevel->AddObject(m_Text, 5);
+	//m_NoneText.push_back(m_Text);
+
+	// 0
+	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameSlotIndex.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_DefaultText.push_back(pNewObj);
+
+	// 1
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);	m_vecText.push_back(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_DefaultText.push_back(pNewObj);
 
+	// 2
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain1.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_NoneText.push_back(pNewObj);
+
+	// 3
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain2.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false);	m_vecText.push_back(pNewObj);
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain3.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain4.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain5.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_NoneText.push_back(pNewObj);
 
+	// 4
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitTime.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_NoneText.push_back(pNewObj);
+	
+	// 5
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitCost.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->GetParent()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_NoneText.push_back(pNewObj);
 
+	// 6
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitSearchText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_NoneText.push_back(pNewObj);
 
+	// 7
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingText1.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_SearchText.push_back(pNewObj);
 
+	// 8
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingText2.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
-
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_SearchText.push_back(pNewObj);
+	// 9
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingTime.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
-
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_SearchText.push_back(pNewObj);
+	// 10
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SkipText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
-
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_SearchText.push_back(pNewObj);
+	// 11
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\DepositText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
-
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_DoneText.push_back(pNewObj);
+	// 12
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\AcceptRecruitText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->AddChild(pNewObj);
-	GamePlayStatic::SpawnGameObject(pNewObj, 5);
-	pNewObj->SetActive(false); 	m_vecText.push_back(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 2);
+	pLevel->AddObject(pNewObj, 5);
+	m_DoneText.push_back(pNewObj);
+
+	for (size_t i = 0; i < m_DefaultText.size(); ++i)
+	{
+		m_DefaultText[i]->SetActive(false);
+	}
+	for (size_t i = 0; i < m_NoneText.size(); ++i)
+	{
+		m_NoneText[i]->SetActive(false);
+	}
+	for (size_t i = 0; i < m_SearchText.size(); ++i)
+	{
+		m_SearchText[i]->SetActive(false);
+	}
+	for (size_t i = 0; i < m_DoneText.size(); ++i)
+	{
+		m_DoneText[i]->SetActive(false);
+	}
+
+	GetOwner()->SetActive(false);
 }
 
 void CRecruitSlotScript::tick()
 {
 	bool bChange = GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->IsChange();
 
-
 	if (RECRUIT_STATE::NONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
 	{
-		for (size_t i = 0; i < m_vecText.size(); i++)
+		GetOwner()->SetActive(true);
+
+		for (size_t i = 0; i < m_DefaultText.size(); ++i)
 		{
-			m_vecText[i]->SetActive(false);
+			m_DefaultText[i]->SetActive(true);
 		}
-		for (size_t i = 0; i < 12; ++i)
+		for (size_t j = 0; j < m_NoneText.size(); ++j)
 		{
-			m_vecText[i]->SetActive(true);
+			m_NoneText[j]->SetActive(true);
+		}
+		for (size_t k = 0; k < m_SearchText.size(); ++k)
+		{
+			m_SearchText[k]->SetActive(false);
+		}
+		for (size_t l = 0; l < m_DoneText.size(); ++l)
+		{
+			m_DoneText[l]->SetActive(false);
 		}
 	}
-	else if (RECRUIT_STATE::SEARCH == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState() && bChange)
+	else if (RECRUIT_STATE::SEARCH == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
 	{
-		for (size_t i = 4; i < m_vecText.size(); i++)
+		for (size_t i = 0; i < m_DefaultText.size(); ++i)
 		{
-			m_vecText[i]->SetActive(false);
+			m_DefaultText[i]->SetActive(true);
 		}
-		for (size_t i = 12; i < 16; ++i)
+		for (size_t j = 0; j < m_NoneText.size(); ++j)
 		{
-			m_vecText[i]->SetActive(true);
+			m_NoneText[j]->SetActive(false);
+		}
+		for (size_t k = 0; k < m_SearchText.size(); ++k)
+		{
+			m_SearchText[k]->SetActive(true);
+		}
+		for (size_t l = 0; l < m_DoneText.size(); ++l)
+		{
+			m_DoneText[l]->SetActive(false);
 		}
 	}
-	else if (RECRUIT_STATE::DONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState() && bChange)
+	else if (RECRUIT_STATE::DONE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState())
 	{
-		for (size_t i = 2; i < 16; ++i)
+		for (size_t i = 0; i < m_DefaultText.size(); ++i)
 		{
-			m_vecText[i]->SetActive(false);
+			m_DefaultText[i]->SetActive(false);
 		}
-		for (size_t i = 16; i <= 17; ++i)
+		for (size_t j = 0; j < m_NoneText.size(); ++j)
 		{
-			m_vecText[i]->SetActive(true);
+			m_NoneText[j]->SetActive(false);
+		}
+		for (size_t k = 0; k < m_SearchText.size(); ++k)
+		{
+			m_SearchText[k]->SetActive(false);
+		}
+		for (size_t l = 0; l < m_DoneText.size(); ++l)
+		{
+			m_DoneText[l]->SetActive(true);
 		}
 	}
 	else if (RECRUIT_STATE::CLOSE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState() && bChange)
 	{
-		for (size_t i = 0; i < m_vecText.size(); ++i)
+		GetOwner()->SetActive(false);
+
+		for (size_t i = 0; i < m_DefaultText.size(); ++i)
 		{
-			m_vecText[i]->SetActive(false);
+			m_DefaultText[i]->SetActive(false);
+		}
+		for (size_t j = 0; j < m_NoneText.size(); ++j)
+		{
+			m_NoneText[j]->SetActive(false);
+		}
+		for (size_t k = 0; k < m_SearchText.size(); ++k)
+		{
+			m_SearchText[k]->SetActive(false);
+		}
+		for (size_t l = 0; l < m_DoneText.size(); ++l)
+		{
+			m_DoneText[l]->SetActive(false);
 		}
 	}
 

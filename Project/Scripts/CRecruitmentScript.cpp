@@ -32,6 +32,7 @@ CRecruitmentScript::CRecruitmentScript()
 	, m_RText(nullptr)
 	, m_RState(RECRUIT_STATE::NONE)
 	, m_bStateChange(false)
+	, m_vecText{}
 {
 }
 
@@ -88,6 +89,119 @@ void CRecruitmentScript::begin()
 	m_RecruitBtn->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	GetOwner()->AddChild(m_RecruitBtn);
 	m_RecruitBtn->SetActive(false);
+
+	// 0
+	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitmentText.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	m_vecText.push_back(pNewObj);
+
+	// 1
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitClose.prefab")->Instatiate();
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	GetOwner()->AddChild(pNewObj);
+	GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	m_vecText.push_back(pNewObj);
+
+	//// 2
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameSlotIndex.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 3
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameText.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 4
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain1.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 5
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitExplain2.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 6
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitTime.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 7
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitCost.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 8
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitSearchText.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 9
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingText1.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 10
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingText2.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 11
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchingTime.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 12
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SkipText.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 13
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\DepositText.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	//// 14
+	//pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\AcceptRecruitText.prefab")->Instatiate();
+	//pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+	//GetOwner()->AddChild(pNewObj);
+	//GamePlayStatic::SpawnGameObject(pNewObj, 5);
+	//m_vecText.push_back(pNewObj);
+
+	for (size_t i = 0; i < m_vecText.size(); ++i)
+	{
+		//m_vecText[i]->SetLayerIdx(5);
+		m_vecText[i]->SetActive(false);
+	}
+
+	GetOwner()->SetActive(false);
 }
 
 void CRecruitmentScript::tick()
@@ -98,6 +212,11 @@ void CRecruitmentScript::tick()
 	{
 		if (RECRUIT_STATE::NONE == GetState() && m_bStateChange)
 		{
+			for (size_t i = 0; i < m_vecText.size(); ++i)
+			{
+					m_vecText[i]->SetActive(true);
+			}
+
 			for (size_t i = 0; i < pchild.size(); ++i)
 			{
 				pchild[i]->SetActive(true);
@@ -116,6 +235,11 @@ void CRecruitmentScript::tick()
 		else if (RECRUIT_STATE::CLOSE == GetState() && m_bStateChange)
 		{
 			m_bStateChange = false;
+
+			for (size_t i = 0; i < m_vecText.size(); ++i)
+			{
+				m_vecText[i]->SetActive(false);
+			}
 
 			vector<CGameObject*> pChild = GetOwner()->GetChild();
 
@@ -166,7 +290,6 @@ void CRecruitmentScript::OnUnHovered()
 void CRecruitmentScript::LBtnUp()
 {
 	m_CurImg = m_NormalImg;
-
 }
 
 void CRecruitmentScript::LBtnReleased()
