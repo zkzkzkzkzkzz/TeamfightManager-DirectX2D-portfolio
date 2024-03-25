@@ -73,6 +73,9 @@ void CMgrBtnScript::begin()
 
 void CMgrBtnScript::tick()
 {
+	if (CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"RecruitmentUI")->IsActive())
+		return;
+
 	m_bMouseOn_Prev = m_bMouseOn;
 
 	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();

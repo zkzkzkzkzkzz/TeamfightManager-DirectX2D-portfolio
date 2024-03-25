@@ -72,6 +72,9 @@ void CRecruitmentBtnScript::begin()
 
 void CRecruitmentBtnScript::tick()
 {
+	if (CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"RecruitmentUI")->IsActive())
+		return;
+
 	if (GetOwner()->GetParent()->GetScript<CLobbyBtnScript>()->m_isOpen && !m_isBtnOpen)
 		OpenBtn();
 	else if (GetOwner()->GetParent()->GetScript<CLobbyBtnScript>()->m_isOpen == false && m_isBtnOpen)

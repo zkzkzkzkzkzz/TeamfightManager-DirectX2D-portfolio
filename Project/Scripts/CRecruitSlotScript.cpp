@@ -81,8 +81,8 @@ void CRecruitSlotScript::begin()
 													L"texture\\Lobby\\recruitment\\recruit_player_slot_bg_hover.png");
 	m_SlotCurTex = m_SlotNTex;
 
-	GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
-	GetOwner()->Transform()->SetRelativeScale(Vec3(302.f, 392.f, 1.f));
+	GetOwner()->Transform()->SetRelativePos(Vec3(-440.f, 0.f, -1.f));
+	GetOwner()->Transform()->SetRelativeScale(Vec3(295.f, 382.f, 1.f));
 
 	GetOwner()->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	GetOwner()->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl"));
@@ -133,7 +133,7 @@ void CRecruitSlotScript::begin()
 	m_NoneText.push_back(pNewObj);
 
 	// 6
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitSearchText.prefab")->Instatiate();
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\SearchText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -30.f));
 	GamePlayStatic::SpawnGameObject(pNewObj, 2);
 	GetOwner()->GetParent()->AddChild(pNewObj);
@@ -172,7 +172,7 @@ void CRecruitSlotScript::begin()
 	m_DoneText.push_back(pNewObj);
 	// 12
 	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\AcceptRecruitText.prefab")->Instatiate();
-	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -5.f));
+	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 1.f, -5.f));
 	GamePlayStatic::SpawnGameObject(pNewObj, 2);
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	m_DoneText.push_back(pNewObj);

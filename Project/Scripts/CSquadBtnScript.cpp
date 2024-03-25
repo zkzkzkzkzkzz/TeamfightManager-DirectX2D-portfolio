@@ -4,6 +4,8 @@
 #include <Engine\CEngine.h>
 #include <Engine\CKeyMgr.h>
 #include <Engine\CTimeMgr.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\components.h>
@@ -67,6 +69,9 @@ void CSquadBtnScript::begin()
 
 void CSquadBtnScript::tick()
 {
+	if (CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"RecruitmentUI")->IsActive())
+		return;
+
 	if (GetOwner()->GetParent()->GetScript<CLobbyBtnScript>()->m_isOpen && !m_isBtnOpen)
 		OpenBtn();
 	else if (GetOwner()->GetParent()->GetScript<CLobbyBtnScript>()->m_isOpen == false && m_isBtnOpen)

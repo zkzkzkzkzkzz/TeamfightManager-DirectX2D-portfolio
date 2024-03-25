@@ -42,8 +42,8 @@ CRecruitmentScript::~CRecruitmentScript()
 
 void CRecruitmentScript::begin()
 {
-	m_PanelTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruitment_uifix.png",
-													L"texture\\Lobby\\recruitment\\recruitment_uifix.png");
+	m_PanelTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\recruitment_ui_bg.png",
+													L"texture\\Lobby\\recruitment\\recruitment_ui_bg.png");
 
 	m_NormalImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\default_button_0.png",
 													L"texture\\Lobby\\recruitment\\btn\\default_button_0.png");
@@ -52,7 +52,7 @@ void CRecruitmentScript::begin()
 	m_CurImg = m_NormalImg;
 
 	GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 150.f));
-	GetOwner()->Transform()->SetRelativeScale(Vec3(332.f, 543.f, 1.f));
+	GetOwner()->Transform()->SetRelativeScale(Vec3(1200.f, 543.f, 1.f));
 	GetOwner()->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	GetOwner()->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"RecruitmentMtrl"));
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
@@ -60,7 +60,7 @@ void CRecruitmentScript::begin()
 	m_CloseBtn = new CGameObject;
 	m_CloseBtn->AddComponent(new CTransform);
 	m_CloseBtn->AddComponent(new CMeshRender);
-	m_CloseBtn->Transform()->SetRelativePos(Vec3(81.f, -232.f, -10.f));
+	m_CloseBtn->Transform()->SetRelativePos(Vec3(510.f, -232.f, -10.f));
 	m_CloseBtn->Transform()->SetRelativeScale(Vec3(138.f, 50.f, 1.f));
 	m_CloseBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	m_CloseBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BtnMtrl"));
@@ -82,7 +82,7 @@ void CRecruitmentScript::begin()
 	m_RecruitBtn = new CGameObject;
 	m_RecruitBtn->AddComponent(new CTransform);
 	m_RecruitBtn->AddComponent(new CMeshRender);
-	m_RecruitBtn->Transform()->SetRelativePos(Vec3(0.f, -157.f, -10.f));
+	m_RecruitBtn->Transform()->SetRelativePos(Vec3(-437.f, -157.f, -10.f));
 	m_RecruitBtn->Transform()->SetRelativeScale(Vec3(138.f, 50.f, 1.f));
 	m_RecruitBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	m_RecruitBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BtnMtrl"));
@@ -98,7 +98,7 @@ void CRecruitmentScript::begin()
 	m_vecText.push_back(pNewObj);
 
 	// 1
-	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitClose.prefab")->Instatiate();
+	pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\CloseText.prefab")->Instatiate();
 	pNewObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	GetOwner()->AddChild(pNewObj);
 	GamePlayStatic::SpawnGameObject(pNewObj, 2);

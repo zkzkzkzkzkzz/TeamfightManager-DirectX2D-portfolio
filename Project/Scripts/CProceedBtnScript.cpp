@@ -4,6 +4,8 @@
 #include <Engine\CEngine.h>
 #include <Engine\CTimeMgr.h>
 #include <Engine\CKeyMgr.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CTransform.h>
 #include <Engine\CAssetMgr.h>
@@ -78,6 +80,9 @@ void CProceedBtnScript::begin()
 
 void CProceedBtnScript::tick()
 {
+	if (CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"RecruitmentUI")->IsActive())
+		return;
+
 	m_bMouseOn_Prev = m_bMouseOn;
 
 	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
