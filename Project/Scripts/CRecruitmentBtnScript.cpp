@@ -65,7 +65,6 @@ void CRecruitmentBtnScript::begin()
 	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
 	m_BtnText->TextRender()->SetOffsetPos(Vec3(-53.f, -8.f, 1.f));
 	GetOwner()->AddChild(m_BtnText);
-	m_BtnText->SetLayerIdx(5);
 	m_BtnText->SetActive(false);
 
 	SetDeletage(this, (DelegateFunc)&CRecruitmentBtnScript::ActiveRecruitUI);

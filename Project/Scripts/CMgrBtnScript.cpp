@@ -60,7 +60,6 @@ void CMgrBtnScript::begin()
 	m_BtnText->TextRender()->TextInit(L"Galmuri11", 24.f, FONT_RGBA(255, 255, 255, 255));
 	m_BtnText->TextRender()->SetOffsetPos(Vec3(-50.f, -8.f, 0.f));
 	GetOwner()->AddChild(m_BtnText);
-	m_BtnText->SetLayerIdx(5);
 
 	m_Icon = new CGameObject;
 	m_Icon->AddComponent(new CTransform);

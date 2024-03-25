@@ -42,7 +42,7 @@ void CProceedBtnScript::begin()
     m_HoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\proceed\\proceed_button_1.png", L"texture\\Lobby\\btn\\proceed\\proceed_button_1.png");
     m_CurImg = m_NormalImg;
 
-	GetOwner()->Transform()->SetRelativePos(Vec3(491.f, -295.f, 200.f));
+	GetOwner()->Transform()->SetRelativePos(Vec3(491.f, -295.f, 230.f));
 	GetOwner()->Transform()->SetRelativeScale(Vec3(258.f, 88.f, 1.f));
 
 	m_AnimImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\proceed\\proceed_button_2.png", L"texture\\Lobby\\btn\\proceed\\proceed_button_2.png");
@@ -65,7 +65,6 @@ void CProceedBtnScript::begin()
 	m_MainText->TextRender()->TextInit(L"Galmuri14", 22.f, FONT_RGBA(0, 0, 0, 255));
 	m_MainText->TextRender()->SetOffsetPos(Vec3(-90.f, -28.f, 1.f));
 	GetOwner()->AddChild(m_MainText);
-	m_MainText->SetLayerIdx(5);
 
 	m_SubText = new CGameObject;
 	m_SubText->AddComponent(new CTransform);
@@ -75,7 +74,6 @@ void CProceedBtnScript::begin()
 	m_SubText->TextRender()->TextInit(L"Galmuri14", 13.f, FONT_RGBA(0, 0, 0, 255));
 	m_SubText->TextRender()->SetOffsetPos(Vec3(-110.f, 15.f, 1.f));
 	GetOwner()->AddChild(m_SubText);
-	m_SubText->SetLayerIdx(5);
 }
 
 void CProceedBtnScript::tick()

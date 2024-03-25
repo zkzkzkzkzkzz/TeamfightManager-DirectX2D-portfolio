@@ -29,20 +29,27 @@
 #include <Scripts\CRecruitmentScript.h>
 #include <Scripts\CRecruitSlotScript.h>
 
+bool compare(CGameObject* a, CGameObject* b)
+{
+	return a->Transform()->GetRelativePos().z > b->Transform()->GetRelativePos().z;
+}
+
 void LobbyLevel::Init()
 {
 }
 
 void LobbyLevel::CreateTempLevel()
 {
+	vector<CGameObject*> vecUI = {};
+
 	CLevel* pTempLevel = new CLevel;
 
 	pTempLevel->GetLayer(0)->SetName(L"Default");
 	pTempLevel->GetLayer(1)->SetName(L"Light");
 	pTempLevel->GetLayer(2)->SetName(L"Background");
 	pTempLevel->GetLayer(3)->SetName(L"Gamer");
-	pTempLevel->GetLayer(4)->SetName(L"Text");
-	pTempLevel->GetLayer(5)->SetName(L"Cursor");
+	pTempLevel->GetLayer(4)->SetName(L"Cursor");
+	pTempLevel->GetLayer(5)->SetName(L"Text");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
 
 	CGameObject* pCursor = new CGameObject;
@@ -50,7 +57,7 @@ void LobbyLevel::CreateTempLevel()
 	pCursor->AddComponent(new CTransform);
 	pCursor->AddComponent(new CMeshRender);
 	pCursor->AddComponent(new CCursorScript);
-	pTempLevel->AddObject(pCursor, 5);
+	pTempLevel->AddObject(pCursor, 4);
 
 	// Main Camera 생성
 	CGameObject* pCamObj = new CGameObject;
@@ -61,6 +68,18 @@ void LobbyLevel::CreateTempLevel()
 	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	pCamObj->Camera()->SetCameraPriority(0);
 	pCamObj->Camera()->LayerCheckAll();
+	pCamObj->Camera()->LayerCheck(2, false);
+	pTempLevel->AddObject(pCamObj, 0);
+
+	// BG Camera 생성
+	pCamObj = new CGameObject;
+	pCamObj->SetName(L"BGCamera");
+	pCamObj->AddComponent(new CTransform);
+	pCamObj->AddComponent(new CCamera);
+	pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Camera()->SetCameraPriority(1);
+	pCamObj->Camera()->LayerCheck(2, true);
 	pTempLevel->AddObject(pCamObj, 0);
 
 	// 광원 추가
@@ -77,14 +96,14 @@ void LobbyLevel::CreateTempLevel()
 	house->SetName(L"House");
 	house->AddComponent(new CTransform);
 	house->AddComponent(new CMeshRender);
-	house->Transform()->SetRelativePos(Vec3(0.f, -32.f, 300.f));
+	house->Transform()->SetRelativePos(Vec3(0.f, -32.f, 400.f));
 	house->Transform()->SetRelativeScale(Vec3(167.f * 2.5f, 128.f * 2.5f, 1.f));
 	house->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	house->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HouseMtrl"));
 	house->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\house_bg_custom.png", L"texture\\Lobby\\house_bg_custom.png");
 	house->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
-	pTempLevel->AddObject(house, 2);
+	vecUI.push_back(house);
 
 	// 로비 배경(하늘)
 	CGameObject* LobbySky = new CGameObject;
@@ -98,21 +117,21 @@ void LobbyLevel::CreateTempLevel()
 	LobbySky->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\sky_day.png", L"texture\\Lobby\\sky_day.png");
 	LobbySky->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
-	pTempLevel->AddObject(LobbySky, 2);
+	vecUI.push_back(LobbySky);
 	
 	// 로비 배경(땅)
 	CGameObject* LobbyGround = new CGameObject;
 	LobbyGround->SetName(L"LobbyGround");
 	LobbyGround->AddComponent(new CTransform);
 	LobbyGround->AddComponent(new CMeshRender);
-	LobbyGround->Transform()->SetRelativePos(Vec3(0.f, -288.f, 300.f));
+	LobbyGround->Transform()->SetRelativePos(Vec3(0.f, -288.f, 350.f));
 	LobbyGround->Transform()->SetRelativeScale(Vec3(480.f * 3.f, 64.f * 3.f, 1.f));
 	LobbyGround->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	LobbyGround->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyGroundMtrl"));
 	LobbyGround->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\ground.png", L"texture\\Lobby\\ground.png");
 	LobbyGround->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
-	pTempLevel->AddObject(LobbyGround, 2);
+	vecUI.push_back(LobbyGround);
 
 	// 헤더
 	CGameObject* Header = new CGameObject;
@@ -120,7 +139,7 @@ void LobbyLevel::CreateTempLevel()
 	Header->AddComponent(new CTransform);
 	Header->AddComponent(new CMeshRender);
 	Header->AddComponent(new CLobbyHdScript);
-	Header->Transform()->SetRelativePos(Vec3(0.f, 330.f, 300.f));
+	Header->Transform()->SetRelativePos(Vec3(0.f, 330.f, 330.f));
 	Header->Transform()->SetRelativeScale(Vec3(1280.f, 74.f, 1.f));
 	Header->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Header->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderMtrl"));
@@ -133,7 +152,7 @@ void LobbyLevel::CreateTempLevel()
 	HeaderSlot->SetName(L"HeaderSlot");
 	HeaderSlot->AddComponent(new CTransform);
 	HeaderSlot->AddComponent(new CMeshRender);
-	HeaderSlot->Transform()->SetRelativePos(Vec3(520.f, 0.f, -10.f));
+	HeaderSlot->Transform()->SetRelativePos(Vec3(520.f, 0.f, -20.f));
 	HeaderSlot->Transform()->SetRelativeScale(Vec3(226.f, 48.f, 1.f));
 	HeaderSlot->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	HeaderSlot->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderSlotMtrl"));
@@ -147,7 +166,7 @@ void LobbyLevel::CreateTempLevel()
 	Coin->SetName(L"Coin");
 	Coin->AddComponent(new CTransform);
 	Coin->AddComponent(new CMeshRender);
-	Coin->Transform()->SetRelativePos(Vec3(-91.f, 0.f, -10.f));
+	Coin->Transform()->SetRelativePos(Vec3(-91.f, 0.f, -20.f));
 	Coin->Transform()->SetRelativeScale(Vec3(28.f, 28.f, 1.f));
 	Coin->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Coin->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"CoinMtrl"));
@@ -161,7 +180,7 @@ void LobbyLevel::CreateTempLevel()
 	HeaderSlot2->SetName(L"HeaderSlot2");
 	HeaderSlot2->AddComponent(new CTransform);
 	HeaderSlot2->AddComponent(new CMeshRender);
-	HeaderSlot2->Transform()->SetRelativePos(Vec3(285.f, 0.f, -10.f));
+	HeaderSlot2->Transform()->SetRelativePos(Vec3(285.f, 0.f, -20.f));
 	HeaderSlot2->Transform()->SetRelativeScale(Vec3(226.f, 48.f, 1.f));
 	HeaderSlot2->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	HeaderSlot2->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderSlotMtrl"));
@@ -173,7 +192,7 @@ void LobbyLevel::CreateTempLevel()
 	Calender->SetName(L"Calender");
 	Calender->AddComponent(new CTransform);
 	Calender->AddComponent(new CMeshRender);
-	Calender->Transform()->SetRelativePos(Vec3(-91.f, 0.f, -10.f));
+	Calender->Transform()->SetRelativePos(Vec3(-91.f, 0.f, -20.f));
 	Calender->Transform()->SetRelativeScale(Vec3(28.f, 28.f, 1.f));
 	Calender->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Calender->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"CalenderMtrl"));
@@ -181,7 +200,7 @@ void LobbyLevel::CreateTempLevel()
 	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_calendar_icon.png", L"texture\\Lobby\\header\\header_calendar_icon.png");
 	Calender->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	HeaderSlot2->AddChild(Calender);
-	pTempLevel->AddObject(Header, 2);
+	vecUI.push_back(Header);
 
 
 	// 팀관리 버튼
@@ -195,8 +214,6 @@ void LobbyLevel::CreateTempLevel()
 	LobbyBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	LobbyBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyBtnMtrl"));
 	LobbyBtn->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
-	//pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png");
-	//LobbyBtn->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 
 	CGameObject* ChildBtn = new CGameObject;
 	ChildBtn->SetName(L"Recruitment");
@@ -237,7 +254,7 @@ void LobbyLevel::CreateTempLevel()
 	ChildBtn->SetActive(false);
 	LobbyBtn->AddChild(ChildBtn);
 
-	pTempLevel->AddObject(LobbyBtn, 2);
+	vecUI.push_back(LobbyBtn);
 
 
 	// 운영
@@ -250,7 +267,7 @@ void LobbyLevel::CreateTempLevel()
 	MgrBtn->Transform()->SetRelativeScale(Vec3(180.f, 57.f, 1.f));
 	MgrBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	MgrBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyBtnMtrl"));
-	pTempLevel->AddObject(MgrBtn, 2);
+	vecUI.push_back(MgrBtn);
 
 	// Proceed Button
 	CGameObject* proceedBtn = new CGameObject;
@@ -258,7 +275,7 @@ void LobbyLevel::CreateTempLevel()
 	proceedBtn->AddComponent(new CTransform);
 	proceedBtn->AddComponent(new CMeshRender);
 	proceedBtn->AddComponent(new CProceedBtnScript);
-	pTempLevel->AddObject(proceedBtn, 2);
+	vecUI.push_back(proceedBtn);
 
 	// Recruitment
 	CGameObject* Recruit = new CGameObject;
@@ -276,7 +293,7 @@ void LobbyLevel::CreateTempLevel()
 	RecruitSlot->SetActive(false);
 	Recruit->SetActive(false);
 
-	pTempLevel->AddObject(Recruit, 2);
+	vecUI.push_back(Recruit);
 
 	Ptr<CMaterial> pBtn = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BtnMtrl");
 	pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 0);
@@ -313,7 +330,14 @@ void LobbyLevel::CreateTempLevel()
 	pLogo->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\league_icon_custom.png",
 																			L"texture\\Lobby\\league_icon_custom.png"));
 
+	sort(vecUI.begin(), vecUI.end(), compare);
+
+	for (size_t i = 0; i < vecUI.size(); ++i)
+	{
+		pTempLevel->AddObject(vecUI[i], 2);
+	}
+
 	// 레벨 플레이
-	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
+	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
 
 }
