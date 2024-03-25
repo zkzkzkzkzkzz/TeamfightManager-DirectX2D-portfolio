@@ -37,27 +37,27 @@ void CCreateTempLevel::Init()
 
 void CCreateTempLevel::CreateTempLevel()
 {
-	//Ptr<CMaterial> pSkyMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"SkyMtrl"); 
-	//Ptr<CMaterial> pStadiumMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl");
-	//Ptr<CMaterial> pBackgroudMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BackgroundMtrl");
-	//Ptr<CMaterial> pTitleMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TitleMtrl");
-	//Ptr<CMaterial> pNGBtnMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"NewGameMtrl");
-	//Ptr<CMaterial> pEGBtnMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"EndGameMtrl");
+	Ptr<CMaterial> pSkyMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"SkyMtrl"); 
+	Ptr<CMaterial> pStadiumMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl");
+	Ptr<CMaterial> pBackgroudMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BackgroundMtrl");
+	Ptr<CMaterial> pTitleMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TitleMtrl");
+	Ptr<CMaterial> pNGBtnMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"NewGameMtrl");
+	Ptr<CMaterial> pEGBtnMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"EndGameMtrl");
 
-	//pSkyMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\sky.png", L"texture\\Title\\sky.png"));
-	//pStadiumMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\stadium.png", L"texture\\Title\\stadium.png"));
-	//pBackgroudMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\titleBG.png", L"texture\\Title\\titleBG.png"));
-	//pTitleMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\title.png", L"texture\\Title\\title.png"));
-	//pNGBtnMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_NewGame_Idle.png", L"texture\\Title\\Title_NewGame_Idle.png"));
-	//pEGBtnMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_Exit_Idle.png", L"texture\\Title\\Title_Exit_Idle.png"));
+	pSkyMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\sky.png", L"texture\\Title\\sky.png"));
+	pStadiumMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\stadium.png", L"texture\\Title\\stadium.png"));
+	pBackgroudMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\titleBG.png", L"texture\\Title\\titleBG.png"));
+	pTitleMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\title.png", L"texture\\Title\\title.png"));
+	pNGBtnMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_NewGame_Idle.png", L"texture\\Title\\Title_NewGame_Idle.png"));
+	pEGBtnMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\Title_Exit_Idle.png", L"texture\\Title\\Title_Exit_Idle.png"));
 
-	//CLevel* pLevel = CLevelSaveLoad::LoadLevel(L"level\\TitleLV2.lv");
-	//pLevel->FindObjectByName(L"NewGameBtn")->GetScript<CNewBtnScript>()->SetCallBack(TestFunc);
+	CLevel* pLevel = CLevelSaveLoad::LoadLevel(L"level\\TitleLV2.lv");
+	pLevel->FindObjectByName(L"NewGameBtn")->GetScript<CNewBtnScript>()->SetCallBack(TestFunc);
 
-	//CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);
+	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);
 
 	//TitleLevel::CreateTempLevel();
-	LobbyLevel::CreateTempLevel();
+	//LobbyLevel::CreateTempLevel();
 }
 
 void TestFunc()

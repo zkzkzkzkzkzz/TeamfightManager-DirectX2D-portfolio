@@ -41,11 +41,6 @@ CNewBtnScript::CNewBtnScript(const CNewBtnScript& _Other)
 
 CNewBtnScript::~CNewBtnScript()
 {
-	if (nullptr != m_LeftSword)
-		m_LeftSword->Destroy();
-
-	if (nullptr != m_RightSword)
-		m_RightSword->Destroy();
 }
 
 

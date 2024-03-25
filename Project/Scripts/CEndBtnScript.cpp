@@ -38,11 +38,6 @@ CEndBtnScript::CEndBtnScript(const CEndBtnScript& _Other)
 
 CEndBtnScript::~CEndBtnScript()
 {
-	if (nullptr != m_LeftSword)
-		m_LeftSword->Destroy();
-
-	if (nullptr != m_RightSword)
-		m_RightSword->Destroy();
 }
 
 

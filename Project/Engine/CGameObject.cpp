@@ -124,6 +124,8 @@ void CGameObject::finaltick()
 
 	vector<CGameObject*>::iterator iter = m_vecChild.begin();
 
+
+
 	for (; iter != m_vecChild.end();)
 	{
 		if ((*iter)->m_bDead)
