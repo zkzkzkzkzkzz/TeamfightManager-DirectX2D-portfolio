@@ -1,10 +1,11 @@
 #pragma once
+#include <Engine\singleton.h>
 
-class CGameObject;
-class CGamer;
-
-class TGMgr
+class CTGMgr :
+    public CSingleton<CTGMgr>
 {
+    SINGLE(CTGMgr);
+
 public:
 	static int G_Year;
 	static int G_Month;
@@ -14,11 +15,7 @@ public:
 
 	static map<wstring, CGameObject*> G_Gamer;			// 선수 목록
 	static map<wstring, CGameObject*> G_RecruitList;	// 영입 가능 선수 목록
-	
+
 	static float G_Time;	// 경기 시간
-
-public:
-	static void GamerInit();
-
 };
 

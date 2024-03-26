@@ -1,12 +1,9 @@
 #pragma once
 
-class CGamer;
-class CLevel;
+class CGameObject;
 
 class LobbyLevel
 {
-private:
-	map<wstring, CGamer*> m_gamer;
 
 public:
 	static void CreateTempLevel();

@@ -17,9 +17,8 @@
 #include <Engine\CFontMgr.h>
 
 #include "CLevelSaveLoad.h"
-#include "TGMgr.h"
-#include "CGamer.h"
 
+#include <Scripts\CTGMgr.h>
 #include <Scripts\CLobbyHdScript.h>
 #include <Scripts\CLobbyBtnScript.h>
 #include <Scripts\CTrainningBtnScript.h>
@@ -33,6 +32,7 @@
 #include <Scripts\CGamerScript.h>
 #include <Scripts\CJoongSooScript.h>
 #include <Scripts\CGosuScript.h>
+
 
 bool compare(CGameObject* a, CGameObject* b)
 {
@@ -60,7 +60,7 @@ void LobbyLevel::CreateTempLevel()
 	gamer->AddComponent(new CGamerScript);
 	gamer->SetName(L"Chobo");
 	pTempLevel->AddObject(gamer, 2);
-	TGMgr::G_Gamer.insert(make_pair(gamer->GetName(), gamer));
+	CTGMgr::GetInst()->G_Gamer.insert(make_pair(gamer->GetName(), gamer));
 
 	gamer = new CGameObject;
 	gamer->AddComponent(new CTransform);
@@ -68,7 +68,7 @@ void LobbyLevel::CreateTempLevel()
 	gamer->AddComponent(new CJoongSooScript);
 	gamer->SetName(L"JoongSoo");
 	pTempLevel->AddObject(gamer, 2);
-	TGMgr::G_Gamer.insert(make_pair(gamer->GetName(), gamer));
+	CTGMgr::GetInst()->G_Gamer.insert(make_pair(gamer->GetName(), gamer));
 
 	gamer = new CGameObject;
 	gamer->AddComponent(new CTransform);
@@ -76,7 +76,7 @@ void LobbyLevel::CreateTempLevel()
 	gamer->AddComponent(new CGosuScript);
 	gamer->SetName(L"GaeGosu");
 	pTempLevel->AddObject(gamer, 2);
-	TGMgr::G_Gamer.insert(make_pair(gamer->GetName(), gamer));
+	CTGMgr::GetInst()->G_RecruitList.insert(make_pair(gamer->GetName(), gamer));
 
 
 	CGameObject* pCursor = new CGameObject;
