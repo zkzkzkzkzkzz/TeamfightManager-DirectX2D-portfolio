@@ -13,6 +13,7 @@ CLobbyHdScript::CLobbyHdScript()
 	, m_LogoTex(nullptr)
 	, m_TeamText(nullptr)
 	, m_ScoreText(nullptr)
+	, m_CoinText(nullptr)
 {	 
 }	
 
@@ -22,6 +23,7 @@ CLobbyHdScript::CLobbyHdScript(const CLobbyHdScript& _Other)
 	, m_LogoTex(_Other.m_LogoTex)
 	, m_TeamText(nullptr)
 	, m_ScoreText(nullptr)
+	, m_CoinText(nullptr)
 {
 }
 
@@ -63,10 +65,23 @@ void CLobbyHdScript::begin()
 	m_ScoreText->TextRender()->TextInit(L"Silver", 23.f, FONT_RGBA(255, 255, 255, 255));
 	m_ScoreText->TextRender()->SetOffsetPos(Vec3(-550.f, 10.f, 0.f));
 	GetOwner()->AddChild(m_ScoreText);
+
+
+	m_CoinText = new CGameObject;
+	m_CoinText->AddComponent(new CTransform);
+	m_CoinText->AddComponent(new CTextRender);
+	m_CoinText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -20.f));
+	m_CoinText->TextRender()->SetString(ToWString(std::to_string(CTGMgr::GetInst()->G_Coin)));
+	m_CoinText->TextRender()->SetFont(L"Galmuri14");
+	m_CoinText->TextRender()->SetFontSize(23.f);
+	m_CoinText->TextRender()->SetFontColor(255, 255, 255, 255);
+	m_CoinText->TextRender()->SetOffsetPos(Vec3(567.f, -11.f, 300.f));
+	GetOwner()->AddChild(m_CoinText);
 }
 
 void CLobbyHdScript::tick()
 {
+	m_CoinText->TextRender()->SetString(ToWString(std::to_string(CTGMgr::GetInst()->G_Coin)));
 }
 
 void CLobbyHdScript::render()

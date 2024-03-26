@@ -9,6 +9,7 @@
 #include <Engine\components.h>
 #include <Engine\CFontMgr.h>
 
+
 CRecruitmentScript::CRecruitmentScript()
 	: CScript(RECRUITMENTSCRIPT)
 	, m_Panel(nullptr)
@@ -33,6 +34,7 @@ CRecruitmentScript::CRecruitmentScript()
 	, m_RState(RECRUIT_STATE::NONE)
 	, m_bStateChange(false)
 	, m_vecText{}
+	, m_CoinText(nullptr)
 {
 }
 
@@ -104,6 +106,18 @@ void CRecruitmentScript::begin()
 	GamePlayStatic::SpawnGameObject(pNewObj, 2);
 	m_vecText.push_back(pNewObj);
 
+	m_CoinText = new CGameObject;
+	m_CoinText->AddComponent(new CTransform);
+	m_CoinText->AddComponent(new CTextRender);
+	m_CoinText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+	m_CoinText->TextRender()->SetString(ToWString(std::to_string(CTGMgr::GetInst()->G_Coin)));
+	m_CoinText->TextRender()->SetFont(L"Galmuri14");
+	m_CoinText->TextRender()->SetFontSize(23.f);
+	m_CoinText->TextRender()->SetFontColor(255, 255, 255, 255);
+	m_CoinText->TextRender()->SetOffsetPos(Vec3(-441.f, 222.f, 330.f));
+	GetOwner()->AddChild(m_CoinText);
+	m_CoinText->SetActive(false);
+
 	for (size_t i = 0; i < m_vecText.size(); ++i)
 	{
 		m_vecText[i]->SetActive(false);
@@ -134,6 +148,7 @@ void CRecruitmentScript::tick()
 		}
 		else if (RECRUIT_STATE::SEARCH == GetState() && m_bStateChange)
 		{
+			CTGMgr::GetInst()->G_Coin -= 10;
 			m_bStateChange = false;
 		}
 		else if (RECRUIT_STATE::DONE == GetState() && m_bStateChange)
@@ -183,6 +198,8 @@ void CRecruitmentScript::render()
 
 	if (nullptr != m_RCurImg)
 		m_RecruitBtn->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_RCurImg);
+
+	m_CoinText->TextRender()->SetString(ToWString(std::to_string(CTGMgr::GetInst()->G_Coin)));
 }
 
 void CRecruitmentScript::OnHovered()

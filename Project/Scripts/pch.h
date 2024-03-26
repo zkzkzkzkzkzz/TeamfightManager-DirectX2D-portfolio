@@ -19,5 +19,6 @@
 #endif
 
 #include "CScriptMgr.h"
+#include "CTGMgr.h"
 
 #endif //PCH_H

@@ -12,6 +12,7 @@ private:
 
     CGameObject*    m_TeamText;
     CGameObject*    m_ScoreText;
+    CGameObject*    m_CoinText;
 
 public:
     virtual void SaveToFile(FILE* _File) override {}

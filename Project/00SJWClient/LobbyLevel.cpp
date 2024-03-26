@@ -189,7 +189,7 @@ void LobbyLevel::CreateTempLevel()
 	HeaderSlot->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	Header->AddChild(HeaderSlot);
 
-	// 달력 아이콘
+	// 코인 아이콘
 	CGameObject* Coin = new CGameObject;
 	Coin->SetName(L"Coin");
 	Coin->AddComponent(new CTransform);
@@ -229,6 +229,23 @@ void LobbyLevel::CreateTempLevel()
 	Calender->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	HeaderSlot2->AddChild(Calender);
 	vecUI.push_back(Header);
+
+	CGameObject* CalenderTextYear = new CGameObject;
+	CalenderTextYear->AddComponent(new CTransform);
+	CalenderTextYear->AddComponent(new CTextRender);
+	CalenderTextYear->Transform()->SetRelativePos(Vec3(0.f, 0.f, -20.f));
+
+	string str = {};
+	str	= std::to_string(CTGMgr::GetInst()->G_Year) + "/ ";
+	str += std::to_string(CTGMgr::GetInst()->G_Month) + "/ ";
+	str += std::to_string(CTGMgr::GetInst()->G_Week);
+
+	CalenderTextYear->TextRender()->SetString(ToWString(str));
+	CalenderTextYear->TextRender()->SetFont(L"Galmuri14");
+	CalenderTextYear->TextRender()->SetFontSize(23.f);
+	CalenderTextYear->TextRender()->SetFontColor(255, 255, 255, 255);
+	CalenderTextYear->TextRender()->SetOffsetPos(Vec3(66.f, -11.f, 300.f));
+	Calender->AddChild(CalenderTextYear);
 
 
 	// 팀관리 버튼

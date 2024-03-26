@@ -35,6 +35,7 @@ private:
     Ptr<CTexture>   m_DHoverImg;
     Ptr<CTexture>   m_RCurImg;
     CGameObject*    m_RText;
+    CGameObject*    m_CoinText;
 
     vector<CGameObject*>    m_vecText;
 
