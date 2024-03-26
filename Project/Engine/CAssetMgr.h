@@ -31,6 +31,7 @@ private:
 	void CreateDefaultGameMaterial();
 	void CreateTitleLevelMaterial();
 	void CreateLobbyLevelMaterial();
+	void CreateGamerMaterial();
 
 public:
 	void init();

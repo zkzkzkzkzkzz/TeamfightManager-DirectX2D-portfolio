@@ -1,0 +1,35 @@
+#pragma once
+
+#include <Engine/CScript.h>
+
+class CGameObject;
+
+class CJoongSooScript :
+    public CScript
+{
+    // 소속 팀
+    // 선수가 플레이 중인 챔피언
+
+    wstring m_GamerName;    // 선수 이름
+
+    int m_GamerATK; // 선수 공격력
+    int m_GamerDEF; // 선수 방어력
+    int m_GamerAge; // 선수 나이
+
+    CGameObject* m_Text;
+    Ptr<CTexture>   m_Tex;
+
+    virtual void SaveToFile(FILE* _File) override {}
+    virtual void LoadFromFile(FILE* _File) override {}
+
+public:
+    virtual void begin() override;
+    virtual void tick() override;
+    void render();
+
+public:
+    CLONE_DISABLE(CJoongSooScript);
+    CJoongSooScript();
+    ~CJoongSooScript();
+};
+

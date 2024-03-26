@@ -54,7 +54,6 @@ void CLobbyHdScript::begin()
 	m_TeamText->TextRender()->TextInit(L"Galmuri11", 40.f, FONT_RGBA(255, 255, 255, 255));
 	m_TeamText->TextRender()->SetOffsetPos(Vec3(-550.f, -25.f, 0.f));
 	GetOwner()->AddChild(m_TeamText);
-	m_TeamText->SetLayerIdx(5);
 
 	m_ScoreText = new CGameObject;
 	m_ScoreText->AddComponent(new CTransform);
@@ -64,7 +63,6 @@ void CLobbyHdScript::begin()
 	m_ScoreText->TextRender()->TextInit(L"Silver", 23.f, FONT_RGBA(255, 255, 255, 255));
 	m_ScoreText->TextRender()->SetOffsetPos(Vec3(-550.f, 10.f, 0.f));
 	GetOwner()->AddChild(m_ScoreText);
-	m_ScoreText->SetLayerIdx(5);
 }
 
 void CLobbyHdScript::tick()

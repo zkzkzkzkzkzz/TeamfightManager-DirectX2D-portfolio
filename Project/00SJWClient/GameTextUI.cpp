@@ -33,7 +33,8 @@ void GameTextUI::render_update()
 	ImGui::Text("Font Offset");
 	ImGui::SameLine(0, 13);	ImGui::PushItemWidth(70);
 	ImGui::Text("x"); ImGui::SameLine(); ImGui::DragFloat("##Posx", &vPos.x); ImGui::SameLine();
-	ImGui::Text("y"); ImGui::SameLine(); ImGui::DragFloat("##Posy", &vPos.y);
+	ImGui::Text("y"); ImGui::SameLine(); ImGui::DragFloat("##Posy", &vPos.y); ImGui::SameLine();
+	ImGui::Text("z"); ImGui::SameLine(); ImGui::DragFloat("##Posz", &vPos.z);
 
 	ImGui::Text("Font Size");
 	ImGui::SameLine(0, 42); ImGui::PushItemWidth(70);

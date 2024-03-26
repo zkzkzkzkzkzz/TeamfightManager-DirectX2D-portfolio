@@ -17,6 +17,8 @@
 #include <Engine\CFontMgr.h>
 
 #include "CLevelSaveLoad.h"
+#include "TGMgr.h"
+#include "CGamer.h"
 
 #include <Scripts\CLobbyHdScript.h>
 #include <Scripts\CLobbyBtnScript.h>
@@ -28,18 +30,19 @@
 #include <Scripts\CMgrBtnScript.h>
 #include <Scripts\CRecruitmentScript.h>
 #include <Scripts\CRecruitSlotScript.h>
+#include <Scripts\CGamerScript.h>
+#include <Scripts\CJoongSooScript.h>
+#include <Scripts\CGosuScript.h>
 
 bool compare(CGameObject* a, CGameObject* b)
 {
 	return a->Transform()->GetRelativePos().z > b->Transform()->GetRelativePos().z;
 }
 
-void LobbyLevel::Init()
-{
-}
 
 void LobbyLevel::CreateTempLevel()
 {
+
 	vector<CGameObject*> vecUI = {};
 
 	CLevel* pTempLevel = new CLevel;
@@ -49,8 +52,32 @@ void LobbyLevel::CreateTempLevel()
 	pTempLevel->GetLayer(2)->SetName(L"Background");
 	pTempLevel->GetLayer(3)->SetName(L"Gamer");
 	pTempLevel->GetLayer(4)->SetName(L"Cursor");
-	pTempLevel->GetLayer(5)->SetName(L"Text");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
+
+	CGameObject* gamer = new CGameObject;
+	gamer->AddComponent(new CTransform);
+	gamer->AddComponent(new CMeshRender);
+	gamer->AddComponent(new CGamerScript);
+	gamer->SetName(L"Chobo");
+	pTempLevel->AddObject(gamer, 2);
+	TGMgr::G_Gamer.insert(make_pair(gamer->GetName(), gamer));
+
+	gamer = new CGameObject;
+	gamer->AddComponent(new CTransform);
+	gamer->AddComponent(new CMeshRender);
+	gamer->AddComponent(new CJoongSooScript);
+	gamer->SetName(L"JoongSoo");
+	pTempLevel->AddObject(gamer, 2);
+	TGMgr::G_Gamer.insert(make_pair(gamer->GetName(), gamer));
+
+	gamer = new CGameObject;
+	gamer->AddComponent(new CTransform);
+	gamer->AddComponent(new CMeshRender);
+	gamer->AddComponent(new CGosuScript);
+	gamer->SetName(L"GaeGosu");
+	pTempLevel->AddObject(gamer, 2);
+	TGMgr::G_Gamer.insert(make_pair(gamer->GetName(), gamer));
+
 
 	CGameObject* pCursor = new CGameObject;
 	pCursor->SetName(L"Cursor");
@@ -81,6 +108,7 @@ void LobbyLevel::CreateTempLevel()
 	pCamObj->Camera()->SetCameraPriority(1);
 	pCamObj->Camera()->LayerCheck(2, true);
 	pTempLevel->AddObject(pCamObj, 0);
+
 
 	// 광원 추가
 	CGameObject* pLight = new CGameObject;
@@ -330,6 +358,14 @@ void LobbyLevel::CreateTempLevel()
 	pLogo->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\league_icon_custom.png",
 																			L"texture\\Lobby\\league_icon_custom.png"));
 
+	//Ptr<CMaterial> pGamer = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"GamerMtrl");
+	//pGamer->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Avatar\\Gamer\\custom\\character_custom0.png",
+	//																		L"texture\\Avatar\\Gamer\\custom\\character_custom0.png"));
+	//pGamer->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Avatar\\Gamer\\custom\\character_custom1.png",
+	//																		L"texture\\Avatar\\Gamer\\custom\\character_custom1.png"));	
+	//pGamer->SetTexParam(TEX_PARAM::TEX_2, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Avatar\\Gamer\\custom\\character_custom2.png",
+	//																		L"texture\\Avatar\\Gamer\\custom\\character_custom2.png"));
+
 	sort(vecUI.begin(), vecUI.end(), compare);
 
 	for (size_t i = 0; i < vecUI.size(); ++i)
@@ -338,6 +374,6 @@ void LobbyLevel::CreateTempLevel()
 	}
 
 	// 레벨 플레이
-	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
+	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
 
 }
