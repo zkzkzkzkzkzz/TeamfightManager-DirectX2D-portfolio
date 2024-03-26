@@ -35,8 +35,9 @@ public:
     void render();
 
 public:
-    CLONE_DISABLE(CJoongSooScript);
+    CLONE(CJoongSooScript);
     CJoongSooScript();
+    CJoongSooScript(const CJoongSooScript& _Origin);
     ~CJoongSooScript();
 };
 

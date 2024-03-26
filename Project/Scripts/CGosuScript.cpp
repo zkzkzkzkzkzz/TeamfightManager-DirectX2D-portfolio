@@ -21,6 +21,20 @@ CGosuScript::CGosuScript()
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerAge", &m_GamerAge);
 }
 
+CGosuScript::CGosuScript(const CGosuScript& _Origin)
+	: CScript(GAMERSCRIPT)
+	, m_GamerName{}
+	, m_GamerATK(_Origin.m_GamerATK)
+	, m_GamerDEF(_Origin.m_GamerDEF)
+	, m_GamerAge(_Origin.m_GamerAge)
+	, m_Tex(_Origin.m_Tex)
+	, m_Text(_Origin.m_Text)
+{
+	AddScriptParam(SCRIPT_PARAM::INT, "GamerATK", &m_GamerATK);
+	AddScriptParam(SCRIPT_PARAM::INT, "GamerDEF", &m_GamerDEF);
+	AddScriptParam(SCRIPT_PARAM::INT, "GamerAge", &m_GamerAge);
+}
+
 CGosuScript::~CGosuScript()
 {
 
@@ -42,6 +56,8 @@ void CGosuScript::begin()
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
 	GetOwner()->SetActive(false);
+
+	CTGMgr::GetInst()->G_RecruitList.insert(make_pair(m_GamerName, GetOwner()));
 }
 
 void CGosuScript::tick()

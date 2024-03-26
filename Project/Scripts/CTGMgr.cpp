@@ -11,6 +11,8 @@ int CTGMgr::G_Coin = 200;
 map<wstring, CGameObject*> CTGMgr::G_Gamer;			// 선수 목록
 map<wstring, CGameObject*> CTGMgr::G_RecruitList;	// 영입 가능 선수 목록
 
+map<wstring, CGameObject*> CTGMgr::G_Champ;	// 챔피언 목록
+
 float CTGMgr::G_Time = 60.f;
 
 

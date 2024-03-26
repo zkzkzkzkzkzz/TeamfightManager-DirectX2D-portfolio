@@ -20,8 +20,10 @@
 #include "CLevelSaveLoad.h"
 
 #include <Engine\CScript.h>
+#include <Engine\CPrefab.h>
 #include <Scripts\CNewBtnScript.h>
 #include <Scripts\CEndBtnScript.h>
+#include <Scripts\CTGMgr.h>
 
 #include "TitleLevel.h"
 #include "LobbyLevel.h"
@@ -62,60 +64,60 @@ void CCreateTempLevel::CreateTempLevel()
 
 void TestFunc()
 {
-	//Ptr<CMaterial> pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HouseMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0,
-	//				CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\house_bg_custom.png", L"texture\\Lobby\\house_bg_custom.png"));
+	Ptr<CMaterial> pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HouseMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0,
+					CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\house_bg_custom.png", L"texture\\Lobby\\house_bg_custom.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbySkyMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0,
-	//				CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\sky_day.png", L"texture\\Lobby\\sky_day.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbySkyMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0,
+					CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\sky_day.png", L"texture\\Lobby\\sky_day.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyGroundMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0,
-	//				CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\ground.png", L"texture\\Lobby\\ground.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyGroundMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0,
+					CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\ground.png", L"texture\\Lobby\\ground.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0, 
-	//				CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_bg.png", L"texture\\Lobby\\header\\header_bg.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0, 
+					CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_bg.png", L"texture\\Lobby\\header\\header_bg.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderSlotMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0, 
-	//				CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_slot_bg.png", L"texture\\Lobby\\header\\header_slot_bg.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderSlotMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0, 
+					CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_slot_bg.png", L"texture\\Lobby\\header\\header_slot_bg.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"CalenderMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0,
-	//				CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_calendar_icon.png", L"texture\\Lobby\\header\\header_calendar_icon.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"CalenderMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0,
+					CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_calendar_icon.png", L"texture\\Lobby\\header\\header_calendar_icon.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"CoinMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0, 
-	//				CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_gold_icon.png", L"texture\\Lobby\\header\\header_gold_icon.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"CoinMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0, 
+					CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\header_gold_icon.png", L"texture\\Lobby\\header\\header_gold_icon.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LogoMtrl");
-	//pMtrl->SetScalarParam(SCALAR_PARAM::INT_0, 0);
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\captains.png", L"texture\\Lobby\\header\\captains.png"));
-	//pMtrl->SetScalarParam(SCALAR_PARAM::INT_0, 1);
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\league_icon_custom.png", L"texture\\Lobby\\league_icon_custom.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LogoMtrl");
+	pMtrl->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\captains.png", L"texture\\Lobby\\header\\captains.png"));
+	pMtrl->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+	pMtrl->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\league_icon_custom.png", L"texture\\Lobby\\league_icon_custom.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TextUIMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\notification_bg_header.png", L"texture\\Lobby\\header\\notification_bg_header.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"TextUIMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\header\\notification_bg_header.png", L"texture\\Lobby\\header\\notification_bg_header.png"));
 
-	//pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyBtnMtrl");
-	//pMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png"));
+	pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyBtnMtrl");
+	pMtrl->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png", L"texture\\Lobby\\btn\\menu\\main_menu_button_0.png"));
 
-	//Ptr<CMaterial> pBtn = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BtnMtrl");
-	//pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 0);
-	//pBtn->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\important_button_0.png",
-	//	L"texture\\Lobby\\recruitment\\btn\\important_button_0.png"));
-	//pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 1);
-	//pBtn->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\important_button_1.png",
-	//	L"texture\\Lobby\\recruitment\\btn\\important_button_1.png"));
-	//pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 2);
-	//pBtn->SetTexParam(TEX_PARAM::TEX_2, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\default_button_4.png",
-	//	L"texture\\Lobby\\recruitment\\btn\\default_button_4.png"));
+	Ptr<CMaterial> pBtn = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"BtnMtrl");
+	pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	pBtn->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\important_button_0.png",
+		L"texture\\Lobby\\recruitment\\btn\\important_button_0.png"));
+	pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+	pBtn->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\important_button_1.png",
+		L"texture\\Lobby\\recruitment\\btn\\important_button_1.png"));
+	pBtn->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+	pBtn->SetTexParam(TEX_PARAM::TEX_2, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\recruitment\\btn\\default_button_4.png",
+		L"texture\\Lobby\\recruitment\\btn\\default_button_4.png"));
 
-	//CLevel* pLevel = CLevelSaveLoad::LoadLevel(L"level\\LobbyLV6.lv");
-	//CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);
-	LobbyLevel::CreateTempLevel();
+	CLevel* pLevel = CLevelSaveLoad::LoadLevel(L"level\\LobbyLV8.lv");
+	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);
+	//LobbyLevel::CreateTempLevel();
 	
 }
 

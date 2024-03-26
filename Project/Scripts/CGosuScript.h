@@ -35,8 +35,9 @@ public:
     void render();
 
 public:
-    CLONE_DISABLE(CGosuScript);
+    CLONE(CGosuScript);
     CGosuScript();
+    CGosuScript(const CGosuScript& _Origin);
     ~CGosuScript();
 };
 

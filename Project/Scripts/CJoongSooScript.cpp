@@ -19,6 +19,20 @@ CJoongSooScript::CJoongSooScript()
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerAge", &m_GamerAge);
 }
 
+CJoongSooScript::CJoongSooScript(const CJoongSooScript& _Origin)
+	: CScript(GAMERSCRIPT)
+	, m_GamerName{}
+	, m_GamerATK(_Origin.m_GamerATK)
+	, m_GamerDEF(_Origin.m_GamerDEF)
+	, m_GamerAge(_Origin.m_GamerAge)
+	, m_Tex(_Origin.m_Tex)
+	, m_Text(_Origin.m_Text)
+{
+	AddScriptParam(SCRIPT_PARAM::INT, "GamerATK", &m_GamerATK);
+	AddScriptParam(SCRIPT_PARAM::INT, "GamerDEF", &m_GamerDEF);
+	AddScriptParam(SCRIPT_PARAM::INT, "GamerAge", &m_GamerAge);
+}
+
 CJoongSooScript::~CJoongSooScript()
 {
 }
@@ -37,6 +51,8 @@ void CJoongSooScript::begin()
 	GetOwner()->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	GetOwner()->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"GamerMtrl"));
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+
+	CTGMgr::GetInst()->G_Gamer.insert(make_pair(m_GamerName, GetOwner()));
 }
 
 void CJoongSooScript::tick()

@@ -36,8 +36,9 @@ public:
     void render();
 
 public:
-    CLONE_DISABLE(CGamerScript);
+    CLONE(CGamerScript);
     CGamerScript();
+    CGamerScript(const CGamerScript& _Origin);
     ~CGamerScript();
 };
 

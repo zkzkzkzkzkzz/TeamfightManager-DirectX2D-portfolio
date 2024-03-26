@@ -16,6 +16,8 @@ public:
 	static map<wstring, CGameObject*> G_Gamer;			// 선수 목록
 	static map<wstring, CGameObject*> G_RecruitList;	// 영입 가능 선수 목록
 
+	static map<wstring, CGameObject*> G_Champ;	// 챔피언 목록
+
 	static float G_Time;	// 경기 시간
 };
 
