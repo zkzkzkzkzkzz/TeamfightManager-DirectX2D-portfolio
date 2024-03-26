@@ -32,7 +32,7 @@ void CJoongSooScript::begin()
 
 	GetOwner()->Transform()->SetRelativePos(Vec3(-54.f, -38.f, 330.f));
 	GetOwner()->Transform()->SetRelativeScale(Vec3(192.f, 192.f, 1.f));
-	GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, 180.f, 0.f));
+	GetOwner()->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 
 	GetOwner()->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	GetOwner()->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"GamerMtrl"));
