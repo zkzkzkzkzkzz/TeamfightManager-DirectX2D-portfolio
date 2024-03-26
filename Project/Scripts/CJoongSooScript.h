@@ -23,6 +23,13 @@ class CJoongSooScript :
     virtual void LoadFromFile(FILE* _File) override {}
 
 public:
+    int GetATK() { return m_GamerATK; }
+    int GetDEF() { return m_GamerDEF; }
+    int GetAge() { return m_GamerAge; }
+
+    wstring GetGamerName() { return m_GamerName; }
+
+public:
     virtual void begin() override;
     virtual void tick() override;
     void render();

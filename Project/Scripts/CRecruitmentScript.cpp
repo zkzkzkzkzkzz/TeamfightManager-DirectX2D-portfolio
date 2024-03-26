@@ -349,7 +349,10 @@ void CRecruitmentScript::RLBtnClicked()
 	else if (RECRUIT_STATE::SEARCH == GetState())
 		SetState(RECRUIT_STATE::DONE);
 	else if (RECRUIT_STATE::DONE == GetState())
+	{
 		RecruitGamer();
+		SetState(RECRUIT_STATE::NONE);
+	}
 
 	m_bStateChange = true;
 }
@@ -417,5 +420,7 @@ void CRecruitmentScript::CheckRecruitBtnPos()
 
 void CRecruitmentScript::RecruitGamer()
 {
-	
+	CGameObject* gamer = CTGMgr::GetInst()->G_RecruitList.find(L"GaeGosu")->second;
+	CTGMgr::GetInst()->G_Gamer.insert(make_pair(gamer->GetName(), gamer));
+	gamer->SetActive(true);
 }

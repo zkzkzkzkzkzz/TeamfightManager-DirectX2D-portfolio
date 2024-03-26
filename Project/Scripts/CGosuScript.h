@@ -16,11 +16,18 @@ class CGosuScript :
     int m_GamerDEF; // 선수 방어력
     int m_GamerAge; // 선수 나이
 
-    CGameObject* m_Text;
+    CGameObject*    m_Text;
     Ptr<CTexture>   m_Tex;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
+
+public:
+    int GetATK() { return m_GamerATK; }
+    int GetDEF() { return m_GamerDEF; }
+    int GetAge() { return m_GamerAge; }
+
+    wstring GetGamerName() { return m_GamerName; }
 
 public:
     virtual void begin() override;

@@ -12,6 +12,7 @@
 #include <Engine\components.h>
 #include <Engine\CFontMgr.h>
 
+#include "CGosuScript.h"
 #include "CRecruitmentScript.h"
 
 CRecruitSlotScript::CRecruitSlotScript()
@@ -89,6 +90,7 @@ void CRecruitSlotScript::begin()
 	GetOwner()->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
 
 	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+	
 
 	// 0
 	CGameObject* pNewObj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RecruitNameSlotIndex.prefab")->Instatiate();
@@ -177,6 +179,40 @@ void CRecruitSlotScript::begin()
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	m_DoneText.push_back(pNewObj);
 
+	// 13
+	CGameObject* GosuText = new CGameObject;
+	GosuText->AddComponent(new CTransform);
+	GosuText->AddComponent(new CTextRender);
+	GosuText->TextRender()->SetString((CTGMgr::GetInst()->G_RecruitList.find(L"GaeGosu")->second->GetScript<CGosuScript>()->GetGamerName()));
+	GosuText->TextRender()->SetFont(L"Galmuri14");
+	GosuText->TextRender()->SetFontSize(20.f);
+	GosuText->TextRender()->SetFontColor(255, 255, 255, 255);
+	GosuText->TextRender()->SetOffsetPos(Vec3(-504.f, -178.f, -10.f));
+	GetOwner()->GetParent()->AddChild(GosuText);
+	m_DoneText.push_back(GosuText);
+
+	GosuText = new CGameObject;
+	GosuText->AddComponent(new CTransform);
+	GosuText->AddComponent(new CTextRender);
+	GosuText->TextRender()->SetString(ToWString(std::to_string((CTGMgr::GetInst()->G_RecruitList.find(L"GaeGosu")->second->GetScript<CGosuScript>()->GetATK()))));
+	GosuText->TextRender()->SetFont(L"Galmuri14");
+	GosuText->TextRender()->SetFontSize(20.f);
+	GosuText->TextRender()->SetFontColor(255, 255, 255, 255);
+	GosuText->TextRender()->SetOffsetPos(Vec3(-479.f, -151.f, -10.f));
+	GetOwner()->GetParent()->AddChild(GosuText);
+	m_DoneText.push_back(GosuText);
+
+	GosuText = new CGameObject;
+	GosuText->AddComponent(new CTransform);
+	GosuText->AddComponent(new CTextRender);
+	GosuText->TextRender()->SetString(ToWString(std::to_string((CTGMgr::GetInst()->G_RecruitList.find(L"GaeGosu")->second->GetScript<CGosuScript>()->GetDEF()))));
+	GosuText->TextRender()->SetFont(L"Galmuri14");
+	GosuText->TextRender()->SetFontSize(20.f);
+	GosuText->TextRender()->SetFontColor(255, 255, 255, 255);
+	GosuText->TextRender()->SetOffsetPos(Vec3(-387.f, -151.f, -10.f));
+	GetOwner()->GetParent()->AddChild(GosuText);
+	m_DoneText.push_back(GosuText);
+
 	for (size_t i = 0; i < m_DefaultText.size(); ++i)
 	{
 		m_DefaultText[i]->SetActive(false);
@@ -259,6 +295,8 @@ void CRecruitSlotScript::tick()
 		{
 			m_DoneText[l]->SetActive(true);
 		}
+
+
 	}
 	else if (RECRUIT_STATE::CLOSE == GetOwner()->GetParent()->GetScript<CRecruitmentScript>()->GetState() && bChange)
 	{

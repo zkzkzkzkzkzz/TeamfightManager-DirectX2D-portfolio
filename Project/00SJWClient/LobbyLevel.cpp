@@ -42,7 +42,6 @@ bool compare(CGameObject* a, CGameObject* b)
 
 void LobbyLevel::CreateTempLevel()
 {
-
 	vector<CGameObject*> vecUI = {};
 
 	CLevel* pTempLevel = new CLevel;
