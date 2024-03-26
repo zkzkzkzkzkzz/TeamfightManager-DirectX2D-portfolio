@@ -63,8 +63,9 @@ public:
     void render();
 
 public:
-    CLONE_DISABLE(CProceedBtnScript);
+    CLONE(CProceedBtnScript);
     CProceedBtnScript();
+    CProceedBtnScript(const CProceedBtnScript& _Origin);
     ~CProceedBtnScript();
 };
 

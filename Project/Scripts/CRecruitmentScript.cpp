@@ -38,6 +38,34 @@ CRecruitmentScript::CRecruitmentScript()
 {
 }
 
+CRecruitmentScript::CRecruitmentScript(const CRecruitmentScript& _Origin)
+	: CScript(RECRUITMENTSCRIPT)
+	, m_Panel(nullptr)
+	, m_PanelTex(_Origin.m_PanelTex)
+	, m_CloseBtn(nullptr)
+	, m_NormalImg(_Origin.m_NormalImg)
+	, m_HoverImg(_Origin.m_HoverImg)
+	, m_CurImg(_Origin.m_CurImg)
+	, m_bMouseOn(false)
+	, m_bMouseOn_Prev(false)
+	, m_bMouseLBtnDown(false)
+	, m_RecruitBtn(nullptr)
+	, m_RNormalImg(_Origin.m_RNormalImg)
+	, m_RHoverImg(_Origin.m_RHoverImg)
+	, m_DNormalImg(_Origin.m_DNormalImg)
+	, m_DHoverImg(_Origin.m_DHoverImg)
+	, m_RCurImg(_Origin.m_RCurImg)
+	, m_RbMouseOn(false)
+	, m_RbMouseOn_Prev(false)
+	, m_RbMouseLBtnDown(false)
+	, m_RText(nullptr)
+	, m_RState(RECRUIT_STATE::NONE)
+	, m_bStateChange(false)
+	, m_vecText{}
+	, m_CoinText(nullptr)
+{
+}
+
 CRecruitmentScript::~CRecruitmentScript()
 {
 }

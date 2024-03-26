@@ -66,8 +66,9 @@ public:
     void render();
 
 public:
-    CLONE_DISABLE(CMgrBtnScript);
+    CLONE(CMgrBtnScript);
     CMgrBtnScript();
+    CMgrBtnScript(const CMgrBtnScript& _Origin);
     ~CMgrBtnScript();
 };
 

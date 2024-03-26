@@ -29,6 +29,25 @@ CMgrBtnScript::CMgrBtnScript()
 {
 }
 
+CMgrBtnScript::CMgrBtnScript(const CMgrBtnScript& _Origin)
+	: CScript(MGRBTNSCRIPT)
+	, m_CurImg(_Origin.m_CurImg)
+	, m_NormalImg(_Origin.m_NormalImg)
+	, m_HoverImg(_Origin.m_HoverImg)
+	, m_PressedImg(_Origin.m_PressedImg)
+	, m_bMouseOn(false)
+	, m_bMouseOn_Prev(false)
+	, m_bMouseLBtnDown(false)
+	, m_isOpen(false)
+	, m_NormalIcon(_Origin.m_NormalIcon)
+	, m_HoverIcon(_Origin.m_HoverIcon)
+	, m_PressedIcon(_Origin.m_PressedIcon)
+	, m_CurIcon(_Origin.m_CurIcon)
+	, m_BtnText(nullptr)
+	, m_Icon(nullptr)
+{
+}
+
 CMgrBtnScript::~CMgrBtnScript()
 {
 }

@@ -30,6 +30,23 @@ CProceedBtnScript::CProceedBtnScript()
 {	  
 }
 
+CProceedBtnScript::CProceedBtnScript(const CProceedBtnScript& _Origin)
+	: CScript(PROCEEDBTNSCRIPT)
+	, m_NormalImg(_Origin.m_NormalImg)
+	, m_HoverImg(_Origin.m_HoverImg)
+	, m_CurImg(_Origin.m_CurImg)
+	, m_bMouseOn(false)
+	, m_bMouseOn_Prev(false)
+	, m_bMouseLBtnDown(false)
+	, m_Arrow(nullptr)
+	, m_AnimImg(m_AnimImg)
+	, m_Time(0.f)
+	, m_Duration(0.9f)
+	, m_MainText(nullptr)
+	, m_SubText(nullptr)
+{
+}
+
 CProceedBtnScript::~CProceedBtnScript()
 {
 }

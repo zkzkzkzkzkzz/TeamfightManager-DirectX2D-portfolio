@@ -14,6 +14,13 @@ CCursorScript::CCursorScript()
 {
 }
 
+CCursorScript::CCursorScript(const CCursorScript& _Origin)
+	: CScript(CURSORSCRIPT)
+	, m_CursorSize(_Origin.m_CursorSize)
+	, m_CursorTex(_Origin.m_CursorTex)
+{
+}
+
 CCursorScript::~CCursorScript()
 {
 }

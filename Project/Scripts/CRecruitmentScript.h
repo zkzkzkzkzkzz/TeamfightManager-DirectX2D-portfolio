@@ -101,8 +101,9 @@ public:
     void render();
 
 public:
-    CLONE_DISABLE(CRecruitmentScript);
+    CLONE(CRecruitmentScript);
     CRecruitmentScript();
+    CRecruitmentScript(const CRecruitmentScript& _Origin);
     ~CRecruitmentScript();
 
     friend class CRecruitmentBtnScript;
