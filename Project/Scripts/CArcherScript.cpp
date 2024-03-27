@@ -1,20 +1,38 @@
 #include "pch.h"
 #include "CArcherScript.h"
 
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
+#include <Engine\CLayer.h>
+#include <Engine\CGameObject.h>
+#include <Engine\components.h>
 #include <Engine\CAssetMgr.h>
 
+#include "CIdleState.h"
+#include "CTraceState.h"
+
 CArcherScript::CArcherScript()
-	: m_Info{}
-	, m_State(CHAMP_STATE::END)
-	, m_Team(TEAM::NONE)
+	: m_DetectRange(10000.f)
 {
+	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
+	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
+	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_Info.ATK);
+	AddScriptParam(SCRIPT_PARAM::INT, "DEF", &m_Info.DEF);
+	AddScriptParam(SCRIPT_PARAM::FLOAT, "Attack Speed", &m_Info.ATKSpeed);
+	AddScriptParam(SCRIPT_PARAM::INT, "Attack Range", &m_Info.ATKRange);
+	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
 }
 
 CArcherScript::CArcherScript(const CArcherScript& _Origin)
-	: m_Info{}
-	, m_State(CHAMP_STATE::END)
-	, m_Team(TEAM::NONE)
+	: m_DetectRange(10000.f)
 {
+	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
+	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
+	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_Info.ATK);
+	AddScriptParam(SCRIPT_PARAM::INT, "DEF", &m_Info.DEF);
+	AddScriptParam(SCRIPT_PARAM::FLOAT, "Attack Speed", &m_Info.ATKSpeed);
+	AddScriptParam(SCRIPT_PARAM::INT, "Attack Range", &m_Info.ATKRange);
+	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
 }
 
 CArcherScript::~CArcherScript()
@@ -31,6 +49,8 @@ void CArcherScript::InitChampInfo()
 	m_Info.ATKRange = 120;
 	m_Info.MOV = 3.f;
 	m_Info.Type = CHAMP_TYPE::ARCHERS;
+
+	m_State = CHAMP_STATE::IDLE;
 }
 
 void CArcherScript::InitChampAnim()
@@ -38,12 +58,55 @@ void CArcherScript::InitChampAnim()
 	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
-	//Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\archer_64pix.png", 
-	//														L"texture\\Champ\\archer_64pix.png");
-	//GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 
 	Animator2D()->LoadAnimation(L"animdata\\ArcherTest.txt");
 	Animator2D()->Play(L"ArcherTest");
+}
+
+void CArcherScript::InitStateMachine()
+{
+	if (StateMachine())
+	{
+		StateMachine()->SetFSM(CAssetMgr::GetInst()->FindAsset<CFSM>(L"ArcherFSM"));
+
+		StateMachine()->AddBlackboardData(L"DetectRange", BB_DATA::FLOAT, &m_DetectRange);
+		StateMachine()->AddBlackboardData(L"MoveSpeed", BB_DATA::FLOAT, &m_Info.MOV);
+		StateMachine()->AddBlackboardData(L"AttackRange", BB_DATA::INT, &m_Info.ATKRange);
+		StateMachine()->AddBlackboardData(L"AttackSpeed", BB_DATA::INT, &m_Info.ATKSpeed);
+		StateMachine()->AddBlackboardData(L"ChampMP", BB_DATA::INT, &m_Info.MP);
+
+		vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetLayerObjects();
+
+		TEAM team = GetOwner()->GetScript<CChampScript>()->GetTeamColor();
+		CGameObject* pTarget = nullptr;
+		for (size_t i = 0; i < pObjs.size(); ++i)
+		{
+			if (team != pObjs[i]->GetScript<CChampScript>()->GetTeamColor())
+			{
+				Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
+
+				if (nullptr != pTarget)
+				{
+					Vec3 prevdist = Transform()->GetRelativePos() - pTarget->Transform()->GetRelativePos();
+
+					if (prevdist.Length() > dist.Length())
+						pTarget = pObjs[i];
+				}
+				else
+				{
+					pTarget = pObjs[i];
+				}
+			}
+		}
+
+		StateMachine()->AddBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
+
+
+		if (nullptr != StateMachine()->GetFSM())
+		{
+			StateMachine()->GetFSM()->SetState(L"Idle");
+		}
+	}
 }
 
 void CArcherScript::Attack()
@@ -74,6 +137,7 @@ void CArcherScript::begin()
 
 	InitChampInfo();
 	InitChampAnim();
+	InitStateMachine();
 }
 
 void CArcherScript::tick()

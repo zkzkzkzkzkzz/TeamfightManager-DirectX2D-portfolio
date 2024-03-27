@@ -17,7 +17,9 @@ public:
     void SetFSM(Ptr<CFSM> _FSM)
     {
         m_FSM = _FSM;
-        m_FSM_Inst = nullptr;
+        m_FSM_Inst = m_FSM->GetFSMInstance();
+        m_FSM_Inst->SetStateMachine(this);
+        //m_FSM_Inst = nullptr;
     }
 
     Ptr<CFSM> GetFSM()

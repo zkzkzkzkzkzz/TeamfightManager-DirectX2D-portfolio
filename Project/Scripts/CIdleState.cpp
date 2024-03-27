@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "CIdleState.h"
 
-#include <Engine/CGameObject.h>
-#include <Engine/CStateMachine.h>
-#include <Engine/CTransform.h>
+#include <Engine\CGameObject.h>
+#include <Engine\CStateMachine.h>
+#include <Engine\CTransform.h>
 
 CIdleState::CIdleState()
 {
@@ -15,9 +15,8 @@ CIdleState::~CIdleState()
 
 void CIdleState::finaltick()
 {
-	// 플레이어가 근처에 있으면, Trace 상태로 변경한다.
 	float DetectRange = *((float*)GetBlackboardData(L"DetectRange"));
-	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"TargetObject"));
+	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
 
@@ -27,8 +26,8 @@ void CIdleState::finaltick()
 
 	if (vDist.Length() <= DetectRange)
 	{
-		// 추적상태로 변경
-		ChangeState(L"TraceState");
+		// 추적상태로 변경한다.
+		ChangeState(L"Trace");
 	}
 }
 

@@ -1,9 +1,8 @@
 #pragma once
-
 #include <Engine\CState.h>
 
 
-class CIdleState :
+class CTraceState :
     public CState
 {
 public:
@@ -12,7 +11,7 @@ public:
     virtual void Exit() override;
 
 public:
-    CIdleState();
-    ~CIdleState();
+    CTraceState();
+    ~CTraceState();
 };
 

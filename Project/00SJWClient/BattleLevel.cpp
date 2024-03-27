@@ -22,7 +22,8 @@
 #include <Scripts\CTGMgr.h>
 #include <Scripts\CChampScript.h>
 #include <Scripts\CArcherScript.h>
-
+#include <Scripts\CIdleState.h>
+#include <Scripts\CTraceState.h>
 
 void BattleLevel::CreateTempLevel()
 {
@@ -35,6 +36,12 @@ void BattleLevel::CreateTempLevel()
 	pTempLevel->GetLayer(4)->SetName(L"Cursor");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
 
+	Ptr<CFSM> pFSM = new CFSM(false);
+
+	pFSM->AddState(L"Idle", new CIdleState);
+	pFSM->AddState(L"Trace", new CTraceState);
+
+	CAssetMgr::GetInst()->AddAsset<CFSM>(L"ArcherFSM", pFSM.Get());
 
 	// Main Camera 생성
 	CGameObject* pCamObj = new CGameObject;
@@ -103,6 +110,7 @@ void BattleLevel::CreateTempLevel()
 	Archer->AddComponent(new CMeshRender);
 	Archer->AddComponent(new CCollider2D);
 	Archer->AddComponent(new CAnimator2D);
+	Archer->AddComponent(new CStateMachine);
 	Archer->AddComponent(new CArcherScript);
 	Archer->GetScript<CArcherScript>()->SetTeam(TEAM::BLUE);
 	pTempLevel->AddObject(Archer, 3);

@@ -22,7 +22,7 @@ enum class CHAMP_TYPE
 enum class CHAMP_STATE
 {
     IDLE,
-    MOVE,
+    TRACE,
     ATTACK,
     SKILL,
     ULTIMATE,
@@ -46,13 +46,23 @@ struct tChampInfo
 class CChampScript :
     public CScript
 {
+protected:
+    tChampInfo      m_Info;
+    CHAMP_STATE     m_State;
+    TEAM            m_Team;
+
 private:
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
     
 public:
-    virtual void InitChampInfo() {}   // 챔프 정보 설정
-    virtual void InitChampAnim() {}   // 챔프 애니메이션 설정
+    void SetTeam(TEAM _team) { m_Team = _team; }
+    TEAM GetTeamColor() { return m_Team; }
+
+public:
+    virtual void InitChampInfo() {}     // 챔프 정보 설정
+    virtual void InitChampAnim() {}     // 챔프 애니메이션 설정
+    virtual void InitStateMachine() {}  // 챔피언 스테이트머신 설정
 
     virtual void Attack();
     virtual void AttackComplete();
