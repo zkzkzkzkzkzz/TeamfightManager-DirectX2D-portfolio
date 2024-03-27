@@ -29,10 +29,10 @@ private:
     bool                    m_Active;
 
 public:
-    void begin();
-    void tick();
+    virtual void begin();
+    virtual void tick();
     virtual void finaltick();
-    void render();
+    virtual void render();
 
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);

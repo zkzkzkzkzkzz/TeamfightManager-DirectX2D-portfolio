@@ -337,7 +337,7 @@ void CAssetMgr::CreateDefaultMaterial()
 	CreateLobbyLevelMaterial();
 
 	// === 선수 머테리얼 =============================================
-	CreateGamerMaterial();
+	CreateInGameObjectMaterial();
 
 
 	// ============================================================
@@ -521,14 +521,19 @@ void CAssetMgr::CreateLobbyLevelMaterial()
 	AddAsset<CMaterial>(L"RecruitmentMtrl", pMtrl);
 }
 
-void CAssetMgr::CreateGamerMaterial()
+void CAssetMgr::CreateInGameObjectMaterial()
 {
 	CMaterial* pMtrl = nullptr;
 
-	// 로비 하우스 머테리얼
+	// 선수 머테리얼
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"GamerMtrl", pMtrl);
+
+	// 챔피언 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"ChampMtrl", pMtrl);
 }
 
 

@@ -27,7 +27,7 @@
 
 #include "TitleLevel.h"
 #include "LobbyLevel.h"
-
+#include "BattleLevel.h"
 
 void TestFunc();
 INT_PTR CALLBACK CreateTempLevel();
@@ -59,7 +59,8 @@ void CCreateTempLevel::CreateTempLevel()
 	//CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);
 
 	//TitleLevel::CreateTempLevel();
-	LobbyLevel::CreateTempLevel();
+	//LobbyLevel::CreateTempLevel();
+	BattleLevel::CreateTempLevel();
 }
 
 void TestFunc()
