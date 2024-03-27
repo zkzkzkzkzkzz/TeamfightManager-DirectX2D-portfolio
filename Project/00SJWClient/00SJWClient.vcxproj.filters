@@ -104,15 +104,6 @@
     <Filter Include="02.UI\3.Inspector\AssetUI\Prefab">
       <UniqueIdentifier>{550fa30a-28ca-48a0-a282-a62fc51be2f7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.State">
-      <UniqueIdentifier>{0fa80225-a488-4cd8-a035-e8d0277d5937}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04.State\IdleState">
-      <UniqueIdentifier>{4d51c6f6-ee87-47cd-abd1-83519c517875}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04.State\TraceState">
-      <UniqueIdentifier>{7d82923f-4278-4b90-b023-d8bae74cc4ca}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.UI\3.Inspector\AssetUI\FSMUI">
       <UniqueIdentifier>{cf760644-c200-482c-9c39-810dfba3d311}</UniqueIdentifier>
     </Filter>
@@ -125,35 +116,20 @@
     <Filter Include="01.Manager\04.CreateTempLevel">
       <UniqueIdentifier>{8f2c38dd-eb7b-41da-9c6e-134ebc3e5ba8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05.Level">
-      <UniqueIdentifier>{23dcc873-46d6-457a-9c6e-1458100baf19}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05.Level\TitleLevel">
-      <UniqueIdentifier>{ec15a883-7e35-4625-8f3b-6650885fb385}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="05.Level\LobbyLevel">
-      <UniqueIdentifier>{1910b131-c008-466d-b594-7ab5de8eff55}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07.Object">
-      <UniqueIdentifier>{c18fead6-6055-472f-b03f-fa9a40d1d0af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07.Object\GameUnit">
-      <UniqueIdentifier>{bdecbc58-06d2-489c-8419-05800170c784}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="07.Object\GameUnit\Gamer">
-      <UniqueIdentifier>{96b02bfa-4e39-4e59-b052-6fec7bc35904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06.GameManager">
-      <UniqueIdentifier>{b9f7630b-6772-4888-8380-dfab722af40f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06.GameManager\DataManager">
-      <UniqueIdentifier>{a8afd03c-da1f-4e0a-b1fe-b772b2d4271c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06.GameManager\DataManager\TotalGameManager">
-      <UniqueIdentifier>{a581f071-7040-49a2-8e24-4ecfe272cc4b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02.UI\3.Inspector\ComponentUI\GameText">
       <UniqueIdentifier>{6fa7bf86-091f-485b-bc56-bf0af12096f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Level">
+      <UniqueIdentifier>{23dcc873-46d6-457a-9c6e-1458100baf19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Level\TitleLevel">
+      <UniqueIdentifier>{ec15a883-7e35-4625-8f3b-6650885fb385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Level\LobbyLevel">
+      <UniqueIdentifier>{1910b131-c008-466d-b594-7ab5de8eff55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.Level\BattleLevel">
+      <UniqueIdentifier>{1d17f30f-8278-4f3e-8f58-d8a80f30b632}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -295,29 +271,20 @@
     <ClInclude Include="FSMUI.h">
       <Filter>02.UI\3.Inspector\AssetUI\FSMUI</Filter>
     </ClInclude>
-    <ClInclude Include="CTraceState.h">
-      <Filter>04.State\TraceState</Filter>
-    </ClInclude>
-    <ClInclude Include="CIdleState.h">
-      <Filter>04.State\IdleState</Filter>
-    </ClInclude>
     <ClInclude Include="ScriptUI.h">
       <Filter>02.UI\3.Inspector\ComponentUI\Script</Filter>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
-      <Filter>05.Level\TitleLevel</Filter>
+      <Filter>04.Level\TitleLevel</Filter>
     </ClInclude>
     <ClInclude Include="LobbyLevel.h">
-      <Filter>05.Level\LobbyLevel</Filter>
-    </ClInclude>
-    <ClInclude Include="CGamer.h">
-      <Filter>07.Object\GameUnit\Gamer</Filter>
-    </ClInclude>
-    <ClInclude Include="TGMgr.h">
-      <Filter>06.GameManager\DataManager\TotalGameManager</Filter>
+      <Filter>04.Level\LobbyLevel</Filter>
     </ClInclude>
     <ClInclude Include="GameTextUI.h">
       <Filter>02.UI\3.Inspector\ComponentUI\GameText</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleLevel.h">
+      <Filter>04.Level\BattleLevel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -458,29 +425,20 @@
     <ClCompile Include="FSMUI.cpp">
       <Filter>02.UI\3.Inspector\AssetUI\FSMUI</Filter>
     </ClCompile>
-    <ClCompile Include="CTraceState.cpp">
-      <Filter>04.State\TraceState</Filter>
-    </ClCompile>
-    <ClCompile Include="CIdleState.cpp">
-      <Filter>04.State\IdleState</Filter>
-    </ClCompile>
     <ClCompile Include="ScriptUI.cpp">
       <Filter>02.UI\3.Inspector\ComponentUI\Script</Filter>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
-      <Filter>05.Level\TitleLevel</Filter>
+      <Filter>04.Level\TitleLevel</Filter>
     </ClCompile>
     <ClCompile Include="LobbyLevel.cpp">
-      <Filter>05.Level\LobbyLevel</Filter>
-    </ClCompile>
-    <ClCompile Include="CGamer.cpp">
-      <Filter>07.Object\GameUnit\Gamer</Filter>
-    </ClCompile>
-    <ClCompile Include="TGMgr.cpp">
-      <Filter>06.GameManager\DataManager\TotalGameManager</Filter>
+      <Filter>04.Level\LobbyLevel</Filter>
     </ClCompile>
     <ClCompile Include="GameTextUI.cpp">
       <Filter>02.UI\3.Inspector\ComponentUI\GameText</Filter>
+    </ClCompile>
+    <ClCompile Include="BattleLevel.cpp">
+      <Filter>04.Level\BattleLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
