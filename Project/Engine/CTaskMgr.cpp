@@ -41,6 +41,11 @@ void CTaskMgr::tick()
 			pCurLevel->AddObject(Object, LayerIdx, true);
 
 			m_bCreateObject = true;
+
+			if (LEVEL_STATE::PLAY == pCurLevel->GetState())
+			{
+				Object->begin();
+			}
 		}
 			break;
 		case TASK_TYPE::DELETE_OBJECT:
