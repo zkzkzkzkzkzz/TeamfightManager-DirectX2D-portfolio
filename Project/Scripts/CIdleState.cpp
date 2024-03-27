@@ -5,6 +5,7 @@
 #include <Engine\CStateMachine.h>
 #include <Engine\CTransform.h>
 #include <Engine\CFSM.h>
+#include "CChampScript.h"
 
 CIdleState::CIdleState()
 {
@@ -18,6 +19,9 @@ void CIdleState::finaltick()
 {
 	float DetectRange = *((float*)GetBlackboardData(L"DetectRange"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
+
+	CFSM* fsm = GetFSM();
+	CStateMachine* sm = GetFSM()->GetStateMachine();
 
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
 
@@ -35,6 +39,7 @@ void CIdleState::finaltick()
 void CIdleState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
+	pSelf->GetScript<CChampScript>()->EnterIdleState();
 }
 
 void CIdleState::Exit()
