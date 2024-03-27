@@ -26,6 +26,9 @@ public:
     virtual void Skill() {};
     virtual void Ultimate() {};
 
+    virtual void EnterIdleState() override;
+    virtual void EnterTraceState() override;
+
 public:
     virtual void begin() override;
     virtual void tick() override;

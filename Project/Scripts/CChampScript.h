@@ -12,10 +12,10 @@ enum class TEAM
 enum class CHAMP_TYPE
 {
     WARRIOR,
-    ARCHERS,
-    MAGES,
-    SUPPORTERS,
-    ASSASSINS,
+    MARKSMAN,
+    MAGE,
+    SUPPORT,
+    ASSASSIN,
     END,
 };
 
@@ -70,6 +70,9 @@ public:
     virtual void HealComplete();
     virtual void Skill() {};
     virtual void Ultimate() {};
+
+    virtual void EnterIdleState() {}
+    virtual void EnterTraceState() {}
 
 public:
     virtual void begin() override;

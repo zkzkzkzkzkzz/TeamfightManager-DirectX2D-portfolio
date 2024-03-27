@@ -4,6 +4,7 @@
 #include <Engine\CGameObject.h>
 #include <Engine\CStateMachine.h>
 #include <Engine\CTransform.h>
+#include <Engine\CFSM.h>
 
 CIdleState::CIdleState()
 {
@@ -33,6 +34,7 @@ void CIdleState::finaltick()
 
 void CIdleState::Enter()
 {
+	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
 }
 
 void CIdleState::Exit()

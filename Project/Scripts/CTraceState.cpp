@@ -6,7 +6,9 @@
 #include <Engine\CGameObject.h>
 #include <Engine\CStateMachine.h>
 #include <Engine\CTransform.h>
+#include <Engine\CFSM.h>
 
+#include "CChampScript.h"
 
 CTraceState::CTraceState()
 {
@@ -31,6 +33,8 @@ void CTraceState::finaltick()
 
 void CTraceState::Enter()
 {
+	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
+	pSelf->GetScript<CChampScript>()->EnterTraceState();
 }
 
 void CTraceState::Exit()

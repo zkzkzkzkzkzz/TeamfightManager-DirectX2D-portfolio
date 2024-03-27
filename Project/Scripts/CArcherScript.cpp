@@ -21,6 +21,7 @@ CArcherScript::CArcherScript()
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Attack Speed", &m_Info.ATKSpeed);
 	AddScriptParam(SCRIPT_PARAM::INT, "Attack Range", &m_Info.ATKRange);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
+	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
 }
 
 CArcherScript::CArcherScript(const CArcherScript& _Origin)
@@ -33,6 +34,7 @@ CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Attack Speed", &m_Info.ATKSpeed);
 	AddScriptParam(SCRIPT_PARAM::INT, "Attack Range", &m_Info.ATKRange);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
+	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
 }
 
 CArcherScript::~CArcherScript()
@@ -48,7 +50,7 @@ void CArcherScript::InitChampInfo()
 	m_Info.ATKSpeed = 0.67f;
 	m_Info.ATKRange = 120;
 	m_Info.MOV = 3.f;
-	m_Info.Type = CHAMP_TYPE::ARCHERS;
+	m_Info.Type = CHAMP_TYPE::MARKSMAN;
 
 	m_State = CHAMP_STATE::IDLE;
 }
@@ -59,8 +61,11 @@ void CArcherScript::InitChampAnim()
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	Animator2D()->LoadAnimation(L"animdata\\ArcherTest.txt");
-	Animator2D()->Play(L"ArcherTest");
+	Animator2D()->LoadAnimation(L"animdata\\ArcherIdle.txt");
+	Animator2D()->LoadAnimation(L"animdata\\ArcherTrace.txt");
+	Animator2D()->LoadAnimation(L"animdata\\ArcherAttack.txt");
+	Animator2D()->LoadAnimation(L"animdata\\ArcherDead.txt");
+	Animator2D()->Play(L"ArcherIdle");
 }
 
 void CArcherScript::InitStateMachine()
@@ -124,6 +129,16 @@ void CArcherScript::Heal()
 
 void CArcherScript::HealComplete()
 {
+}
+
+void CArcherScript::EnterIdleState()
+{
+	Animator2D()->Play(L"ArcherIdle");
+}
+
+void CArcherScript::EnterTraceState()
+{
+	Animator2D()->Play(L"ArcherTrace");
 }
 
 void CArcherScript::begin()
