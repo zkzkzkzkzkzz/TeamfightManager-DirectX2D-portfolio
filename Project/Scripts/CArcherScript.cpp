@@ -142,7 +142,7 @@ void CArcherScript::CheckStateMachine()
 				}
 			}
 
-			if (nullptr != pTarget)
+			//if (nullptr != pTarget)
 				StateMachine()->SetBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
 		}
 	}
