@@ -8,7 +8,6 @@ class CArcherScript :
 {
 private:
     CGameObject* m_Target;
-
     float   m_AccTime;
 
     virtual void SaveToFile(FILE* _File) override {}
@@ -17,6 +16,7 @@ private:
 public:
     void SetTeam(TEAM _team) { m_Team = _team; }
     TEAM GetTeamColor() { return m_Team; }
+
 
 public:
     virtual void InitChampInfo();   // 챔프 정보 설정

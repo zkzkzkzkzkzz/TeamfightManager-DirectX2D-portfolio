@@ -42,8 +42,8 @@ void BattleLevel::CreateTempLevel()
 	pTempLevel->GetLayer(31)->SetName(L"UI");
 
 	// 충돌 설정
-	CCollisionMgr::GetInst()->LayerCheck(3, 5);
 	CCollisionMgr::GetInst()->LayerCheck(3, 3);
+	CCollisionMgr::GetInst()->LayerCheck(5, 3);
 
 	Ptr<CFSM> pFSM = new CFSM(false);
 

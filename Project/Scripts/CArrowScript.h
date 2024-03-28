@@ -7,6 +7,7 @@ class CArrowScript :
     public CScript
 {
 private:
+    CGameObject*    m_Shooter;
     CGameObject*    m_Target;
     Ptr<CTexture>   m_Tex;
 
@@ -18,7 +19,8 @@ private:
     virtual void LoadFromFile(FILE* _File) override {}
 
 public:
-    Vec3 Rotate(Vec3 _vDir, float _angle);
+    void SetShooter(CGameObject* _Obj) { m_Shooter = _Obj; }
+    void SetTarget(CGameObject* _Obj) { m_Target = _Obj; }
 
 public:
     virtual void begin() override;

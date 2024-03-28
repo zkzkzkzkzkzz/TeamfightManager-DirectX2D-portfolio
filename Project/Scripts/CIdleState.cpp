@@ -17,6 +17,13 @@ CIdleState::~CIdleState()
 
 void CIdleState::finaltick()
 {
+	int HP = *((int*)GetBlackboardData(L"HP"));
+	if (HP <= 0)
+	{
+		ChangeState(L"Dead");
+		return;
+	}
+
 	int AttRange = *((int*)GetBlackboardData(L"AttackRange"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 

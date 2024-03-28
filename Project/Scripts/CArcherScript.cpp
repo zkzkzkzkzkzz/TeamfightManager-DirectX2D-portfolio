@@ -94,6 +94,7 @@ void CArcherScript::render()
 }
 
 
+
 void CArcherScript::InitChampInfo()
 {
 	m_Info.HP = 100;
@@ -114,8 +115,8 @@ void CArcherScript::InitChampAnim()
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
-	Collider2D()->SetOffsetScale(Vec2(0.5f, 0.5f));
+	Collider2D()->SetOffsetPos(Vec2(0.05f, 0.05f));
+	Collider2D()->SetOffsetScale(Vec2(0.4f, 0.5f));
 
 	Animator2D()->LoadAnimation(L"animdata\\ArcherIdle.txt");
 	Animator2D()->LoadAnimation(L"animdata\\ArcherTrace.txt");
@@ -203,6 +204,7 @@ void CArcherScript::CheckStateMachine()
 				}
 			}
 
+			StateMachine()->SetBlackboardData(L"HP", BB_DATA::INT, &m_Info.HP);
 			StateMachine()->SetBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
 		}
 	}
@@ -232,13 +234,14 @@ void CArcherScript::EnterAttackState()
 	{
 		//CGameObject* arrow = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Arrow3.prefab")->Instatiate();
 		CGameObject* arrow = new CGameObject;
+		arrow->SetName(L"Arrow");
 		arrow->AddComponent(new CTransform);
 		arrow->AddComponent(new CMeshRender);
 		arrow->AddComponent(new CCollider2D);
 		arrow->AddComponent(new CArrowScript);
-		GetOwner()->AddChild(arrow);
+		arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
+		arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
 		GamePlayStatic::SpawnGameObject(arrow, 5);
-		arrow->SetLayerIdx(5);
 
 		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
 
@@ -259,7 +262,12 @@ void CArcherScript::EnterUltimateState()
 
 void CArcherScript::EnterDeadState()
 {
-	Animator2D()->Play(L"ArcherDead");
+	Animator2D()->Play(L"ArcherDead", false);
+
+	if (Animator2D()->FindAnim(L"ArcherDead")->IsFinish())
+	{
+		GamePlayStatic::DestroyGameObject(GetOwner());
+	}
 }
 
 

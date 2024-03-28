@@ -69,3 +69,13 @@ void CChampScript::tick()
 void CChampScript::render()
 {
 }
+
+
+void CChampScript::Damaged(int HP, int ATK, int DEF)
+{
+	int Damage = (ATK * 100 + 99 + DEF) / (100 + DEF);
+
+	HP -= Damage;
+
+	m_Info.HP = HP;
+}

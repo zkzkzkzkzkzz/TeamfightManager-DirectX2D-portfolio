@@ -21,12 +21,19 @@ CSkillState::~CSkillState()
 
 void CSkillState::finaltick()
 {
+	int HP = *((int*)GetBlackboardData(L"HP"));
+	if (HP <= 0)
+	{
+		ChangeState(L"Dead");
+		return;
+	}
+
 }
 
 void CSkillState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
-	pSelf->GetScript<CChampScript>()->EnterSkillState();
+	pSelf->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::SKILL);
 }
 
 void CSkillState::Exit()

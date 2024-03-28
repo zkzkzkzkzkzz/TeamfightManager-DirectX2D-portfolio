@@ -21,6 +21,13 @@ CAttackState::~CAttackState()
 
 void CAttackState::finaltick()
 {
+	int HP = *((int*)GetBlackboardData(L"HP"));
+	if (HP <= 0)
+	{
+		ChangeState(L"Dead");
+		return;
+	}
+
 	int AttRange = *((int*)GetBlackboardData(L"AttackRange"));
 	float Speed = *((float*)GetBlackboardData(L"MoveSpeed"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));

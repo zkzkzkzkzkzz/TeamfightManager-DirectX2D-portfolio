@@ -64,7 +64,17 @@ public:
     void SetChampState(CHAMP_STATE _State) { m_State = _State; }
     CHAMP_STATE GetChampState() { return m_State; }
 
+    virtual int GetChampHP() { return m_Info.HP; }
+    virtual int GetChampATK() { return m_Info.ATK; }
+    virtual int GetChampDEF() { return m_Info.DEF; }
+    virtual float GetChampATKSpeed() { return m_Info.ATKSpeed; }
+    virtual int GetChampATKRange() { return m_Info.ATKRange; }
+    virtual float GetChampMoveSpeed() { return m_Info.MOV; }
+    virtual CHAMP_TYPE GetChampType() { return m_Info.Type; }
+
     bool IsAttack() { return m_bAttack; }
+
+    virtual void Damaged(int HP, int ATK, int DEF);
 
 public:
     virtual void InitChampInfo() {}     // 챔프 정보 설정
