@@ -9,7 +9,10 @@ class CArrowScript :
 private:
     CGameObject*    m_Target;
     Ptr<CTexture>   m_Tex;
-    float           m_Speed;
+
+    Vec3    m_Pos;
+    Vec3    m_Rotation;
+    float   m_Speed;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}

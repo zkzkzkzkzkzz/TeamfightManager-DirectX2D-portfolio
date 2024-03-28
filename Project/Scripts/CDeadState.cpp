@@ -25,7 +25,7 @@ void CDeadState::finaltick()
 void CDeadState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
-	pSelf->GetScript<CChampScript>()->EnterDeadState();
+	pSelf->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::DEAD);
 }
 
 void CDeadState::Exit()

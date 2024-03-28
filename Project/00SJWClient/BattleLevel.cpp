@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "BattleLevel.h"
 
+#include <Engine\CCollisionMgr.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 #include <Engine\CLayer.h>
@@ -17,7 +18,6 @@
 #include <Engine\CFontMgr.h>
 
 #include "CLevelSaveLoad.h"
-
 
 #include <Scripts\CTGMgr.h>
 #include <Scripts\CChampScript.h>
@@ -38,7 +38,12 @@ void BattleLevel::CreateTempLevel()
 	pTempLevel->GetLayer(2)->SetName(L"Background");
 	pTempLevel->GetLayer(3)->SetName(L"Champ");
 	pTempLevel->GetLayer(4)->SetName(L"Cursor");
+	pTempLevel->GetLayer(5)->SetName(L"Projectile");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
+
+	// 충돌 설정
+	CCollisionMgr::GetInst()->LayerCheck(3, 5);
+	CCollisionMgr::GetInst()->LayerCheck(3, 3);
 
 	Ptr<CFSM> pFSM = new CFSM(false);
 
@@ -62,6 +67,7 @@ void BattleLevel::CreateTempLevel()
 	pCamObj->Camera()->LayerCheckAll();
 	pCamObj->Camera()->LayerCheck(2, false);
 	pCamObj->Camera()->LayerCheck(3, false);
+	pCamObj->Camera()->LayerCheck(5, false);
 	pTempLevel->AddObject(pCamObj, 0);
 
 	// BG Camera 생성
@@ -84,6 +90,17 @@ void BattleLevel::CreateTempLevel()
 	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	pCamObj->Camera()->SetCameraPriority(2);
 	pCamObj->Camera()->LayerCheck(3, true);
+	pTempLevel->AddObject(pCamObj, 0);
+
+	// Projectile Camera 생성
+	pCamObj = new CGameObject;
+	pCamObj->SetName(L"ProjectileCamera");
+	pCamObj->AddComponent(new CTransform);
+	pCamObj->AddComponent(new CCamera);
+	pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Camera()->SetCameraPriority(3);
+	pCamObj->Camera()->LayerCheck(5, true);
 	pTempLevel->AddObject(pCamObj, 0);
 
 	// 광원 추가

@@ -14,6 +14,8 @@ CArrowScript::CArrowScript()
 	, m_Tex(nullptr)
 	, m_Target(nullptr)
 	, m_Speed(50.f)
+	, m_Pos{}
+	, m_Rotation{}
 {
 }
 
@@ -22,6 +24,8 @@ CArrowScript::CArrowScript(const CArrowScript& _Origin)
 	, m_Tex(_Origin.m_Tex)
 	, m_Target(nullptr)
 	, m_Speed(50.f)
+	, m_Pos{}
+	, m_Rotation{}
 {
 }
 
@@ -36,7 +40,6 @@ void CArrowScript::begin()
 	m_Tex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\arrow.png",
 												L"texture\\Champ\\arrow.png");
 
-
 	Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
 	Transform()->SetRelativeScale(Vec3(16.f, 16.f, 0.f));
 	Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
@@ -45,7 +48,7 @@ void CArrowScript::begin()
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	Collider2D()->SetOffsetPos(Vec2(0.f, -0.05f));
 	Collider2D()->SetOffsetScale(Vec2(1.f, 0.5f));
-	Collider2D()->SetAbsolute(false);
+	Collider2D()->SetAbsolute(true);
 }
 
 void CArrowScript::tick()
@@ -54,29 +57,35 @@ void CArrowScript::tick()
 
 	if (m_Target)
 	{
-		Vec3 vDir = m_Target->Transform()->GetRelativePos() - Transform()->GetRelativePos();
+		Vec3 vDir = m_Target->Transform()->GetRelativePos() - GetOwner()->GetParent()->Transform()->GetRelativePos();
 		vDir.Normalize();
 
-		Vec3 vRot = Transform()->GetRelativeRotation();
-		float fDot = vDir.x;
-		float fAngle = acosf(fDot);
-		vRot.z = fAngle;
-		if (0.f == GetOwner()->GetParent()->Transform()->GetRelativeRotation().y)
+		if (vDir.x >= 0.f)
 		{
+			float fDot = vDir.x;
+			float fAngle = acosf(fDot);
+
+			Vec3 vRot = Transform()->GetRelativeRotation();
+			vRot.z = -fAngle;
+		
 			float vPosX = Transform()->GetRelativePos().x + vDir.x * DT * m_Speed;
 			float vPosY = Transform()->GetRelativePos().y + vDir.y * DT * m_Speed;
 			Transform()->SetRelativePos(Vec3(vPosX, vPosY, 0));
 			Transform()->SetRelativeRotation(Vec3(vRot));
 		}
-		//else
-		//{
-		//	float vPosX = Transform()->GetRelativePos().x - vDir.x * DT * m_Speed;
-		//	float vPosY = Transform()->GetRelativePos().y + vDir.y * DT * m_Speed;
-		//	Transform()->SetRelativePos(Vec3(vPosX, vPosY, 0));
-		//	Transform()->SetRelativeRotation(Vec3(vRot));
-		//}
+		else
+		{
+			float fDot = -vDir.x;
+			float fAngle = acosf(fDot);
 
+			Vec3 vRot = Transform()->GetRelativeRotation();
+			vRot.z = fAngle;
 
+			float vPosX = Transform()->GetRelativePos().x - vDir.x * DT * m_Speed;
+			float vPosY = Transform()->GetRelativePos().y + vDir.y * DT * m_Speed;
+			Transform()->SetRelativePos(Vec3(vPosX, vPosY, 0));
+			Transform()->SetRelativeRotation(Vec3(vRot));
+		}
 	}
 
 	render();
