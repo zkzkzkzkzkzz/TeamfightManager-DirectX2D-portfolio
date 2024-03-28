@@ -12,7 +12,6 @@
 #include "CTraceState.h"
 
 CArcherScript::CArcherScript()
-	: m_DetectRange(10000.f)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
@@ -25,7 +24,6 @@ CArcherScript::CArcherScript()
 }
 
 CArcherScript::CArcherScript(const CArcherScript& _Origin)
-	: m_DetectRange(10000.f)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
@@ -74,13 +72,12 @@ void CArcherScript::InitStateMachine()
 	{
 		StateMachine()->SetFSM(CAssetMgr::GetInst()->FindAsset<CFSM>(L"ArcherFSM"));
 
-		StateMachine()->AddBlackboardData(L"DetectRange", BB_DATA::FLOAT, &m_DetectRange);
 		StateMachine()->AddBlackboardData(L"MoveSpeed", BB_DATA::FLOAT, &m_Info.MOV);
 		StateMachine()->AddBlackboardData(L"AttackRange", BB_DATA::INT, &m_Info.ATKRange);
 		StateMachine()->AddBlackboardData(L"AttackSpeed", BB_DATA::INT, &m_Info.ATKSpeed);
 		StateMachine()->AddBlackboardData(L"ChampMP", BB_DATA::INT, &m_Info.MP);
 
-		vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetLayerObjects();
+		vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 
 		TEAM team = GetOwner()->GetScript<CChampScript>()->GetTeamColor();
 		CGameObject* pTarget = nullptr;
@@ -110,6 +107,43 @@ void CArcherScript::InitStateMachine()
 		if (nullptr != StateMachine()->GetFSM())
 		{
 			StateMachine()->GetFSM()->SetState(L"Idle");
+		}
+	}
+}
+
+void CArcherScript::CheckStateMachine()
+{
+	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+	CLayer* pLayer = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3);
+	vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
+	if (StateMachine())
+	{
+		if (!pObjs.empty())
+		{
+			TEAM team = GetOwner()->GetScript<CChampScript>()->GetTeamColor();
+			CGameObject* pTarget = nullptr;
+			for (size_t i = 0; i < pObjs.size(); ++i)
+			{
+				if (team != pObjs[i]->GetScript<CChampScript>()->GetTeamColor())
+				{
+					Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
+
+					if (nullptr != pTarget)
+					{
+						Vec3 prevdist = Transform()->GetRelativePos() - pTarget->Transform()->GetRelativePos();
+
+						if (prevdist.Length() > dist.Length())
+							pTarget = pObjs[i];
+					}
+					else
+					{
+						pTarget = pObjs[i];
+					}
+				}
+			}
+
+			if (nullptr != pTarget)
+				StateMachine()->SetBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
 		}
 	}
 }
@@ -160,6 +194,8 @@ void CArcherScript::begin()
 void CArcherScript::tick()
 {
 	CChampScript::tick();
+
+	CheckStateMachine();
 }
 
 void CArcherScript::render()

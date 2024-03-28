@@ -63,7 +63,7 @@ public:
     virtual void InitChampInfo() {}     // 챔프 정보 설정
     virtual void InitChampAnim() {}     // 챔프 애니메이션 설정
     virtual void InitStateMachine() {}  // 챔피언 스테이트머신 설정
-
+    virtual void CheckStateMachine() {}
 
     virtual void EnterIdleState() {}
     virtual void EnterTraceState() {}

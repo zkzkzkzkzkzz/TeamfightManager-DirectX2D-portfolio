@@ -5,7 +5,6 @@ class CArcherScript :
     public CChampScript
 {
 private:
-    float           m_DetectRange;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
@@ -18,7 +17,7 @@ public:
     virtual void InitChampInfo();   // 챔프 정보 설정
     virtual void InitChampAnim();   // 챔프 애니메이션 설정
     virtual void InitStateMachine();
-
+    virtual void CheckStateMachine();
 
     virtual void EnterIdleState() override;
     virtual void EnterTraceState() override;
