@@ -38,7 +38,7 @@ void CIdleState::finaltick()
 		{
 			ChangeState(L"Trace");
 		}
-		else if (vDir.Length() <= AttRange)
+		else if (vDir.Length() <= AttRange && !(pSelf->GetScript<CChampScript>()->IsAttack()))
 		{
 			ChangeState(L"Attack");
 		}
@@ -48,7 +48,7 @@ void CIdleState::finaltick()
 void CIdleState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
-	pSelf->GetScript<CChampScript>()->EnterIdleState();
+	pSelf->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::IDLE);
 }
 
 void CIdleState::Exit()

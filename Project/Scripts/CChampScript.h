@@ -51,6 +51,8 @@ protected:
     CHAMP_STATE     m_State;
     TEAM            m_Team;
 
+    bool    m_bAttack;
+
 private:
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
@@ -58,6 +60,11 @@ private:
 public:
     void SetTeam(TEAM _team) { m_Team = _team; }
     TEAM GetTeamColor() { return m_Team; }
+
+    void SetChampState(CHAMP_STATE _State) { m_State = _State; }
+    CHAMP_STATE GetChampState() { return m_State; }
+
+    bool IsAttack() { return m_bAttack; }
 
 public:
     virtual void InitChampInfo() {}     // 챔프 정보 설정
@@ -76,6 +83,10 @@ public:
     virtual void begin() override;
     virtual void tick() override;
     virtual void render();
+
+    virtual void BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) {}
+    virtual void Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) {}
+    virtual void EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) {}
 
 public:
     CLONE(CChampScript);
