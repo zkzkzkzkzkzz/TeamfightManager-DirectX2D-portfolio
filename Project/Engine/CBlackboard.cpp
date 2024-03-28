@@ -35,3 +35,14 @@ void* CBlackboard::GetBlackboardData(const wstring& _strKey)
 
 	return iter->second.pData;
 }
+
+void CBlackboard::SetBlackboardData(const wstring& _strKey, BB_DATA _Type, void* _Data)
+{
+	map<wstring, tBlackboardData>::iterator iter = m_mapBBData.find(_strKey);
+
+	if (iter == m_mapBBData.end())
+		return;
+
+	m_mapBBData.erase(iter);
+	m_mapBBData.insert(make_pair(_strKey, tBlackboardData{ _Type , _Data }));
+}

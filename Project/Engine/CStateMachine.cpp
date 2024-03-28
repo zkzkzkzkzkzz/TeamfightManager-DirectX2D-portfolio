@@ -37,6 +37,11 @@ void* CStateMachine::GetBlackboardData(const wstring& _strKey)
 	return m_Blackboard.GetBlackboardData(_strKey);
 }
 
+void CStateMachine::SetBlackboardData(const wstring& _strKey, BB_DATA _Type, void* _Data)
+{
+	m_Blackboard.SetBlackboardData(_strKey, _Type, _Data);
+}
+
 void CStateMachine::SaveToFile(FILE* _File)
 {
 	SaveAssetRef(m_FSM, _File);
