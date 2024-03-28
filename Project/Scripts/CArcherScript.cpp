@@ -18,6 +18,8 @@ CArcherScript::CArcherScript()
 	: CChampScript(ARCHERSCRIPT)
 	, m_Target(nullptr)
 	, m_AccTime(0.f)
+	, m_bRespawn(false)
+	, m_RespawnTime(0.f)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
@@ -36,6 +38,8 @@ CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	: CChampScript(ARCHERSCRIPT)
 	, m_Target(nullptr)
 	, m_AccTime(0.f)
+	, m_bRespawn(false)
+	, m_RespawnTime(0.f)
 {
 
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
@@ -79,6 +83,10 @@ void CArcherScript::tick()
 	CheckStateMachine();
 
 	m_AccTime += DT;
+	if (m_bRespawn)
+	{
+		m_RespawnTime += DT;
+	}
 
 	float delay = 1 / m_Info.ATKSpeed;
 
@@ -232,7 +240,6 @@ void CArcherScript::EnterAttackState()
 
 	if (Animator2D()->FindAnim(L"ArcherAttack")->IsFinish())
 	{
-		//CGameObject* arrow = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Arrow3.prefab")->Instatiate();
 		CGameObject* arrow = new CGameObject;
 		arrow->SetName(L"Arrow");
 		arrow->AddComponent(new CTransform);
@@ -262,10 +269,15 @@ void CArcherScript::EnterUltimateState()
 
 void CArcherScript::EnterDeadState()
 {
-	Animator2D()->Play(L"ArcherDead", false);
+	if (!m_bRespawn)
+	{
+		Animator2D()->Play(L"ArcherDead", false);
+		m_bRespawn = true;
+	}
 
 	if (Animator2D()->FindAnim(L"ArcherDead")->IsFinish())
 	{
+		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
 		GamePlayStatic::DestroyGameObject(GetOwner());
 	}
 }

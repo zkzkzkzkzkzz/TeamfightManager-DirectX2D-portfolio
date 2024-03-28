@@ -15,7 +15,7 @@ CArrowScript::CArrowScript()
 	, m_Tex(nullptr)
 	, m_Target(nullptr)
 	, m_Shooter(nullptr)
-	, m_Speed(50.f)
+	, m_Speed(240.f)
 	, m_Pos{}
 	, m_Rotation{}
 {
@@ -26,7 +26,7 @@ CArrowScript::CArrowScript(const CArrowScript& _Origin)
 	, m_Tex(_Origin.m_Tex)
 	, m_Shooter(nullptr)
 	, m_Target(nullptr)
-	, m_Speed(50.f)
+	, m_Speed(240.f)
 	, m_Pos{}
 	, m_Rotation{}
 {
@@ -44,6 +44,11 @@ void CArrowScript::begin()
 												L"texture\\Champ\\arrow.png");
 
 	m_Pos = m_Shooter->Transform()->GetRelativePos();
+
+	if (0.f == m_Shooter->Transform()->GetRelativeRotation().y)
+		m_Pos.x += 15.f;
+	else if (XM_PI == m_Shooter->Transform()->GetRelativeRotation().y)
+		m_Pos.x -= 15.f;
 
 	Transform()->SetRelativePos(Vec3(m_Pos));
 	Transform()->SetRelativeScale(Vec3(16.f, 16.f, 0.f));

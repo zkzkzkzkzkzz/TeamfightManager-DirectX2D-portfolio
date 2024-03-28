@@ -9,6 +9,8 @@ class CArcherScript :
 private:
     CGameObject* m_Target;
     float   m_AccTime;
+    bool    m_bRespawn;
+    float   m_RespawnTime;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
