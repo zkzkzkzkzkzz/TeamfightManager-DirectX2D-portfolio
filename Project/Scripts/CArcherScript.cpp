@@ -12,6 +12,7 @@
 #include "CTraceState.h"
 
 CArcherScript::CArcherScript()
+	: CChampScript(ARCHERSCRIPT)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
@@ -21,10 +22,13 @@ CArcherScript::CArcherScript()
 	AddScriptParam(SCRIPT_PARAM::INT, "Attack Range", &m_Info.ATKRange);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
 	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
+	AddScriptParam(SCRIPT_PARAM::INT, "Team", &m_Team);
 }
 
 CArcherScript::CArcherScript(const CArcherScript& _Origin)
+	: CChampScript(ARCHERSCRIPT)
 {
+
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_Info.ATK);
@@ -33,11 +37,41 @@ CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	AddScriptParam(SCRIPT_PARAM::INT, "Attack Range", &m_Info.ATKRange);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
 	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
+	AddScriptParam(SCRIPT_PARAM::INT, "Team", &m_Team);
 }
 
 CArcherScript::~CArcherScript()
 {
 }
+
+
+void CArcherScript::begin()
+{
+	CChampScript::begin();
+
+	if (TEAM::BLUE == GetTeamColor())
+		Transform()->SetRelativePos(Vec3(-290.f, 0.f, 300.f));
+	else
+		Transform()->SetRelativePos(Vec3(290.f, 0.f, 300.f));
+
+	Transform()->SetRelativeScale(Vec3(64.f, 64.f, 1.f));
+
+	InitChampInfo();
+	InitChampAnim();
+	InitStateMachine();
+}
+
+void CArcherScript::tick()
+{
+	CChampScript::tick();
+
+	CheckStateMachine();
+}
+
+void CArcherScript::render()
+{
+}
+
 
 void CArcherScript::InitChampInfo()
 {
@@ -83,7 +117,9 @@ void CArcherScript::InitStateMachine()
 		CGameObject* pTarget = nullptr;
 		for (size_t i = 0; i < pObjs.size(); ++i)
 		{
-			if (team != pObjs[i]->GetScript<CChampScript>()->GetTeamColor())
+			if (team != pObjs[i]->GetScript<CChampScript>()->GetTeamColor() 
+				&& TEAM::NONE != pObjs[i]->GetScript<CChampScript>()->GetTeamColor()
+				&& TEAM::END != pObjs[i]->GetScript<CChampScript>()->GetTeamColor())
 			{
 				Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
 
@@ -113,8 +149,6 @@ void CArcherScript::InitStateMachine()
 
 void CArcherScript::CheckStateMachine()
 {
-	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
-	CLayer* pLayer = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3);
 	vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 	if (StateMachine())
 	{
@@ -124,7 +158,10 @@ void CArcherScript::CheckStateMachine()
 			CGameObject* pTarget = nullptr;
 			for (size_t i = 0; i < pObjs.size(); ++i)
 			{
-				if (team != pObjs[i]->GetScript<CChampScript>()->GetTeamColor())
+				if (TEAM::NONE != team
+					&& team != pObjs[i]->GetScript<CChampScript>()->GetTeamColor()
+					&& TEAM::NONE != pObjs[i]->GetScript<CChampScript>()->GetTeamColor()
+					&& TEAM::END != pObjs[i]->GetScript<CChampScript>()->GetTeamColor())
 				{
 					Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
 
@@ -142,8 +179,7 @@ void CArcherScript::CheckStateMachine()
 				}
 			}
 
-			//if (nullptr != pTarget)
-				StateMachine()->SetBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
+			StateMachine()->SetBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
 		}
 	}
 }
@@ -175,29 +211,4 @@ void CArcherScript::EnterUltimateState()
 void CArcherScript::EnterDeadState()
 {
 	Animator2D()->Play(L"ArcherDead");
-}
-
-void CArcherScript::begin()
-{
-	if (TEAM::BLUE == GetTeamColor())
-		Transform()->SetRelativePos(Vec3(-290.f, 0.f, 300.f));
-	else
-		Transform()->SetRelativePos(Vec3(290.f, 0.f, 300.f));
-
-	Transform()->SetRelativeScale(Vec3(64.f, 64.f, 1.f));
-
-	InitChampInfo();
-	InitChampAnim();
-	InitStateMachine();
-}
-
-void CArcherScript::tick()
-{
-	CChampScript::tick();
-
-	CheckStateMachine();
-}
-
-void CArcherScript::render()
-{
 }

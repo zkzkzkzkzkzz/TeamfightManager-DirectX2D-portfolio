@@ -21,7 +21,7 @@ void Collider2DUI::render_update()
 	Vec2 vPos = GetTargetObject()->Collider2D()->GetOffsetPos();
 	Vec2 vScale = GetTargetObject()->Collider2D()->GetOffsetScale();
 	static int ColType = int(GetTargetObject()->Collider2D()->GetType());
-	static bool linkScale = true;
+	static bool linkScale = false;
 
 
 	ImGui::Text("Position");

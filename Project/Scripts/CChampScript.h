@@ -80,6 +80,7 @@ public:
 public:
     CLONE(CChampScript);
     CChampScript();
+    CChampScript(UINT _ScriptType);
     CChampScript(const CChampScript& _Origin);
     ~CChampScript();
 };

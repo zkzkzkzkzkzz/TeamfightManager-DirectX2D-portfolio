@@ -11,6 +11,14 @@ CChampScript::CChampScript()
 {
 }
 
+CChampScript::CChampScript(UINT _ScriptType)
+	: CScript(_ScriptType)
+	, m_Info{}
+	, m_State(CHAMP_STATE::END)
+	, m_Team(TEAM::NONE)
+{
+}
+
 CChampScript::CChampScript(const CChampScript& _Origin)
 	: CScript(CHAMPSCRIPT)
 	, m_Info(_Origin.m_Info)

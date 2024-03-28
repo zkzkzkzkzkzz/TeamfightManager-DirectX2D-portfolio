@@ -534,6 +534,11 @@ void CAssetMgr::CreateInGameObjectMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"ChampMtrl", pMtrl);
+
+	// 탄막 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"ProjectileMtrl", pMtrl);
 }
 
 

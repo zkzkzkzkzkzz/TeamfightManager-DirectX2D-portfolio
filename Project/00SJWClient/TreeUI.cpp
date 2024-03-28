@@ -106,6 +106,7 @@ TreeUI::TreeUI(const string& _ID)
 	: UI("", _ID)
 	, m_bShowRoot(true)
 	, m_bDragDrop(false)
+	, m_Selected(nullptr)
 {
 }
 

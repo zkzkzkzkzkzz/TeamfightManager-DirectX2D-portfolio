@@ -120,6 +120,7 @@ void BattleLevel::CreateTempLevel()
 	Archer->AddComponent(new CAnimator2D);
 	Archer->AddComponent(new CStateMachine);
 	Archer->AddComponent(new CArcherScript);
+	Archer->Transform()->SetRelativePos(Vec3(-290.f, 0.f, 300.f));
 	Archer->GetScript<CArcherScript>()->SetTeam(TEAM::BLUE);
 	pTempLevel->AddObject(Archer, 3);
 
