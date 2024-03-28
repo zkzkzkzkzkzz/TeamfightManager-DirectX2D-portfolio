@@ -17,6 +17,7 @@ CIdleState::~CIdleState()
 
 void CIdleState::finaltick()
 {
+	int AttRange = *((int*)GetBlackboardData(L"AttackRange"));
 	float DetectRange = *((float*)GetBlackboardData(L"DetectRange"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 
@@ -29,10 +30,13 @@ void CIdleState::finaltick()
 
 	GamePlayStatic::DrawDebugCircle(pSelf->Transform()->GetWorldPos(), DetectRange, Vec3(0.1f, 1.f, 0.1f), 0.f);
 
-	if (vDist.Length() <= DetectRange)
+	if (vDist.Length() <= DetectRange && vDist.Length() > AttRange)
 	{
-		// 추적상태로 변경한다.
 		ChangeState(L"Trace");
+	}
+	else if (vDist.Length() <= DetectRange && vDist.Length() <= AttRange)
+	{
+		ChangeState(L"Attack");
 	}
 }
 

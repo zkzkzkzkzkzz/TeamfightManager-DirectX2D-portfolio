@@ -19,15 +19,13 @@ public:
     virtual void InitChampAnim();   // 챔프 애니메이션 설정
     virtual void InitStateMachine();
 
-    virtual void Attack();
-    virtual void AttackComplete();
-    virtual void Heal();
-    virtual void HealComplete();
-    virtual void Skill() {};
-    virtual void Ultimate() {};
 
     virtual void EnterIdleState() override;
     virtual void EnterTraceState() override;
+    virtual void EnterAttackState() override;
+    virtual void EnterSkillState() override;
+    virtual void EnterUltimateState() override;
+    virtual void EnterDeadState() override;
 
 public:
     virtual void begin() override;

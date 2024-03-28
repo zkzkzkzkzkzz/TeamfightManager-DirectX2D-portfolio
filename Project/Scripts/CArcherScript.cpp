@@ -114,22 +114,6 @@ void CArcherScript::InitStateMachine()
 	}
 }
 
-void CArcherScript::Attack()
-{
-
-}
-
-void CArcherScript::AttackComplete()
-{
-}
-
-void CArcherScript::Heal()
-{
-}
-
-void CArcherScript::HealComplete()
-{
-}
 
 void CArcherScript::EnterIdleState()
 {
@@ -139,6 +123,24 @@ void CArcherScript::EnterIdleState()
 void CArcherScript::EnterTraceState()
 {
 	Animator2D()->Play(L"ArcherTrace");
+}
+
+void CArcherScript::EnterAttackState()
+{
+	Animator2D()->Play(L"ArcherAttack");
+}
+
+void CArcherScript::EnterSkillState()
+{
+}
+
+void CArcherScript::EnterUltimateState()
+{
+}
+
+void CArcherScript::EnterDeadState()
+{
+	Animator2D()->Play(L"ArcherDead");
 }
 
 void CArcherScript::begin()

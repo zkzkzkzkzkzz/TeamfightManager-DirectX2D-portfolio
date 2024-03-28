@@ -23,21 +23,6 @@ CChampScript::~CChampScript()
 {
 }
 
-void CChampScript::Attack()
-{
-}
-
-void CChampScript::AttackComplete()
-{
-}
-
-void CChampScript::Heal()
-{
-}
-
-void CChampScript::HealComplete()
-{
-}
 
 void CChampScript::begin()
 {

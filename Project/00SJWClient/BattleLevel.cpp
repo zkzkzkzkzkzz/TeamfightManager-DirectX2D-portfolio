@@ -24,6 +24,10 @@
 #include <Scripts\CArcherScript.h>
 #include <Scripts\CIdleState.h>
 #include <Scripts\CTraceState.h>
+#include <Scripts\CAttackState.h>
+#include <Scripts\CSkillState.h>
+#include <Scripts\CUltimateState.h>
+#include <Scripts\CDeadState.h>
 
 void BattleLevel::CreateTempLevel()
 {
@@ -40,6 +44,10 @@ void BattleLevel::CreateTempLevel()
 
 	pFSM->AddState(L"Idle", new CIdleState);
 	pFSM->AddState(L"Trace", new CTraceState);
+	pFSM->AddState(L"Attack", new CAttackState);
+	pFSM->AddState(L"Skill", new CSkillState);
+	pFSM->AddState(L"Ultimate", new CUltimateState);
+	pFSM->AddState(L"Dead", new CDeadState);
 
 	CAssetMgr::GetInst()->AddAsset<CFSM>(L"ArcherFSM", pFSM.Get());
 

@@ -20,15 +20,32 @@ CTraceState::~CTraceState()
 
 void CTraceState::finaltick()
 {
+	int AttRange = *((int*)GetBlackboardData(L"AttackRange"));
+	float DetectRange = *((float*)GetBlackboardData(L"DetectRange"));
 	float Speed = *((float*)GetBlackboardData(L"MoveSpeed"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
 
-	Vec3 vDir = pTarget->Transform()->GetWorldPos() - pSelf->Transform()->GetWorldPos();
-	vDir.Normalize();
+	if (nullptr == pTarget)
+	{
+		ChangeState(L"Idle");
+	}
+	else
+	{
+		Vec3 vDir = pTarget->Transform()->GetWorldPos() - pSelf->Transform()->GetWorldPos();
 
-	Vec3 vPos = pSelf->Transform()->GetWorldPos() + vDir * DT * Speed;
-	pSelf->Transform()->SetRelativePos(vPos);
+		if (vDir.Length() <= DetectRange && vDir.Length() > AttRange)
+		{
+			vDir.Normalize();
+
+			Vec3 vPos = pSelf->Transform()->GetWorldPos() + vDir * DT * Speed * 30.f;
+			pSelf->Transform()->SetRelativePos(vPos);
+		}
+		else if (vDir.Length() <= DetectRange && vDir.Length() <= AttRange)
+		{
+			ChangeState(L"Attack");
+		}
+	}
 }
 
 void CTraceState::Enter()

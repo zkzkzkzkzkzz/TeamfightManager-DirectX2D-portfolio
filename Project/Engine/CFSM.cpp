@@ -69,9 +69,9 @@ void CFSM::ChangeState(const wstring& _strStateName)
         m_CurState->Exit();
 
     m_CurState = FindState(_strStateName);
-    m_CurState->m_FSM = this;
     assert(m_CurState);
 
+    m_CurState->m_FSM = this;
     m_CurState->Enter();
 }
 

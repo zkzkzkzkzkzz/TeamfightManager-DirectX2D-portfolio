@@ -64,15 +64,13 @@ public:
     virtual void InitChampAnim() {}     // 챔프 애니메이션 설정
     virtual void InitStateMachine() {}  // 챔피언 스테이트머신 설정
 
-    virtual void Attack();
-    virtual void AttackComplete();
-    virtual void Heal();
-    virtual void HealComplete();
-    virtual void Skill() {};
-    virtual void Ultimate() {};
 
     virtual void EnterIdleState() {}
     virtual void EnterTraceState() {}
+    virtual void EnterAttackState() {}
+    virtual void EnterSkillState() {}
+    virtual void EnterUltimateState() {}
+    virtual void EnterDeadState() {}
 
 public:
     virtual void begin() override;
