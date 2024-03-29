@@ -20,6 +20,7 @@ CDeadState::~CDeadState()
 
 void CDeadState::finaltick()
 {
+
 }
 
 void CDeadState::Enter()

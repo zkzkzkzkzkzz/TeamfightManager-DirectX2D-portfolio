@@ -10,6 +10,7 @@
 #include <Engine\CAnim.h>
 #include <Engine\CAssetMgr.h>
 
+#include "CBTMgr.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
 #include "CArrowScript.h"
@@ -17,14 +18,10 @@
 CArcherScript::CArcherScript()
 	: CChampScript(ARCHERSCRIPT)
 	, m_Target(nullptr)
-	, m_AccTime(0.f)
-	, m_bRespawn(false)
-	, m_RespawnTime(0.f)
 {
-	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
-	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
-	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_Info.ATK);
-	AddScriptParam(SCRIPT_PARAM::INT, "DEF", &m_Info.DEF);
+	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
+	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
+	AddScriptParam(SCRIPT_PARAM::INT, "DEF", &m_InGameStatus.DEF);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Attack Speed", &m_Info.ATKSpeed);
 	AddScriptParam(SCRIPT_PARAM::INT, "Attack Range", &m_Info.ATKRange);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
@@ -37,15 +34,11 @@ CArcherScript::CArcherScript()
 CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	: CChampScript(ARCHERSCRIPT)
 	, m_Target(nullptr)
-	, m_AccTime(0.f)
-	, m_bRespawn(false)
-	, m_RespawnTime(0.f)
 {
 
-	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_Info.HP);
-	AddScriptParam(SCRIPT_PARAM::INT, "MP", &m_Info.MP);
-	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_Info.ATK);
-	AddScriptParam(SCRIPT_PARAM::INT, "DEF", &m_Info.DEF);
+	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
+	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
+	AddScriptParam(SCRIPT_PARAM::INT, "DEF", &m_InGameStatus.DEF);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Attack Speed", &m_Info.ATKSpeed);
 	AddScriptParam(SCRIPT_PARAM::INT, "Attack Range", &m_Info.ATKRange);
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
@@ -82,18 +75,14 @@ void CArcherScript::tick()
 
 	CheckStateMachine();
 
-	m_AccTime += DT;
-	if (m_bRespawn)
-	{
-		m_RespawnTime += DT;
-	}
+	m_InGameStatus.CoolTime_Attack += DT;
 
 	float delay = 1 / m_Info.ATKSpeed;
 
-	if (m_AccTime > delay)
+	if (m_InGameStatus.CoolTime_Attack > delay)
 	{
 		m_bAttack = false;
-		m_AccTime = 0.f;
+		m_InGameStatus.CoolTime_Attack = 0.f;
 	}
 }
 
@@ -105,16 +94,39 @@ void CArcherScript::render()
 
 void CArcherScript::InitChampInfo()
 {
-	m_Info.HP = 100;
-	m_Info.MP = 0;
-	m_Info.ATK = 42;
-	m_Info.DEF = 5;
-	m_Info.ATKSpeed = 0.67f;
-	m_Info.ATKRange = 120;
-	m_Info.MOV = 3.f;
-	m_Info.Type = CHAMP_TYPE::MARKSMAN;
+	SetChampInfo(100, 42, 5, 0.67f, 120, 3, CHAMP_TYPE::MARKSMAN);	// 기본 정보 설정
+	InitChampStatus(0, 0);	// 인게임 정보 설정
 
 	m_State = CHAMP_STATE::IDLE;
+	m_bRespawn = false;
+
+	//m_InGameStatus.CoolTime_Attack = 0.f;
+
+	if (StateMachine() && nullptr != StateMachine()->GetFSM())
+	{
+		StateMachine()->GetFSM()->SetState(L"Idle");
+	}
+}
+
+void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
+{
+	m_InGameStatus.HP = m_Info.MaxHP;
+	m_InGameStatus.ATK = m_Info.ATK + _GamerATK;
+	m_InGameStatus.DEF = m_Info.DEF + _GamerDEF;
+
+	m_InGameStatus.CoolTime_Attack = 0.f;
+	m_InGameStatus.CoolTime_Skill = 0.f;
+	m_InGameStatus.UltimateUseTime = 60.f;
+	m_InGameStatus.bUltimate = false;
+	
+	m_InGameStatus.RespawnTime = 0.f;
+	
+	m_InGameStatus.TotalDeal = 0;
+	m_InGameStatus.TotalDamage = 0;
+	m_InGameStatus.TotalHeal = 0;
+	m_InGameStatus.KillPoint = 0;
+	m_InGameStatus.DeathPoint = 0;
+	m_InGameStatus.AssistPoint = 0;
 }
 
 void CArcherScript::InitChampAnim()
@@ -142,17 +154,17 @@ void CArcherScript::InitStateMachine()
 		StateMachine()->AddBlackboardData(L"MoveSpeed", BB_DATA::FLOAT, &m_Info.MOV);
 		StateMachine()->AddBlackboardData(L"AttackRange", BB_DATA::INT, &m_Info.ATKRange);
 		StateMachine()->AddBlackboardData(L"AttackSpeed", BB_DATA::INT, &m_Info.ATKSpeed);
-		StateMachine()->AddBlackboardData(L"ChampMP", BB_DATA::INT, &m_Info.MP);
+		StateMachine()->AddBlackboardData(L"Skill_Cooltime", BB_DATA::INT, &m_InGameStatus.CoolTime_Skill);
 
 		vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 
-		TEAM team = GetOwner()->GetScript<CChampScript>()->GetTeamColor();
+		TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
 		CGameObject* pTarget = nullptr;
 		for (size_t i = 0; i < pObjs.size(); ++i)
 		{
-			if (team != pObjs[i]->GetScript<CChampScript>()->GetTeamColor() 
-				&& TEAM::NONE != pObjs[i]->GetScript<CChampScript>()->GetTeamColor()
-				&& TEAM::END != pObjs[i]->GetScript<CChampScript>()->GetTeamColor())
+			if ( team != GETCHAMP(pObjs[i])->GetTeamColor() 
+				&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
+				&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
 			{
 				Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
 
@@ -170,6 +182,7 @@ void CArcherScript::InitStateMachine()
 			}
 		}
 
+		StateMachine()->AddBlackboardData(L"HP", BB_DATA::INT, &m_InGameStatus.HP);
 		StateMachine()->AddBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
 
 
@@ -187,18 +200,19 @@ void CArcherScript::CheckStateMachine()
 	{
 		if (!pObjs.empty())
 		{
-			TEAM team = GetOwner()->GetScript<CChampScript>()->GetTeamColor();
+			TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
 			CGameObject* pTarget = nullptr;
 			for (size_t i = 0; i < pObjs.size(); ++i)
 			{
-				if (TEAM::NONE != team
-					&& team != pObjs[i]->GetScript<CChampScript>()->GetTeamColor()
-					&& TEAM::NONE != pObjs[i]->GetScript<CChampScript>()->GetTeamColor()
-					&& TEAM::END != pObjs[i]->GetScript<CChampScript>()->GetTeamColor())
+				if ( m_Target->IsActive()
+					&& TEAM::NONE != team
+					&& team != GETCHAMP(pObjs[i])->GetTeamColor()
+					&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
+					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
 				{
 					Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
 
-					if (nullptr != pTarget)
+					if (nullptr != pTarget && pTarget->IsActive())
 					{
 						Vec3 prevdist = Transform()->GetRelativePos() - pTarget->Transform()->GetRelativePos();
 
@@ -212,10 +226,20 @@ void CArcherScript::CheckStateMachine()
 				}
 			}
 
-			StateMachine()->SetBlackboardData(L"HP", BB_DATA::INT, &m_Info.HP);
 			StateMachine()->SetBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
 		}
 	}
+}
+
+void CArcherScript::SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type)
+{
+	m_Info.MaxHP = _MaxHP;
+	m_Info.ATK = _ATK;
+	m_Info.DEF = _DEF;
+	m_Info.ATKSpeed = _ATKSpeed;
+	m_Info.ATKRange = _ATKRange;
+	m_Info.MOV = _MoveSpeed;
+	m_Info.Type = _Type;
 }
 
 
@@ -231,14 +255,14 @@ void CArcherScript::EnterTraceState()
 
 void CArcherScript::EnterAttackState()
 {
-	if (!m_bAttack && m_AccTime < m_Info.ATKSpeed)
+	if (!m_bAttack && m_InGameStatus.CoolTime_Attack < m_Info.ATKSpeed)
 	{
 		Animator2D()->Play(L"ArcherAttack");
 		m_bAttack = true;
-		m_AccTime = 0.f;
+		m_InGameStatus.CoolTime_Attack = 0.f;
 	}
 
-	if (Animator2D()->FindAnim(L"ArcherAttack")->IsFinish())
+	if (Animator2D()->GetCurAnim()->IsFinish())
 	{
 		CGameObject* arrow = new CGameObject;
 		arrow->SetName(L"Arrow");
@@ -275,17 +299,18 @@ void CArcherScript::EnterDeadState()
 		m_bRespawn = true;
 	}
 
-	if (Animator2D()->FindAnim(L"ArcherDead")->IsFinish())
+	if (Animator2D()->GetCurAnim() && Animator2D()->GetCurAnim()->IsFinish())
 	{
-		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
-		GamePlayStatic::DestroyGameObject(GetOwner());
+		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
+		Animator2D()->GetCurAnim()->Reset();
+		m_InGameStatus.CoolTime_Attack = 0.f;
+		GetOwner()->SetActive(false);
 	}
 }
 
 
 void CArcherScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	int a = 0;
 }
 
 void CArcherScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

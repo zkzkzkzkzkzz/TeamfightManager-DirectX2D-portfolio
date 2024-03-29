@@ -118,11 +118,7 @@ void CArrowScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, 
 {
 	if (m_Shooter != _OtherObj && m_Target == _OtherObj)
 	{
-		int HP = m_Target->GetScript<CChampScript>()->GetChampHP();
-		int DEF = m_Target->GetScript<CChampScript>()->GetChampDEF();
-		int ATK = m_Shooter->GetScript<CChampScript>()->GetChampATK();
-
-		m_Target->GetScript<CChampScript>()->Damaged(HP, ATK, DEF);
+		m_Target->GetScript<CChampScript>()->Damaged(m_Shooter, m_Target);
 		GamePlayStatic::DestroyGameObject(GetOwner());
 	}
 }
@@ -133,5 +129,4 @@ void CArrowScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CColl
 
 void CArrowScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
-	int a = 0;
 }

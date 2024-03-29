@@ -115,7 +115,7 @@ void CAnimator2D::Play(const wstring& _strAnimName, bool _bRepeat)
 
 	m_CurAnim = pAnim;
 
-	if (m_CurAnim->IsFinish())
+	if (m_bRepeat && m_CurAnim->IsFinish())
 	{
 		m_CurAnim->Reset();
 	}
