@@ -287,22 +287,9 @@ void CArcherScript::EnterDeadState()
 
 	if (Animator2D()->GetCurAnim() && Animator2D()->GetCurAnim()->IsFinish())
 	{
-		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
 		Animator2D()->GetCurAnim()->Reset();
+		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
 		m_InGameStatus.CoolTime_Attack = 0.f;
 		GetOwner()->SetActive(false);
 	}
 }
-
-//
-//void CArcherScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-//{
-//}
-//
-//void CArcherScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-//{
-//}
-//
-//void CArcherScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-//{
-//}

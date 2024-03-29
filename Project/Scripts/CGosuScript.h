@@ -1,14 +1,15 @@
 #pragma once
 
 #include <Engine/CScript.h>
+#include "CChampScript.h"
 
 class CGameObject;
 
 class CGosuScript :
     public CScript
 {
-    // 소속 팀
-    // 선수가 플레이 중인 챔피언
+    TEAM            m_Team;             // 소속 팀
+    CGameObject*    m_SelectedChamp;    // 선수가 플레이 중인 챔피언
 
     wstring m_GamerName;    // 선수 이름
 

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CChampScript.h"
 
+#include <Engine\CTimeMgr.h>	 
 
 #include "CBTMgr.h"
 
@@ -44,13 +45,19 @@ CChampScript::~CChampScript()
 
 void CChampScript::begin()
 {
-	if (TEAM::BLUE == GetTeamColor())
-		Transform()->SetRelativePos(Vec3(-190.f, 100.f, 300.f));
+	Vec3 vSpawnPos = Vec3(0.f, 0.f, 300.f);
+
+	if (TEAM::BLUE == m_Team)
+		vSpawnPos = Vec3(-290.f, 0.f, 300.f);
 	else
-		Transform()->SetRelativePos(Vec3(190.f, -100.f, 300.f));
+		vSpawnPos = Vec3(290.f, 0.f, 300.f);
+
+	vSpawnPos.x += (float)(rand() % 50);
+	vSpawnPos.y += (float)(rand() % 200);
+
+	Transform()->SetRelativePos(vSpawnPos);
 
 	Transform()->SetRelativeScale(Vec3(64.f, 64.f, 1.f));
-
 }
 
 void CChampScript::tick()
@@ -89,19 +96,21 @@ void CChampScript::render()
 
 void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target)
 {
-	int ATK = Attacker->GetScript<CChampScript>()->GetInGameChampATK();
-	int HP = Target->GetScript<CChampScript>()->GetInGameChampHP();
-	int DEF = Target->GetScript<CChampScript>()->GetInGameChampDEF();
+	int ATK = GETCHAMP(Attacker)->GetInGameChampATK();
+	int HP = GETCHAMP(Target)->GetInGameChampHP();
+	int DEF = GETCHAMP(Target)->GetInGameChampDEF();
 
 	int Damage = (ATK * 100 + 99 + DEF) / (100 + DEF);
 
 	HP -= Damage;
 
-	Target->GetScript<CChampScript>()->m_InGameStatus.HP = HP;
+	GETCHAMP(Target)->m_InGameStatus.HP = HP;
 
-	if (Target->GetScript<CChampScript>()->m_InGameStatus.HP <= 0)
+	if (GETCHAMP(Target)->m_InGameStatus.HP <= 0)
 	{
-		Target->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::DEAD);
+		GETCHAMP(Attacker)->m_InGameStatus.KillPoint += 1;
+		GETCHAMP(Target)->m_InGameStatus.DeathPoint -= 1;
+		GETCHAMP(Target)->SetChampState(CHAMP_STATE::DEAD);
 	}
 }
 

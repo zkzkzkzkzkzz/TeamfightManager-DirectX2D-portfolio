@@ -46,6 +46,7 @@ void CArrowScript::begin()
 												L"texture\\Champ\\arrow.png");
 
 	m_Pos = m_Shooter->Transform()->GetRelativePos();
+	m_prevPos = m_Target->Transform()->GetRelativePos();
 
 	if (0.f == m_Shooter->Transform()->GetRelativeRotation().y)
 		m_Pos.x += 15.f;
@@ -62,7 +63,6 @@ void CArrowScript::begin()
 	Collider2D()->SetOffsetScale(Vec2(1.f, 0.5f));
 	Collider2D()->SetAbsolute(false);
 
-	m_prevPos = m_Target->Transform()->GetRelativePos();
 }
 
 void CArrowScript::tick()

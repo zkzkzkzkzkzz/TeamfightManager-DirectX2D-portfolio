@@ -248,7 +248,7 @@ void CFighterScript::EnterAttackState()
 	{
 		Damaged(GetOwner(), m_Target);
 
-		Animator2D()->FindAnim(L"FighterAttack")->Reset();
+		Animator2D()->GetCurAnim()->Reset();
 
 		if (m_bAttack)
 		{
@@ -270,28 +270,15 @@ void CFighterScript::EnterDeadState()
 {
 	if (!m_bRespawn)
 	{
-		Animator2D()->Play(L"FighterDead", false);
+		Animator2D()->Play(L"FighterDead");
 		m_bRespawn = true;
 	}
 
 	if (Animator2D()->GetCurAnim() && Animator2D()->GetCurAnim()->IsFinish())
 	{
-		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
 		Animator2D()->GetCurAnim()->Reset();
+		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
 		m_InGameStatus.CoolTime_Attack = 0.f;
 		GetOwner()->SetActive(false);
 	}
 }
-
-
-//void CFighterScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-//{
-//}
-//
-//void CFighterScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-//{
-//}
-//
-//void CFighterScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-//{
-//}

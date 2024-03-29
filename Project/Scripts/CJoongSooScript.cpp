@@ -13,6 +13,8 @@ CJoongSooScript::CJoongSooScript()
 	, m_GamerAge(21)
 	, m_Tex(nullptr)
 	, m_Text(nullptr)
+	, m_Team(TEAM::NONE)
+	, m_SelectedChamp(nullptr)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerATK", &m_GamerATK);
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerDEF", &m_GamerDEF);
@@ -27,6 +29,8 @@ CJoongSooScript::CJoongSooScript(const CJoongSooScript& _Origin)
 	, m_GamerAge(_Origin.m_GamerAge)
 	, m_Tex(_Origin.m_Tex)
 	, m_Text(_Origin.m_Text)
+	, m_Team(TEAM::NONE)
+	, m_SelectedChamp(nullptr)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerATK", &m_GamerATK);
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerDEF", &m_GamerDEF);
