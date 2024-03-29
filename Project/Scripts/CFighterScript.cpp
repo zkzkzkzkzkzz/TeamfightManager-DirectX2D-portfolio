@@ -273,7 +273,7 @@ void CFighterScript::EnterDeadState()
 		effect->AddComponent(new CAnimator2D);
 		effect->AddComponent(new CEffectScript);
 		effect->GetScript<CEffectScript>()->SetEffectInfo(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
-			, Transform()->GetRelativeRotation(), L"FighterDead", 1.f);
+														, Transform()->GetRelativeRotation(), L"FighterDead", 1.f);
 		GamePlayStatic::SpawnGameObject(effect, 6);
 
 		m_bRespawn = true;

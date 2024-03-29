@@ -41,6 +41,7 @@ void BattleLevel::CreateTempLevel()
 	pTempLevel->GetLayer(3)->SetName(L"Champ");
 	pTempLevel->GetLayer(4)->SetName(L"Cursor");
 	pTempLevel->GetLayer(5)->SetName(L"Projectile");
+	pTempLevel->GetLayer(6)->SetName(L"Effect");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
 
 	// 충돌 설정
@@ -56,7 +57,7 @@ void BattleLevel::CreateTempLevel()
 	pFSM->AddState(L"Ultimate", new CUltimateState);
 	pFSM->AddState(L"Dead", new CDeadState);
 
-	CAssetMgr::GetInst()->AddAsset<CFSM>(L"ArcherFSM", pFSM.Get());
+	CAssetMgr::GetInst()->AddAsset<CFSM>(L"ChampFSM", pFSM.Get());
 
 	pFSM = new CFSM(false);
 
@@ -141,6 +142,13 @@ void BattleLevel::CreateTempLevel()
 															L"texture\\Champ\\stadium.png");
  	Stadium->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(Stadium, 2);
+
+	CGameObject* BTmgr = new CGameObject;
+	BTmgr->SetName(L"BTMgr");
+	BTmgr->AddComponent(new CTransform);
+	BTmgr->AddComponent(new CChampScript);
+	GETCHAMP(BTmgr)->SetTeam(TEAM::NONE);
+	pTempLevel->AddObject(BTmgr, 3);
 
 	CGameObject* Champ = new CGameObject;
 	Champ->SetName(L"Archer");

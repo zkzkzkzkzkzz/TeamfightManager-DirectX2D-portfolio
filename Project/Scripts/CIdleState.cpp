@@ -24,6 +24,7 @@ void CIdleState::finaltick()
 		return;
 	}
 
+	float CoolTime = *((float*)GetBlackboardData(L"Skill_Cooltime"));
 	int AttRange = *((int*)GetBlackboardData(L"AttackRange"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
@@ -43,7 +44,10 @@ void CIdleState::finaltick()
 		}
 		else if (vDir.Length() <= AttRange && !(GETCHAMP(pSelf)->IsAttack()))
 		{
-			ChangeState(L"Attack");
+			if (vDir.Length() < AttRange - 20.f && CoolTime >= SKILLCOOLTIME)
+				ChangeState(L"Skill");
+			else
+				ChangeState(L"Attack");
 		}
 	}
 }

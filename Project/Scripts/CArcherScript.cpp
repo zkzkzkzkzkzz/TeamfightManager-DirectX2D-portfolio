@@ -21,6 +21,8 @@ CArcherScript::CArcherScript()
 	, m_Target(nullptr)
 	, m_arrowDelay(0.f)
 	, m_arrowspawn(false)
+	, m_SkillDelay(0.f)
+	, m_SkillActive(false)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -30,6 +32,7 @@ CArcherScript::CArcherScript()
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
 	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
 	AddScriptParam(SCRIPT_PARAM::INT, "Team", &m_Team);
+	AddScriptParam(SCRIPT_PARAM::INT, "State", &m_State);
 
 	m_bAttack = false;
 }
@@ -39,6 +42,8 @@ CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	, m_Target(nullptr)
 	, m_arrowDelay(0.f)
 	, m_arrowspawn(false)
+	, m_SkillDelay(0.f)
+	, m_SkillActive(false)
 {
 
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
@@ -74,7 +79,9 @@ void CArcherScript::tick()
 	CheckStateMachine();
 
 	m_InGameStatus.CoolTime_Attack += DT;
+	m_InGameStatus.CoolTime_Skill += DT;
 	m_arrowDelay += DT;
+	m_SkillDelay += DT;
 
 	float delay = 1 / m_Info.ATKSpeed;
 	if (m_InGameStatus.CoolTime_Attack > delay)
@@ -132,6 +139,7 @@ void CArcherScript::InitChampAnim()
 	Animator2D()->LoadAnimation(L"animdata\\ArcherTrace.txt");
 	Animator2D()->LoadAnimation(L"animdata\\ArcherAttack.txt");
 	Animator2D()->LoadAnimation(L"animdata\\ArcherDead.txt");
+	Animator2D()->LoadAnimation(L"animdata\\ArcherSkill.txt");
 	Animator2D()->Play(L"ArcherIdle");
 }
 
@@ -255,7 +263,7 @@ void CArcherScript::EnterAttackState()
 		m_arrowspawn = false;
 	}
 
-	if (m_bAttack && !m_arrowspawn && m_arrowDelay > 0.3f)
+	if (m_bAttack && !m_arrowspawn && m_arrowDelay > 0.4f)
 	{
 		CGameObject* arrow = new CGameObject;
 		arrow->SetName(L"Arrow");
@@ -272,6 +280,44 @@ void CArcherScript::EnterAttackState()
 
 void CArcherScript::EnterSkillState()
 {
+	if (!m_SkillActive)
+	{
+		Animator2D()->FindAnim(L"ArcherSkill")->Reset();
+		Animator2D()->Play(L"ArcherSkill", false);
+		m_InGameStatus.CoolTime_Skill = 0.f;
+		m_SkillActive = true;
+		m_arrowspawn = false;
+		m_arrowDelay = 0.f;
+		m_SkillDelay = 0.f;
+	}
+	else
+	{
+		if (m_SkillDelay < 0.5f)
+		{
+			Vec3 vDir = m_Target->Transform()->GetRelativePos() - Transform()->GetRelativePos();
+			vDir.Normalize();
+
+			Vec3 vNewPos = Transform()->GetRelativePos() + -vDir * DT * 30.f;
+			Transform()->SetRelativePos(vNewPos);
+		}
+		else if (m_SkillDelay > 1.4f)
+		{
+			if (!m_arrowspawn && m_arrowDelay > 0.4f)
+			{
+				CGameObject* arrow = new CGameObject;
+				arrow->SetName(L"Arrow");
+				arrow->AddComponent(new CTransform);
+				arrow->AddComponent(new CMeshRender);
+				arrow->AddComponent(new CCollider2D);
+				arrow->AddComponent(new CArrowScript);
+				arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
+				arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
+				GamePlayStatic::SpawnGameObject(arrow, 5);
+			}
+			m_arrowspawn = true;
+			m_SkillActive = false;
+		}
+	}
 }
 
 void CArcherScript::EnterUltimateState()
