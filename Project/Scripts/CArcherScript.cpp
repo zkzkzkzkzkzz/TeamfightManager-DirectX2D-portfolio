@@ -135,7 +135,7 @@ void CArcherScript::InitStateMachine()
 {
 	if (StateMachine())
 	{
-		StateMachine()->SetFSM(CAssetMgr::GetInst()->FindAsset<CFSM>(L"ArcherFSM"));
+		StateMachine()->SetFSM(CAssetMgr::GetInst()->FindAsset<CFSM>(L"ChampFSM"));
 
 		StateMachine()->AddBlackboardData(L"MoveSpeed", BB_DATA::FLOAT, &m_Info.MOV);
 		StateMachine()->AddBlackboardData(L"AttackRange", BB_DATA::INT, &m_Info.ATKRange);
@@ -294,15 +294,15 @@ void CArcherScript::EnterDeadState()
 	}
 }
 
-
-void CArcherScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-{
-}
-
-void CArcherScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-{
-}
-
-void CArcherScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
-{
-}
+//
+//void CArcherScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+//{
+//}
+//
+//void CArcherScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+//{
+//}
+//
+//void CArcherScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+//{
+//}

@@ -18,6 +18,7 @@ CArrowScript::CArrowScript()
 	, m_Speed(240.f)
 	, m_Pos{}
 	, m_Rotation{}
+	, m_prevPos{}
 {
 }
 
@@ -29,6 +30,7 @@ CArrowScript::CArrowScript(const CArrowScript& _Origin)
 	, m_Speed(240.f)
 	, m_Pos{}
 	, m_Rotation{}
+	, m_prevPos{}
 {
 }
 
@@ -59,11 +61,13 @@ void CArrowScript::begin()
 	Collider2D()->SetOffsetPos(Vec2(0.f, -0.05f));
 	Collider2D()->SetOffsetScale(Vec2(1.f, 0.5f));
 	Collider2D()->SetAbsolute(false);
+
+	m_prevPos = m_Target->Transform()->GetRelativePos();
 }
 
 void CArrowScript::tick()
 {
-	if (m_Target)
+	if (m_Target->IsActive())
 	{
 		Vec3 vDir = m_Target->Transform()->GetRelativePos() - m_Pos;
 		vDir.Normalize();
@@ -101,6 +105,52 @@ void CArrowScript::tick()
 			float vPosY = Transform()->GetRelativePos().y + vDir.y * DT * m_Speed;
 			Transform()->SetRelativePos(Vec3(vPosX, vPosY, 0));
 			Transform()->SetRelativeRotation(Vec3(vRot));
+		}
+	}
+	else
+	{
+		Vec3 vDir = m_prevPos - m_Pos;
+		vDir.Normalize();
+
+		if (vDir.x >= 0.f)
+		{
+			float fDot = vDir.x;
+			float fAngle = acosf(fDot);
+
+			Vec3 vRot = Transform()->GetRelativeRotation();
+
+			if (vDir.y >= 0.f)
+				vRot.z = fAngle;
+			else if (vDir.y < 0.f)
+				vRot.z = -fAngle;
+
+			float vPosX = Transform()->GetRelativePos().x + vDir.x * DT * m_Speed;
+			float vPosY = Transform()->GetRelativePos().y + vDir.y * DT * m_Speed;
+			Transform()->SetRelativePos(Vec3(vPosX, vPosY, 0));
+			Transform()->SetRelativeRotation(Vec3(vRot));
+		}
+		else if (vDir.x < 0.f)
+		{
+			float fDot = -vDir.x;
+			float fAngle = acosf(fDot);
+
+			Vec3 vRot = Transform()->GetRelativeRotation();
+
+			if (vDir.y >= 0.f)
+				vRot.z = -fAngle;
+			else if (vDir.y < 0.f)
+				vRot.z = fAngle;
+
+			float vPosX = Transform()->GetRelativePos().x + vDir.x * DT * m_Speed;
+			float vPosY = Transform()->GetRelativePos().y + vDir.y * DT * m_Speed;
+			Transform()->SetRelativePos(Vec3(vPosX, vPosY, 0));
+			Transform()->SetRelativeRotation(Vec3(vRot));
+		}
+
+		if (m_prevPos.x - 10.f <= Transform()->GetRelativePos().x && m_prevPos.x + 10.f >= Transform()->GetRelativePos().x
+			&& m_prevPos.y- 10.f <= Transform()->GetRelativePos().y && m_prevPos.y + 10.f >= Transform()->GetRelativePos().y)
+		{
+			GamePlayStatic::DestroyGameObject(GetOwner());
 		}
 	}
 

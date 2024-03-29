@@ -11,6 +11,8 @@ private:
     CGameObject*    m_Target;
     Ptr<CTexture>   m_Tex;
 
+
+    Vec3    m_prevPos;
     Vec3    m_Pos;
     Vec3    m_Rotation;
     float   m_Speed;
