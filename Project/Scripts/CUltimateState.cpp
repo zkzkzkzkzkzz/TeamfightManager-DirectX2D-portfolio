@@ -32,7 +32,7 @@ void CUltimateState::finaltick()
 void CUltimateState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
-	pSelf->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::ULTIMATE);
+	GETCHAMP(pSelf)->SetChampState(CHAMP_STATE::ULTIMATE);
 }
 
 void CUltimateState::Exit()

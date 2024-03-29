@@ -7,6 +7,8 @@ class CFighterScript :
 {
 private:
     CGameObject* m_Target;
+    bool    m_DealActive;
+    float   m_DealDelay;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}

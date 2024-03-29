@@ -11,6 +11,7 @@
 #include <Engine\CAssetMgr.h>
 
 #include "CBTMgr.h"
+#include "CEffectScript.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
 #include "CArrowScript.h"
@@ -18,6 +19,8 @@
 CArcherScript::CArcherScript()
 	: CChampScript(ARCHERSCRIPT)
 	, m_Target(nullptr)
+	, m_arrowDelay(0.f)
+	, m_arrowspawn(false)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -34,6 +37,8 @@ CArcherScript::CArcherScript()
 CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	: CChampScript(ARCHERSCRIPT)
 	, m_Target(nullptr)
+	, m_arrowDelay(0.f)
+	, m_arrowspawn(false)
 {
 
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
@@ -69,13 +74,12 @@ void CArcherScript::tick()
 	CheckStateMachine();
 
 	m_InGameStatus.CoolTime_Attack += DT;
+	m_arrowDelay += DT;
 
 	float delay = 1 / m_Info.ATKSpeed;
-
 	if (m_InGameStatus.CoolTime_Attack > delay)
 	{
 		m_bAttack = false;
-		m_InGameStatus.CoolTime_Attack = 0.f;
 	}
 }
 
@@ -241,14 +245,17 @@ void CArcherScript::EnterTraceState()
 
 void CArcherScript::EnterAttackState()
 {
-	if (!m_bAttack && m_InGameStatus.CoolTime_Attack < m_Info.ATKSpeed)
+	if (!m_bAttack)
 	{
-		Animator2D()->Play(L"ArcherAttack");
+		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
+		Animator2D()->Play(L"ArcherAttack", false);
 		m_bAttack = true;
 		m_InGameStatus.CoolTime_Attack = 0.f;
+		m_arrowDelay = 0.f;
+		m_arrowspawn = false;
 	}
 
-	if (Animator2D()->GetCurAnim()->IsFinish())
+	if (m_bAttack && !m_arrowspawn && m_arrowDelay > 0.3f)
 	{
 		CGameObject* arrow = new CGameObject;
 		arrow->SetName(L"Arrow");
@@ -259,13 +266,7 @@ void CArcherScript::EnterAttackState()
 		arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
 		arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
 		GamePlayStatic::SpawnGameObject(arrow, 5);
-
-		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
-
-		if (m_bAttack)
-		{
-			m_State = CHAMP_STATE::IDLE;
-		}
+		m_arrowspawn = true;
 	}
 }
 
@@ -281,13 +282,19 @@ void CArcherScript::EnterDeadState()
 {
 	if (!m_bRespawn)
 	{
-		Animator2D()->Play(L"ArcherDead", false);
+		CGameObject* effect = new CGameObject;
+		effect->AddComponent(new CTransform);
+		effect->AddComponent(new CMeshRender);
+		effect->AddComponent(new CAnimator2D);
+		effect->AddComponent(new CEffectScript);
+		effect->GetScript<CEffectScript>()->SetEffectInfo(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
+														, Transform()->GetRelativeRotation(), L"ArcherDead", 1.f);
+		GamePlayStatic::SpawnGameObject(effect, 6);
+
 		m_bRespawn = true;
 	}
-
-	if (Animator2D()->GetCurAnim() && Animator2D()->GetCurAnim()->IsFinish())
+	else
 	{
-		Animator2D()->GetCurAnim()->Reset();
 		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
 		m_InGameStatus.CoolTime_Attack = 0.f;
 		GetOwner()->SetActive(false);

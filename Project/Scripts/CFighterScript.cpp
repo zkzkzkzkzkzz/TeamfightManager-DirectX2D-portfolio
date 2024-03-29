@@ -11,11 +11,12 @@
 #include <Engine\CAssetMgr.h>
 
 #include "CBTMgr.h"
-
+#include "CEffectScript.h"
 
 CFighterScript::CFighterScript()
 	: CChampScript(FIGHTERSCRIPT)
 	, m_Target(nullptr)
+	, m_DealActive(false)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -32,6 +33,7 @@ CFighterScript::CFighterScript()
 CFighterScript::CFighterScript(const CFighterScript& _Origin)
 	: CChampScript(FIGHTERSCRIPT)
 	, m_Target(nullptr)
+	, m_DealActive(false)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -66,13 +68,11 @@ void CFighterScript::tick()
 	CheckStateMachine();
 
 	m_InGameStatus.CoolTime_Attack += DT;
-
+	m_DealDelay += DT;
 	float delay = 1 / m_Info.ATKSpeed;
-
 	if (m_InGameStatus.CoolTime_Attack > delay)
 	{
 		m_bAttack = false;
-		m_InGameStatus.CoolTime_Attack = 0.f;
 	}
 }
 
@@ -237,23 +237,20 @@ void CFighterScript::EnterTraceState()
 
 void CFighterScript::EnterAttackState()
 {
-	if (!m_bAttack && m_InGameStatus.CoolTime_Attack < m_Info.ATKSpeed)
+	if (!m_bAttack)
 	{
-		Animator2D()->Play(L"FighterAttack");
+		Animator2D()->FindAnim(L"FighterAttack")->Reset();
+		Animator2D()->Play(L"FighterAttack", false);
 		m_bAttack = true;
 		m_InGameStatus.CoolTime_Attack = 0.f;
+		m_DealActive = true;
+		m_DealDelay = 0.f;
 	}
-
-	if (Animator2D()->GetCurAnim()->IsFinish())
+	
+	if (m_bAttack && m_DealActive && m_DealDelay > 0.4f)
 	{
 		Damaged(GetOwner(), m_Target);
-
-		Animator2D()->GetCurAnim()->Reset();
-
-		if (m_bAttack)
-		{
-			m_State = CHAMP_STATE::IDLE;
-		}
+		m_DealActive = false;
 	}
 }
 
@@ -270,13 +267,19 @@ void CFighterScript::EnterDeadState()
 {
 	if (!m_bRespawn)
 	{
-		Animator2D()->Play(L"FighterDead");
+		CGameObject* effect = new CGameObject;
+		effect->AddComponent(new CTransform);
+		effect->AddComponent(new CMeshRender);
+		effect->AddComponent(new CAnimator2D);
+		effect->AddComponent(new CEffectScript);
+		effect->GetScript<CEffectScript>()->SetEffectInfo(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
+			, Transform()->GetRelativeRotation(), L"FighterDead", 1.f);
+		GamePlayStatic::SpawnGameObject(effect, 6);
+
 		m_bRespawn = true;
 	}
-
-	if (Animator2D()->GetCurAnim() && Animator2D()->GetCurAnim()->IsFinish())
+	else
 	{
-		Animator2D()->GetCurAnim()->Reset();
 		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
 		m_InGameStatus.CoolTime_Attack = 0.f;
 		GetOwner()->SetActive(false);

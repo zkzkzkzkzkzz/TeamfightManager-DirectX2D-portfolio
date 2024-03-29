@@ -33,7 +33,7 @@ void CSkillState::finaltick()
 void CSkillState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
-	pSelf->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::SKILL);
+	GETCHAMP(pSelf)->SetChampState(CHAMP_STATE::SKILL);
 }
 
 void CSkillState::Exit()

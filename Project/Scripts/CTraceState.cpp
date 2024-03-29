@@ -62,7 +62,7 @@ void CTraceState::finaltick()
 void CTraceState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
-	pSelf->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::TRACE);
+	GETCHAMP(pSelf)->SetChampState(CHAMP_STATE::TRACE);
 }
 
 void CTraceState::Exit()

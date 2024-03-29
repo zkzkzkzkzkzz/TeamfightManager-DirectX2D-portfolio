@@ -50,7 +50,7 @@ void CAttackState::finaltick()
 		{
 			ChangeState(L"Trace");
 		}
-		else if (!(pSelf->GetScript<CChampScript>()->IsAttack()))
+		else if (!(GETCHAMP(pSelf)->IsAttack()))
 		{
 			ChangeState(L"Idle");
 		}
@@ -60,7 +60,7 @@ void CAttackState::finaltick()
 void CAttackState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
-	pSelf->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::ATTACK);
+	GETCHAMP(pSelf)->SetChampState(CHAMP_STATE::ATTACK);
 }
 
 void CAttackState::Exit()

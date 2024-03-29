@@ -15,7 +15,7 @@ CArrowScript::CArrowScript()
 	, m_Tex(nullptr)
 	, m_Target(nullptr)
 	, m_Shooter(nullptr)
-	, m_Speed(240.f)
+	, m_Speed(350.f)
 	, m_Pos{}
 	, m_Rotation{}
 	, m_prevPos{}
@@ -27,7 +27,7 @@ CArrowScript::CArrowScript(const CArrowScript& _Origin)
 	, m_Tex(_Origin.m_Tex)
 	, m_Shooter(nullptr)
 	, m_Target(nullptr)
-	, m_Speed(240.f)
+	, m_Speed(350.f)
 	, m_Pos{}
 	, m_Rotation{}
 	, m_prevPos{}

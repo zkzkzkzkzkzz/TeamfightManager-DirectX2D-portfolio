@@ -8,6 +8,8 @@ class CArcherScript :
 {
 private:
     CGameObject* m_Target;
+    float m_arrowDelay;
+    bool m_arrowspawn;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}

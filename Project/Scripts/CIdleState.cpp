@@ -26,10 +26,6 @@ void CIdleState::finaltick()
 
 	int AttRange = *((int*)GetBlackboardData(L"AttackRange"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
-
-	CFSM* fsm = GetFSM();
-	CStateMachine* sm = GetFSM()->GetStateMachine();
-
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
 
 	if (nullptr != pTarget)
@@ -45,7 +41,7 @@ void CIdleState::finaltick()
 		{
 			ChangeState(L"Trace");
 		}
-		else if (vDir.Length() <= AttRange && !(pSelf->GetScript<CChampScript>()->IsAttack()))
+		else if (vDir.Length() <= AttRange && !(GETCHAMP(pSelf)->IsAttack()))
 		{
 			ChangeState(L"Attack");
 		}
@@ -55,7 +51,7 @@ void CIdleState::finaltick()
 void CIdleState::Enter()
 {
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
-	pSelf->GetScript<CChampScript>()->SetChampState(CHAMP_STATE::IDLE);
+	GETCHAMP(pSelf)->SetChampState(CHAMP_STATE::IDLE);
 }
 
 void CIdleState::Exit()
