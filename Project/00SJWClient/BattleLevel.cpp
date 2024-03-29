@@ -22,6 +22,8 @@
 #include <Scripts\CTGMgr.h>
 #include <Scripts\CChampScript.h>
 #include <Scripts\CArcherScript.h>
+#include <Scripts\CFighterScript.h>
+
 #include <Scripts\CIdleState.h>
 #include <Scripts\CTraceState.h>
 #include <Scripts\CAttackState.h>
@@ -55,6 +57,17 @@ void BattleLevel::CreateTempLevel()
 	pFSM->AddState(L"Dead", new CDeadState);
 
 	CAssetMgr::GetInst()->AddAsset<CFSM>(L"ArcherFSM", pFSM.Get());
+
+	pFSM = new CFSM(false);
+
+	pFSM->AddState(L"Idle", new CIdleState);
+	pFSM->AddState(L"Trace", new CTraceState);
+	pFSM->AddState(L"Attack", new CAttackState);
+	pFSM->AddState(L"Skill", new CSkillState);
+	pFSM->AddState(L"Ultimate", new CUltimateState);
+	pFSM->AddState(L"Dead", new CDeadState);
+
+	CAssetMgr::GetInst()->AddAsset<CFSM>(L"FighterFSM", pFSM.Get());
 
 	// Main Camera 생성
 	CGameObject* pCamObj = new CGameObject;
@@ -129,24 +142,27 @@ void BattleLevel::CreateTempLevel()
  	Stadium->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(Stadium, 2);
 
-	CGameObject* Archer = new CGameObject;
-	Archer->SetName(L"Archer");
-	Archer->AddComponent(new CTransform);
-	Archer->AddComponent(new CMeshRender);
-	Archer->AddComponent(new CCollider2D);
-	Archer->AddComponent(new CAnimator2D);
-	Archer->AddComponent(new CStateMachine);
-	Archer->AddComponent(new CArcherScript);
-	Archer->Transform()->SetRelativePos(Vec3(-290.f, 0.f, 300.f));
-	Archer->GetScript<CArcherScript>()->SetTeam(TEAM::BLUE);
-	pTempLevel->AddObject(Archer, 3);
+	CGameObject* Champ = new CGameObject;
+	Champ->SetName(L"Archer");
+	Champ->AddComponent(new CTransform);
+	Champ->AddComponent(new CMeshRender);
+	Champ->AddComponent(new CCollider2D);
+	Champ->AddComponent(new CAnimator2D);
+	Champ->AddComponent(new CStateMachine);
+	Champ->AddComponent(new CArcherScript);
+	Champ->GetScript<CArcherScript>()->SetTeam(TEAM::BLUE);
+	pTempLevel->AddObject(Champ, 3);
 
-	Archer = Archer->Clone();
-	Archer->SetName(L"Enemy");
-	Archer->Transform()->SetRelativePos(Vec3(290.f, 0.f, 300.f));
-	Archer->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
-	Archer->GetScript<CArcherScript>()->SetTeam(TEAM::RED);
-	pTempLevel->AddObject(Archer, 3);
+	Champ = new CGameObject;
+	Champ->SetName(L"Fighter");
+	Champ->AddComponent(new CTransform);
+	Champ->AddComponent(new CMeshRender);
+	Champ->AddComponent(new CCollider2D);
+	Champ->AddComponent(new CAnimator2D);
+	Champ->AddComponent(new CStateMachine);
+	Champ->AddComponent(new CFighterScript);
+	Champ->GetScript<CFighterScript>()->SetTeam(TEAM::RED);
+	pTempLevel->AddObject(Champ, 3);
 
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);

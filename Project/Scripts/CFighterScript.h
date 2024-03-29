@@ -1,9 +1,8 @@
 #pragma once
 #include "CChampScript.h"
 
-class CGameObject;
 
-class CArcherScript :
+class CFighterScript :
     public CChampScript
 {
 private:
@@ -38,11 +37,9 @@ public:
     virtual void EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider);
 
 public:
-    CLONE(CArcherScript);
-    CArcherScript();
-    CArcherScript(const CArcherScript& _Origin);
-    ~CArcherScript();
-
-    friend class CArrowScript;
+    CLONE(CFighterScript);
+    CFighterScript();
+    CFighterScript(const CFighterScript& _Origin);
+    ~CFighterScript();
 };
 

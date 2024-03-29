@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CArcherScript.h"
+#include "CFighterScript.h"
 
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
@@ -11,12 +11,10 @@
 #include <Engine\CAssetMgr.h>
 
 #include "CBTMgr.h"
-#include "CIdleState.h"
-#include "CTraceState.h"
-#include "CArrowScript.h"
 
-CArcherScript::CArcherScript()
-	: CChampScript(ARCHERSCRIPT)
+
+CFighterScript::CFighterScript()
+	: CChampScript(FIGHTERSCRIPT)
 	, m_Target(nullptr)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
@@ -31,11 +29,10 @@ CArcherScript::CArcherScript()
 	m_bAttack = false;
 }
 
-CArcherScript::CArcherScript(const CArcherScript& _Origin)
-	: CChampScript(ARCHERSCRIPT)
+CFighterScript::CFighterScript(const CFighterScript& _Origin)
+	: CChampScript(FIGHTERSCRIPT)
 	, m_Target(nullptr)
 {
-
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
 	AddScriptParam(SCRIPT_PARAM::INT, "DEF", &m_InGameStatus.DEF);
@@ -48,12 +45,12 @@ CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	m_bAttack = false;
 }
 
-CArcherScript::~CArcherScript()
+CFighterScript::~CFighterScript()
 {
 }
 
 
-void CArcherScript::begin()
+void CFighterScript::begin()
 {
 	CChampScript::begin();
 
@@ -62,7 +59,7 @@ void CArcherScript::begin()
 	InitStateMachine();
 }
 
-void CArcherScript::tick()
+void CFighterScript::tick()
 {
 	CChampScript::tick();
 
@@ -80,9 +77,9 @@ void CArcherScript::tick()
 }
 
 
-void CArcherScript::InitChampInfo()
+void CFighterScript::InitChampInfo()
 {
-	SetChampInfo(100, 42, 5, 0.67f, 120, 3, CHAMP_TYPE::MARKSMAN);	// 기본 정보 설정
+	SetChampInfo(190, 10, 40, 1.18f, 35, 7, CHAMP_TYPE::WARRIOR);	// 기본 정보 설정
 	InitChampStatus(0, 0);	// 인게임 정보 설정
 
 	m_State = CHAMP_STATE::IDLE;
@@ -94,7 +91,7 @@ void CArcherScript::InitChampInfo()
 	}
 }
 
-void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
+void CFighterScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 {
 	m_InGameStatus.HP = m_Info.MaxHP;
 	m_InGameStatus.ATK = m_Info.ATK + _GamerATK;
@@ -104,9 +101,9 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 	m_InGameStatus.CoolTime_Skill = 0.f;
 	m_InGameStatus.UltimateUseTime = 60.f;
 	m_InGameStatus.bUltimate = false;
-	
+
 	m_InGameStatus.RespawnTime = 0.f;
-	
+
 	m_InGameStatus.TotalDeal = 0;
 	m_InGameStatus.TotalDamage = 0;
 	m_InGameStatus.TotalHeal = 0;
@@ -115,7 +112,7 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 	m_InGameStatus.AssistPoint = 0;
 }
 
-void CArcherScript::InitChampAnim()
+void CFighterScript::InitChampAnim()
 {
 	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
@@ -124,14 +121,14 @@ void CArcherScript::InitChampAnim()
 	Collider2D()->SetOffsetPos(Vec2(0.05f, 0.05f));
 	Collider2D()->SetOffsetScale(Vec2(0.4f, 0.5f));
 
-	Animator2D()->LoadAnimation(L"animdata\\ArcherIdle.txt");
-	Animator2D()->LoadAnimation(L"animdata\\ArcherTrace.txt");
-	Animator2D()->LoadAnimation(L"animdata\\ArcherAttack.txt");
-	Animator2D()->LoadAnimation(L"animdata\\ArcherDead.txt");
-	Animator2D()->Play(L"ArcherIdle");
+	Animator2D()->LoadAnimation(L"animdata\\FighterIdle.txt");
+	Animator2D()->LoadAnimation(L"animdata\\FighterTrace.txt");
+	Animator2D()->LoadAnimation(L"animdata\\FighterAttack.txt");
+	Animator2D()->LoadAnimation(L"animdata\\FighterDead.txt");
+	Animator2D()->Play(L"FighterIdle");
 }
 
-void CArcherScript::InitStateMachine()
+void CFighterScript::InitStateMachine()
 {
 	if (StateMachine())
 	{
@@ -148,7 +145,7 @@ void CArcherScript::InitStateMachine()
 		CGameObject* pTarget = nullptr;
 		for (size_t i = 0; i < pObjs.size(); ++i)
 		{
-			if ( team != GETCHAMP(pObjs[i])->GetTeamColor() 
+			if (team != GETCHAMP(pObjs[i])->GetTeamColor()
 				&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
 				&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
 			{
@@ -179,7 +176,7 @@ void CArcherScript::InitStateMachine()
 	}
 }
 
-void CArcherScript::CheckStateMachine()
+void CFighterScript::CheckStateMachine()
 {
 	vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 	if (StateMachine())
@@ -190,7 +187,7 @@ void CArcherScript::CheckStateMachine()
 			CGameObject* pTarget = nullptr;
 			for (size_t i = 0; i < pObjs.size(); ++i)
 			{
-				if ( m_Target->IsActive()
+				if (m_Target->IsActive()
 					&& TEAM::NONE != team
 					&& team != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
@@ -217,7 +214,7 @@ void CArcherScript::CheckStateMachine()
 	}
 }
 
-void CArcherScript::SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type)
+void CFighterScript::SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type)
 {
 	m_Info.MaxHP = _MaxHP;
 	m_Info.ATK = _ATK;
@@ -228,39 +225,30 @@ void CArcherScript::SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed
 	m_Info.Type = _Type;
 }
 
-
-void CArcherScript::EnterIdleState()
+void CFighterScript::EnterIdleState()
 {
-	Animator2D()->Play(L"ArcherIdle");
+	Animator2D()->Play(L"FighterIdle");
 }
 
-void CArcherScript::EnterTraceState()
+void CFighterScript::EnterTraceState()
 {
-	Animator2D()->Play(L"ArcherTrace");
+	Animator2D()->Play(L"FighterTrace");
 }
 
-void CArcherScript::EnterAttackState()
+void CFighterScript::EnterAttackState()
 {
 	if (!m_bAttack && m_InGameStatus.CoolTime_Attack < m_Info.ATKSpeed)
 	{
-		Animator2D()->Play(L"ArcherAttack");
+		Animator2D()->Play(L"FighterAttack");
 		m_bAttack = true;
 		m_InGameStatus.CoolTime_Attack = 0.f;
 	}
 
 	if (Animator2D()->GetCurAnim()->IsFinish())
 	{
-		CGameObject* arrow = new CGameObject;
-		arrow->SetName(L"Arrow");
-		arrow->AddComponent(new CTransform);
-		arrow->AddComponent(new CMeshRender);
-		arrow->AddComponent(new CCollider2D);
-		arrow->AddComponent(new CArrowScript);
-		arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
-		arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
-		GamePlayStatic::SpawnGameObject(arrow, 5);
+		Damaged(GetOwner(), m_Target);
 
-		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
+		Animator2D()->FindAnim(L"FighterAttack")->Reset();
 
 		if (m_bAttack)
 		{
@@ -269,19 +257,20 @@ void CArcherScript::EnterAttackState()
 	}
 }
 
-void CArcherScript::EnterSkillState()
+void CFighterScript::EnterSkillState()
+{
+
+}
+
+void CFighterScript::EnterUltimateState()
 {
 }
 
-void CArcherScript::EnterUltimateState()
-{
-}
-
-void CArcherScript::EnterDeadState()
+void CFighterScript::EnterDeadState()
 {
 	if (!m_bRespawn)
 	{
-		Animator2D()->Play(L"ArcherDead", false);
+		Animator2D()->Play(L"FighterDead", false);
 		m_bRespawn = true;
 	}
 
@@ -295,14 +284,14 @@ void CArcherScript::EnterDeadState()
 }
 
 
-void CArcherScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+void CFighterScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
 }
 
-void CArcherScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+void CFighterScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
 }
 
-void CArcherScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+void CFighterScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
 {
 }

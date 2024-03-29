@@ -43,6 +43,13 @@ CChampScript::~CChampScript()
 
 void CChampScript::begin()
 {
+	if (TEAM::BLUE == GetTeamColor())
+		Transform()->SetRelativePos(Vec3(-190.f, 100.f, 300.f));
+	else
+		Transform()->SetRelativePos(Vec3(190.f, -100.f, 300.f));
+
+	Transform()->SetRelativeScale(Vec3(64.f, 64.f, 1.f));
+
 }
 
 void CChampScript::tick()
