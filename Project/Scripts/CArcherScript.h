@@ -25,6 +25,8 @@ public:
 
     virtual void SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type) override;
 
+    void BackStepMoving();
+
 public:
     virtual void EnterIdleState() override;
     virtual void EnterTraceState() override;

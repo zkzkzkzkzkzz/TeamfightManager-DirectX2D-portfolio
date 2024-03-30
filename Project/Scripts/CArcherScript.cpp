@@ -88,6 +88,11 @@ void CArcherScript::tick()
 	{
 		m_bAttack = false;
 	}
+
+	//if (CHAMP_STATE::SKILL == m_State && m_SkillDelay < 0.5f)
+	//{
+	//	BackStepMoving();
+	//}
 }
 
 
@@ -284,7 +289,6 @@ void CArcherScript::EnterSkillState()
 	{
 		Animator2D()->FindAnim(L"ArcherSkill")->Reset();
 		Animator2D()->Play(L"ArcherSkill", false);
-		m_InGameStatus.CoolTime_Skill = 0.f;
 		m_SkillActive = true;
 		m_arrowspawn = false;
 		m_arrowDelay = 0.f;
@@ -292,13 +296,9 @@ void CArcherScript::EnterSkillState()
 	}
 	else
 	{
-		if (m_SkillDelay < 0.5f)
+		if (m_SkillDelay < 1.f)
 		{
-			Vec3 vDir = m_Target->Transform()->GetRelativePos() - Transform()->GetRelativePos();
-			vDir.Normalize();
-
-			Vec3 vNewPos = Transform()->GetRelativePos() + -vDir * DT * 30.f;
-			Transform()->SetRelativePos(vNewPos);
+			BackStepMoving();
 		}
 		else if (m_SkillDelay > 1.4f)
 		{
@@ -313,9 +313,10 @@ void CArcherScript::EnterSkillState()
 				arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
 				arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
 				GamePlayStatic::SpawnGameObject(arrow, 5);
+				m_arrowspawn = true;
+				m_SkillActive = false;
+				m_InGameStatus.CoolTime_Skill = 0.f;
 			}
-			m_arrowspawn = true;
-			m_SkillActive = false;
 		}
 	}
 }
@@ -343,6 +344,16 @@ void CArcherScript::EnterDeadState()
 	{
 		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
 		m_InGameStatus.CoolTime_Attack = 0.f;
+		m_InGameStatus.CoolTime_Skill = 0.f;
 		GetOwner()->SetActive(false);
 	}
+}
+
+void CArcherScript::BackStepMoving()
+{
+	Vec3 vDir = m_Target->Transform()->GetRelativePos() - Transform()->GetRelativePos();
+	vDir.Normalize();
+
+	Vec3 vNewPos = Transform()->GetRelativePos() + ( -1 * vDir * DT * 30.f);
+	Transform()->SetRelativePos(vNewPos);
 }
