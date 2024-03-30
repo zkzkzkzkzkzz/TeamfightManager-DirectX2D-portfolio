@@ -27,6 +27,7 @@ void CTraceState::finaltick()
 		return;
 	}
 
+	float UltiTime = *((float*)GetBlackboardData(L"UltimateTime"));
 	int AttRange = *((int*)GetBlackboardData(L"AttackRange"));
 	float Speed = *((float*)GetBlackboardData(L"MoveSpeed"));
 	float CoolTime = *((float*)GetBlackboardData(L"Skill_Cooltime"));
@@ -46,6 +47,12 @@ void CTraceState::finaltick()
 		else
 			pSelf->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 
+		if (!GETCHAMP(pSelf)->DoUltimate() && UltiTime > CTGMgr::G_Time)
+		{
+			ChangeState(L"Ultimate");
+			return;
+		}
+
 		if (vDir.Length() > AttRange)
 		{
 			vDir.Normalize();
@@ -55,7 +62,7 @@ void CTraceState::finaltick()
 		}
 		else if (vDir.Length() <= AttRange)
 		{
-			if (vDir.Length() < AttRange - 20.f && CoolTime >= SKILLCOOLTIME)
+			if (CoolTime >= SKILLCOOLTIME)
 				ChangeState(L"Skill");
 			else
 				ChangeState(L"Attack");

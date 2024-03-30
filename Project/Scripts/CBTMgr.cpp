@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CBTMgr.h"
 
+#include <Engine\CTimeMgr.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CTransform.h>
 
@@ -18,6 +19,8 @@ CBTMgr::~CBTMgr()
 
 void CBTMgr::tick()
 {
+    CTGMgr::G_Time -= DT;
+
     list<CGameObject*>::iterator iter = G_Respawn.begin();
 
     while (iter != G_Respawn.end())

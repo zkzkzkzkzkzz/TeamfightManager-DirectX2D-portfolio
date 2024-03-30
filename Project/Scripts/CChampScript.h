@@ -56,6 +56,7 @@ struct tChampStatus
     float   CoolTime_Skill;     // 챔피언 스킬 쿨타임
     float   UltimateUseTime;    // 궁극기 사용 시간
     bool    bUltimate;          // 궁극기 사용 여부
+    bool    bUltimateDone;      // 궁극기 끝남 여부
     float   RespawnTime;        // 리스폰 시간
 
     // 인게임 통계
@@ -98,7 +99,9 @@ public:
     virtual float GetChampMoveSpeed() { return m_Info.MOV; }
     virtual CHAMP_TYPE GetChampType() { return m_Info.Type; }
 
-    bool IsAttack() { return m_bAttack; }
+    virtual bool IsAttack() { return m_bAttack; }
+    virtual bool DoUltimate() { return m_InGameStatus.bUltimate; }
+    virtual bool IsUltimateDone() { return m_InGameStatus.bUltimateDone; }
 
     virtual void Damaged(CGameObject* Attacker, CGameObject* Target);
 

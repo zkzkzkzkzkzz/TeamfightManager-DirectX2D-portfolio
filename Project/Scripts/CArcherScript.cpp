@@ -23,6 +23,8 @@ CArcherScript::CArcherScript()
 	, m_arrowspawn(false)
 	, m_SkillDelay(0.f)
 	, m_SkillActive(false)
+	, m_UltiDelay(0.f)
+	, m_UltiActive(false)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -33,6 +35,7 @@ CArcherScript::CArcherScript()
 	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
 	AddScriptParam(SCRIPT_PARAM::INT, "Team", &m_Team);
 	AddScriptParam(SCRIPT_PARAM::INT, "State", &m_State);
+	AddScriptParam(SCRIPT_PARAM::INT, "ULTI", &m_InGameStatus.bUltimate);
 
 	m_bAttack = false;
 }
@@ -44,6 +47,8 @@ CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	, m_arrowspawn(false)
 	, m_SkillDelay(0.f)
 	, m_SkillActive(false)
+	, m_UltiDelay(0.f)
+	, m_UltiActive(false)
 {
 
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
@@ -54,6 +59,8 @@ CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
 	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
 	AddScriptParam(SCRIPT_PARAM::INT, "Team", &m_Team);
+	AddScriptParam(SCRIPT_PARAM::INT, "State", &m_State);
+	AddScriptParam(SCRIPT_PARAM::INT, "ULTI", &m_InGameStatus.bUltimate);
 
 	m_bAttack = false;
 }
@@ -82,17 +89,13 @@ void CArcherScript::tick()
 	m_InGameStatus.CoolTime_Skill += DT;
 	m_arrowDelay += DT;
 	m_SkillDelay += DT;
+	m_UltiDelay += DT;
 
 	float delay = 1 / m_Info.ATKSpeed;
 	if (m_InGameStatus.CoolTime_Attack > delay)
 	{
 		m_bAttack = false;
 	}
-
-	//if (CHAMP_STATE::SKILL == m_State && m_SkillDelay < 0.5f)
-	//{
-	//	BackStepMoving();
-	//}
 }
 
 
@@ -118,8 +121,9 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 
 	m_InGameStatus.CoolTime_Attack = 0.f;
 	m_InGameStatus.CoolTime_Skill = 0.f;
-	m_InGameStatus.UltimateUseTime = 60.f;
+	m_InGameStatus.UltimateUseTime = 50.f;
 	m_InGameStatus.bUltimate = false;
+	m_InGameStatus.bUltimateDone = false;
 	
 	m_InGameStatus.RespawnTime = 0.f;
 	
@@ -158,6 +162,7 @@ void CArcherScript::InitStateMachine()
 		StateMachine()->AddBlackboardData(L"AttackRange", BB_DATA::INT, &m_Info.ATKRange);
 		StateMachine()->AddBlackboardData(L"AttackSpeed", BB_DATA::INT, &m_Info.ATKSpeed);
 		StateMachine()->AddBlackboardData(L"Skill_Cooltime", BB_DATA::INT, &m_InGameStatus.CoolTime_Skill);
+		StateMachine()->AddBlackboardData(L"UltimateTime", BB_DATA::FLOAT, &m_InGameStatus.UltimateUseTime);
 
 		vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 
@@ -207,8 +212,7 @@ void CArcherScript::CheckStateMachine()
 			CGameObject* pTarget = nullptr;
 			for (size_t i = 0; i < pObjs.size(); ++i)
 			{
-				if ( m_Target->IsActive()
-					&& TEAM::NONE != team
+				if ( TEAM::NONE != team
 					&& team != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
@@ -270,16 +274,7 @@ void CArcherScript::EnterAttackState()
 
 	if (m_bAttack && !m_arrowspawn && m_arrowDelay > 0.4f)
 	{
-		CGameObject* arrow = new CGameObject;
-		arrow->SetName(L"Arrow");
-		arrow->AddComponent(new CTransform);
-		arrow->AddComponent(new CMeshRender);
-		arrow->AddComponent(new CCollider2D);
-		arrow->AddComponent(new CArrowScript);
-		arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
-		arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
-		GamePlayStatic::SpawnGameObject(arrow, 5);
-		m_arrowspawn = true;
+		SpawnArrow();
 	}
 }
 
@@ -304,16 +299,7 @@ void CArcherScript::EnterSkillState()
 		{
 			if (!m_arrowspawn && m_arrowDelay > 0.4f)
 			{
-				CGameObject* arrow = new CGameObject;
-				arrow->SetName(L"Arrow");
-				arrow->AddComponent(new CTransform);
-				arrow->AddComponent(new CMeshRender);
-				arrow->AddComponent(new CCollider2D);
-				arrow->AddComponent(new CArrowScript);
-				arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
-				arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
-				GamePlayStatic::SpawnGameObject(arrow, 5);
-				m_arrowspawn = true;
+				SpawnArrow();
 				m_SkillActive = false;
 				m_InGameStatus.CoolTime_Skill = 0.f;
 			}
@@ -323,6 +309,71 @@ void CArcherScript::EnterSkillState()
 
 void CArcherScript::EnterUltimateState()
 {
+	if (!m_InGameStatus.bUltimate)
+	{
+		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
+		Animator2D()->Play(L"ArcherAttack", false);
+		CGameObject* EnterEffect = new CGameObject;
+		EnterEffect->AddComponent(new CTransform);
+		EnterEffect->AddComponent(new CMeshRender);
+		EnterEffect->AddComponent(new CAnimator2D);
+		EnterEffect->AddComponent(new CEffectScript);
+		Vec3 vPos = Transform()->GetRelativePos();
+		vPos.x += 20.f;
+		vPos.y += 5.f;
+		vPos.z -= 10.f;
+		GETEFFECT(EnterEffect)->SetEffectInfo(vPos, Transform()->GetRelativeScale()
+											, Transform()->GetRelativeRotation(), L"ArcherUltiEnter", 0.3f);
+		GamePlayStatic::SpawnGameObject(EnterEffect, 6);
+		m_InGameStatus.bUltimate = true;
+		m_UltiDelay = 0.f;
+		m_arrowspawn = false;
+		m_arrowDelay = 0.f;
+	}
+	else
+	{
+		if (!m_UltiActive && m_UltiDelay >= 0.3f && m_UltiDelay < 3.f)
+		{
+			CGameObject* PlayEffect = new CGameObject;
+			PlayEffect->AddComponent(new CTransform);
+			PlayEffect->AddComponent(new CMeshRender);
+			PlayEffect->AddComponent(new CAnimator2D);
+			PlayEffect->AddComponent(new CEffectScript);
+			Vec3 vPos = Transform()->GetRelativePos();
+			vPos.x += 20.f;
+			vPos.y += 5.f;
+			vPos.z -= 10.f;
+			GETEFFECT(PlayEffect)->SetEffectInfo(vPos, Transform()->GetRelativeScale()
+												, Transform()->GetRelativeRotation(), L"ArcherUltiPlay", 3.f, true);
+			GamePlayStatic::SpawnGameObject(PlayEffect, 6);
+			m_UltiActive = true;
+		}
+		else if (m_UltiActive && m_UltiDelay >= 3.3f)
+		{
+			CGameObject* ExitEffect = new CGameObject;
+			ExitEffect->AddComponent(new CTransform);
+			ExitEffect->AddComponent(new CMeshRender);
+			ExitEffect->AddComponent(new CAnimator2D);
+			ExitEffect->AddComponent(new CEffectScript);
+			Vec3 vPos = Transform()->GetRelativePos();
+			vPos.x += 20.f;
+			vPos.y += 5.f;
+			vPos.z -= 10.f;
+			GETEFFECT(ExitEffect)->SetEffectInfo(vPos, Transform()->GetRelativeScale()
+												, Transform()->GetRelativeRotation(), L"ArcherUltiExit", 0.4f);
+			GamePlayStatic::SpawnGameObject(ExitEffect, 6);
+			m_UltiActive = false;
+			m_InGameStatus.bUltimateDone = true;
+		}
+
+		if (m_UltiActive && !m_arrowspawn && CHAMP_STATE::DEAD != GETCHAMP(m_Target)->GetChampState())
+			SpawnArrow();
+		else if (m_arrowspawn && m_arrowDelay > 0.1f)
+		{
+			m_arrowspawn = false;
+			m_arrowDelay = 0.f;
+		}
+	}
 }
 
 void CArcherScript::EnterDeadState()
@@ -334,7 +385,7 @@ void CArcherScript::EnterDeadState()
 		effect->AddComponent(new CMeshRender);
 		effect->AddComponent(new CAnimator2D);
 		effect->AddComponent(new CEffectScript);
-		effect->GetScript<CEffectScript>()->SetEffectInfo(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
+		GETEFFECT(effect)->SetEffectInfo(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
 														, Transform()->GetRelativeRotation(), L"ArcherDead", 1.f);
 		GamePlayStatic::SpawnGameObject(effect, 6);
 
@@ -356,4 +407,18 @@ void CArcherScript::BackStepMoving()
 
 	Vec3 vNewPos = Transform()->GetRelativePos() + ( -1 * vDir * DT * 30.f);
 	Transform()->SetRelativePos(vNewPos);
+}
+
+void CArcherScript::SpawnArrow()
+{
+	CGameObject* arrow = new CGameObject;
+	arrow->SetName(L"Arrow");
+	arrow->AddComponent(new CTransform);
+	arrow->AddComponent(new CMeshRender);
+	arrow->AddComponent(new CCollider2D);
+	arrow->AddComponent(new CArrowScript);
+	arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
+	arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
+	GamePlayStatic::SpawnGameObject(arrow, 5);
+	m_arrowspawn = true;
 }

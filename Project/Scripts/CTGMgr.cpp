@@ -24,3 +24,8 @@ CTGMgr::CTGMgr()
 CTGMgr::~CTGMgr()
 {
 }
+
+void CTGMgr::ResetInGameTime()
+{
+	G_Time = 60.f;
+}

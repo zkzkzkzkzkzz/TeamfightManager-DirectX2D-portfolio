@@ -26,6 +26,8 @@ CFighterScript::CFighterScript()
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
 	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
 	AddScriptParam(SCRIPT_PARAM::INT, "Team", &m_Team);
+	AddScriptParam(SCRIPT_PARAM::INT, "State", &m_State);
+	AddScriptParam(SCRIPT_PARAM::INT, "ULTI", &m_InGameStatus.bUltimate);
 
 	m_bAttack = false;
 }
@@ -43,6 +45,8 @@ CFighterScript::CFighterScript(const CFighterScript& _Origin)
 	AddScriptParam(SCRIPT_PARAM::FLOAT, "Move Speed", &m_Info.MOV);
 	AddScriptParam(SCRIPT_PARAM::INT, "Champ Type", &m_Info.Type);
 	AddScriptParam(SCRIPT_PARAM::INT, "Team", &m_Team);
+	AddScriptParam(SCRIPT_PARAM::INT, "State", &m_State);
+	AddScriptParam(SCRIPT_PARAM::INT, "ULTI", &m_InGameStatus.bUltimate);
 
 	m_bAttack = false;
 }
@@ -99,8 +103,9 @@ void CFighterScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 
 	m_InGameStatus.CoolTime_Attack = 0.f;
 	m_InGameStatus.CoolTime_Skill = 0.f;
-	m_InGameStatus.UltimateUseTime = 60.f;
+	m_InGameStatus.UltimateUseTime = 40.f;
 	m_InGameStatus.bUltimate = false;
+	m_InGameStatus.bUltimateDone = false;
 
 	m_InGameStatus.RespawnTime = 0.f;
 
@@ -138,6 +143,7 @@ void CFighterScript::InitStateMachine()
 		StateMachine()->AddBlackboardData(L"AttackRange", BB_DATA::INT, &m_Info.ATKRange);
 		StateMachine()->AddBlackboardData(L"AttackSpeed", BB_DATA::INT, &m_Info.ATKSpeed);
 		StateMachine()->AddBlackboardData(L"Skill_Cooltime", BB_DATA::INT, &m_InGameStatus.CoolTime_Skill);
+		StateMachine()->AddBlackboardData(L"UltimateTime", BB_DATA::FLOAT, &m_InGameStatus.UltimateUseTime);
 
 		vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 

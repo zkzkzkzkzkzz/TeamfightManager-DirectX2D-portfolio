@@ -28,11 +28,18 @@ void CAttackState::finaltick()
 		return;
 	}
 
+	float UltiTime = *((float*)GetBlackboardData(L"UltimateTime"));
 	int AttRange = *((int*)GetBlackboardData(L"AttackRange"));
 	float Speed = *((float*)GetBlackboardData(L"MoveSpeed"));
 	float CoolTime = *((float*)GetBlackboardData(L"Skill_Cooltime"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
+
+	if (!GETCHAMP(pSelf)->DoUltimate() && UltiTime > CTGMgr::G_Time)
+	{
+		ChangeState(L"Ultimate");
+		return;
+	}
 
 	if (nullptr == pTarget)
 	{
@@ -51,14 +58,10 @@ void CAttackState::finaltick()
 		{
 			ChangeState(L"Trace");
 		}
-		else if (vDir.Length() < AttRange - 20.f && CoolTime >= SKILLCOOLTIME)
+		else if (CoolTime >= SKILLCOOLTIME)
 		{
 			ChangeState(L"Skill");
 		}
-		//else if ((GETCHAMP(pSelf)->IsAttack()))
-		//{
-		//	ChangeState(L"Idle");
-		//}
 	}
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 #include <Engine\CScript.h>
 
+#define GETEFFECT(TYPE) TYPE->GetScript<CEffectScript>()
 
 class CEffectScript :
     public CScript

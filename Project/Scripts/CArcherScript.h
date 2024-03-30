@@ -12,6 +12,8 @@ private:
     bool    m_arrowspawn;
     float   m_SkillDelay;
     bool    m_SkillActive;
+    float   m_UltiDelay;
+    bool    m_UltiActive;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
@@ -26,6 +28,7 @@ public:
     virtual void SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type) override;
 
     void BackStepMoving();
+    void SpawnArrow();
 
 public:
     virtual void EnterIdleState() override;
