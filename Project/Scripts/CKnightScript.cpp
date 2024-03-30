@@ -21,6 +21,7 @@ CKnightScript::CKnightScript()
 	, m_SkillActive(false)
 	, m_UltiDelay(0.f)
 	, m_UltiActive(false)
+	, m_DeadDelay(0.f)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -44,6 +45,7 @@ CKnightScript::CKnightScript(const CKnightScript& _Origin)
 	, m_SkillActive(false)
 	, m_UltiDelay(0.f)
 	, m_UltiActive(false)
+	, m_DeadDelay(0.f)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -83,6 +85,7 @@ void CKnightScript::tick()
 	m_DealDelay += DT;
 	m_SkillDelay += DT;
 	m_UltiDelay += DT;
+	m_DeadDelay += DT;
 
 	float delay = 1 / m_Info.ATKSpeed;
 	if (m_InGameStatus.CoolTime_Attack > delay)
@@ -135,14 +138,15 @@ void CKnightScript::InitChampAnim()
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	Collider2D()->SetOffsetPos(Vec2(0.f, 3.f));
-	Collider2D()->SetOffsetScale(Vec2(21.f, 31.f));
+	Collider2D()->SetOffsetPos(Vec2(2.f, -7.f));
+	Collider2D()->SetOffsetScale(Vec2(23.f, 10.f));
 
 	Animator2D()->LoadAnimation(L"animdata\\KnightIdle.txt");
 	Animator2D()->LoadAnimation(L"animdata\\KnightTrace.txt");
 	Animator2D()->LoadAnimation(L"animdata\\KnightAttack.txt");
 	Animator2D()->LoadAnimation(L"animdata\\KnightSkill.txt");
 	Animator2D()->LoadAnimation(L"animdata\\KnightUlti.txt");
+	Animator2D()->LoadAnimation(L"animdata\\CommonDead.txt");
 	Animator2D()->Play(L"KnightIdle");
 }
 
@@ -339,22 +343,22 @@ void CKnightScript::EnterDeadState()
 {
 	if (!m_bRespawn)
 	{
-		CGameObject* effect = new CGameObject;
-		effect->AddComponent(new CTransform);
-		effect->AddComponent(new CMeshRender);
-		effect->AddComponent(new CAnimator2D);
-		effect->AddComponent(new CEffectScript);
-		GETEFFECT(effect)->SetEffectInfo(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
-										, Transform()->GetRelativeRotation(), L"KnightDead", 1.f);
-		GamePlayStatic::SpawnGameObject(effect, 6);
+		Animator2D()->Play(L"CommonDead");
+		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
+			, Transform()->GetRelativeRotation(), L"KnightDead", 1.f);
 
+		m_DeadDelay = 0.f;
 		m_bRespawn = true;
 	}
 	else
 	{
-		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
-		m_InGameStatus.CoolTime_Attack = 0.f;
-		GetOwner()->SetActive(false);
+		if (m_DeadDelay > 1.f)
+		{
+			CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
+			m_InGameStatus.CoolTime_Attack = 0.f;
+			m_InGameStatus.CoolTime_Skill = 0.f;
+			GetOwner()->SetActive(false);
+		}
 	}
 }
 

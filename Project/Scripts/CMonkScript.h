@@ -2,12 +2,12 @@
 #include "CChampScript.h"
 
 
-class CFighterScript :
+class CMonkScript :
     public CChampScript
 {
 private:
-    bool    m_DealActive;
     float   m_DealDelay;
+    bool    m_DealActive;
     float   m_SkillDelay;
     bool    m_SkillActive;
     float   m_UltiDelay;
@@ -40,9 +40,9 @@ public:
 
 
 public:
-    CLONE(CFighterScript);
-    CFighterScript();
-    CFighterScript(const CFighterScript& _Origin);
-    ~CFighterScript();
+    CLONE(CMonkScript);
+    CMonkScript();
+    CMonkScript(const CMonkScript& _Origin);
+    ~CMonkScript();
 };
 

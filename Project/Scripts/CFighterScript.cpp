@@ -21,6 +21,7 @@ CFighterScript::CFighterScript()
 	, m_SkillActive(false)
 	, m_UltiDelay(0.f)
 	, m_UltiActive(false)
+	, m_DeadDelay(0.f)
 
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
@@ -45,6 +46,7 @@ CFighterScript::CFighterScript(const CFighterScript& _Origin)
 	, m_SkillActive(false)
 	, m_UltiDelay(0.f)
 	, m_UltiActive(false)
+	, m_DeadDelay(0.f)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -85,6 +87,7 @@ void CFighterScript::tick()
 	m_DealDelay += DT;
 	m_SkillDelay += DT;
 	m_UltiDelay += DT;
+	m_DeadDelay += DT;
 
 	float delay = 1 / m_Info.ATKSpeed;
 	if (m_InGameStatus.CoolTime_Attack > delay)
@@ -138,14 +141,15 @@ void CFighterScript::InitChampAnim()
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	Collider2D()->SetOffsetPos(Vec2(0.f, 3.f));
-	Collider2D()->SetOffsetScale(Vec2(21.f, 31.f));
+	Collider2D()->SetOffsetPos(Vec2(0.f, -8.f));
+	Collider2D()->SetOffsetScale(Vec2(21.f, 10.f));
 
 	Animator2D()->LoadAnimation(L"animdata\\FighterIdle.txt");
 	Animator2D()->LoadAnimation(L"animdata\\FighterTrace.txt");
 	Animator2D()->LoadAnimation(L"animdata\\FighterAttack.txt");
 	Animator2D()->LoadAnimation(L"animdata\\FighterSkill.txt");
 	Animator2D()->LoadAnimation(L"animdata\\FighterUltimate.txt");
+	Animator2D()->LoadAnimation(L"animdata\\CommonDead.txt");
 	Animator2D()->Play(L"FighterIdle");
 }
 
@@ -344,15 +348,21 @@ void CFighterScript::EnterDeadState()
 {
 	if (!m_bRespawn)
 	{
+		Animator2D()->Play(L"CommonDead");
 		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
-					, Transform()->GetRelativeRotation(), L"FighterDead", 1.f);
+			, Transform()->GetRelativeRotation(), L"FighterDead", 1.4f);
 
+		m_DeadDelay = 0.f;
 		m_bRespawn = true;
 	}
 	else
 	{
-		CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
-		m_InGameStatus.CoolTime_Attack = 0.f;
-		GetOwner()->SetActive(false);
+		if (m_DeadDelay > 1.4f)
+		{
+			CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
+			m_InGameStatus.CoolTime_Attack = 0.f;
+			m_InGameStatus.CoolTime_Skill = 0.f;
+			GetOwner()->SetActive(false);
+		}
 	}
 }

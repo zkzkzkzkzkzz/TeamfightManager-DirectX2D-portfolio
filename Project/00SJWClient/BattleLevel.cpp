@@ -24,6 +24,7 @@
 #include <Scripts\CArcherScript.h>
 #include <Scripts\CFighterScript.h>
 #include <Scripts\CKnightScript.h>
+#include <Scripts\CMonkScript.h>
 
 #include <Scripts\CIdleState.h>
 #include <Scripts\CTraceState.h>
@@ -152,6 +153,17 @@ void BattleLevel::CreateTempLevel()
 	pTempLevel->AddObject(Champ, 3);
 
 	Champ = new CGameObject;
+	Champ->SetName(L"Knight");
+	Champ->AddComponent(new CTransform);
+	Champ->AddComponent(new CMeshRender);
+	Champ->AddComponent(new CCollider2D);
+	Champ->AddComponent(new CAnimator2D);
+	Champ->AddComponent(new CStateMachine);
+	Champ->AddComponent(new CKnightScript);
+	Champ->GetScript<CKnightScript>()->SetTeam(TEAM::BLUE);
+	pTempLevel->AddObject(Champ, 3);
+
+	Champ = new CGameObject;
 	Champ->SetName(L"Fighter");
 	Champ->AddComponent(new CTransform);
 	Champ->AddComponent(new CMeshRender);
@@ -163,14 +175,14 @@ void BattleLevel::CreateTempLevel()
 	pTempLevel->AddObject(Champ, 3);
 
 	Champ = new CGameObject;
-	Champ->SetName(L"Knight");
+	Champ->SetName(L"Monk");
 	Champ->AddComponent(new CTransform);
 	Champ->AddComponent(new CMeshRender);
 	Champ->AddComponent(new CCollider2D);
 	Champ->AddComponent(new CAnimator2D);
 	Champ->AddComponent(new CStateMachine);
-	Champ->AddComponent(new CKnightScript);
-	Champ->GetScript<CKnightScript>()->SetTeam(TEAM::BLUE);
+	Champ->AddComponent(new CMonkScript);
+	Champ->GetScript<CMonkScript>()->SetTeam(TEAM::RED);
 	pTempLevel->AddObject(Champ, 3);
 
 	// 레벨 플레이

@@ -13,6 +13,7 @@ private:
     bool    m_SkillActive;
     float   m_UltiDelay;
     bool    m_UltiActive;
+    float   m_DeadDelay;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}

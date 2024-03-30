@@ -98,6 +98,8 @@ public:
     virtual void SetTarget(CGameObject* _target) { m_Target = _target; }
 
     virtual void SetChampDEF(int _def) { m_InGameStatus.DEF = _def; }
+    virtual void SetChampHP(int _hp) { m_InGameStatus.HP = _hp; }
+    virtual void SetChampATK(int _atk) { m_InGameStatus.HP = _atk; }
 
     virtual int GetInGameChampHP() { return m_InGameStatus.HP; }
     virtual int GetInGameChampATK() { return m_InGameStatus.ATK; }

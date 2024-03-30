@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CArcherScript.h"
+#include "CMonkScript.h"
 
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
@@ -12,14 +12,12 @@
 
 #include "CBTMgr.h"
 #include "CEffectScript.h"
-#include "CIdleState.h"
-#include "CTraceState.h"
-#include "CArrowScript.h"
 
-CArcherScript::CArcherScript()
-	: CChampScript(ARCHERSCRIPT)
-	, m_arrowDelay(0.f)
-	, m_arrowspawn(false)
+
+CMonkScript::CMonkScript()
+	: CChampScript(MONKSCRIPT)
+	, m_DealDelay(0.f)
+	, m_DealActive(false)
 	, m_SkillDelay(0.f)
 	, m_SkillActive(false)
 	, m_UltiDelay(0.f)
@@ -40,17 +38,16 @@ CArcherScript::CArcherScript()
 	m_bAttack = false;
 }
 
-CArcherScript::CArcherScript(const CArcherScript& _Origin)
-	: CChampScript(ARCHERSCRIPT)
-	, m_arrowDelay(0.f)
-	, m_arrowspawn(false)
+CMonkScript::CMonkScript(const CMonkScript& _Origin)
+	: CChampScript(MONKSCRIPT)
+	, m_DealDelay(0.f)
+	, m_DealActive(false)
 	, m_SkillDelay(0.f)
 	, m_SkillActive(false)
 	, m_UltiDelay(0.f)
 	, m_UltiActive(false)
 	, m_DeadDelay(0.f)
 {
-
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
 	AddScriptParam(SCRIPT_PARAM::INT, "DEF", &m_InGameStatus.DEF);
@@ -65,12 +62,12 @@ CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	m_bAttack = false;
 }
 
-CArcherScript::~CArcherScript()
+CMonkScript::~CMonkScript()
 {
 }
 
 
-void CArcherScript::begin()
+void CMonkScript::begin()
 {
 	CChampScript::begin();
 
@@ -79,7 +76,7 @@ void CArcherScript::begin()
 	InitStateMachine();
 }
 
-void CArcherScript::tick()
+void CMonkScript::tick()
 {
 	CChampScript::tick();
 
@@ -87,7 +84,7 @@ void CArcherScript::tick()
 
 	m_InGameStatus.CoolTime_Attack += DT;
 	m_InGameStatus.CoolTime_Skill += DT;
-	m_arrowDelay += DT;
+	m_DealDelay += DT;
 	m_SkillDelay += DT;
 	m_UltiDelay += DT;
 	m_DeadDelay += DT;
@@ -100,9 +97,9 @@ void CArcherScript::tick()
 }
 
 
-void CArcherScript::InitChampInfo()
+void CMonkScript::InitChampInfo()
 {
-	SetChampInfo(100, 42, 5, 0.67f, 120, 3, CHAMP_TYPE::MARKSMAN);	// 기본 정보 설정
+	SetChampInfo(220, 20, 40, 0.71f, 35, 5, CHAMP_TYPE::SUPPORT);	// 기본 정보 설정
 	InitChampStatus(0, 0);	// 인게임 정보 설정
 
 	m_State = CHAMP_STATE::IDLE;
@@ -114,7 +111,7 @@ void CArcherScript::InitChampInfo()
 	}
 }
 
-void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
+void CMonkScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 {
 	m_InGameStatus.HP = m_Info.MaxHP;
 	m_InGameStatus.ATK = m_Info.ATK + _GamerATK;
@@ -122,16 +119,12 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 
 	m_InGameStatus.CoolTime_Attack = 0.f;
 	m_InGameStatus.CoolTime_Skill = 0.f;
-	m_InGameStatus.UltimateUseTime = 10.f;
 	m_InGameStatus.bSkillPlay = false;
+	m_InGameStatus.UltimateUseTime = 30.f;
+	m_InGameStatus.bUltimate = false;
 
-	if (false == m_InGameStatus.bUltimate)
-	{
-		m_InGameStatus.bUltimate = false;
-	}
-	
 	m_InGameStatus.RespawnTime = 0.f;
-	
+
 	m_InGameStatus.TotalDeal = 0;
 	m_InGameStatus.TotalDamage = 0;
 	m_InGameStatus.TotalHeal = 0;
@@ -140,7 +133,7 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 	m_InGameStatus.AssistPoint = 0;
 }
 
-void CArcherScript::InitChampAnim()
+void CMonkScript::InitChampAnim()
 {
 	Transform()->SetRelativeScale(Vec3(64.f, 64.f, 1.f));
 
@@ -148,19 +141,19 @@ void CArcherScript::InitChampAnim()
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	Collider2D()->SetOffsetPos(Vec2(1.f, -8.f));
+	Collider2D()->SetOffsetPos(Vec2(0.f, -8.f));
 	Collider2D()->SetOffsetScale(Vec2(21.f, 10.f));
 
-	Animator2D()->LoadAnimation(L"animdata\\ArcherIdle.txt");
-	Animator2D()->LoadAnimation(L"animdata\\ArcherTrace.txt");
-	Animator2D()->LoadAnimation(L"animdata\\ArcherAttack.txt");
-	Animator2D()->LoadAnimation(L"animdata\\ArcherDead.txt");
-	Animator2D()->LoadAnimation(L"animdata\\ArcherSkill.txt");
+	Animator2D()->LoadAnimation(L"animdata\\MonkIdle.txt");
+	Animator2D()->LoadAnimation(L"animdata\\MonkTrace.txt");
+	Animator2D()->LoadAnimation(L"animdata\\MonkAttack.txt");
+	Animator2D()->LoadAnimation(L"animdata\\MonkSkill.txt");
+	Animator2D()->LoadAnimation(L"animdata\\MonkUlti.txt");
 	Animator2D()->LoadAnimation(L"animdata\\CommonDead.txt");
-	Animator2D()->Play(L"ArcherIdle");
+	Animator2D()->Play(L"MonkIdle");
 }
 
-void CArcherScript::InitStateMachine()
+void CMonkScript::InitStateMachine()
 {
 	if (StateMachine())
 	{
@@ -178,7 +171,7 @@ void CArcherScript::InitStateMachine()
 		CGameObject* pTarget = nullptr;
 		for (size_t i = 0; i < pObjs.size(); ++i)
 		{
-			if ( team != GETCHAMP(pObjs[i])->GetTeamColor() 
+			if (team != GETCHAMP(pObjs[i])->GetTeamColor()
 				&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
 				&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
 			{
@@ -209,7 +202,7 @@ void CArcherScript::InitStateMachine()
 	}
 }
 
-void CArcherScript::CheckStateMachine()
+void CMonkScript::CheckStateMachine()
 {
 	vector<CGameObject*> pObjs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 	if (StateMachine())
@@ -220,7 +213,8 @@ void CArcherScript::CheckStateMachine()
 			CGameObject* pTarget = nullptr;
 			for (size_t i = 0; i < pObjs.size(); ++i)
 			{
-				if ( TEAM::NONE != team
+				if (m_Target->IsActive()
+					&& TEAM::NONE != team
 					&& team != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
@@ -252,7 +246,7 @@ void CArcherScript::CheckStateMachine()
 	}
 }
 
-void CArcherScript::SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type)
+void CMonkScript::SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type)
 {
 	m_Info.MaxHP = _MaxHP;
 	m_Info.ATK = _ATK;
@@ -263,134 +257,121 @@ void CArcherScript::SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed
 	m_Info.Type = _Type;
 }
 
-
-void CArcherScript::EnterIdleState()
+void CMonkScript::EnterIdleState()
 {
-	Animator2D()->Play(L"ArcherIdle");
+	Animator2D()->Play(L"MonkIdle");
 }
 
-void CArcherScript::EnterTraceState()
+void CMonkScript::EnterTraceState()
 {
-	Animator2D()->Play(L"ArcherTrace");
+	Animator2D()->Play(L"MonkTrace");
 }
 
-void CArcherScript::EnterAttackState()
+void CMonkScript::EnterAttackState()
 {
 	if (!m_bAttack)
 	{
-		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
-		Animator2D()->Play(L"ArcherAttack", false);
+		Animator2D()->FindAnim(L"MonkAttack")->Reset();
+		Animator2D()->Play(L"MonkAttack", false);
 		m_bAttack = true;
 		m_InGameStatus.CoolTime_Attack = 0.f;
-		m_arrowDelay = 0.f;
-		m_arrowspawn = false;
+		m_DealActive = true;
+		m_DealDelay = 0.f;
 	}
 
-	if (m_bAttack && !m_arrowspawn && m_arrowDelay > 0.4f)
+	if (m_bAttack && m_DealActive && m_DealDelay > 0.4f)
 	{
-		SpawnArrow();
+		Damaged(GetOwner(), m_Target);
+		m_DealActive = false;
 	}
 }
 
-void CArcherScript::EnterSkillState()
+void CMonkScript::EnterSkillState()
 {
 	if (!m_SkillActive)
 	{
-		Animator2D()->FindAnim(L"ArcherSkill")->Reset();
-		Animator2D()->Play(L"ArcherSkill", false);
-		m_SkillActive = true;
-		m_arrowspawn = false;
-		m_arrowDelay = 0.f;
+		Animator2D()->FindAnim(L"MonkSkill")->Reset();
+		Animator2D()->Play(L"MonkSkill", false);
 		m_SkillDelay = 0.f;
+		m_SkillActive = true;
 		m_InGameStatus.bSkillPlay = true;
-	}
-	else
-	{
-		if (m_SkillDelay < 0.65f)
+
+		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
+					, Transform()->GetRelativeRotation(), L"MonkSkillEffect", 0.9f);
+
+		vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
+		TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
+
+		for (size_t i = 0; i < pTarget.size(); i++)
 		{
-			BackStepMoving();
-		}
-		else
-		{
-			if (!m_arrowspawn && m_arrowDelay > 0.3f)
+			if (team == GETCHAMP(pTarget[i])->GetTeamColor())
 			{
-				SpawnArrow();
-				m_SkillActive = false;
-				m_InGameStatus.CoolTime_Skill = 0.f;
-				m_InGameStatus.bSkillPlay = false;
+				int HP = GETCHAMP(pTarget[i])->GetInGameChampHP() + 25;
+				GETCHAMP(pTarget[i])->SetChampHP(HP);
 			}
 		}
 	}
+	else
+	{
+		if (m_SkillDelay > 0.9f)
+		{
+			m_SkillActive = false;
+			m_InGameStatus.CoolTime_Skill = 0.f;
+			m_InGameStatus.bSkillPlay = false;
+		}
+	}
 }
 
-void CArcherScript::EnterUltimateState()
+void CMonkScript::EnterUltimateState()
 {
 	if (!m_InGameStatus.bUltimate)
 	{
-		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
-		Animator2D()->Play(L"ArcherAttack", false);
-		Vec3 vPos = Transform()->GetRelativePos();
-		vPos.x += 20.f;
-		vPos.y += 5.f;
-		vPos.z -= 10.f;
-		SpawnEffect(vPos, Transform()->GetRelativeScale()
-					, Transform()->GetRelativeRotation(), L"ArcherUltiEnter", 0.3f);
+		Animator2D()->FindAnim(L"MonkUlti")->Reset();
+		Animator2D()->Play(L"MonkUlti", false);
+
+		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
+			, Transform()->GetRelativeRotation(), L"MonkUltiEffect", 1.2f);
 
 		m_InGameStatus.bUltimate = true;
 		m_UltiDelay = 0.f;
-		m_arrowspawn = false;
-		m_arrowDelay = 0.f;
+		m_UltiActive = true;
+
+		vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
+		TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
+
+		for (size_t i = 0; i < pTarget.size(); i++)
+		{
+			if (team == GETCHAMP(pTarget[i])->GetTeamColor())
+			{
+				int HP = GETCHAMP(pTarget[i])->GetInGameChampHP() + 150;
+				GETCHAMP(pTarget[i])->SetChampHP(HP);
+			}
+		}
 	}
 	else
 	{
-		if (!m_UltiActive && m_UltiDelay >= 0.3f && m_UltiDelay < 3.f)
+		if (m_UltiActive && m_UltiDelay > 0.8f)
 		{
-			Vec3 vPos = Transform()->GetRelativePos();
-			vPos.x += 20.f;
-			vPos.y += 5.f;
-			vPos.z -= 10.f;
-			SpawnEffect(vPos, Transform()->GetRelativeScale()
-						, Transform()->GetRelativeRotation(), L"ArcherUltiPlay", 3.f, true);
-
-			m_UltiActive = true;
-		}
-		else if (m_UltiActive && m_UltiDelay >= 3.3f)
-		{
-			Vec3 vPos = Transform()->GetRelativePos();
-			vPos.x += 20.f;
-			vPos.y += 5.f;
-			vPos.z -= 10.f;
-			SpawnEffect(vPos, Transform()->GetRelativeScale()
-						, Transform()->GetRelativeRotation(), L"ArcherUltiExit", 0.4f);
-
 			m_UltiActive = false;
 			m_InGameStatus.bUltimateDone = true;
-		}
-
-		if (m_UltiActive && !m_arrowspawn && CHAMP_STATE::DEAD != GETCHAMP(m_Target)->GetChampState())
-			SpawnArrow();
-		else if (m_arrowspawn && m_arrowDelay > 0.1f)
-		{
-			m_arrowspawn = false;
-			m_arrowDelay = 0.f;
 		}
 	}
 }
 
-void CArcherScript::EnterDeadState()
+void CMonkScript::EnterDeadState()
 {
 	if (!m_bRespawn)
 	{
 		Animator2D()->Play(L"CommonDead");
 		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
-					, Transform()->GetRelativeRotation(), L"ArcherDead", 1.f);
+			, Transform()->GetRelativeRotation(), L"MonkDead", 1.5f);
 
 		m_DeadDelay = 0.f;
 		m_bRespawn = true;
 	}
 	else
 	{
-		if (m_DeadDelay > 1.f)
+		if (m_DeadDelay > 1.5f)
 		{
 			CBTMgr::GetInst()->RegistRespawnPool(GetOwner());
 			m_InGameStatus.CoolTime_Attack = 0.f;
@@ -398,27 +379,4 @@ void CArcherScript::EnterDeadState()
 			GetOwner()->SetActive(false);
 		}
 	}
-}
-
-void CArcherScript::BackStepMoving()
-{
-	Vec3 vDir = m_Target->Transform()->GetRelativePos() - Transform()->GetRelativePos();
-	vDir.Normalize();
-
-	Vec3 vNewPos = Transform()->GetRelativePos() + ( -1 * vDir * DT * 30.f);
-	Transform()->SetRelativePos(vNewPos);
-}
-
-void CArcherScript::SpawnArrow()
-{
-	CGameObject* arrow = new CGameObject;
-	arrow->SetName(L"Arrow");
-	arrow->AddComponent(new CTransform);
-	arrow->AddComponent(new CMeshRender);
-	arrow->AddComponent(new CCollider2D);
-	arrow->AddComponent(new CArrowScript);
-	arrow->GetScript<CArrowScript>()->SetShooter(GetOwner());
-	arrow->GetScript<CArrowScript>()->SetTarget(m_Target);
-	GamePlayStatic::SpawnGameObject(arrow, 5);
-	m_arrowspawn = true;
 }
