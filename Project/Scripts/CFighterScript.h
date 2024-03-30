@@ -9,6 +9,10 @@ private:
     CGameObject* m_Target;
     bool    m_DealActive;
     float   m_DealDelay;
+    float   m_SkillDelay;
+    bool    m_SkillActive;
+    float   m_UltiDelay;
+    bool    m_UltiActive;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}

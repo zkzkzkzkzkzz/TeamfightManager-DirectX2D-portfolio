@@ -123,8 +123,11 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 	m_InGameStatus.CoolTime_Skill = 0.f;
 	m_InGameStatus.UltimateUseTime = 10.f;
 	m_InGameStatus.bSkillPlay = false;
-	m_InGameStatus.bUltimate = false;
-	m_InGameStatus.bUltimateDone = false;
+
+	if (false == m_InGameStatus.bUltimate)
+	{
+		m_InGameStatus.bUltimate = false;
+	}
 	
 	m_InGameStatus.RespawnTime = 0.f;
 	
@@ -144,8 +147,8 @@ void CArcherScript::InitChampAnim()
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	Collider2D()->SetOffsetPos(Vec2(0.05f, 0.05f));
-	Collider2D()->SetOffsetScale(Vec2(0.4f, 0.5f));
+	Collider2D()->SetOffsetPos(Vec2(1.f, 3.f));
+	Collider2D()->SetOffsetScale(Vec2(21.f, 31.f));
 
 	Animator2D()->LoadAnimation(L"animdata\\ArcherIdle.txt");
 	Animator2D()->LoadAnimation(L"animdata\\ArcherTrace.txt");

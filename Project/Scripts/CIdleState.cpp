@@ -39,7 +39,7 @@ void CIdleState::finaltick()
 		else
 			pSelf->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 
-		if (!GETCHAMP(pSelf)->DoUltimate() && UltiTime > CTGMgr::G_Time)
+		if (!(GETCHAMP(pSelf)->DoUltimate()) && !(GETCHAMP(pSelf)->IsUltimateDone()) && UltiTime > CTGMgr::G_Time)
 		{
 			ChangeState(L"Ultimate");
 			return;
@@ -51,8 +51,7 @@ void CIdleState::finaltick()
 		}
 		else if (vDir.Length() <= AttRange && !(GETCHAMP(pSelf)->IsAttack()))
 		{
-
-			if (CoolTime >= SKILLCOOLTIME)
+			if (CoolTime >= SKILLCOOLTIME && vDir.Length() <= AttRange)
 				ChangeState(L"Skill");
 			else
 				ChangeState(L"Attack");

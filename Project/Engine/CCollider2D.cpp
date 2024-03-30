@@ -7,7 +7,7 @@
 CCollider2D::CCollider2D()
 	: CComponent(COMPONENT_TYPE::COLLIDER2D)
 	, m_CollisionCount(0)
-	, m_bAbsolute(false)
+	, m_bAbsolute(true)
 	, m_Type(COLLIDER2D_TYPE::RECT)
 	, m_IsDebug(false)
 {

@@ -54,7 +54,7 @@ struct tChampStatus
     int     DEF;                // 챔피언 현재 체력
     float   CoolTime_Attack;    // 챔피언 공격 쿨타임
     float   CoolTime_Skill;     // 챔피언 스킬 쿨타임
-    bool    bSkillPlay;          // 챔피언 스킬 끝남 여부
+    bool    bSkillPlay;         // 챔피언 스킬 끝남 여부
     float   UltimateUseTime;    // 궁극기 사용 시간
     bool    bUltimate;          // 궁극기 사용 여부
     bool    bUltimateDone;      // 궁극기 끝남 여부

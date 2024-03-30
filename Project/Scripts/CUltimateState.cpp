@@ -33,7 +33,7 @@ void CUltimateState::finaltick()
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
 
-	if ((GETCHAMP(pSelf)->IsUltimateDone()))
+	if (GETCHAMP(pSelf)->IsUltimateDone())
 	{
 		if (nullptr == pTarget)
 		{

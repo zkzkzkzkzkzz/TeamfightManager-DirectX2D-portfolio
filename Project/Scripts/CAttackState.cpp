@@ -35,7 +35,7 @@ void CAttackState::finaltick()
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
 
-	if (!GETCHAMP(pSelf)->DoUltimate() && UltiTime > CTGMgr::G_Time)
+	if (!(GETCHAMP(pSelf)->DoUltimate()) && !(GETCHAMP(pSelf)->IsUltimateDone()) && UltiTime > CTGMgr::G_Time)
 	{
 		ChangeState(L"Ultimate");
 		return;
@@ -58,7 +58,7 @@ void CAttackState::finaltick()
 		{
 			ChangeState(L"Trace");
 		}
-		else if (CoolTime >= SKILLCOOLTIME)
+		else if (CoolTime >= SKILLCOOLTIME && vDir.Length() <= AttRange)
 		{
 			ChangeState(L"Skill");
 		}

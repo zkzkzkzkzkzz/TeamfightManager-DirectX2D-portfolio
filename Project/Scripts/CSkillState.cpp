@@ -36,7 +36,7 @@ void CSkillState::finaltick()
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
 	bool bSkill = GETCHAMP(pSelf)->IsSkillPlay();
 
-	if (!GETCHAMP(pSelf)->DoUltimate() && UltiTime > CTGMgr::G_Time)
+	if (!(GETCHAMP(pSelf)->DoUltimate()) && !(GETCHAMP(pSelf)->IsUltimateDone()) && UltiTime > CTGMgr::G_Time)
 	{
 		ChangeState(L"Ultimate");
 		return;
@@ -55,7 +55,7 @@ void CSkillState::finaltick()
 		else
 			pSelf->Transform()->SetRelativeRotation(Vec3(0.f, XM_PI, 0.f));
 
-		if (vDir.Length() > AttRange)
+		if (vDir.Length() > AttRange && !bSkill)
 		{
 			ChangeState(L"Trace");
 		}

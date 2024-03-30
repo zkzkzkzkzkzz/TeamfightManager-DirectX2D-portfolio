@@ -16,7 +16,13 @@
 CFighterScript::CFighterScript()
 	: CChampScript(FIGHTERSCRIPT)
 	, m_Target(nullptr)
+	, m_DealDelay(0.f)
 	, m_DealActive(false)
+	, m_SkillDelay(0.f)
+	, m_SkillActive(false)
+	, m_UltiDelay(0.f)
+	, m_UltiActive(false)
+
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -35,7 +41,12 @@ CFighterScript::CFighterScript()
 CFighterScript::CFighterScript(const CFighterScript& _Origin)
 	: CChampScript(FIGHTERSCRIPT)
 	, m_Target(nullptr)
+	, m_DealDelay(0.f)
 	, m_DealActive(false)
+	, m_SkillDelay(0.f)
+	, m_SkillActive(false)
+	, m_UltiDelay(0.f)
+	, m_UltiActive(false)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -72,7 +83,11 @@ void CFighterScript::tick()
 	CheckStateMachine();
 
 	m_InGameStatus.CoolTime_Attack += DT;
+	m_InGameStatus.CoolTime_Skill += DT;
 	m_DealDelay += DT;
+	m_SkillDelay += DT;
+	m_UltiDelay += DT;
+
 	float delay = 1 / m_Info.ATKSpeed;
 	if (m_InGameStatus.CoolTime_Attack > delay)
 	{
@@ -103,9 +118,9 @@ void CFighterScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 
 	m_InGameStatus.CoolTime_Attack = 0.f;
 	m_InGameStatus.CoolTime_Skill = 0.f;
+	m_InGameStatus.bSkillPlay = false;
 	m_InGameStatus.UltimateUseTime = 40.f;
 	m_InGameStatus.bUltimate = false;
-	m_InGameStatus.bUltimateDone = false;
 
 	m_InGameStatus.RespawnTime = 0.f;
 
@@ -119,16 +134,20 @@ void CFighterScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 
 void CFighterScript::InitChampAnim()
 {
+	Transform()->SetRelativeScale(Vec3(128.f, 128.f, 1.f));
+
 	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	Collider2D()->SetOffsetPos(Vec2(0.05f, 0.05f));
-	Collider2D()->SetOffsetScale(Vec2(0.4f, 0.5f));
+	Collider2D()->SetOffsetPos(Vec2(0.f, 3.f));
+	Collider2D()->SetOffsetScale(Vec2(21.f, 31.f));
 
 	Animator2D()->LoadAnimation(L"animdata\\FighterIdle.txt");
 	Animator2D()->LoadAnimation(L"animdata\\FighterTrace.txt");
 	Animator2D()->LoadAnimation(L"animdata\\FighterAttack.txt");
+	Animator2D()->LoadAnimation(L"animdata\\FighterSkill.txt");
+	Animator2D()->LoadAnimation(L"animdata\\FighterUltimate.txt");
 	Animator2D()->LoadAnimation(L"animdata\\FighterDead.txt");
 	Animator2D()->Play(L"FighterIdle");
 }
@@ -231,6 +250,7 @@ void CFighterScript::SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpee
 	m_Info.Type = _Type;
 }
 
+
 void CFighterScript::EnterIdleState()
 {
 	Animator2D()->Play(L"FighterIdle");
@@ -262,11 +282,63 @@ void CFighterScript::EnterAttackState()
 
 void CFighterScript::EnterSkillState()
 {
-
+	if (!m_SkillActive)
+	{
+		Animator2D()->FindAnim(L"FighterSkill")->Reset();
+		Animator2D()->Play(L"FighterSkill", false);
+		m_SkillDelay = 0.f;
+		m_SkillActive = true;
+		m_InGameStatus.bSkillPlay = true;
+	}
+	else
+	{
+		if (m_SkillDelay > 0.6f)
+		{
+			m_SkillActive = false;
+			m_InGameStatus.CoolTime_Skill = 0.f;
+			m_InGameStatus.bSkillPlay = false;
+			Damaged(GetOwner(), m_Target, 10);
+		}
+	}
 }
 
 void CFighterScript::EnterUltimateState()
 {
+	if (!m_InGameStatus.bUltimate)
+	{
+		Animator2D()->FindAnim(L"FighterUltimate")->Reset();
+		Animator2D()->Play(L"FighterUltimate", false);
+		CGameObject* Effect = new CGameObject;
+		Effect->AddComponent(new CTransform);
+		Effect->AddComponent(new CMeshRender);
+		Effect->AddComponent(new CAnimator2D);
+		Effect->AddComponent(new CEffectScript);
+		GETEFFECT(Effect)->SetEffectInfo(Transform()->GetRelativePos(), Vec3(370.f, 370.f, 1.f)
+										, Transform()->GetRelativeRotation(), L"FighterUltiEffect", 1.1f);
+		GamePlayStatic::SpawnGameObject(Effect, 6);
+		m_InGameStatus.bUltimate = true;
+		m_UltiDelay = 0.f;
+		m_UltiActive = true;
+	}
+	else
+	{
+		if (m_UltiActive && m_UltiDelay > 1.1f)
+		{
+			vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
+			TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
+
+			for (size_t i = 0; i < pTarget.size(); i++)
+			{
+				if (team != GETCHAMP(pTarget[i])->GetTeamColor())
+				{
+					Damaged(GetOwner(), m_Target, 100);
+				}
+			}
+
+			m_UltiActive = false;
+			m_InGameStatus.bUltimateDone = true;
+		}
+	}
 }
 
 void CFighterScript::EnterDeadState()
