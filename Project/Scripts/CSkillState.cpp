@@ -34,6 +34,7 @@ void CSkillState::finaltick()
 	float CoolTime = *((float*)GetBlackboardData(L"Skill_Cooltime"));
 	CGameObject* pTarget = ((CGameObject*)GetBlackboardData(L"Target"));
 	CGameObject* pSelf = GetFSM()->GetStateMachine()->GetOwner();
+	bool bSkill = GETCHAMP(pSelf)->IsSkillPlay();
 
 	if (!GETCHAMP(pSelf)->DoUltimate() && UltiTime > CTGMgr::G_Time)
 	{
@@ -58,7 +59,7 @@ void CSkillState::finaltick()
 		{
 			ChangeState(L"Trace");
 		}
-		else if (vDir.Length() <= AttRange)
+		else if (vDir.Length() <= AttRange && !bSkill)
 		{
 			ChangeState(L"Attack");
 		}

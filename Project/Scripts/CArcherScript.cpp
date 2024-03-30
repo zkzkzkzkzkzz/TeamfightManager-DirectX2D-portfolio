@@ -121,7 +121,8 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 
 	m_InGameStatus.CoolTime_Attack = 0.f;
 	m_InGameStatus.CoolTime_Skill = 0.f;
-	m_InGameStatus.UltimateUseTime = 50.f;
+	m_InGameStatus.UltimateUseTime = 10.f;
+	m_InGameStatus.bSkillPlay = false;
 	m_InGameStatus.bUltimate = false;
 	m_InGameStatus.bUltimateDone = false;
 	
@@ -137,6 +138,8 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 
 void CArcherScript::InitChampAnim()
 {
+	Transform()->SetRelativeScale(Vec3(64.f, 64.f, 1.f));
+
 	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ChampMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
@@ -288,20 +291,22 @@ void CArcherScript::EnterSkillState()
 		m_arrowspawn = false;
 		m_arrowDelay = 0.f;
 		m_SkillDelay = 0.f;
+		m_InGameStatus.bSkillPlay = true;
 	}
 	else
 	{
-		if (m_SkillDelay < 1.f)
+		if (m_SkillDelay < 0.65f)
 		{
 			BackStepMoving();
 		}
-		else if (m_SkillDelay > 1.4f)
+		else
 		{
-			if (!m_arrowspawn && m_arrowDelay > 0.4f)
+			if (!m_arrowspawn && m_arrowDelay > 0.3f)
 			{
 				SpawnArrow();
 				m_SkillActive = false;
 				m_InGameStatus.CoolTime_Skill = 0.f;
+				m_InGameStatus.bSkillPlay = false;
 			}
 		}
 	}

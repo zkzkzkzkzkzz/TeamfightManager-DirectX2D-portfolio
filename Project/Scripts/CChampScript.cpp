@@ -56,8 +56,6 @@ void CChampScript::begin()
 	vSpawnPos.y += (float)(rand() % 200);
 
 	Transform()->SetRelativePos(vSpawnPos);
-
-	Transform()->SetRelativeScale(Vec3(64.f, 64.f, 1.f));
 }
 
 void CChampScript::tick()
@@ -94,9 +92,9 @@ void CChampScript::render()
 }
 
 
-void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target)
+void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target, int _ExtraDmg)
 {
-	int ATK = GETCHAMP(Attacker)->GetInGameChampATK();
+	int ATK = GETCHAMP(Attacker)->GetInGameChampATK() + _ExtraDmg;
 	int HP = GETCHAMP(Target)->GetInGameChampHP();
 	int DEF = GETCHAMP(Target)->GetInGameChampDEF();
 

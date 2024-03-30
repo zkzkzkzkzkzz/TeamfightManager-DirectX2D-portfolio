@@ -54,6 +54,7 @@ struct tChampStatus
     int     DEF;                // 챔피언 현재 체력
     float   CoolTime_Attack;    // 챔피언 공격 쿨타임
     float   CoolTime_Skill;     // 챔피언 스킬 쿨타임
+    bool    bSkillPlay;          // 챔피언 스킬 끝남 여부
     float   UltimateUseTime;    // 궁극기 사용 시간
     bool    bUltimate;          // 궁극기 사용 여부
     bool    bUltimateDone;      // 궁극기 끝남 여부
@@ -101,9 +102,10 @@ public:
 
     virtual bool IsAttack() { return m_bAttack; }
     virtual bool DoUltimate() { return m_InGameStatus.bUltimate; }
+    virtual bool IsSkillPlay() { return m_InGameStatus.bSkillPlay; }
     virtual bool IsUltimateDone() { return m_InGameStatus.bUltimateDone; }
 
-    virtual void Damaged(CGameObject* Attacker, CGameObject* Target);
+    virtual void Damaged(CGameObject* Attacker, CGameObject* Target, int _ExtraDmg = 0);
 
 public:
     virtual void InitChampInfo() {}     // 챔프 정보 설정
