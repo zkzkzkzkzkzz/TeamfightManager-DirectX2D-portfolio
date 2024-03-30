@@ -45,7 +45,7 @@ void CEffectScript::begin()
 	{
 		wstring RelativePath = L"animdata\\" + m_EffectName + L".txt";
 		Animator2D()->LoadAnimation(RelativePath);
-		Animator2D()->Play(m_EffectName, false);
+		Animator2D()->Play(m_EffectName, m_Repeat);
 	}
 }
 
@@ -60,11 +60,12 @@ void CEffectScript::tick()
 }
 
 
-void CEffectScript::SetEffectInfo(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _Name, float _time)
+void CEffectScript::SetEffectInfo(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _Name, float _time, bool _Repeat)
 {
 	m_Pos = _Pos;
 	m_Scale = _Scale;
 	m_Rotation = _Rotation;
 	m_EffectName = _Name;
 	m_AccTime = _time;
+	m_Repeat = _Repeat;
 }

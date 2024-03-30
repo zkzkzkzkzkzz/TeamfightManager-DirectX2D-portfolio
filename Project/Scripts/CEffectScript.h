@@ -14,12 +14,13 @@ private:
 
     float   m_AccTime;  // 이펙트 재생 시간
     float   m_Duration; // 이펙트 현재 재생 시간
+    bool    m_Repeat;   // 이펙트 반복 여부
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
 
 public:
-    void SetEffectInfo(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _Name, float _time);
+    void SetEffectInfo(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _Name, float _time, bool m_Repeat = false);
 
     void SetEffectPos(Vec3 _Pos) { m_Pos = _Pos; }
     void SetEffectScale(Vec3 _Scale) { m_Scale = _Scale; }
