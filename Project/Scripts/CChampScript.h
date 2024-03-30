@@ -1,6 +1,8 @@
 #pragma once
 #include <Engine\CScript.h>
 
+#include "CEffectScript.h"
+
 #define SKILLCOOLTIME 3.f
 #define RESPAWNTIME 3.f
 #define GETCHAMP(TYPE) TYPE->GetScript<CChampScript>()
@@ -73,6 +75,7 @@ class CChampScript :
     public CScript
 {
 protected:
+    CGameObject*    m_Target;
     tChampInfo      m_Info;
     tChampStatus    m_InGameStatus;
     CHAMP_STATE     m_State;
@@ -92,6 +95,10 @@ public:
     virtual void SetChampState(CHAMP_STATE _State) { m_State = _State; }
     virtual CHAMP_STATE GetChampState() { return m_State; }
 
+    virtual void SetTarget(CGameObject* _target) { m_Target = _target; }
+
+    virtual void SetChampDEF(int _def) { m_InGameStatus.DEF = _def; }
+
     virtual int GetInGameChampHP() { return m_InGameStatus.HP; }
     virtual int GetInGameChampATK() { return m_InGameStatus.ATK; }
     virtual int GetInGameChampDEF() { return m_InGameStatus.DEF; }
@@ -107,6 +114,8 @@ public:
 
     virtual void Damaged(CGameObject* Attacker, CGameObject* Target, int _ExtraDmg = 0);
 
+    virtual void SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat = false);
+
 public:
     virtual void InitChampInfo() {}     // 챔프 정보 설정
     virtual void InitChampStatus(int _GamerATK, int _GamerDEF) {}    // 챔프 인게임 정보 설정
@@ -117,7 +126,7 @@ public:
     virtual void SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type) {};
     
     void RespawnInfo();
-
+    
 public:
     virtual void EnterIdleState() {}
     virtual void EnterTraceState() {}

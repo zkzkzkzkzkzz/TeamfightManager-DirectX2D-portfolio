@@ -82,6 +82,8 @@ void CChampScript::tick()
 		break;
 	case CHAMP_STATE::END:
 		break;
+	default:
+		break;
 	}
 
 	CBTMgr::tick();
@@ -112,6 +114,7 @@ void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target, int _Extr
 	}
 }
 
+
 void CChampScript::RespawnInfo()
 {
 	m_InGameStatus.HP = m_Info.MaxHP;       // 현재 체력
@@ -119,4 +122,16 @@ void CChampScript::RespawnInfo()
 	m_InGameStatus.CoolTime_Skill = 0.f;	// 스킬 쿨타임
 
 	m_InGameStatus.RespawnTime = 0.f;
+}
+
+
+void CChampScript::SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat)
+{
+	CGameObject* effect = new CGameObject;
+	effect->AddComponent(new CTransform);
+	effect->AddComponent(new CMeshRender);
+	effect->AddComponent(new CAnimator2D);
+	effect->AddComponent(new CEffectScript);
+	GETEFFECT(effect)->SetEffectInfo(_Pos, _Scale, _Rotation, _anim, _time, _repeat);
+	GamePlayStatic::SpawnGameObject(effect, 6);
 }

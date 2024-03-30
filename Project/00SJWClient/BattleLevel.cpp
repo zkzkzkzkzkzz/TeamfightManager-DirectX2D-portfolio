@@ -23,6 +23,7 @@
 #include <Scripts\CChampScript.h>
 #include <Scripts\CArcherScript.h>
 #include <Scripts\CFighterScript.h>
+#include <Scripts\CKnightScript.h>
 
 #include <Scripts\CIdleState.h>
 #include <Scripts\CTraceState.h>
@@ -58,17 +59,6 @@ void BattleLevel::CreateTempLevel()
 	pFSM->AddState(L"Dead", new CDeadState);
 
 	CAssetMgr::GetInst()->AddAsset<CFSM>(L"ChampFSM", pFSM.Get());
-
-	pFSM = new CFSM(false);
-
-	pFSM->AddState(L"Idle", new CIdleState);
-	pFSM->AddState(L"Trace", new CTraceState);
-	pFSM->AddState(L"Attack", new CAttackState);
-	pFSM->AddState(L"Skill", new CSkillState);
-	pFSM->AddState(L"Ultimate", new CUltimateState);
-	pFSM->AddState(L"Dead", new CDeadState);
-
-	CAssetMgr::GetInst()->AddAsset<CFSM>(L"FighterFSM", pFSM.Get());
 
 	// Main Camera 생성
 	CGameObject* pCamObj = new CGameObject;
@@ -170,6 +160,17 @@ void BattleLevel::CreateTempLevel()
 	Champ->AddComponent(new CStateMachine);
 	Champ->AddComponent(new CFighterScript);
 	Champ->GetScript<CFighterScript>()->SetTeam(TEAM::RED);
+	pTempLevel->AddObject(Champ, 3);
+
+	Champ = new CGameObject;
+	Champ->SetName(L"Knight");
+	Champ->AddComponent(new CTransform);
+	Champ->AddComponent(new CMeshRender);
+	Champ->AddComponent(new CCollider2D);
+	Champ->AddComponent(new CAnimator2D);
+	Champ->AddComponent(new CStateMachine);
+	Champ->AddComponent(new CKnightScript);
+	Champ->GetScript<CKnightScript>()->SetTeam(TEAM::BLUE);
 	pTempLevel->AddObject(Champ, 3);
 
 	// 레벨 플레이

@@ -18,7 +18,6 @@
 
 CArcherScript::CArcherScript()
 	: CChampScript(ARCHERSCRIPT)
-	, m_Target(nullptr)
 	, m_arrowDelay(0.f)
 	, m_arrowspawn(false)
 	, m_SkillDelay(0.f)
@@ -42,7 +41,6 @@ CArcherScript::CArcherScript()
 
 CArcherScript::CArcherScript(const CArcherScript& _Origin)
 	: CChampScript(ARCHERSCRIPT)
-	, m_Target(nullptr)
 	, m_arrowDelay(0.f)
 	, m_arrowspawn(false)
 	, m_SkillDelay(0.f)
@@ -237,7 +235,13 @@ void CArcherScript::CheckStateMachine()
 						m_Target = pTarget = pObjs[i];
 					}
 				}
+
+				if (L"Knight" == pObjs[i]->GetName() && CHAMP_STATE::SKILL == GETCHAMP(pObjs[i])->GetChampState())
+				{
+					m_Target = pTarget = pObjs[i];
+				}
 			}
+
 
 			StateMachine()->SetBlackboardData(L"Target", BB_DATA::OBJECT, pTarget);
 		}
@@ -321,18 +325,13 @@ void CArcherScript::EnterUltimateState()
 	{
 		Animator2D()->FindAnim(L"ArcherAttack")->Reset();
 		Animator2D()->Play(L"ArcherAttack", false);
-		CGameObject* EnterEffect = new CGameObject;
-		EnterEffect->AddComponent(new CTransform);
-		EnterEffect->AddComponent(new CMeshRender);
-		EnterEffect->AddComponent(new CAnimator2D);
-		EnterEffect->AddComponent(new CEffectScript);
 		Vec3 vPos = Transform()->GetRelativePos();
 		vPos.x += 20.f;
 		vPos.y += 5.f;
 		vPos.z -= 10.f;
-		GETEFFECT(EnterEffect)->SetEffectInfo(vPos, Transform()->GetRelativeScale()
-											, Transform()->GetRelativeRotation(), L"ArcherUltiEnter", 0.3f);
-		GamePlayStatic::SpawnGameObject(EnterEffect, 6);
+		SpawnEffect(vPos, Transform()->GetRelativeScale()
+					, Transform()->GetRelativeRotation(), L"ArcherUltiEnter", 0.3f);
+
 		m_InGameStatus.bUltimate = true;
 		m_UltiDelay = 0.f;
 		m_arrowspawn = false;
@@ -342,34 +341,24 @@ void CArcherScript::EnterUltimateState()
 	{
 		if (!m_UltiActive && m_UltiDelay >= 0.3f && m_UltiDelay < 3.f)
 		{
-			CGameObject* PlayEffect = new CGameObject;
-			PlayEffect->AddComponent(new CTransform);
-			PlayEffect->AddComponent(new CMeshRender);
-			PlayEffect->AddComponent(new CAnimator2D);
-			PlayEffect->AddComponent(new CEffectScript);
 			Vec3 vPos = Transform()->GetRelativePos();
 			vPos.x += 20.f;
 			vPos.y += 5.f;
 			vPos.z -= 10.f;
-			GETEFFECT(PlayEffect)->SetEffectInfo(vPos, Transform()->GetRelativeScale()
-												, Transform()->GetRelativeRotation(), L"ArcherUltiPlay", 3.f, true);
-			GamePlayStatic::SpawnGameObject(PlayEffect, 6);
+			SpawnEffect(vPos, Transform()->GetRelativeScale()
+						, Transform()->GetRelativeRotation(), L"ArcherUltiPlay", 3.f, true);
+
 			m_UltiActive = true;
 		}
 		else if (m_UltiActive && m_UltiDelay >= 3.3f)
 		{
-			CGameObject* ExitEffect = new CGameObject;
-			ExitEffect->AddComponent(new CTransform);
-			ExitEffect->AddComponent(new CMeshRender);
-			ExitEffect->AddComponent(new CAnimator2D);
-			ExitEffect->AddComponent(new CEffectScript);
 			Vec3 vPos = Transform()->GetRelativePos();
 			vPos.x += 20.f;
 			vPos.y += 5.f;
 			vPos.z -= 10.f;
-			GETEFFECT(ExitEffect)->SetEffectInfo(vPos, Transform()->GetRelativeScale()
-												, Transform()->GetRelativeRotation(), L"ArcherUltiExit", 0.4f);
-			GamePlayStatic::SpawnGameObject(ExitEffect, 6);
+			SpawnEffect(vPos, Transform()->GetRelativeScale()
+						, Transform()->GetRelativeRotation(), L"ArcherUltiExit", 0.4f);
+
 			m_UltiActive = false;
 			m_InGameStatus.bUltimateDone = true;
 		}
@@ -388,14 +377,8 @@ void CArcherScript::EnterDeadState()
 {
 	if (!m_bRespawn)
 	{
-		CGameObject* effect = new CGameObject;
-		effect->AddComponent(new CTransform);
-		effect->AddComponent(new CMeshRender);
-		effect->AddComponent(new CAnimator2D);
-		effect->AddComponent(new CEffectScript);
-		GETEFFECT(effect)->SetEffectInfo(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
-														, Transform()->GetRelativeRotation(), L"ArcherDead", 1.f);
-		GamePlayStatic::SpawnGameObject(effect, 6);
+		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
+					, Transform()->GetRelativeRotation(), L"ArcherDead", 1.f);
 
 		m_bRespawn = true;
 	}

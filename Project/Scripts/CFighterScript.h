@@ -6,7 +6,6 @@ class CFighterScript :
     public CChampScript
 {
 private:
-    CGameObject* m_Target;
     bool    m_DealActive;
     float   m_DealDelay;
     float   m_SkillDelay;

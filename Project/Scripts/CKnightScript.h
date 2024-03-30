@@ -1,14 +1,12 @@
 #pragma once
 #include "CChampScript.h"
 
-class CGameObject;
-
-class CArcherScript :
+class CKnightScript :
     public CChampScript
 {
 private:
-    float   m_arrowDelay;
-    bool    m_arrowspawn;
+    bool    m_DealActive;
+    float   m_DealDelay;
     float   m_SkillDelay;
     bool    m_SkillActive;
     float   m_UltiDelay;
@@ -26,9 +24,6 @@ public:
 
     virtual void SetChampInfo(int _MaxHP, int _ATK, int _DEF, float _ATKSpeed, int _ATKRange, int _MoveSpeed, CHAMP_TYPE _Type) override;
 
-    void BackStepMoving();
-    void SpawnArrow();
-
 public:
     virtual void EnterIdleState() override;
     virtual void EnterTraceState() override;
@@ -43,11 +38,9 @@ public:
 
 
 public:
-    CLONE(CArcherScript);
-    CArcherScript();
-    CArcherScript(const CArcherScript& _Origin);
-    ~CArcherScript();
-
-    friend class CArrowScript;
+    CLONE(CKnightScript);
+    CKnightScript();
+    CKnightScript(const CKnightScript& _Origin);
+    ~CKnightScript();
 };
 
