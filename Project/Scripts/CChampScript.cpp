@@ -54,6 +54,7 @@ void CChampScript::begin()
 
 	vSpawnPos.x += (float)(rand() % 50);
 	vSpawnPos.y += (float)(rand() % 200);
+	vSpawnPos.z += vSpawnPos.y;
 
 	Transform()->SetRelativePos(vSpawnPos);
 }
@@ -85,6 +86,12 @@ void CChampScript::tick()
 	default:
 		break;
 	}
+
+	Vec3 vPos = Transform()->GetRelativePos();
+
+	vPos.z = 300.f + vPos.y;
+
+	Transform()->SetRelativePos(vPos);
 
 	CBTMgr::tick();
 }

@@ -329,7 +329,7 @@ void CMonkScript::EnterUltimateState()
 		Animator2D()->FindAnim(L"MonkUlti")->Reset();
 		Animator2D()->Play(L"MonkUlti", false);
 
-		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
+		SpawnEffect(Transform()->GetRelativePos(), Vec3(388.f, 379.f, 1.f)
 			, Transform()->GetRelativeRotation(), L"MonkUltiEffect", 1.2f);
 
 		m_InGameStatus.bUltimate = true;
@@ -350,7 +350,7 @@ void CMonkScript::EnterUltimateState()
 	}
 	else
 	{
-		if (m_UltiActive && m_UltiDelay > 0.8f)
+		if (m_UltiActive && m_UltiDelay > 1.2f)
 		{
 			m_UltiActive = false;
 			m_InGameStatus.bUltimateDone = true;
