@@ -307,6 +307,11 @@ void CMonkScript::EnterSkillState()
 			if (team == GETCHAMP(pTarget[i])->GetTeamColor())
 			{
 				int HP = GETCHAMP(pTarget[i])->GetInGameChampHP() + 25;
+				if (GETCHAMP(pTarget[i])->GetChampMaxHP() <= HP)
+				{
+					HP = GETCHAMP(pTarget[i])->GetChampMaxHP();
+				}
+				
 				GETCHAMP(pTarget[i])->SetChampHP(HP);
 			}
 		}
@@ -346,6 +351,9 @@ void CMonkScript::EnterUltimateState()
 				int HP = GETCHAMP(pTarget[i])->GetInGameChampHP() + 150;
 				GETCHAMP(pTarget[i])->SetChampHP(HP);
 			}
+
+			int Speed = GETCHAMP(pTarget[i])->GetChampMoveSpeed() + 0.3f;
+			GETCHAMP(pTarget[i])->SetChampMoveSpeed(Speed);
 		}
 	}
 	else

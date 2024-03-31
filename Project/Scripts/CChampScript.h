@@ -100,7 +100,9 @@ public:
     virtual void SetChampDEF(int _def) { m_InGameStatus.DEF = _def; }
     virtual void SetChampHP(int _hp) { m_InGameStatus.HP = _hp; }
     virtual void SetChampATK(int _atk) { m_InGameStatus.HP = _atk; }
+    virtual void SetChampMoveSpeed(float _speed) { m_Info.MOV = _speed; }
 
+    virtual int GetChampMaxHP() { return m_Info.MaxHP; }
     virtual int GetInGameChampHP() { return m_InGameStatus.HP; }
     virtual int GetInGameChampATK() { return m_InGameStatus.ATK; }
     virtual int GetInGameChampDEF() { return m_InGameStatus.DEF; }

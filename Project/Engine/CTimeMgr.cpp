@@ -65,7 +65,7 @@ void CTimeMgr::tick()
 
 void CTimeMgr::render()
 {
-	m_font = L"Galmuri14";
+	//m_font = L"Galmuri14";
 	 //폰트 출력
-	CFontMgr::GetInst()->DrawFont(m_szText, m_font, 10.f, 30.f, 16, FONT_RGBA(255, 30, 30, 255));
+	//CFontMgr::GetInst()->DrawFont(m_szText, m_font, 10.f, 30.f, 16, FONT_RGBA(255, 30, 30, 255));
 }
