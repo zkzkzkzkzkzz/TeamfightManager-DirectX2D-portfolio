@@ -13,6 +13,7 @@ CChampScript::CChampScript()
 	, m_Team(TEAM::NONE)
 	, m_bAttack(false)
 	, m_bRespawn(false)
+	, m_Target(nullptr)
 {
 }
 
@@ -24,6 +25,7 @@ CChampScript::CChampScript(UINT _ScriptType)
 	, m_Team(TEAM::NONE)
 	, m_bAttack(false)
 	, m_bRespawn(false)
+	, m_Target(nullptr)
 {
 }
 
@@ -35,6 +37,7 @@ CChampScript::CChampScript(const CChampScript& _Origin)
 	, m_Team(TEAM::NONE)
 	, m_bAttack(false)
 	, m_bRespawn(false)
+	, m_Target(nullptr)
 {
 }
 
@@ -144,4 +147,38 @@ void CChampScript::SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wst
 
 	GETEFFECT(effect)->SetEffectInfo(_Pos, _Scale, _Rotation, _anim, _time, _repeat);
 	GamePlayStatic::SpawnGameObject(effect, 6);
+}
+
+void CChampScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+{
+}
+
+void CChampScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)
+{
+	Vec3 vPos = _Collider->GetOwner()->Transform()->GetRelativePos();
+	Vec2 vColSize = _Collider->GetOffsetScale();
+
+	Vec3 vOtherPos = _OtherObj->Transform()->GetRelativePos();
+	Vec2 vOhterColSize = _OtherCollider->GetOffsetScale();
+	
+	if (3 == _OtherObj->GetLayerIdx() && 3 == _Collider->GetOwner()->GetLayerIdx())
+	{
+		if (vPos.x < vOtherPos.x)
+			vOtherPos.x += DT * 10.f;
+		else if (vPos.x >= vOtherPos.x)
+			vOtherPos.x -= DT * 10.f;
+
+		if (vPos.y < vOtherPos.y)
+			vOtherPos.y += DT * 10.f;
+		else if (vPos.y >= vOtherPos.y)
+			vOtherPos.y -= DT * 10.f;
+	}	
+	
+	_OtherObj->Transform()->SetRelativePos(vOtherPos);
+}
+
+
+void CChampScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) 
+{
+
 }

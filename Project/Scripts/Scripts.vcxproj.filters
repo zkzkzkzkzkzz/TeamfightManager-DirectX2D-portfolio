@@ -91,6 +91,27 @@
     <Filter Include="03. State\02.Trace">
       <UniqueIdentifier>{9b8dc78f-77cb-4ef5-a599-6c69df1e13ed}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. State\04.Skill">
+      <UniqueIdentifier>{4f6aceb5-606f-46d6-a45f-4ffc4a56bb59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\05.Ultimate">
+      <UniqueIdentifier>{092b5b22-b294-4ce0-b01a-b3172ce55c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. State\06.Dead">
+      <UniqueIdentifier>{9dc6e769-79bd-49e7-b3b1-bed035464a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\ChampScript\Archer\Arrow">
+      <UniqueIdentifier>{84126677-88a8-464d-8120-3a5aeb211ce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameManager\BTMgrScript">
+      <UniqueIdentifier>{ddf5eb84-e74c-41e1-b4fe-e995e976399b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\EffectScript">
+      <UniqueIdentifier>{d4e87bc9-e3f0-412b-a156-a3b447437380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\ChampScript\Ninja\NinjaClone">
+      <UniqueIdentifier>{f1cda386-c6f0-481e-ac85-128c81986192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -162,6 +183,42 @@
     <ClInclude Include="CTraceState.h">
       <Filter>03. State\02.Trace</Filter>
     </ClInclude>
+    <ClInclude Include="CAttackState.h">
+      <Filter>03. State\03.Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="CDeadState.h">
+      <Filter>03. State\06.Dead</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkillState.h">
+      <Filter>03. State\04.Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="CUltimateState.h">
+      <Filter>03. State\05.Ultimate</Filter>
+    </ClInclude>
+    <ClInclude Include="CArrowScript.h">
+      <Filter>02. Scripts\ChampScript\Archer\Arrow</Filter>
+    </ClInclude>
+    <ClInclude Include="CBTMgr.h">
+      <Filter>01. GameManager\BTMgrScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CFighterScript.h">
+      <Filter>02. Scripts\ChampScript\Fighter</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffectScript.h">
+      <Filter>02. Scripts\EffectScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CKnightScript.h">
+      <Filter>02. Scripts\ChampScript\Knight</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonkScript.h">
+      <Filter>02. Scripts\ChampScript\Monk</Filter>
+    </ClInclude>
+    <ClInclude Include="CNinjaScript.h">
+      <Filter>02. Scripts\ChampScript\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="CNinjaCloneScript.h">
+      <Filter>02. Scripts\ChampScript\Ninja\NinjaClone</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -232,6 +289,42 @@
     </ClCompile>
     <ClCompile Include="CTraceState.cpp">
       <Filter>03. State\02.Trace</Filter>
+    </ClCompile>
+    <ClCompile Include="CAttackState.cpp">
+      <Filter>03. State\03.Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="CDeadState.cpp">
+      <Filter>03. State\06.Dead</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkillState.cpp">
+      <Filter>03. State\04.Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="CUltimateState.cpp">
+      <Filter>03. State\05.Ultimate</Filter>
+    </ClCompile>
+    <ClCompile Include="CArrowScript.cpp">
+      <Filter>02. Scripts\ChampScript\Archer\Arrow</Filter>
+    </ClCompile>
+    <ClCompile Include="CBTMgr.cpp">
+      <Filter>01. GameManager\BTMgrScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CFighterScript.cpp">
+      <Filter>02. Scripts\ChampScript\Fighter</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffectScript.cpp">
+      <Filter>02. Scripts\EffectScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CKnightScript.cpp">
+      <Filter>02. Scripts\ChampScript\Knight</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonkScript.cpp">
+      <Filter>02. Scripts\ChampScript\Monk</Filter>
+    </ClCompile>
+    <ClCompile Include="CNinjaScript.cpp">
+      <Filter>02. Scripts\ChampScript\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="CNinjaCloneScript.cpp">
+      <Filter>02. Scripts\ChampScript\Ninja\NinjaClone</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -171,17 +171,28 @@ call CodeGen.exe</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CArcherScript.h" />
+    <ClInclude Include="CArrowScript.h" />
+    <ClInclude Include="CAttackState.h" />
+    <ClInclude Include="CBTMgr.h" />
     <ClInclude Include="CChampScript.h" />
     <ClInclude Include="CCursorScript.h" />
+    <ClInclude Include="CDeadState.h" />
+    <ClInclude Include="CEffectScript.h" />
+    <ClInclude Include="CFighterScript.h" />
     <ClInclude Include="CGamerScript.h" />
     <ClInclude Include="CGosuScript.h" />
     <ClInclude Include="CIdleState.h" />
     <ClInclude Include="CJoongSooScript.h" />
+    <ClInclude Include="CKnightScript.h" />
     <ClInclude Include="CLobbyBtnScript.h" />
     <ClInclude Include="CMgrBtnScript.h" />
+    <ClInclude Include="CMonkScript.h" />
+    <ClInclude Include="CNinjaCloneScript.h" />
+    <ClInclude Include="CNinjaScript.h" />
     <ClInclude Include="CProceedBtnScript.h" />
     <ClInclude Include="CRecruitmentScript.h" />
     <ClInclude Include="CRecruitSlotScript.h" />
+    <ClInclude Include="CSkillState.h" />
     <ClInclude Include="CSquadBtnScript.h" />
     <ClInclude Include="CTGMgr.h" />
     <ClInclude Include="CTraceState.h" />
@@ -191,22 +202,34 @@ call CodeGen.exe</Command>
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CNewBtnScript.h" />
     <ClInclude Include="CEndBtnScript.h" />
+    <ClInclude Include="CUltimateState.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CArcherScript.cpp" />
+    <ClCompile Include="CArrowScript.cpp" />
+    <ClCompile Include="CAttackState.cpp" />
+    <ClCompile Include="CBTMgr.cpp" />
     <ClCompile Include="CChampScript.cpp" />
     <ClCompile Include="CCursorScript.cpp" />
+    <ClCompile Include="CDeadState.cpp" />
+    <ClCompile Include="CEffectScript.cpp" />
+    <ClCompile Include="CFighterScript.cpp" />
     <ClCompile Include="CGamerScript.cpp" />
     <ClCompile Include="CGosuScript.cpp" />
     <ClCompile Include="CIdleState.cpp" />
     <ClCompile Include="CJoongSooScript.cpp" />
+    <ClCompile Include="CKnightScript.cpp" />
     <ClCompile Include="CLobbyBtnScript.cpp" />
     <ClCompile Include="CMgrBtnScript.cpp" />
+    <ClCompile Include="CMonkScript.cpp" />
+    <ClCompile Include="CNinjaCloneScript.cpp" />
+    <ClCompile Include="CNinjaScript.cpp" />
     <ClCompile Include="CProceedBtnScript.cpp" />
     <ClCompile Include="CRecruitmentScript.cpp" />
     <ClCompile Include="CRecruitSlotScript.cpp" />
+    <ClCompile Include="CSkillState.cpp" />
     <ClCompile Include="CSquadBtnScript.cpp" />
     <ClCompile Include="CTGMgr.cpp" />
     <ClCompile Include="CTraceState.cpp" />
@@ -216,6 +239,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CNewBtnScript.cpp" />
     <ClCompile Include="CEndBtnScript.cpp" />
+    <ClCompile Include="CUltimateState.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
