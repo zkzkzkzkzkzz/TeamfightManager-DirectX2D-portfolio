@@ -13,7 +13,8 @@ private:
     float   m_UltiDelay;
     bool    m_UltiActive;
     float   m_DeadDelay;
-    bool    m_ishealed;
+    float   m_healdelay;
+    bool    m_healactive;
 
     Vec3    m_UltiPos;
 

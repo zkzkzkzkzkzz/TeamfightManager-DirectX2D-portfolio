@@ -18,6 +18,8 @@ CPriestScript::CPriestScript()
 	: CChampScript(PRIESTSCRIPT)
 	, m_DealDelay(0.f)
 	, m_DealActive(false)
+	, m_healdelay(0.f)
+	, m_healactive(false)
 	, m_SkillDelay(0.f)
 	, m_SkillActive(false)
 	, m_UltiDelay(0.f)
@@ -43,6 +45,8 @@ CPriestScript::CPriestScript(const CPriestScript& _Origin)
 	: CChampScript(PRIESTSCRIPT)
 	, m_DealDelay(0.f)
 	, m_DealActive(false)
+	, m_healdelay(0.f)
+	, m_healactive(false)
 	, m_SkillDelay(0.f)
 	, m_SkillActive(false)
 	, m_UltiDelay(0.f)
@@ -89,6 +93,7 @@ void CPriestScript::tick()
 	m_SkillDelay += DT;
 	m_UltiDelay += DT;
 	m_DeadDelay += DT;
+	m_healdelay += DT;
 
 	float delay = 1 / m_Info.ATKSpeed;
 
@@ -277,18 +282,30 @@ void CPriestScript::EnterAttackState()
 		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
 			, Transform()->GetRelativeRotation(), L"PriestAttackEffect1", 1.f);
 
+		m_DealDelay = 0.f;
+	}
+
+	if (m_bAttack && !m_healactive)
+	{
 		SpawnEffect(m_Target->Transform()->GetRelativePos(), Vec3(38.f, 39.f, 1.f)
 			, Transform()->GetRelativeRotation(), L"PriestHealEffectDown", 0.6f);
 
 		SpawnEffect(m_Target->Transform()->GetRelativePos(), Vec3(38.f, 39.f, 1.f)
 			, Transform()->GetRelativeRotation(), L"PriestHealEffectUp", 0.6f, false, Vec3(0.f, 0.f, -10.f));
-		m_DealDelay = 0.f;
+
+		m_healactive = true;
+		m_healdelay = 0.f;
 	}
 
-	if (m_bAttack && m_DealActive && m_DealDelay > 1.f)
+
+	if (m_healactive && m_healdelay > 0.6f)
 	{
-		Healed(GetOwner(), m_Target);
-		m_DealActive = false;
+		if (m_bAttack && m_DealActive && m_DealDelay > 1.f)
+		{
+			Healed(GetOwner(), m_Target);
+			m_DealActive = false;
+			m_healactive = false;
+		}
 	}
 }
 
