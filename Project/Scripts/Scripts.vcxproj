@@ -189,6 +189,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CMonkScript.h" />
     <ClInclude Include="CNinjaCloneScript.h" />
     <ClInclude Include="CNinjaScript.h" />
+    <ClInclude Include="CPriestScript.h" />
     <ClInclude Include="CProceedBtnScript.h" />
     <ClInclude Include="CRecruitmentScript.h" />
     <ClInclude Include="CRecruitSlotScript.h" />
@@ -226,6 +227,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CMonkScript.cpp" />
     <ClCompile Include="CNinjaCloneScript.cpp" />
     <ClCompile Include="CNinjaScript.cpp" />
+    <ClCompile Include="CPriestScript.cpp" />
     <ClCompile Include="CProceedBtnScript.cpp" />
     <ClCompile Include="CRecruitmentScript.cpp" />
     <ClCompile Include="CRecruitSlotScript.cpp" />

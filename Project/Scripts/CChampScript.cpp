@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CChampScript.h"
 
+#include <ctime>
 #include <Engine\CTimeMgr.h>	 
 
 #include "CBTMgr.h"
@@ -120,6 +121,20 @@ void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target, int _Extr
 		GETCHAMP(Target)->m_InGameStatus.DeathPoint -= 1;
 		GETCHAMP(Target)->SetChampState(CHAMP_STATE::DEAD);
 	}
+}
+
+void CChampScript::Healed(CGameObject* Attacker, CGameObject* Target, int _ExtraHeal)
+{
+	int ATK = GETCHAMP(Attacker)->GetInGameChampATK() + _ExtraHeal;
+
+	int heal = GETCHAMP(Target)->m_InGameStatus.HP + ATK;
+
+	if (heal >= GETCHAMP(Target)->GetChampMaxHP())
+	{
+		heal = GETCHAMP(Target)->GetChampMaxHP();
+	}
+
+	GETCHAMP(Target)->m_InGameStatus.HP = heal;
 }
 
 

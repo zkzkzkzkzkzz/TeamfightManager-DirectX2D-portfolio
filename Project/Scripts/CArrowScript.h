@@ -16,6 +16,7 @@ private:
     Vec3    m_Pos;
     Vec3    m_Rotation;
     float   m_Speed;
+    float   m_lifeTime;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}

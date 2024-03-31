@@ -19,6 +19,7 @@ CArrowScript::CArrowScript()
 	, m_Pos{}
 	, m_Rotation{}
 	, m_prevPos{}
+	, m_lifeTime(0.f)
 {
 }
 
@@ -31,6 +32,7 @@ CArrowScript::CArrowScript(const CArrowScript& _Origin)
 	, m_Pos{}
 	, m_Rotation{}
 	, m_prevPos{}
+	, m_lifeTime(0.f)
 {
 }
 
@@ -62,11 +64,17 @@ void CArrowScript::begin()
 	Collider2D()->SetOffsetPos(Vec2(0.f, -0.05f));
 	Collider2D()->SetOffsetScale(Vec2(1.f, 0.5f));
 	Collider2D()->SetAbsolute(false);
-
 }
 
 void CArrowScript::tick()
 {
+	m_lifeTime += DT;
+
+	if (m_lifeTime > 4.f)
+	{
+		GamePlayStatic::DestroyGameObject(GetOwner());
+	}
+
 	if (m_Target->IsActive())
 	{
 		Vec3 vDir = m_Target->Transform()->GetRelativePos() - m_Pos;

@@ -101,6 +101,7 @@ public:
     virtual void SetChampHP(int _hp) { m_InGameStatus.HP = _hp; }
     virtual void SetChampATK(int _atk) { m_InGameStatus.HP = _atk; }
     virtual void SetChampMoveSpeed(float _speed) { m_Info.MOV = _speed; }
+    virtual void SetChampATKSpeed(float _speed) { m_Info.ATKSpeed = _speed; }
 
     virtual int GetChampMaxHP() { return m_Info.MaxHP; }
     virtual int GetInGameChampHP() { return m_InGameStatus.HP; }
@@ -117,6 +118,7 @@ public:
     virtual bool IsUltimateDone() { return m_InGameStatus.bUltimateDone; }
 
     virtual void Damaged(CGameObject* Attacker, CGameObject* Target, int _ExtraDmg = 0);
+    virtual void Healed(CGameObject* Attacker, CGameObject* Target, int _ExtraHeal = 0);
 
     virtual void SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat = false, Vec3 _offset = Vec3(0.f, 0.f, 0.f));
 

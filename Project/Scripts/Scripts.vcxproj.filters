@@ -219,6 +219,9 @@
     <ClInclude Include="CNinjaCloneScript.h">
       <Filter>02. Scripts\ChampScript\Ninja\NinjaClone</Filter>
     </ClInclude>
+    <ClInclude Include="CPriestScript.h">
+      <Filter>02. Scripts\ChampScript\Priest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -325,6 +328,9 @@
     </ClCompile>
     <ClCompile Include="CNinjaCloneScript.cpp">
       <Filter>02. Scripts\ChampScript\Ninja\NinjaClone</Filter>
+    </ClCompile>
+    <ClCompile Include="CPriestScript.cpp">
+      <Filter>02. Scripts\ChampScript\Priest</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
