@@ -25,6 +25,7 @@
 #include <Scripts\CFighterScript.h>
 #include <Scripts\CKnightScript.h>
 #include <Scripts\CMonkScript.h>
+#include <Scripts\CNinjaScript.h>
 
 #include <Scripts\CIdleState.h>
 #include <Scripts\CTraceState.h>
@@ -60,6 +61,15 @@ void BattleLevel::CreateTempLevel()
 	pFSM->AddState(L"Dead", new CDeadState);
 
 	CAssetMgr::GetInst()->AddAsset<CFSM>(L"ChampFSM", pFSM.Get());
+
+	pFSM = new CFSM(false);
+
+	pFSM->AddState(L"Idle", new CIdleState);
+	pFSM->AddState(L"Trace", new CTraceState);
+	pFSM->AddState(L"Attack", new CAttackState);
+	pFSM->AddState(L"Dead", new CDeadState);
+
+	CAssetMgr::GetInst()->AddAsset<CFSM>(L"SummonFSM", pFSM.Get());
 
 	// Main Camera 생성
 	CGameObject* pCamObj = new CGameObject;
@@ -124,7 +134,7 @@ void BattleLevel::CreateTempLevel()
 	Stadium->SetName(L"Stadium");
 	Stadium->AddComponent(new CTransform);
 	Stadium->AddComponent(new CMeshRender);
-	Stadium->Transform()->SetRelativePos(Vec3(0.f, 0.f, 400.f));
+	Stadium->Transform()->SetRelativePos(Vec3(0.f, 0.f, 1000.f));
 	Stadium->Transform()->SetRelativeScale(Vec3(1427.f, 1029.f, 1.f));
 	Stadium->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Stadium->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl"));
@@ -163,16 +173,16 @@ void BattleLevel::CreateTempLevel()
 	Champ->GetScript<CKnightScript>()->SetTeam(TEAM::BLUE);
 	pTempLevel->AddObject(Champ, 3);
 
-	Champ = new CGameObject;
-	Champ->SetName(L"Fighter");
-	Champ->AddComponent(new CTransform);
-	Champ->AddComponent(new CMeshRender);
-	Champ->AddComponent(new CCollider2D);
-	Champ->AddComponent(new CAnimator2D);
-	Champ->AddComponent(new CStateMachine);
-	Champ->AddComponent(new CFighterScript);
-	Champ->GetScript<CFighterScript>()->SetTeam(TEAM::RED);
-	pTempLevel->AddObject(Champ, 3);
+	//Champ = new CGameObject;
+	//Champ->SetName(L"Fighter");
+	//Champ->AddComponent(new CTransform);
+	//Champ->AddComponent(new CMeshRender);
+	//Champ->AddComponent(new CCollider2D);
+	//Champ->AddComponent(new CAnimator2D);
+	//Champ->AddComponent(new CStateMachine);
+	//Champ->AddComponent(new CFighterScript);
+	//Champ->GetScript<CFighterScript>()->SetTeam(TEAM::RED);
+	//pTempLevel->AddObject(Champ, 3);
 
 	Champ = new CGameObject;
 	Champ->SetName(L"Monk");
@@ -183,6 +193,17 @@ void BattleLevel::CreateTempLevel()
 	Champ->AddComponent(new CStateMachine);
 	Champ->AddComponent(new CMonkScript);
 	Champ->GetScript<CMonkScript>()->SetTeam(TEAM::RED);
+	pTempLevel->AddObject(Champ, 3);
+
+	Champ = new CGameObject;
+	Champ->SetName(L"Ninja");
+	Champ->AddComponent(new CTransform);
+	Champ->AddComponent(new CMeshRender);
+	Champ->AddComponent(new CCollider2D);
+	Champ->AddComponent(new CAnimator2D);
+	Champ->AddComponent(new CStateMachine);
+	Champ->AddComponent(new CNinjaScript);
+	Champ->GetScript<CNinjaScript>()->SetTeam(TEAM::RED);
 	pTempLevel->AddObject(Champ, 3);
 
 	// 레벨 플레이

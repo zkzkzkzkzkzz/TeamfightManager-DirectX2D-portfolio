@@ -88,9 +88,7 @@ void CChampScript::tick()
 	}
 
 	Vec3 vPos = Transform()->GetRelativePos();
-
 	vPos.z = 300.f + vPos.y;
-
 	Transform()->SetRelativePos(vPos);
 
 	CBTMgr::tick();
@@ -132,13 +130,18 @@ void CChampScript::RespawnInfo()
 }
 
 
-void CChampScript::SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat)
+void CChampScript::SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat, Vec3 _offset)
 {
 	CGameObject* effect = new CGameObject;
 	effect->AddComponent(new CTransform);
 	effect->AddComponent(new CMeshRender);
 	effect->AddComponent(new CAnimator2D);
 	effect->AddComponent(new CEffectScript);
+
+	_Pos.x += _offset.x;
+	_Pos.y += _offset.y;
+	_Pos.z += _offset.z;
+
 	GETEFFECT(effect)->SetEffectInfo(_Pos, _Scale, _Rotation, _anim, _time, _repeat);
 	GamePlayStatic::SpawnGameObject(effect, 6);
 }

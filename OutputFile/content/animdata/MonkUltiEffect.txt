@@ -2,8 +2,8 @@
 MonkUltiEffect
 
 [ATLAS_TEXTURE]
-ultefc.png
-texture\Champ\monk\ultefc.png
+Monkultefc.png
+texture\Champ\monk\Monkultefc.png
 
 [FRAME_COUNT]
 12

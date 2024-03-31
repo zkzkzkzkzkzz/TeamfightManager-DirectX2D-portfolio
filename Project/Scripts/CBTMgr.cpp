@@ -6,6 +6,7 @@
 #include <Engine\CTransform.h>
 
 #include "CChampScript.h"
+#include "CEffectScript.h"
 
 list<CGameObject*> CBTMgr::G_Respawn;
 
@@ -66,6 +67,17 @@ void CBTMgr::SpawnChamp(CGameObject* _Obj)
 {
     GETCHAMP(_Obj)->RespawnInfo();
 
+    CGameObject* effect = new CGameObject;
+    effect->AddComponent(new CTransform);
+    effect->AddComponent(new CMeshRender);
+    effect->AddComponent(new CAnimator2D);
+    effect->AddComponent(new CEffectScript);
+    GETEFFECT(effect)->SetEffectInfo(_Obj->Transform()->GetRelativePos(), Vec3(64.f, 64.f, 64.f)
+                                    , _Obj->Transform()->GetRelativeRotation(), L"SpawnEffect", 0.55f);
+    GamePlayStatic::SpawnGameObject(effect, 6);
+
+
     _Obj->SetActive(true);
+
     GETCHAMP(_Obj)->SetChampState(CHAMP_STATE::IDLE);
 }

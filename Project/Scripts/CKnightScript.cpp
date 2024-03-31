@@ -294,8 +294,9 @@ void CKnightScript::EnterSkillState()
 	}
 	else
 	{
-		if (m_SkillDelay > 0.8f)
+		if (m_SkillDelay > 1.6f)
 		{
+			m_InGameStatus.DEF = m_Info.DEF;
 			m_SkillActive = false;
 			m_InGameStatus.CoolTime_Skill = 0.f;
 			m_InGameStatus.bSkillPlay = false;
@@ -320,7 +321,7 @@ void CKnightScript::EnterUltimateState()
 		vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 		TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
 
-		for (size_t i = 0; i < pTarget.size(); i++)
+		for (size_t i = 0; i < pTarget.size(); ++i)
 		{
 			if (team == GETCHAMP(pTarget[i])->GetTeamColor())
 			{

@@ -330,7 +330,7 @@ void CFighterScript::EnterUltimateState()
 			vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 			TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
 
-			for (size_t i = 0; i < pTarget.size(); i++)
+			for (size_t i = 0; i < pTarget.size(); ++i)
 			{
 				if (team != GETCHAMP(pTarget[i])->GetTeamColor())
 				{

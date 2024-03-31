@@ -120,7 +120,7 @@ void CMonkScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 	m_InGameStatus.CoolTime_Attack = 0.f;
 	m_InGameStatus.CoolTime_Skill = 0.f;
 	m_InGameStatus.bSkillPlay = false;
-	m_InGameStatus.UltimateUseTime = 30.f;
+	m_InGameStatus.UltimateUseTime = 25.f;
 	m_InGameStatus.bUltimate = false;
 
 	m_InGameStatus.RespawnTime = 0.f;
@@ -302,7 +302,7 @@ void CMonkScript::EnterSkillState()
 		vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 		TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
 
-		for (size_t i = 0; i < pTarget.size(); i++)
+		for (size_t i = 0; i < pTarget.size(); ++i)
 		{
 			if (team == GETCHAMP(pTarget[i])->GetTeamColor())
 			{
@@ -339,7 +339,7 @@ void CMonkScript::EnterUltimateState()
 		vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 		TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
 
-		for (size_t i = 0; i < pTarget.size(); i++)
+		for (size_t i = 0; i < pTarget.size(); ++i)
 		{
 			if (team == GETCHAMP(pTarget[i])->GetTeamColor())
 			{
