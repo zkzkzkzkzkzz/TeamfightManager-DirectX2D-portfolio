@@ -1,0 +1,127 @@
+#include "pch.h"
+#include "CTeamHeaderScript.h"
+
+#include <Engine\CEngine.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
+#include <Engine\CKeyMgr.h>
+#include <Engine\CAssetMgr.h>
+#include <Engine\CGameObject.h>
+#include <Engine\components.h>
+#include <Engine\CAnim.h>
+
+CTeamHeaderScript::CTeamHeaderScript()
+	: CScript(TEAMHEADERSCRIPT)
+	, m_HeaderTex(nullptr)
+	, m_BlueTeam(nullptr)
+	, m_RedTeam(nullptr)
+	, m_BlueTeamLogo(nullptr)
+	, m_RedTeamLogo(nullptr)
+	, m_Time(nullptr)
+	, m_strTime{}
+{
+}
+
+CTeamHeaderScript::CTeamHeaderScript(const CTeamHeaderScript& _Origin)
+	: CScript(TEAMHEADERSCRIPT)
+	, m_HeaderTex(_Origin.m_HeaderTex)
+	, m_BlueTeam(nullptr)
+	, m_RedTeam(nullptr)
+	, m_BlueTeamLogo(_Origin.m_BlueTeamLogo)
+	, m_RedTeamLogo(_Origin.m_RedTeamLogo)
+	, m_Time(nullptr)
+	, m_strTime{}
+{
+}
+
+CTeamHeaderScript::~CTeamHeaderScript()
+{
+}
+
+void CTeamHeaderScript::begin()
+{
+	Transform()->SetRelativePos(Vec3(0.f, 324.f, 2000.f));
+	Transform()->SetRelativeScale(Vec3(1280.f, 82.f, 1.f));
+
+	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"InGameUIMtrl"));
+	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+
+	m_HeaderTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\IngameUI\\ingameheader_bg.png"
+														, L"texture\\Champ\\IngameUI\\ingameheader_bg.png");
+
+	m_BlueTeam = new CGameObject;
+	m_BlueTeam->SetName(L"BlueTeamLogo");
+	m_BlueTeam->AddComponent(new CTransform);
+	m_BlueTeam->AddComponent(new CMeshRender);
+	m_BlueTeam->Transform()->SetRelativePos(Vec3(-599.f, 7.f, -10.f));
+	m_BlueTeam->Transform()->SetRelativeScale(Vec3(60.f, 60.f, 1.f));
+	m_BlueTeam->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	m_BlueTeam->MeshRender()->SetMaterial(MeshRender()->GetDynamicMaterial());
+	m_BlueTeam->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+	GetOwner()->AddChild(m_BlueTeam);
+	m_BlueTeamLogo = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\IngameUI\\captains.png"
+														, L"texture\\Champ\\IngameUI\\captains.png");
+
+	m_RedTeam = new CGameObject;
+	m_RedTeam->SetName(L"RedTeamLogo");
+	m_RedTeam->AddComponent(new CTransform);
+	m_RedTeam->AddComponent(new CMeshRender);
+	m_RedTeam->Transform()->SetRelativePos(Vec3(599.f, 7.f, -10.f));
+	m_RedTeam->Transform()->SetRelativeScale(Vec3(60.f, 60.f, 1.f));
+	m_RedTeam->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	m_RedTeam->MeshRender()->SetMaterial(MeshRender()->GetDynamicMaterial());
+	m_RedTeam->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+	GetOwner()->AddChild(m_RedTeam);
+	m_RedTeamLogo = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\IngameUI\\gorillas.png"
+														, L"texture\\Champ\\IngameUI\\gorillas.png");
+
+	m_strTime = L": ";
+	m_Time = new CGameObject;
+	m_Time->SetName(L"Time");
+	m_Time->AddComponent(new CTransform);
+	m_Time->AddComponent(new CTextRender);
+	m_Time->Transform()->SetRelativePos(Vec3(0.f, -8.f, -10.f));
+	m_Time->TextRender()->SetString(m_strTime);
+	m_Time->TextRender()->SetFont(L"Galmuri14");
+	m_Time->TextRender()->SetFontSize(15.f);
+	m_Time->TextRender()->SetFontColor(255,255,255,255);
+	m_Time->TextRender()->SetOffsetPos(Vec3(-13.f, 22.f, 0.f));
+	GetOwner()->AddChild(m_Time);
+}
+
+void CTeamHeaderScript::tick()
+{
+	int CurTime = CheckTime();
+
+	SetTimer(CurTime);
+
+	render();
+}
+
+void CTeamHeaderScript::render()
+{
+	if (nullptr != m_HeaderTex)
+		MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_HeaderTex);
+
+	if (nullptr != m_BlueTeamLogo)
+		m_BlueTeam->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_1, m_BlueTeamLogo);
+
+	if (nullptr != m_RedTeamLogo)
+		m_RedTeam->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_2, m_RedTeamLogo);
+}
+
+
+int CTeamHeaderScript::CheckTime()
+{
+	return CTGMgr::G_Time;
+}
+
+void CTeamHeaderScript::SetTimer(int _CurTime)
+{
+	m_strTime = L": ";
+
+	m_strTime += ToWString(std::to_string(_CurTime));
+
+	m_Time->TextRender()->SetString(m_strTime);
+}

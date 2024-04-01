@@ -35,6 +35,8 @@
 #include <Scripts\CUltimateState.h>
 #include <Scripts\CDeadState.h>
 
+#include <Scripts\CTeamHeaderScript.h>
+
 void BattleLevel::CreateTempLevel()
 {
 	CLevel* pTempLevel = new CLevel;
@@ -131,88 +133,41 @@ void BattleLevel::CreateTempLevel()
 	pTempLevel->AddObject(pLight, 1);
 
 
+	CGameObject* Obj = new CGameObject;
+	Obj->SetName(L"SkyBG");
+	Obj->AddComponent(new CTransform);
+	Obj->AddComponent(new CMeshRender);
+	Obj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 5000.f));
+	Obj->Transform()->SetRelativeScale(Vec3(1800.f, 800.f, 1.f));
+	Obj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	Obj->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"SkyMtrl"));
+	Obj->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Title\\sky.png", L"texture\\Title\\sky.png");
+	Obj->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
+	pTempLevel->AddObject(Obj, 2);
+
 	CGameObject* Stadium = new CGameObject;
 	Stadium->SetName(L"Stadium");
 	Stadium->AddComponent(new CTransform);
 	Stadium->AddComponent(new CMeshRender);
-	Stadium->Transform()->SetRelativePos(Vec3(0.f, 0.f, 1000.f));
+	Stadium->Transform()->SetRelativePos(Vec3(0.f, 0.f, 4000.f));
 	Stadium->Transform()->SetRelativeScale(Vec3(1427.f, 1029.f, 1.f));
 	Stadium->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Stadium->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl"));
 	Stadium->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
-	Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\stadium.png",
+	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\stadium.png",
 															L"texture\\Champ\\stadium.png");
  	Stadium->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(Stadium, 2);
 
-	//CGameObject* BTmgr = new CGameObject;
-	//BTmgr->SetName(L"BTMgr");
-	//BTmgr->AddComponent(new CTransform);
-	//BTmgr->AddComponent(new CChampScript);
-	//GETCHAMP(BTmgr)->SetTeam(TEAM::NONE);
-	//pTempLevel->AddObject(BTmgr, 3);
 
-	//CGameObject* Champ = new CGameObject;
-	//Champ->SetName(L"Archer");
-	//Champ->AddComponent(new CTransform);
-	//Champ->AddComponent(new CMeshRender);
-	//Champ->AddComponent(new CCollider2D);
-	//Champ->AddComponent(new CAnimator2D);
-	//Champ->AddComponent(new CStateMachine);
-	//Champ->AddComponent(new CArcherScript);
-	//Champ->GetScript<CArcherScript>()->SetTeam(TEAM::BLUE);
-	//pTempLevel->AddObject(Champ, 3);
-
-	//Champ = new CGameObject;
-	//Champ->SetName(L"Knight");
-	//Champ->AddComponent(new CTransform);
-	//Champ->AddComponent(new CMeshRender);
-	//Champ->AddComponent(new CCollider2D);
-	//Champ->AddComponent(new CAnimator2D);
-	//Champ->AddComponent(new CStateMachine);
-	//Champ->AddComponent(new CKnightScript);
-	//Champ->GetScript<CKnightScript>()->SetTeam(TEAM::BLUE);
-	//pTempLevel->AddObject(Champ, 3);
-
-	//Champ = new CGameObject;
-	//Champ->SetName(L"Fighter");
-	//Champ->AddComponent(new CTransform);
-	//Champ->AddComponent(new CMeshRender);
-	//Champ->AddComponent(new CCollider2D);
-	//Champ->AddComponent(new CAnimator2D);
-	//Champ->AddComponent(new CStateMachine);
-	//Champ->AddComponent(new CFighterScript);
-	//pTempLevel->AddObject(Champ, 3);
-
-	//Champ = new CGameObject;
-	//Champ->SetName(L"Monk");
-	//Champ->AddComponent(new CTransform);
-	//Champ->AddComponent(new CMeshRender);
-	//Champ->AddComponent(new CCollider2D);
-	//Champ->AddComponent(new CAnimator2D);
-	//Champ->AddComponent(new CStateMachine);
-	//Champ->AddComponent(new CMonkScript);
-	//pTempLevel->AddObject(Champ, 3);
-
-	//Champ = new CGameObject;
-	//Champ->SetName(L"Ninja");
-	//Champ->AddComponent(new CTransform);
-	//Champ->AddComponent(new CMeshRender);
-	//Champ->AddComponent(new CCollider2D);
-	//Champ->AddComponent(new CAnimator2D);
-	//Champ->AddComponent(new CStateMachine);
-	//Champ->AddComponent(new CNinjaScript);
-	//pTempLevel->AddObject(Champ, 3);
-
-	//Champ = new CGameObject;
-	//Champ->SetName(L"Priest");
-	//Champ->AddComponent(new CTransform);
-	//Champ->AddComponent(new CMeshRender);
-	//Champ->AddComponent(new CCollider2D);
-	//Champ->AddComponent(new CAnimator2D);
-	//Champ->AddComponent(new CStateMachine);
-	//Champ->AddComponent(new CPriestScript);
-	//pTempLevel->AddObject(Champ, 3);
+	// 팀 헤더
+	Obj = new CGameObject;
+	Obj->SetName(L"TeamHeader");
+	Obj->AddComponent(new CTransform);
+	Obj->AddComponent(new CMeshRender);
+	Obj->AddComponent(new CTeamHeaderScript);
+	pTempLevel->AddObject(Obj, 2);
 
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);

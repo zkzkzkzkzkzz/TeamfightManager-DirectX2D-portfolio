@@ -13,7 +13,10 @@ map<wstring, CGameObject*> CTGMgr::G_RecruitList;	// 영입 가능 선수 목록
 
 map<wstring, CGameObject*> CTGMgr::G_Champ;	// 챔피언 목록
 
-float CTGMgr::G_Time = 60.f;
+list<CGameObject*> CTGMgr::G_TeamBlue;
+list<CGameObject*> CTGMgr::G_TeamRed;
+
+int CTGMgr::G_Time = 60;
 
 
 
@@ -27,5 +30,5 @@ CTGMgr::~CTGMgr()
 
 void CTGMgr::ResetInGameTime()
 {
-	G_Time = 60.f;
+	G_Time = 60;
 }

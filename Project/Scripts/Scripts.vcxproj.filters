@@ -112,6 +112,18 @@
     <Filter Include="02. Scripts\ChampScript\Ninja\NinjaClone">
       <UniqueIdentifier>{f1cda386-c6f0-481e-ac85-128c81986192}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scripts\BattleScript">
+      <UniqueIdentifier>{197bc30c-2581-4ca1-b9c1-92fe08d3ec8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\BattleScript\BlueTeamSlot">
+      <UniqueIdentifier>{dfc928a4-f376-40fb-8bd6-c0fac329824d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\BattleScript\TeamHeader">
+      <UniqueIdentifier>{01652f24-d9a1-4891-a55a-652f043c0e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\BattleScript\RedTeamSlot">
+      <UniqueIdentifier>{6f7e87ea-5074-454e-ad90-40e778a90197}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -222,6 +234,9 @@
     <ClInclude Include="CPriestScript.h">
       <Filter>02. Scripts\ChampScript\Priest</Filter>
     </ClInclude>
+    <ClInclude Include="CTeamHeaderScript.h">
+      <Filter>02. Scripts\BattleScript\TeamHeader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -331,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="CPriestScript.cpp">
       <Filter>02. Scripts\ChampScript\Priest</Filter>
+    </ClCompile>
+    <ClCompile Include="CTeamHeaderScript.cpp">
+      <Filter>02. Scripts\BattleScript\TeamHeader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

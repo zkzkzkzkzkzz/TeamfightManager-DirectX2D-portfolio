@@ -10,6 +10,7 @@ class CBTMgr :
 
 private:
     static list<CGameObject*> G_Respawn;
+    static float m_CurTime;
 
 public:
     static void tick();

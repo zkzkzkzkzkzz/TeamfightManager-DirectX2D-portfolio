@@ -9,6 +9,7 @@
 #include "CEffectScript.h"
 
 list<CGameObject*> CBTMgr::G_Respawn;
+float CBTMgr::m_CurTime = 0;
 
 CBTMgr::CBTMgr()
 {
@@ -20,7 +21,15 @@ CBTMgr::~CBTMgr()
 
 void CBTMgr::tick()
 {
-    CTGMgr::G_Time -= DT;
+    m_CurTime += DT;
+
+    if (1.f <= m_CurTime)
+    {
+        CTGMgr::G_Time -= 1;
+        m_CurTime = 0.f;
+        if (CTGMgr::G_Time <= 0)
+            CTGMgr::G_Time = 0;
+    }
 
     list<CGameObject*>::iterator iter = G_Respawn.begin();
 
