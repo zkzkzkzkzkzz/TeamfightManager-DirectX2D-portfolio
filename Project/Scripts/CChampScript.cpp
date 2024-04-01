@@ -2,7 +2,10 @@
 #include "CChampScript.h"
 
 #include <ctime>
-#include <Engine\CTimeMgr.h>	 
+#include <Engine\CTimeMgr.h>
+#include <Engine\CGameObject.h>
+#include <Engine\CAssetMgr.h>
+#include <Engine\CTexture.h>
 
 #include "CBTMgr.h"
 
@@ -15,6 +18,8 @@ CChampScript::CChampScript()
 	, m_bAttack(false)
 	, m_bRespawn(false)
 	, m_Target(nullptr)
+	, m_Shadow(nullptr)
+	, m_ShadowTex(nullptr)
 {
 }
 
@@ -27,6 +32,8 @@ CChampScript::CChampScript(UINT _ScriptType)
 	, m_bAttack(false)
 	, m_bRespawn(false)
 	, m_Target(nullptr)
+	, m_Shadow(nullptr)
+	, m_ShadowTex(nullptr)
 {
 }
 
@@ -39,6 +46,8 @@ CChampScript::CChampScript(const CChampScript& _Origin)
 	, m_bAttack(false)
 	, m_bRespawn(false)
 	, m_Target(nullptr)
+	, m_Shadow(nullptr)
+	, m_ShadowTex(_Origin.m_ShadowTex)
 {
 }
 
@@ -96,10 +105,14 @@ void CChampScript::tick()
 	Transform()->SetRelativePos(vPos);
 
 	CBTMgr::tick();
+
+	render();
 }
 
 void CChampScript::render()
 {
+	if (nullptr != m_ShadowTex)
+		m_Shadow->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_ShadowTex);
 }
 
 
@@ -196,4 +209,20 @@ void CChampScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CColl
 void CChampScript::EndOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider) 
 {
 
+}
+
+
+void CChampScript::SpawnShadow()
+{
+	m_Shadow = new CGameObject;
+	m_Shadow->SetName(L"Shadow");
+	m_Shadow->AddComponent(new CTransform);
+	m_Shadow->AddComponent(new CMeshRender);
+	m_Shadow->Transform()->SetRelativePos(Vec3(1.f, -13.f, 10.f));
+	m_Shadow->Transform()->SetRelativeScale(Vec3(30.f, 15.f, 1.f));
+	m_Shadow->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	m_Shadow->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"ShadowMtrl"));
+	m_Shadow->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	m_ShadowTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\player_shadow.png", L"texture\\Champ\\player_shadow.png");
+	GetOwner()->AddChild(m_Shadow);
 }

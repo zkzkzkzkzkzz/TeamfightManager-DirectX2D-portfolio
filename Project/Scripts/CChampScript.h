@@ -81,6 +81,9 @@ protected:
     CHAMP_STATE     m_State;
     TEAM            m_Team;
 
+    CGameObject*    m_Shadow;
+    Ptr<CTexture>   m_ShadowTex;
+
     bool    m_bAttack;
     bool    m_bRespawn;
 
@@ -121,6 +124,7 @@ public:
     virtual void Healed(CGameObject* Attacker, CGameObject* Target, int _ExtraHeal = 0);
 
     virtual void SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat = false, Vec3 _offset = Vec3(0.f, 0.f, 0.f));
+    virtual void SpawnShadow();
 
 public:
     virtual void InitChampInfo() {}     // 챔프 정보 설정

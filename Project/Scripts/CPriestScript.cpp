@@ -79,6 +79,8 @@ void CPriestScript::begin()
 	InitChampInfo();
 	InitChampAnim();
 	InitStateMachine();
+
+	SpawnShadow();
 }
 
 void CPriestScript::tick()
@@ -101,6 +103,11 @@ void CPriestScript::tick()
 	{
 		m_bAttack = false;
 	}
+}
+
+void CPriestScript::render()
+{
+	CChampScript::render();
 }
 
 

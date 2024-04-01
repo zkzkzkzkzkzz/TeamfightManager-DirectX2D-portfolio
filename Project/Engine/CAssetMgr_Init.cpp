@@ -404,6 +404,11 @@ void CAssetMgr::CreateDefaultGameMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"EffectMtrl", pMtrl);
+
+	// 그림자 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
+	AddAsset<CMaterial>(L"ShadowMtrl", pMtrl);
 }
 
 void CAssetMgr::CreateTitleLevelMaterial()

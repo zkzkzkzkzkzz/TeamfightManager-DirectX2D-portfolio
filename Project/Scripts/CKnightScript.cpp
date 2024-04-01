@@ -72,6 +72,8 @@ void CKnightScript::begin()
 	InitChampInfo();
 	InitChampAnim();
 	InitStateMachine();
+
+	SpawnShadow();
 }
 
 void CKnightScript::tick()
@@ -92,6 +94,11 @@ void CKnightScript::tick()
 	{
 		m_bAttack = false;
 	}
+}
+
+void CKnightScript::render()
+{
+	CChampScript::render();
 }
 
 void CKnightScript::InitChampInfo()

@@ -78,6 +78,8 @@ void CNinjaScript::begin()
 	InitChampInfo();
 	InitChampAnim();
 	InitStateMachine();
+
+	SpawnShadow();
 }
 
 void CNinjaScript::tick()
@@ -99,6 +101,11 @@ void CNinjaScript::tick()
 	{
 		m_bAttack = false;
 	}
+}
+
+void CNinjaScript::render()
+{
+	CChampScript::render();
 }
 
 

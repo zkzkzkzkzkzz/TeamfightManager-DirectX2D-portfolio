@@ -207,16 +207,16 @@ void BattleLevel::CreateTempLevel()
 	Champ->GetScript<CNinjaScript>()->SetTeam(TEAM::RED);
 	pTempLevel->AddObject(Champ, 3);
 
-	Champ = new CGameObject;
-	Champ->SetName(L"Priest");
-	Champ->AddComponent(new CTransform);
-	Champ->AddComponent(new CMeshRender);
-	Champ->AddComponent(new CCollider2D);
-	Champ->AddComponent(new CAnimator2D);
-	Champ->AddComponent(new CStateMachine);
-	Champ->AddComponent(new CPriestScript);
-	Champ->GetScript<CPriestScript>()->SetTeam(TEAM::RED);
-	pTempLevel->AddObject(Champ, 3);
+	//Champ = new CGameObject;
+	//Champ->SetName(L"Priest");
+	//Champ->AddComponent(new CTransform);
+	//Champ->AddComponent(new CMeshRender);
+	//Champ->AddComponent(new CCollider2D);
+	//Champ->AddComponent(new CAnimator2D);
+	//Champ->AddComponent(new CStateMachine);
+	//Champ->AddComponent(new CPriestScript);
+	//Champ->GetScript<CPriestScript>()->SetTeam(TEAM::RED);
+	//pTempLevel->AddObject(Champ, 3);
 
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);

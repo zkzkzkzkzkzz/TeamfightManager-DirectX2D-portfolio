@@ -74,6 +74,8 @@ void CFighterScript::begin()
 	InitChampInfo();
 	InitChampAnim();
 	InitStateMachine();
+
+	SpawnShadow();
 }
 
 void CFighterScript::tick()
@@ -94,6 +96,11 @@ void CFighterScript::tick()
 	{
 		m_bAttack = false;
 	}
+}
+
+void CFighterScript::render()
+{
+	CChampScript::render();
 }
 
 

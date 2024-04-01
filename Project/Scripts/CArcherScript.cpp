@@ -77,6 +77,8 @@ void CArcherScript::begin()
 	InitChampInfo();
 	InitChampAnim();
 	InitStateMachine();
+
+	SpawnShadow();
 }
 
 void CArcherScript::tick()
@@ -97,6 +99,11 @@ void CArcherScript::tick()
 	{
 		m_bAttack = false;
 	}
+}
+
+void CArcherScript::render()
+{
+	CChampScript::render();
 }
 
 

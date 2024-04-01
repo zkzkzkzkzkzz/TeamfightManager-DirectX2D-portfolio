@@ -74,6 +74,8 @@ void CMonkScript::begin()
 	InitChampInfo();
 	InitChampAnim();
 	InitStateMachine();
+
+	SpawnShadow();
 }
 
 void CMonkScript::tick()
@@ -94,6 +96,11 @@ void CMonkScript::tick()
 	{
 		m_bAttack = false;
 	}
+}
+
+void CMonkScript::render()
+{
+	CChampScript::render();
 }
 
 
