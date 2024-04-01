@@ -15,6 +15,13 @@ CBlueTeamSlotScript::CBlueTeamSlotScript()
 	, m_SubSlot(nullptr)
 	, m_SubSlotTex(nullptr)
 	, m_KDAText(nullptr)
+	, m_InfoText(nullptr)
+	, m_CurGamer(nullptr)
+	, Kill(0)
+	, Dead(0)
+	, Deal(0)
+	, Damaged(0)
+	, Heal(0)
 {
 }
 
@@ -24,13 +31,19 @@ CBlueTeamSlotScript::CBlueTeamSlotScript(const CBlueTeamSlotScript& _Origin)
 	, m_SubSlot(nullptr)
 	, m_SubSlotTex(_Origin.m_SubSlotTex)
 	, m_KDAText(nullptr)
+	, m_InfoText(nullptr)
+	, m_CurGamer(nullptr)
+	, Kill(0)
+	, Dead(0)
+	, Deal(0)
+	, Damaged(0)
+	, Heal(0)
 {
 }
 
 CBlueTeamSlotScript::~CBlueTeamSlotScript()
 {
 }
-
 
 void CBlueTeamSlotScript::begin()
 {
@@ -57,6 +70,18 @@ void CBlueTeamSlotScript::begin()
 	m_SubSlotTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\IngameUI\\data_ui_bg_0.png"
 														, L"texture\\Champ\\IngameUI\\data_ui_bg_0.png");
 
+	m_InfoText = new CGameObject;
+	m_InfoText->SetName(L"Info");
+	m_InfoText->AddComponent(new CTransform);
+	m_InfoText->AddComponent(new CTextRender);
+	m_InfoText->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+	m_InfoText->TextRender()->SetString(L"Info");
+	m_InfoText->TextRender()->SetFont(L"Galmuri14");
+	m_InfoText->TextRender()->SetFontSize(15.f);
+	m_InfoText->TextRender()->SetFontColor(255, 255, 255, 255);
+	m_InfoText->TextRender()->SetOffsetPos(Vec3(-14.f, -69.f, -10.f));
+	m_SubSlot->AddChild(m_InfoText);
+
 	m_KDAText = new CGameObject;
 	m_KDAText->SetName(L"KDA");
 	m_KDAText->AddComponent(new CTransform);
@@ -72,7 +97,7 @@ void CBlueTeamSlotScript::begin()
 
 void CBlueTeamSlotScript::tick()
 {
-
+	CheckInGameInfo();
 	render();
 }
 
@@ -83,4 +108,16 @@ void CBlueTeamSlotScript::render()
 
 	if (nullptr != m_SubSlotTex)
 		m_SubSlot->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_SubSlotTex);
+}
+
+
+
+void CBlueTeamSlotScript::SetGamer(CGameObject* _Gamer)
+{
+	m_CurGamer = _Gamer;
+}
+
+void CBlueTeamSlotScript::CheckInGameInfo()
+{
+	
 }

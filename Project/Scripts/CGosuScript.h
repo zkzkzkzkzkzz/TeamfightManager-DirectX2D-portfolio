@@ -30,6 +30,12 @@ public:
 
     wstring GetGamerName() { return m_GamerName; }
 
+    void SetChamp(CGameObject* _Champ) { m_SelectedChamp = _Champ; }
+    CGameObject* GetSelectedChamp() { return m_SelectedChamp; }
+
+    void SetGamerTeam(TEAM _color) { m_Team = _color; }
+    TEAM GetGamerTeam() { return m_Team; }
+
 public:
     virtual void begin() override;
     virtual void tick() override;

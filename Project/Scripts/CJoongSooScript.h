@@ -17,7 +17,7 @@ class CJoongSooScript :
     int m_GamerDEF; // 선수 방어력
     int m_GamerAge; // 선수 나이
 
-    CGameObject* m_Text;
+    CGameObject*    m_Text;
     Ptr<CTexture>   m_Tex;
 
     virtual void SaveToFile(FILE* _File) override {}
@@ -29,6 +29,12 @@ public:
     int GetAge() { return m_GamerAge; }
 
     wstring GetGamerName() { return m_GamerName; }
+
+    void SetChamp(CGameObject* _Champ) { m_SelectedChamp = _Champ; }
+    CGameObject* GetSelectedChamp() { return m_SelectedChamp; }
+
+    void SetGamerTeam(TEAM _color) { m_Team = _color; }
+    TEAM GetGamerTeam() { return m_Team; }
 
 public:
     virtual void begin() override;

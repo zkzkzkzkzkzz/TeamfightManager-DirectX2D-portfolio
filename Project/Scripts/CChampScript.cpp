@@ -66,7 +66,7 @@ void CChampScript::begin()
 		vSpawnPos = Vec3(290.f, 0.f, 300.f);
 
 	vSpawnPos.x += (float)(rand() % 50);
-	vSpawnPos.y += (float)(rand() % 200);
+	vSpawnPos.y += (float)(rand() % 200) - 200.f;
 	vSpawnPos.z += vSpawnPos.y;
 
 	Transform()->SetRelativePos(vSpawnPos);

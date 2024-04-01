@@ -151,8 +151,8 @@ void BattleLevel::CreateTempLevel()
 	Stadium->SetName(L"Stadium");
 	Stadium->AddComponent(new CTransform);
 	Stadium->AddComponent(new CMeshRender);
-	Stadium->Transform()->SetRelativePos(Vec3(0.f, 0.f, 4000.f));
-	Stadium->Transform()->SetRelativeScale(Vec3(1427.f, 1029.f, 1.f));
+	Stadium->Transform()->SetRelativePos(Vec3(0.f, -100.f, 4000.f));
+	Stadium->Transform()->SetRelativeScale(Vec3(1502.f, 1102.f, 1.f));
 	Stadium->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Stadium->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl"));
 	Stadium->MeshRender()->GetMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
