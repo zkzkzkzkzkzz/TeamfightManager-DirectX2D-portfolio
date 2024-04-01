@@ -159,6 +159,23 @@ void BattleLevel::CreateTempLevel()
 	pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\stadium.png",
 															L"texture\\Champ\\stadium.png");
  	Stadium->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
+
+	CGameObject* waterfall = new CGameObject;
+	waterfall->SetName(L"waterfall");	
+	waterfall->AddComponent(new CTransform);
+	waterfall->AddComponent(new CMeshRender);
+	waterfall->AddComponent(new CAnimator2D);
+	waterfall->Transform()->SetRelativePos(Vec3(-147.f, -345.f, 100.f));
+	waterfall->Transform()->SetRelativeScale(Vec3(70.f, 222.f, 1.f));
+	waterfall->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	waterfall->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl"));
+	waterfall->Animator2D()->LoadAnimation(L"animdata\\WaterFall.txt");
+	waterfall->Animator2D()->Play(L"WaterFall");
+	Stadium->AddChild(waterfall);
+
+	waterfall = waterfall->Clone();
+	waterfall->Transform()->SetRelativePos(Vec3(147.f, -345.f, 100.f));
+	Stadium->AddChild(waterfall);
 	pTempLevel->AddObject(Stadium, 2);
 
 
