@@ -136,7 +136,8 @@ void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target, int _Extr
 	GETCHAMP(Target)->m_InGameStatus.HP = HP;
 
 	if (GETCHAMP(Target)->m_InGameStatus.HP <= 0 
-		&& CHAMP_STATE::DEAD != GETCHAMP(Target)->GetChampState())
+		&& CHAMP_STATE::DEAD != GETCHAMP(Target)->GetChampState()
+		&& L"NinjaClone" != Target->GetName())
 	{
 		GETCHAMP(Attacker)->m_InGameStatus.KillPoint += 1;
 		GETCHAMP(Target)->m_InGameStatus.DeathPoint -= 1;

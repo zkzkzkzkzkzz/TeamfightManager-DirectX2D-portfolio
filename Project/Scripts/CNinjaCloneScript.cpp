@@ -77,6 +77,8 @@ void CNinjaCloneScript::begin()
 	InitChampInfo();
 	InitChampAnim();
 	InitStateMachine();
+
+	SpawnShadow();
 }
 
 void CNinjaCloneScript::tick()
