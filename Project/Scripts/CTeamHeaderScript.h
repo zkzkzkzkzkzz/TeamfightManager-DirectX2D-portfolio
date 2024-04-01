@@ -22,6 +22,9 @@ private:
     CGameObject*    m_RedScore;
     wstring         m_RScore;
 
+    CGameObject*    m_BlueTeamName;
+    CGameObject*    m_RedTeamName;
+
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
 
@@ -29,6 +32,7 @@ public:
     void InitBlueTeam();
     void InitRedTeam();
     void InitTimer();
+    void InitTeamName();
     
     void CheckScore();
     int CheckTime();

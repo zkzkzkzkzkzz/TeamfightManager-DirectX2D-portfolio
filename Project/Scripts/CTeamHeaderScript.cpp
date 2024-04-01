@@ -23,6 +23,8 @@ CTeamHeaderScript::CTeamHeaderScript()
 	, m_BScore{}
 	, m_RedScore(nullptr)
 	, m_RScore{}
+	, m_BlueTeamName(nullptr)
+	, m_RedTeamName(nullptr)
 {
 }
 
@@ -39,6 +41,8 @@ CTeamHeaderScript::CTeamHeaderScript(const CTeamHeaderScript& _Origin)
 	, m_BScore{}
 	, m_RedScore(nullptr)
 	, m_RScore{}
+	, m_BlueTeamName(nullptr)
+	, m_RedTeamName(nullptr)
 {
 }
 
@@ -61,7 +65,8 @@ void CTeamHeaderScript::begin()
 
 	InitBlueTeam();
 	InitRedTeam();
-	InitTimer();	
+	InitTimer();
+	InitTeamName();
 }
 
 void CTeamHeaderScript::tick()
@@ -185,4 +190,31 @@ void CTeamHeaderScript::InitTimer()
 	m_Time->TextRender()->SetFontColor(255, 255, 255, 255);
 	m_Time->TextRender()->SetOffsetPos(Vec3(-13.f, 22.f, 0.f));
 	GetOwner()->AddChild(m_Time);
+}
+
+void CTeamHeaderScript::InitTeamName()
+{
+	m_BlueTeamName = new CGameObject;
+	m_BlueTeamName->SetName(L"BlueTeamName");
+	m_BlueTeamName->AddComponent(new CTransform);
+	m_BlueTeamName->AddComponent(new CTextRender);
+	m_BlueTeamName->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+	m_BlueTeamName->TextRender()->SetString(L"AR49");
+	m_BlueTeamName->TextRender()->SetFont(L"Galmuri14");
+	m_BlueTeamName->TextRender()->SetFontSize(50.f);
+	m_BlueTeamName->TextRender()->SetFontColor(255, 255, 255, 255);
+	m_BlueTeamName->TextRender()->SetOffsetPos(Vec3(-449.f, -26.f, 0.f));
+	GetOwner()->AddChild(m_BlueTeamName);
+
+	m_RedTeamName = new CGameObject;
+	m_RedTeamName->SetName(L"RedTeamName");
+	m_RedTeamName->AddComponent(new CTransform);
+	m_RedTeamName->AddComponent(new CTextRender);
+	m_RedTeamName->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+	m_RedTeamName->TextRender()->SetString(L"OOH EEH AH AH");
+	m_RedTeamName->TextRender()->SetFont(L"Galmuri14");
+	m_RedTeamName->TextRender()->SetFontSize(50.f);
+	m_RedTeamName->TextRender()->SetFontColor(255, 255, 255, 255);
+	m_RedTeamName->TextRender()->SetOffsetPos(Vec3(184.f, -26.f, 0.f));
+	GetOwner()->AddChild(m_RedTeamName);
 }
