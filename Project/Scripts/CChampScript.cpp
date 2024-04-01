@@ -109,6 +109,7 @@ void CChampScript::tick()
 		CBTMgr::tick();
 	}
 
+	CheckShadow();
 	render();
 }
 
@@ -241,4 +242,13 @@ void CChampScript::SpawnShadow()
 	m_Shadow->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 	m_ShadowTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\player_shadow.png", L"texture\\Champ\\player_shadow.png");
 	GetOwner()->AddChild(m_Shadow);
+	m_Shadow->SetActive(false);
+}
+
+void CChampScript::CheckShadow()
+{
+	if (nullptr != GETCHAMP(GetOwner())->m_Shadow && CHAMP_STATE::DEAD != GETCHAMP(GetOwner())->GetChampState())
+		GETCHAMP(GetOwner())->m_Shadow->SetActive(true);
+	else if (nullptr != GETCHAMP(GetOwner())->m_Shadow && CHAMP_STATE::DEAD == GETCHAMP(GetOwner())->GetChampState())
+		GETCHAMP(GetOwner())->m_Shadow->SetActive(false);
 }

@@ -18,6 +18,7 @@ CNinjaCloneScript::CNinjaCloneScript()
 	, m_DealDelay(0.f)
 	, m_DealActive(false)
 	, m_DeadDelay(0.f)
+	, m_LifeTime(0.f)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -37,6 +38,7 @@ CNinjaCloneScript::CNinjaCloneScript(const CNinjaCloneScript& _Origin)
 	, m_DealDelay(0.f)
 	, m_DealActive(false)
 	, m_DeadDelay(0.f)
+	, m_LifeTime(0.f)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "HP", &m_InGameStatus.HP);
 	AddScriptParam(SCRIPT_PARAM::INT, "ATK", &m_InGameStatus.ATK);
@@ -86,12 +88,18 @@ void CNinjaCloneScript::tick()
 	m_InGameStatus.CoolTime_Attack += DT;
 	m_DealDelay += DT;
 	m_DeadDelay += DT;
+	m_LifeTime += DT;
 
 	float delay = 1 / m_Info.ATKSpeed;
 	if (m_InGameStatus.CoolTime_Attack > delay)
 	{
-		m_InGameStatus.HP -= 1;
 		m_bAttack = false;
+	}
+	
+	if (1.f <= m_LifeTime)
+	{
+		m_InGameStatus.HP -= 5;
+		m_LifeTime = 0.f;
 	}
 }
 
@@ -170,7 +178,8 @@ void CNinjaCloneScript::InitStateMachine()
 		{
 			if (team != GETCHAMP(pObjs[i])->GetTeamColor()
 				&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
-				&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
+				&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor()
+				&& CHAMP_STATE::DEAD != GETCHAMP(pObjs[i])->GetChampState())
 			{
 				Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
 
@@ -213,7 +222,8 @@ void CNinjaCloneScript::CheckStateMachine()
 				if (TEAM::NONE != team
 					&& team != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
-					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
+					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor()
+					&& CHAMP_STATE::DEAD != GETCHAMP(pObjs[i])->GetChampState())
 				{
 					Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
 

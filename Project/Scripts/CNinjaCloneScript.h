@@ -10,6 +10,8 @@ private:
     bool    m_DealActive;
     float   m_DeadDelay;
 
+    float   m_LifeTime;
+
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
 

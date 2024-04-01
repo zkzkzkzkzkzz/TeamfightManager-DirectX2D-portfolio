@@ -220,7 +220,8 @@ void CKnightScript::CheckStateMachine()
 				if (TEAM::NONE != team
 					&& team != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
-					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
+					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor()
+					&& CHAMP_STATE::DEAD != GETCHAMP(pObjs[i])->GetChampState())
 				{
 					Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
 

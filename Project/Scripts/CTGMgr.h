@@ -21,7 +21,7 @@ public:
 	static list<CGameObject*> G_TeamBlue;
 	static list<CGameObject*> G_TeamRed;
 
-	static int G_Time;	// 경기 시간
+	static int G_Time;		// 현재 경기 시간
 
 	static int G_BlueKillScore;
 	static int G_RedKillScore;

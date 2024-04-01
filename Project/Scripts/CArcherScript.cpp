@@ -185,7 +185,7 @@ void CArcherScript::InitStateMachine()
 		CGameObject* pTarget = nullptr;
 		for (size_t i = 0; i < pObjs.size(); ++i)
 		{
-			if ( team != GETCHAMP(pObjs[i])->GetTeamColor() 
+			if (team != GETCHAMP(pObjs[i])->GetTeamColor() 
 				&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
 				&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
 			{
@@ -230,7 +230,8 @@ void CArcherScript::CheckStateMachine()
 				if ( TEAM::NONE != team
 					&& team != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
-					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
+					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor()
+					&& CHAMP_STATE::DEAD != GETCHAMP(pObjs[i])->GetChampState())
 				{
 					Vec3 dist = Transform()->GetRelativePos() - pObjs[i]->Transform()->GetRelativePos();
 

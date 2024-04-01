@@ -228,7 +228,8 @@ void CPriestScript::CheckStateMachine()
 			CGameObject* pTarget = nullptr;
 			for (size_t i = 0; i < pObjs.size(); ++i)
 			{
-				if (team == GETCHAMP(pObjs[i])->GetTeamColor())
+				if (team == GETCHAMP(pObjs[i])->GetTeamColor()
+					&& CHAMP_STATE::DEAD != GETCHAMP(pObjs[i])->GetChampState())
 				{
 					int HP = GETCHAMP(pObjs[i])->GetInGameChampHP();
 
