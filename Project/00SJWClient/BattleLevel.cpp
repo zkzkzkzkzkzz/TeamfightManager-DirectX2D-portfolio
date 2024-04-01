@@ -145,34 +145,34 @@ void BattleLevel::CreateTempLevel()
  	Stadium->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	pTempLevel->AddObject(Stadium, 2);
 
-	CGameObject* BTmgr = new CGameObject;
-	BTmgr->SetName(L"BTMgr");
-	BTmgr->AddComponent(new CTransform);
-	BTmgr->AddComponent(new CChampScript);
-	GETCHAMP(BTmgr)->SetTeam(TEAM::NONE);
-	pTempLevel->AddObject(BTmgr, 3);
+	//CGameObject* BTmgr = new CGameObject;
+	//BTmgr->SetName(L"BTMgr");
+	//BTmgr->AddComponent(new CTransform);
+	//BTmgr->AddComponent(new CChampScript);
+	//GETCHAMP(BTmgr)->SetTeam(TEAM::NONE);
+	//pTempLevel->AddObject(BTmgr, 3);
 
-	CGameObject* Champ = new CGameObject;
-	Champ->SetName(L"Archer");
-	Champ->AddComponent(new CTransform);
-	Champ->AddComponent(new CMeshRender);
-	Champ->AddComponent(new CCollider2D);
-	Champ->AddComponent(new CAnimator2D);
-	Champ->AddComponent(new CStateMachine);
-	Champ->AddComponent(new CArcherScript);
-	Champ->GetScript<CArcherScript>()->SetTeam(TEAM::BLUE);
-	pTempLevel->AddObject(Champ, 3);
+	//CGameObject* Champ = new CGameObject;
+	//Champ->SetName(L"Archer");
+	//Champ->AddComponent(new CTransform);
+	//Champ->AddComponent(new CMeshRender);
+	//Champ->AddComponent(new CCollider2D);
+	//Champ->AddComponent(new CAnimator2D);
+	//Champ->AddComponent(new CStateMachine);
+	//Champ->AddComponent(new CArcherScript);
+	//Champ->GetScript<CArcherScript>()->SetTeam(TEAM::BLUE);
+	//pTempLevel->AddObject(Champ, 3);
 
-	Champ = new CGameObject;
-	Champ->SetName(L"Knight");
-	Champ->AddComponent(new CTransform);
-	Champ->AddComponent(new CMeshRender);
-	Champ->AddComponent(new CCollider2D);
-	Champ->AddComponent(new CAnimator2D);
-	Champ->AddComponent(new CStateMachine);
-	Champ->AddComponent(new CKnightScript);
-	Champ->GetScript<CKnightScript>()->SetTeam(TEAM::BLUE);
-	pTempLevel->AddObject(Champ, 3);
+	//Champ = new CGameObject;
+	//Champ->SetName(L"Knight");
+	//Champ->AddComponent(new CTransform);
+	//Champ->AddComponent(new CMeshRender);
+	//Champ->AddComponent(new CCollider2D);
+	//Champ->AddComponent(new CAnimator2D);
+	//Champ->AddComponent(new CStateMachine);
+	//Champ->AddComponent(new CKnightScript);
+	//Champ->GetScript<CKnightScript>()->SetTeam(TEAM::BLUE);
+	//pTempLevel->AddObject(Champ, 3);
 
 	//Champ = new CGameObject;
 	//Champ->SetName(L"Fighter");
@@ -182,30 +182,27 @@ void BattleLevel::CreateTempLevel()
 	//Champ->AddComponent(new CAnimator2D);
 	//Champ->AddComponent(new CStateMachine);
 	//Champ->AddComponent(new CFighterScript);
-	//Champ->GetScript<CFighterScript>()->SetTeam(TEAM::RED);
 	//pTempLevel->AddObject(Champ, 3);
 
-	Champ = new CGameObject;
-	Champ->SetName(L"Monk");
-	Champ->AddComponent(new CTransform);
-	Champ->AddComponent(new CMeshRender);
-	Champ->AddComponent(new CCollider2D);
-	Champ->AddComponent(new CAnimator2D);
-	Champ->AddComponent(new CStateMachine);
-	Champ->AddComponent(new CMonkScript);
-	Champ->GetScript<CMonkScript>()->SetTeam(TEAM::RED);
-	pTempLevel->AddObject(Champ, 3);
+	//Champ = new CGameObject;
+	//Champ->SetName(L"Monk");
+	//Champ->AddComponent(new CTransform);
+	//Champ->AddComponent(new CMeshRender);
+	//Champ->AddComponent(new CCollider2D);
+	//Champ->AddComponent(new CAnimator2D);
+	//Champ->AddComponent(new CStateMachine);
+	//Champ->AddComponent(new CMonkScript);
+	//pTempLevel->AddObject(Champ, 3);
 
-	Champ = new CGameObject;
-	Champ->SetName(L"Ninja");
-	Champ->AddComponent(new CTransform);
-	Champ->AddComponent(new CMeshRender);
-	Champ->AddComponent(new CCollider2D);
-	Champ->AddComponent(new CAnimator2D);
-	Champ->AddComponent(new CStateMachine);
-	Champ->AddComponent(new CNinjaScript);
-	Champ->GetScript<CNinjaScript>()->SetTeam(TEAM::RED);
-	pTempLevel->AddObject(Champ, 3);
+	//Champ = new CGameObject;
+	//Champ->SetName(L"Ninja");
+	//Champ->AddComponent(new CTransform);
+	//Champ->AddComponent(new CMeshRender);
+	//Champ->AddComponent(new CCollider2D);
+	//Champ->AddComponent(new CAnimator2D);
+	//Champ->AddComponent(new CStateMachine);
+	//Champ->AddComponent(new CNinjaScript);
+	//pTempLevel->AddObject(Champ, 3);
 
 	//Champ = new CGameObject;
 	//Champ->SetName(L"Priest");
@@ -215,7 +212,6 @@ void BattleLevel::CreateTempLevel()
 	//Champ->AddComponent(new CAnimator2D);
 	//Champ->AddComponent(new CStateMachine);
 	//Champ->AddComponent(new CPriestScript);
-	//Champ->GetScript<CPriestScript>()->SetTeam(TEAM::RED);
 	//pTempLevel->AddObject(Champ, 3);
 
 	// 레벨 플레이

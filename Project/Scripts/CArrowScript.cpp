@@ -48,6 +48,7 @@ void CArrowScript::begin()
 												L"texture\\Champ\\arrow.png");
 
 	m_Pos = m_Shooter->Transform()->GetRelativePos();
+
 	m_prevPos = m_Target->Transform()->GetRelativePos();
 
 	if (0.f == m_Shooter->Transform()->GetRelativeRotation().y)

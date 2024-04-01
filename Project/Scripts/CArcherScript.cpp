@@ -293,7 +293,7 @@ void CArcherScript::EnterAttackState()
 		m_arrowspawn = false;
 	}
 
-	if (m_bAttack && !m_arrowspawn && m_arrowDelay > 0.4f)
+	if (m_bAttack && !m_arrowspawn && m_arrowDelay > 0.4f && nullptr != m_Target)
 	{
 		SpawnArrow();
 	}
@@ -383,7 +383,7 @@ void CArcherScript::EnterUltimateState()
 			m_InGameStatus.bUltimateDone = true;
 		}
 
-		if (m_UltiActive && !m_arrowspawn && CHAMP_STATE::DEAD != GETCHAMP(m_Target)->GetChampState())
+		if (m_UltiActive && !m_arrowspawn && nullptr != m_Target && CHAMP_STATE::DEAD != GETCHAMP(m_Target)->GetChampState())
 			SpawnArrow();
 		else if (m_arrowspawn && m_arrowDelay > 0.1f)
 		{

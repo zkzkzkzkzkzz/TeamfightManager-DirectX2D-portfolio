@@ -226,8 +226,7 @@ void CNinjaScript::CheckStateMachine()
 			CGameObject* pTarget = nullptr;
 			for (size_t i = 0; i < pObjs.size(); ++i)
 			{
-				if (m_Target->IsActive()
-					&& TEAM::NONE != team
+				if (TEAM::NONE != team
 					&& team != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::NONE != GETCHAMP(pObjs[i])->GetTeamColor()
 					&& TEAM::END != GETCHAMP(pObjs[i])->GetTeamColor())
