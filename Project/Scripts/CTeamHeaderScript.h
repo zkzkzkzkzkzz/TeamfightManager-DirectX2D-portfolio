@@ -17,10 +17,20 @@ private:
     CGameObject*    m_Time;
     wstring         m_strTime;
 
+    CGameObject*    m_BlueScore;
+    wstring         m_BScore;
+    CGameObject*    m_RedScore;
+    wstring         m_RScore;
+
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
 
 public:
+    void InitBlueTeam();
+    void InitRedTeam();
+    void InitTimer();
+    
+    void CheckScore();
     int CheckTime();
     void SetTimer(int _CurTime);
 

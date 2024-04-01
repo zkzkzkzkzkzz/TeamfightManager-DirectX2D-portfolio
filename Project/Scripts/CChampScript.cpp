@@ -104,7 +104,10 @@ void CChampScript::tick()
 	vPos.z = 300.f + vPos.y;
 	Transform()->SetRelativePos(vPos);
 
-	CBTMgr::tick();
+	if (L"BTMgr" == GetOwner()->GetName())
+	{
+		CBTMgr::tick();
+	}
 
 	render();
 }
@@ -124,15 +127,27 @@ void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target, int _Extr
 
 	int Damage = (ATK * 100 + 99 + DEF) / (100 + DEF);
 
+	GETCHAMP(Attacker)->m_InGameStatus.TotalDeal += Damage;
+	GETCHAMP(Target)->m_InGameStatus.TotalDamage += Damage;
+
 	HP -= Damage;
 
 	GETCHAMP(Target)->m_InGameStatus.HP = HP;
 
-	if (GETCHAMP(Target)->m_InGameStatus.HP <= 0)
+	if (GETCHAMP(Target)->m_InGameStatus.HP <= 0 
+		&& CHAMP_STATE::DEAD != GETCHAMP(Target)->GetChampState())
 	{
 		GETCHAMP(Attacker)->m_InGameStatus.KillPoint += 1;
 		GETCHAMP(Target)->m_InGameStatus.DeathPoint -= 1;
 		GETCHAMP(Target)->SetChampState(CHAMP_STATE::DEAD);
+
+		TEAM team = GETCHAMP(Attacker)->GetTeamColor();
+
+		if (TEAM::BLUE == team)
+			++CTGMgr::G_BlueKillScore;
+		else if (TEAM::RED == team)
+			++CTGMgr::G_RedKillScore;
+
 	}
 }
 
@@ -147,6 +162,7 @@ void CChampScript::Healed(CGameObject* Attacker, CGameObject* Target, int _Extra
 		heal = GETCHAMP(Target)->GetChampMaxHP();
 	}
 
+	GETCHAMP(Target)->m_InGameStatus.TotalHeal += heal;
 	GETCHAMP(Target)->m_InGameStatus.HP = heal;
 }
 

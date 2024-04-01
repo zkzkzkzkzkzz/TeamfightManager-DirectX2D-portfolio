@@ -18,6 +18,8 @@ list<CGameObject*> CTGMgr::G_TeamRed;
 
 int CTGMgr::G_Time = 60;
 
+int CTGMgr::G_BlueKillScore = 0;
+int CTGMgr::G_RedKillScore = 0;
 
 
 CTGMgr::CTGMgr()
