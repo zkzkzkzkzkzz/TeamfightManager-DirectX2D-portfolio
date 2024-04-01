@@ -36,6 +36,7 @@
 #include <Scripts\CDeadState.h>
 
 #include <Scripts\CTeamHeaderScript.h>
+#include <Scripts\CBlueTeamSlotScript.h>
 
 void BattleLevel::CreateTempLevel()
 {
@@ -167,6 +168,20 @@ void BattleLevel::CreateTempLevel()
 	Obj->AddComponent(new CTransform);
 	Obj->AddComponent(new CMeshRender);
 	Obj->AddComponent(new CTeamHeaderScript);
+	pTempLevel->AddObject(Obj, 2);
+
+	// 블루 팀 슬롯
+	Obj = new CGameObject;
+	Obj->SetName(L"BlueSlot1");
+	Obj->AddComponent(new CTransform);
+	Obj->AddComponent(new CMeshRender);
+	Obj->AddComponent(new CBlueTeamSlotScript);
+	Obj->Transform()->SetRelativePos(Vec3(-559.f, 201.f, 2000.f));
+	pTempLevel->AddObject(Obj, 2);
+
+	Obj = Obj->Clone();
+	Obj->SetName(L"BlueSlot2");
+	Obj->Transform()->SetRelativePos(Vec3(-559.f, 38.f, 2000.f));
 	pTempLevel->AddObject(Obj, 2);
 
 	// 레벨 플레이

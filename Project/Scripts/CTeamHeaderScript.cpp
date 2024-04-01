@@ -201,7 +201,7 @@ void CTeamHeaderScript::InitTeamName()
 	m_BlueTeamName->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
 	m_BlueTeamName->TextRender()->SetString(L"AR49");
 	m_BlueTeamName->TextRender()->SetFont(L"Galmuri14");
-	m_BlueTeamName->TextRender()->SetFontSize(50.f);
+	m_BlueTeamName->TextRender()->SetFontSize(45.f);
 	m_BlueTeamName->TextRender()->SetFontColor(255, 255, 255, 255);
 	m_BlueTeamName->TextRender()->SetOffsetPos(Vec3(-449.f, -26.f, 0.f));
 	GetOwner()->AddChild(m_BlueTeamName);
@@ -213,7 +213,7 @@ void CTeamHeaderScript::InitTeamName()
 	m_RedTeamName->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
 	m_RedTeamName->TextRender()->SetString(L"OOH EEH AH AH");
 	m_RedTeamName->TextRender()->SetFont(L"Galmuri14");
-	m_RedTeamName->TextRender()->SetFontSize(50.f);
+	m_RedTeamName->TextRender()->SetFontSize(45.f);
 	m_RedTeamName->TextRender()->SetFontColor(255, 255, 255, 255);
 	m_RedTeamName->TextRender()->SetOffsetPos(Vec3(184.f, -26.f, 0.f));
 	GetOwner()->AddChild(m_RedTeamName);

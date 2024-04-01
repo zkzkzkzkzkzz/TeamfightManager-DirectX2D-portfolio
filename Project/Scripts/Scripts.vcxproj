@@ -196,6 +196,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CSkillState.h" />
     <ClInclude Include="CSquadBtnScript.h" />
     <ClInclude Include="CTeamHeaderScript.h" />
+    <ClInclude Include="CBlueTeamSlotScript.h" />
     <ClInclude Include="CTGMgr.h" />
     <ClInclude Include="CTraceState.h" />
     <ClInclude Include="CTrainningBtnScript.h" />
@@ -235,6 +236,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CSkillState.cpp" />
     <ClCompile Include="CSquadBtnScript.cpp" />
     <ClCompile Include="CTeamHeaderScript.cpp" />
+    <ClCompile Include="CBlueTeamSlotScript.cpp" />
     <ClCompile Include="CTGMgr.cpp" />
     <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="CTrainningBtnScript.cpp" />
