@@ -29,7 +29,7 @@ void MaterialUI::render_update()
 
     ImGui::Text("Material");
     ImGui::SameLine(0, 16); ImGui::SetNextItemWidth(200);
-    ImGui::InputText("##MtrlName", (char*)strPath.c_str(), strPath.length(), ImGuiInputTextFlags_ReadOnly);
+    ImGui::InputText("##MtrlName", (char*)strPath.c_str(), strPath.length());
 
     Ptr<CGraphicsShader> pShader = pMtrl->GetShader();
     string strShaderName;
@@ -45,6 +45,16 @@ void MaterialUI::render_update()
     ImGui::Separator();
     ImGui::Text("Material Parameter");
     ImGui::Spacing();
+
+    if (ImGui::Button("Add Std2DShader"))
+    {
+        pMtrl->SetShader(CAssetMgr::GetInst()->FindAsset<CGraphicsShader>(L"Std2DShader"));
+    }
+
+    if (ImGui::Button("Save Material"))
+    {
+        pMtrl->Save(ToWString(strPath));
+    }
 
     // Shader Parameter
     if (nullptr == pShader)

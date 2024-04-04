@@ -8,6 +8,10 @@ int CTGMgr::G_Week = 1;
 
 int CTGMgr::G_Coin = 200;
 
+vector<CGameObject*> CTGMgr::G_ParticipatingPlayer[2];
+vector<CGameObject*> CTGMgr::G_SubstituesPlayer[1];
+
+vector<CGameObject*> CTGMgr::G_PlayableGamer;
 map<wstring, CGameObject*> CTGMgr::G_Gamer;			// 선수 목록
 map<wstring, CGameObject*> CTGMgr::G_RecruitList;	// 영입 가능 선수 목록
 

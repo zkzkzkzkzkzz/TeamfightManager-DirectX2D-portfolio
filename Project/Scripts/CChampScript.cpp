@@ -20,6 +20,7 @@ CChampScript::CChampScript()
 	, m_Target(nullptr)
 	, m_Shadow(nullptr)
 	, m_ShadowTex(nullptr)
+	, m_PlayingGamer(nullptr)
 {
 }
 
@@ -34,6 +35,7 @@ CChampScript::CChampScript(UINT _ScriptType)
 	, m_Target(nullptr)
 	, m_Shadow(nullptr)
 	, m_ShadowTex(nullptr)
+	, m_PlayingGamer(nullptr)
 {
 }
 
@@ -48,6 +50,7 @@ CChampScript::CChampScript(const CChampScript& _Origin)
 	, m_Target(nullptr)
 	, m_Shadow(nullptr)
 	, m_ShadowTex(_Origin.m_ShadowTex)
+	, m_PlayingGamer(nullptr)
 {
 }
 

@@ -57,6 +57,8 @@ public:
     void MoveArrow();
     void ResetArrow();
 
+    void SpawnLineUpUI();
+
 public:
     virtual void begin() override;
     virtual void tick() override;

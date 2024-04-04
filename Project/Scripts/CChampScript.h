@@ -87,6 +87,8 @@ protected:
     bool    m_bAttack;
     bool    m_bRespawn;
 
+    CGameObject*    m_PlayingGamer;
+
 private:
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
@@ -163,5 +165,6 @@ public:
     ~CChampScript();
 
     friend class CBTMgr;
+    friend class CGamerScript;
 };
 

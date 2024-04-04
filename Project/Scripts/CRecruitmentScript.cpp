@@ -448,7 +448,7 @@ void CRecruitmentScript::CheckRecruitBtnPos()
 
 void CRecruitmentScript::RecruitGamer()
 {
-	CGameObject* gamer = CTGMgr::GetInst()->G_RecruitList.find(L"GaeGosu")->second;
-	CTGMgr::GetInst()->G_Gamer.insert(make_pair(gamer->GetName(), gamer));
+	CGameObject* gamer = CTGMgr::GetInst()->G_RecruitList.find(L"Gosu")->second;
+	CTGMgr::GetInst()->G_PlayableGamer.push_back(gamer);
 	gamer->SetActive(true);
 }

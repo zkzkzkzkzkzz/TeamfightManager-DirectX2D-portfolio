@@ -13,6 +13,8 @@
 #include <Engine\CTextRender.h>
 #include <Engine\CFontMgr.h>
 
+#include "CLineUpSlotScript.h"
+
 CProceedBtnScript::CProceedBtnScript()
     : CScript(PROCEEDBTNSCRIPT)
     , m_NormalImg(nullptr)
@@ -61,7 +63,7 @@ void CProceedBtnScript::begin()
     m_HoverImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\proceed\\proceed_button_1.png", L"texture\\Lobby\\btn\\proceed\\proceed_button_1.png");
     m_CurImg = m_NormalImg;
 
-	GetOwner()->Transform()->SetRelativePos(Vec3(491.f, -295.f, 230.f));
+	GetOwner()->Transform()->SetRelativePos(Vec3(491.f, -295.f, 1000.f));
 	GetOwner()->Transform()->SetRelativeScale(Vec3(258.f, 88.f, 1.f));
 
 	m_AnimImg = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\btn\\proceed\\proceed_button_2.png", L"texture\\Lobby\\btn\\proceed\\proceed_button_2.png");
@@ -201,6 +203,7 @@ void CProceedBtnScript::LBtnClicked()
     m_CurImg = m_HoverImg;
 	m_MainText->TextRender()->SetFontColor(0, 0, 0, 255);
 	m_SubText->TextRender()->SetFontColor(0, 0, 0, 255);
+	SpawnLineUpUI();
 }
 
 void CProceedBtnScript::MoveArrow()
@@ -238,4 +241,33 @@ void CProceedBtnScript::ResetArrow()
 {
 	m_Time = 0.f;
 	m_Arrow->Transform()->SetRelativePos(Vec3(65.f, 0.f, -1.f));
+}
+
+void CProceedBtnScript::SpawnLineUpUI()
+{
+	CGameObject* prefab = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\LineUpTest3.prefab")->Instatiate();
+	GamePlayStatic::SpawnGameObject(prefab, 2);
+
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_PlayableGamer.size(); ++i)
+	{
+		CGameObject* slot = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\LineUpTeamSlot1.prefab")->Instatiate();
+		slot->GetScript<CLineUpSlotScript>()->SetGamerToSlot(CTGMgr::GetInst()->G_PlayableGamer[i]);
+
+		if (i < 2)
+		{
+			if (1 == i)
+				slot->Transform()->SetRelativePos(Vec3(-436.f, 26.f, 50.f));
+			else
+				slot->Transform()->SetRelativePos(Vec3(-264.f, 26.f, 50.f));
+
+			CTGMgr::GetInst()->G_ParticipatingPlayer->push_back(slot->GetScript<CLineUpSlotScript>()->GetGamerFromSlot());
+		}
+		else
+		{
+			slot->Transform()->SetRelativePos(Vec3(44.f, 26.f, 50.f));
+			CTGMgr::GetInst()->G_SubstituesPlayer->push_back(slot->GetScript<CLineUpSlotScript>()->GetGamerFromSlot());
+		}
+
+		GamePlayStatic::SpawnGameObject(slot, 2);
+	}
 }

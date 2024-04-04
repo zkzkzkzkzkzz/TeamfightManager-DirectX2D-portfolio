@@ -13,6 +13,10 @@ public:
 
 	static int G_Coin;
 
+	static vector<CGameObject*> G_ParticipatingPlayer[2];
+	static vector<CGameObject*> G_SubstituesPlayer[1];
+
+	static vector<CGameObject*>	G_PlayableGamer;
 	static map<wstring, CGameObject*> G_Gamer;			// 선수 목록
 	static map<wstring, CGameObject*> G_RecruitList;	// 영입 가능 선수 목록
 

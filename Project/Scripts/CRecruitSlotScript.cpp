@@ -12,8 +12,8 @@
 #include <Engine\components.h>
 #include <Engine\CFontMgr.h>
 
-#include "CGosuScript.h"
 #include "CRecruitmentScript.h"
+#include "CGamerScript.h"
 
 CRecruitSlotScript::CRecruitSlotScript()
 	: CScript(RECRUITSLOTSCRIPT)
@@ -179,11 +179,13 @@ void CRecruitSlotScript::begin()
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	m_DoneText.push_back(pNewObj);
 
+	CGameObject* temp = CTGMgr::GetInst()->G_RecruitList.find(L"Gosu")->second;
+
 	// 13
 	CGameObject* GosuText = new CGameObject;
 	GosuText->AddComponent(new CTransform);
 	GosuText->AddComponent(new CTextRender);
-	GosuText->TextRender()->SetString((CTGMgr::GetInst()->G_RecruitList.find(L"GaeGosu")->second->GetScript<CGosuScript>()->GetGamerName()));
+	GosuText->TextRender()->SetString(GETGAMER(temp)->GetGamerName());
 	GosuText->TextRender()->SetFont(L"Galmuri14");
 	GosuText->TextRender()->SetFontSize(20.f);
 	GosuText->TextRender()->SetFontColor(255, 255, 255, 255);
@@ -194,7 +196,7 @@ void CRecruitSlotScript::begin()
 	GosuText = new CGameObject;
 	GosuText->AddComponent(new CTransform);
 	GosuText->AddComponent(new CTextRender);
-	GosuText->TextRender()->SetString(ToWString(std::to_string((CTGMgr::GetInst()->G_RecruitList.find(L"GaeGosu")->second->GetScript<CGosuScript>()->GetATK()))));
+	GosuText->TextRender()->SetString(ToWString(std::to_string(GETGAMER(temp)->GetATK())));
 	GosuText->TextRender()->SetFont(L"Galmuri14");
 	GosuText->TextRender()->SetFontSize(20.f);
 	GosuText->TextRender()->SetFontColor(255, 255, 255, 255);
@@ -205,7 +207,7 @@ void CRecruitSlotScript::begin()
 	GosuText = new CGameObject;
 	GosuText->AddComponent(new CTransform);
 	GosuText->AddComponent(new CTextRender);
-	GosuText->TextRender()->SetString(ToWString(std::to_string((CTGMgr::GetInst()->G_RecruitList.find(L"GaeGosu")->second->GetScript<CGosuScript>()->GetDEF()))));
+	GosuText->TextRender()->SetString(ToWString(std::to_string((GETGAMER(temp)->GetATK()))));
 	GosuText->TextRender()->SetFont(L"Galmuri14");
 	GosuText->TextRender()->SetFontSize(20.f);
 	GosuText->TextRender()->SetFontColor(255, 255, 255, 255);
