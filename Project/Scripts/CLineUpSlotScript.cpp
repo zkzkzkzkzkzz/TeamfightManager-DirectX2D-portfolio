@@ -58,6 +58,8 @@ void CLineUpSlotScript::begin()
 void CLineUpSlotScript::tick()
 {
 	CheckMousePos();
+
+	SetSlotPos();
 }
 
 void CLineUpSlotScript::SetSlotInfo()
@@ -165,10 +167,60 @@ void CLineUpSlotScript::LBtnClicked()
 	{
 		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 2);
 		m_SelectSlot = true;
+
+		GetSlotIndex();
+
+		if (-1 != CTGMgr::GetInst()->G_FirstSlot && -1 != CTGMgr::GetInst()->G_SecondSlot)
+		{
+			SwapSlot();
+			CTGMgr::GetInst()->G_FirstSlot = -1;
+			CTGMgr::GetInst()->G_SecondSlot = -1;
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+			m_SelectSlot = false;
+		}
 	}
 	else
 	{
 		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 		m_SelectSlot = false;
 	}
+}
+
+
+void CLineUpSlotScript::SetSlotPos()
+{
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_ShortlistSlot.size(); ++i)
+	{
+		if (0 == i)
+			CTGMgr::GetInst()->G_ShortlistSlot[i]->Transform()->SetRelativePos(Vec3(-436.f, 26.f, 50.f));
+		else if (1 == i)
+			CTGMgr::GetInst()->G_ShortlistSlot[i]->Transform()->SetRelativePos(Vec3(-264.f, 26.f, 50.f));
+		else if (2 == i)
+			CTGMgr::GetInst()->G_ShortlistSlot[i]->Transform()->SetRelativePos(Vec3(44.f, 26.f, 50.f));
+
+	}
+}
+
+void CLineUpSlotScript::GetSlotIndex()
+{
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_ShortlistSlot.size(); ++i)
+	{
+		if (-1 == CTGMgr::GetInst()->G_FirstSlot 
+			&& CTGMgr::GetInst()->G_ShortlistSlot[i]->GetScript<CLineUpSlotScript>()->IsSelect())
+		{
+			CTGMgr::GetInst()->G_FirstSlot = i;
+		}
+		else if (-1 != CTGMgr::GetInst()->G_FirstSlot
+			&& CTGMgr::GetInst()->G_FirstSlot != i
+			&& CTGMgr::GetInst()->G_ShortlistSlot[i]->GetScript<CLineUpSlotScript>()->IsSelect())
+		{
+			CTGMgr::GetInst()->G_SecondSlot = i;
+		}
+	}
+}
+
+void CLineUpSlotScript::SwapSlot()
+{
+	swap(CTGMgr::GetInst()->G_ShortlistSlot[CTGMgr::GetInst()->G_FirstSlot]
+		, CTGMgr::GetInst()->G_ShortlistSlot[CTGMgr::GetInst()->G_SecondSlot]);
 }

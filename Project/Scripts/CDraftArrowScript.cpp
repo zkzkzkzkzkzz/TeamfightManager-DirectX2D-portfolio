@@ -34,17 +34,9 @@ void CDraftArrowScript::tick()
 
 bool CDraftArrowScript::CheckSlotSelect()
 {
-	for (size_t i = 0; i < CTGMgr::GetInst()->G_ParticipatingSlot.size(); ++i)
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_ShortlistSlot.size(); ++i)
 	{
-		if (CTGMgr::GetInst()->G_ParticipatingSlot[i]->GetScript<CLineUpSlotScript>()->IsSelect())
-		{
-			return true;
-		}
-	}
-
-	for (size_t i = 0; i < CTGMgr::GetInst()->G_SubstituesSlot.size(); ++i)
-	{
-		if (CTGMgr::GetInst()->G_SubstituesSlot[i]->GetScript<CLineUpSlotScript>()->IsSelect())
+		if (CTGMgr::GetInst()->G_ShortlistSlot[i]->GetScript<CLineUpSlotScript>()->IsSelect())
 		{
 			return true;
 		}

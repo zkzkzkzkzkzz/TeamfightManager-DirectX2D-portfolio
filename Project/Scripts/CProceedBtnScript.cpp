@@ -260,14 +260,12 @@ void CProceedBtnScript::SpawnLineUpUI()
 			else
 				slot->Transform()->SetRelativePos(Vec3(-264.f, 26.f, 50.f));
 
-			CTGMgr::GetInst()->G_ParticipatingSlot.push_back(slot);
-			//CTGMgr::GetInst()->G_ParticipatingPlayer->push_back(slot->GetScript<CLineUpSlotScript>()->GetGamerFromSlot());
+			CTGMgr::GetInst()->G_ShortlistSlot.push_back(slot);
 		}
 		else
 		{
 			slot->Transform()->SetRelativePos(Vec3(44.f, 26.f, 50.f));
-			CTGMgr::GetInst()->G_SubstituesSlot.push_back(slot);
-			//CTGMgr::GetInst()->G_SubstituesPlayer->push_back(slot->GetScript<CLineUpSlotScript>()->GetGamerFromSlot());
+			CTGMgr::GetInst()->G_ShortlistSlot.push_back(slot);
 		}
 
 		GamePlayStatic::SpawnGameObject(slot, 2);

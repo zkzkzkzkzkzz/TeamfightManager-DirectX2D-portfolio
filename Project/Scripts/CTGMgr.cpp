@@ -8,8 +8,10 @@ int CTGMgr::G_Week = 1;
 
 int CTGMgr::G_Coin = 200;
 
-vector<CGameObject*> CTGMgr::G_ParticipatingSlot;
-vector<CGameObject*> CTGMgr::G_SubstituesSlot;
+int CTGMgr::G_FirstSlot = -1;
+int CTGMgr::G_SecondSlot = -1;
+
+vector<CGameObject*> CTGMgr::G_ShortlistSlot;
 
 vector<CGameObject*> CTGMgr::G_ParticipatingPlayer[2];
 vector<CGameObject*> CTGMgr::G_SubstituesPlayer[1];
