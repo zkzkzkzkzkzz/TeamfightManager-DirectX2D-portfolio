@@ -10,6 +10,9 @@ private:
     virtual void LoadFromFile(FILE* _File) override {}
 
 public:
+    bool CheckSlotSelect();
+
+public:
     virtual void begin() override;
     virtual void tick() override;
 

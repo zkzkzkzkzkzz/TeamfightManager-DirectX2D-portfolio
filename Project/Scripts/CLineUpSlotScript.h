@@ -22,6 +22,7 @@ public:
     CGameObject* GetGamerFromSlot() { return m_Gamer; }
 
     void SetSlotInfo();
+    bool IsSelect() { return m_SelectSlot; }
 
     void CheckMousePos();
 

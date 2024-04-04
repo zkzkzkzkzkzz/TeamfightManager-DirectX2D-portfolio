@@ -13,6 +13,9 @@ public:
 
 	static int G_Coin;
 
+	static vector<CGameObject*> G_ParticipatingSlot;
+	static vector<CGameObject*> G_SubstituesSlot;
+
 	static vector<CGameObject*> G_ParticipatingPlayer[2];
 	static vector<CGameObject*> G_SubstituesPlayer[1];
 

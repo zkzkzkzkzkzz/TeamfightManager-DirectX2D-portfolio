@@ -3,9 +3,16 @@
 
 #include <Engine\CEngine.h>
 #include <Engine\CKeyMgr.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
+#include <Engine\CLayer.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\components.h>
+
+
+#include "CLineUpBGScript.h"
+#include "CDraftArrowScript.h"
 #include "CGamerScript.h"
 
 CLineUpSlotScript::CLineUpSlotScript()

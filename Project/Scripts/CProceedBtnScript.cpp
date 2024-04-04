@@ -245,7 +245,7 @@ void CProceedBtnScript::ResetArrow()
 
 void CProceedBtnScript::SpawnLineUpUI()
 {
-	CGameObject* prefab = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\LineUpTest3.prefab")->Instatiate();
+	CGameObject* prefab = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\LineUpTest4.prefab")->Instatiate();
 	GamePlayStatic::SpawnGameObject(prefab, 2);
 
 	for (size_t i = 0; i < CTGMgr::GetInst()->G_PlayableGamer.size(); ++i)
@@ -260,12 +260,14 @@ void CProceedBtnScript::SpawnLineUpUI()
 			else
 				slot->Transform()->SetRelativePos(Vec3(-264.f, 26.f, 50.f));
 
-			CTGMgr::GetInst()->G_ParticipatingPlayer->push_back(slot->GetScript<CLineUpSlotScript>()->GetGamerFromSlot());
+			CTGMgr::GetInst()->G_ParticipatingSlot.push_back(slot);
+			//CTGMgr::GetInst()->G_ParticipatingPlayer->push_back(slot->GetScript<CLineUpSlotScript>()->GetGamerFromSlot());
 		}
 		else
 		{
 			slot->Transform()->SetRelativePos(Vec3(44.f, 26.f, 50.f));
-			CTGMgr::GetInst()->G_SubstituesPlayer->push_back(slot->GetScript<CLineUpSlotScript>()->GetGamerFromSlot());
+			CTGMgr::GetInst()->G_SubstituesSlot.push_back(slot);
+			//CTGMgr::GetInst()->G_SubstituesPlayer->push_back(slot->GetScript<CLineUpSlotScript>()->GetGamerFromSlot());
 		}
 
 		GamePlayStatic::SpawnGameObject(slot, 2);
