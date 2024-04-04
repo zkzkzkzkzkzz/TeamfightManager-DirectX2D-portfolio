@@ -245,7 +245,7 @@ void CProceedBtnScript::ResetArrow()
 
 void CProceedBtnScript::SpawnLineUpUI()
 {
-	CGameObject* prefab = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\LineUpTest4.prefab")->Instatiate();
+	CGameObject* prefab = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\LineUpTest7.prefab")->Instatiate();
 	GamePlayStatic::SpawnGameObject(prefab, 2);
 
 	for (size_t i = 0; i < CTGMgr::GetInst()->G_PlayableGamer.size(); ++i)

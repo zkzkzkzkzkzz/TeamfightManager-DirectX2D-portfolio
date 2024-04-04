@@ -139,6 +139,9 @@
     <Filter Include="02. Scripts\EntryScript\SlotScript">
       <UniqueIdentifier>{2f934cfa-0e7d-4b22-8d24-8d3a738c37d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scripts\EntryScript\NextBtnScript">
+      <UniqueIdentifier>{574c2c6a-1362-4cf5-a743-3d159799a105}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -261,6 +264,9 @@
     <ClInclude Include="CLineUpSlotScript.h">
       <Filter>02. Scripts\EntryScript\SlotScript</Filter>
     </ClInclude>
+    <ClInclude Include="CNextBtnScript.h">
+      <Filter>02. Scripts\EntryScript\NextBtnScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -382,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="CLineUpSlotScript.cpp">
       <Filter>02. Scripts\EntryScript\SlotScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CNextBtnScript.cpp">
+      <Filter>02. Scripts\EntryScript\NextBtnScript</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -188,6 +188,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CLobbyBtnScript.h" />
     <ClInclude Include="CMgrBtnScript.h" />
     <ClInclude Include="CMonkScript.h" />
+    <ClInclude Include="CNextBtnScript.h" />
     <ClInclude Include="CNinjaCloneScript.h" />
     <ClInclude Include="CNinjaScript.h" />
     <ClInclude Include="CPriestScript.h" />
@@ -230,6 +231,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CLobbyBtnScript.cpp" />
     <ClCompile Include="CMgrBtnScript.cpp" />
     <ClCompile Include="CMonkScript.cpp" />
+    <ClCompile Include="CNextBtnScript.cpp" />
     <ClCompile Include="CNinjaCloneScript.cpp" />
     <ClCompile Include="CNinjaScript.cpp" />
     <ClCompile Include="CPriestScript.cpp" />

@@ -76,6 +76,46 @@ void CLineUpSlotScript::SetSlotInfo()
 	Ptr<CTexture> pTex = GETGAMER(m_Gamer)->GetGamerTexture();
 	icon->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	GetOwner()->AddChild(icon);
+
+	wstring GamerName = GETGAMER(m_Gamer)->GetGamerName();
+	wstring GamerATK = ToWString(std::to_string(GETGAMER(m_Gamer)->GetATK()));
+	wstring GamerDEF = ToWString(std::to_string(GETGAMER(m_Gamer)->GetDEF()));
+
+	// 선수 이름
+	CGameObject* Text = new CGameObject;
+	Text->SetName(L"GamerName");
+	Text->AddComponent(new CTransform);
+	Text->AddComponent(new CTextRender);
+	Text->TextRender()->SetString(GamerName);
+	Text->TextRender()->SetFont(L"Galmuri14");
+	Text->TextRender()->SetFontSize(16.f);
+	Text->TextRender()->SetFontColor(255, 255, 255, 255);
+	Text->TextRender()->SetOffsetPos(Vec3(-65.f, -70.f, -1.f));
+	GetOwner()->AddChild(Text);
+
+	// 선수 공격력
+	Text = new CGameObject;
+	Text->SetName(L"GamerATK");
+	Text->AddComponent(new CTransform);
+	Text->AddComponent(new CTextRender);
+	Text->TextRender()->SetString(GamerATK);
+	Text->TextRender()->SetFont(L"Galmuri14");
+	Text->TextRender()->SetFontSize(16.f);
+	Text->TextRender()->SetFontColor(255, 255, 255, 255);
+	Text->TextRender()->SetOffsetPos(Vec3(-36.f, 15.f, -1.f));
+	GetOwner()->AddChild(Text);
+
+	// 선수 방어력
+	Text = new CGameObject;
+	Text->SetName(L"GamerDEF");
+	Text->AddComponent(new CTransform);
+	Text->AddComponent(new CTextRender);
+	Text->TextRender()->SetString(GamerDEF);
+	Text->TextRender()->SetFont(L"Galmuri14");
+	Text->TextRender()->SetFontSize(16.f);
+	Text->TextRender()->SetFontColor(255, 255, 255, 255);
+	Text->TextRender()->SetOffsetPos(Vec3(36.f, 15.f, -1.f));
+	GetOwner()->AddChild(Text);
 }
 
 void CLineUpSlotScript::CheckMousePos()
