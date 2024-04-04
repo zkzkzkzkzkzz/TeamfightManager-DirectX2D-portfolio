@@ -124,6 +124,21 @@
     <Filter Include="02. Scripts\BattleScript\RedTeamSlot">
       <UniqueIdentifier>{6f7e87ea-5074-454e-ad90-40e778a90197}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scripts\EntryScript">
+      <UniqueIdentifier>{19e2a769-c6b0-443f-94e1-e7f6f9d416f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\EntryScript\LineUpBGScript">
+      <UniqueIdentifier>{8f2355ac-41c4-4cd2-bdc8-83e6d9417fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\EntryScript\LineUpTeamScript">
+      <UniqueIdentifier>{80b0df7a-243b-4856-87db-d74776b3a998}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\EntryScript\DraftArrowScript">
+      <UniqueIdentifier>{509ccd91-ec77-4e36-81ea-1ee3ba045d6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\EntryScript\SlotScript">
+      <UniqueIdentifier>{2f934cfa-0e7d-4b22-8d24-8d3a738c37d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -172,12 +187,6 @@
       <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
     </ClInclude>
     <ClInclude Include="CGamerScript.h">
-      <Filter>02. Scripts\GamerScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CJoongSooScript.h">
-      <Filter>02. Scripts\GamerScript</Filter>
-    </ClInclude>
-    <ClInclude Include="CGosuScript.h">
       <Filter>02. Scripts\GamerScript</Filter>
     </ClInclude>
     <ClInclude Include="CTGMgr.h">
@@ -240,6 +249,18 @@
     <ClInclude Include="CBlueTeamSlotScript.h">
       <Filter>02. Scripts\BattleScript\BlueTeamSlot</Filter>
     </ClInclude>
+    <ClInclude Include="CLineUpBGScript.h">
+      <Filter>02. Scripts\EntryScript\LineUpBGScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CLineUpTeamScript.h">
+      <Filter>02. Scripts\EntryScript\LineUpTeamScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CDraftArrowScript.h">
+      <Filter>02. Scripts\EntryScript\DraftArrowScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CLineUpSlotScript.h">
+      <Filter>02. Scripts\EntryScript\SlotScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -288,12 +309,6 @@
       <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
     </ClCompile>
     <ClCompile Include="CGamerScript.cpp">
-      <Filter>02. Scripts\GamerScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CJoongSooScript.cpp">
-      <Filter>02. Scripts\GamerScript</Filter>
-    </ClCompile>
-    <ClCompile Include="CGosuScript.cpp">
       <Filter>02. Scripts\GamerScript</Filter>
     </ClCompile>
     <ClCompile Include="CTGMgr.cpp">
@@ -355,6 +370,18 @@
     </ClCompile>
     <ClCompile Include="CBlueTeamSlotScript.cpp">
       <Filter>02. Scripts\BattleScript\BlueTeamSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CLineUpBGScript.cpp">
+      <Filter>02. Scripts\EntryScript\LineUpBGScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CLineUpTeamScript.cpp">
+      <Filter>02. Scripts\EntryScript\LineUpTeamScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CDraftArrowScript.cpp">
+      <Filter>02. Scripts\EntryScript\DraftArrowScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CLineUpSlotScript.cpp">
+      <Filter>02. Scripts\EntryScript\SlotScript</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

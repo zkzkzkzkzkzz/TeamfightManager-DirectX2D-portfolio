@@ -177,13 +177,14 @@ call CodeGen.exe</Command>
     <ClInclude Include="CChampScript.h" />
     <ClInclude Include="CCursorScript.h" />
     <ClInclude Include="CDeadState.h" />
+    <ClInclude Include="CDraftArrowScript.h" />
     <ClInclude Include="CEffectScript.h" />
     <ClInclude Include="CFighterScript.h" />
     <ClInclude Include="CGamerScript.h" />
-    <ClInclude Include="CGosuScript.h" />
     <ClInclude Include="CIdleState.h" />
-    <ClInclude Include="CJoongSooScript.h" />
     <ClInclude Include="CKnightScript.h" />
+    <ClInclude Include="CLineUpBGScript.h" />
+    <ClInclude Include="CLineUpTeamScript.h" />
     <ClInclude Include="CLobbyBtnScript.h" />
     <ClInclude Include="CMgrBtnScript.h" />
     <ClInclude Include="CMonkScript.h" />
@@ -207,6 +208,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CEndBtnScript.h" />
     <ClInclude Include="CUltimateState.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="CLineUpSlotScript.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -217,13 +219,14 @@ call CodeGen.exe</Command>
     <ClCompile Include="CChampScript.cpp" />
     <ClCompile Include="CCursorScript.cpp" />
     <ClCompile Include="CDeadState.cpp" />
+    <ClCompile Include="CDraftArrowScript.cpp" />
     <ClCompile Include="CEffectScript.cpp" />
     <ClCompile Include="CFighterScript.cpp" />
     <ClCompile Include="CGamerScript.cpp" />
-    <ClCompile Include="CGosuScript.cpp" />
     <ClCompile Include="CIdleState.cpp" />
-    <ClCompile Include="CJoongSooScript.cpp" />
     <ClCompile Include="CKnightScript.cpp" />
+    <ClCompile Include="CLineUpBGScript.cpp" />
+    <ClCompile Include="CLineUpTeamScript.cpp" />
     <ClCompile Include="CLobbyBtnScript.cpp" />
     <ClCompile Include="CMgrBtnScript.cpp" />
     <ClCompile Include="CMonkScript.cpp" />
@@ -246,6 +249,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CNewBtnScript.cpp" />
     <ClCompile Include="CEndBtnScript.cpp" />
     <ClCompile Include="CUltimateState.cpp" />
+    <ClCompile Include="CLineUpSlotScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

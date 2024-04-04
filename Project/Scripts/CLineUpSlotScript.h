@@ -23,6 +23,8 @@ public:
 
     void SetSlotInfo();
 
+    void CheckMousePos();
+
 public:
     virtual void begin() override;
     virtual void tick() override;
@@ -30,11 +32,6 @@ public:
 public:
     void OnHovered();
     void OnUnHovered();
-
-    void LBtnDown();
-    void LBtnUp();
-
-    void LBtnReleased();
     void LBtnClicked();
 
 public:
