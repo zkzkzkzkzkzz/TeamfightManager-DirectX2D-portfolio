@@ -226,7 +226,6 @@ void CLineUpSlotScript::LBtnClicked()
 	}
 }
 
-
 void CLineUpSlotScript::SetSlotPos()
 {
 	for (size_t i = 0; i < CTGMgr::GetInst()->G_ShortlistSlot.size(); ++i)

@@ -18,8 +18,7 @@ public:
 
 	static vector<CGameObject*> G_ShortlistSlot;
 
-	static vector<CGameObject*> G_ParticipatingPlayer[2];
-	static vector<CGameObject*> G_SubstituesPlayer[1];
+	static vector<CGameObject*> G_ParticipatingPlayer;
 
 	static vector<CGameObject*>	G_PlayableGamer;
 	static map<wstring, CGameObject*> G_Gamer;			// 선수 목록

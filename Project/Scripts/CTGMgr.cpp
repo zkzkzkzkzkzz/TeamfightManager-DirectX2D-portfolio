@@ -13,8 +13,7 @@ int CTGMgr::G_SecondSlot = -1;
 
 vector<CGameObject*> CTGMgr::G_ShortlistSlot;
 
-vector<CGameObject*> CTGMgr::G_ParticipatingPlayer[2];
-vector<CGameObject*> CTGMgr::G_SubstituesPlayer[1];
+vector<CGameObject*> CTGMgr::G_ParticipatingPlayer;
 
 vector<CGameObject*> CTGMgr::G_PlayableGamer;
 map<wstring, CGameObject*> CTGMgr::G_Gamer;			// 선수 목록

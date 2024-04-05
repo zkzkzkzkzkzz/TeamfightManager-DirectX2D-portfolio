@@ -25,10 +25,14 @@ private:
     CGameObject*    m_BlueTeamName;
     CGameObject*    m_RedTeamName;
 
+    float m_UIPosTime;
+
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
 
 public:
+    void SetHeaderPos();
+
     void InitBlueTeam();
     void InitRedTeam();
     void InitTimer();

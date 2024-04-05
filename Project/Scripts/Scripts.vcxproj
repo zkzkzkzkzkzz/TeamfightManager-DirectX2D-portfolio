@@ -173,6 +173,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CArcherScript.h" />
     <ClInclude Include="CArrowScript.h" />
     <ClInclude Include="CAttackState.h" />
+    <ClInclude Include="CBanpickLevel.h" />
     <ClInclude Include="CBTMgr.h" />
     <ClInclude Include="CChampScript.h" />
     <ClInclude Include="CCursorScript.h" />
@@ -216,6 +217,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CArcherScript.cpp" />
     <ClCompile Include="CArrowScript.cpp" />
     <ClCompile Include="CAttackState.cpp" />
+    <ClCompile Include="CBanpickLevel.cpp" />
     <ClCompile Include="CBTMgr.cpp" />
     <ClCompile Include="CChampScript.cpp" />
     <ClCompile Include="CCursorScript.cpp" />

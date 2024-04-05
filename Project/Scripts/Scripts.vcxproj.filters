@@ -142,6 +142,15 @@
     <Filter Include="02. Scripts\EntryScript\NextBtnScript">
       <UniqueIdentifier>{574c2c6a-1362-4cf5-a743-3d159799a105}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Level">
+      <UniqueIdentifier>{64d6d2a8-e8ba-4b4c-8cc1-324cf13003b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Level\BanpickLevel">
+      <UniqueIdentifier>{8b32a22e-2505-4116-b27d-599da159c43e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\BanpickScript">
+      <UniqueIdentifier>{3da97210-f80d-47fc-98b7-061d4a56acab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -267,6 +276,9 @@
     <ClInclude Include="CNextBtnScript.h">
       <Filter>02. Scripts\EntryScript\NextBtnScript</Filter>
     </ClInclude>
+    <ClInclude Include="CBanpickLevel.h">
+      <Filter>04. Level\BanpickLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -391,6 +403,9 @@
     </ClCompile>
     <ClCompile Include="CNextBtnScript.cpp">
       <Filter>02. Scripts\EntryScript\NextBtnScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CBanpickLevel.cpp">
+      <Filter>04. Level\BanpickLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

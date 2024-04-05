@@ -3,14 +3,28 @@
 
 #include <Engine\CEngine.h>
 #include <Engine\CKeyMgr.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
+#include <Engine\CGameObject.h>
+
+#include "CLineUpSlotScript.h"
+#include "CGamerScript.h"
+
+#include "CBanpickLevel.h"
 
 CNextBtnScript::CNextBtnScript()
 	: CScript(NEXTBTNSCRIPT)
+	, m_bMouseOn(false)
+	, m_bMouseOn_Prev(false)
+	, m_bMouseLBtnDown(false)
 {
 }
 
 CNextBtnScript::CNextBtnScript(const CNextBtnScript& _Other)
 	: CScript(NEXTBTNSCRIPT)
+	, m_bMouseOn(false)
+	, m_bMouseOn_Prev(false)
+	, m_bMouseLBtnDown(false)
 {
 }
 
@@ -100,4 +114,15 @@ void CNextBtnScript::OnUnHovered()
 void CNextBtnScript::LBtnClicked()
 {
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+
+	for (size_t i = 0; i < 2; ++i)
+	{
+		CGameObject* gamer = CTGMgr::GetInst()->G_ShortlistSlot[i]->GetScript<CLineUpSlotScript>()->GetGamerFromSlot();
+
+		CTGMgr::GetInst()->G_ParticipatingPlayer.push_back(gamer);
+
+		GETGAMER(gamer)->SetGamerTeam(TEAM::BLUE);
+	}
+
+	CLevelMgr::GetInst()->ChangeLevel(new CBanpickLevel, LEVEL_STATE::PLAY);
 }

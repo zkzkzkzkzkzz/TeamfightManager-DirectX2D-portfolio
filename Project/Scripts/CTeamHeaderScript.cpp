@@ -4,6 +4,7 @@
 #include <Engine\CEngine.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
+#include <Engine\CTimeMgr.h>
 #include <Engine\CKeyMgr.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CGameObject.h>
@@ -25,6 +26,7 @@ CTeamHeaderScript::CTeamHeaderScript()
 	, m_RScore{}
 	, m_BlueTeamName(nullptr)
 	, m_RedTeamName(nullptr)
+	, m_UIPosTime(0.f)
 {
 }
 
@@ -43,6 +45,7 @@ CTeamHeaderScript::CTeamHeaderScript(const CTeamHeaderScript& _Origin)
 	, m_RScore{}
 	, m_BlueTeamName(nullptr)
 	, m_RedTeamName(nullptr)
+	, m_UIPosTime(0.f)
 {
 }
 
@@ -52,7 +55,7 @@ CTeamHeaderScript::~CTeamHeaderScript()
 
 void CTeamHeaderScript::begin()
 {
-	Transform()->SetRelativePos(Vec3(0.f, 324.f, 2000.f));
+	Transform()->SetRelativePos(Vec3(0.f, 450.f, 2000.f));
 	Transform()->SetRelativeScale(Vec3(1280.f, 82.f, 1.f));
 
 	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
@@ -72,6 +75,10 @@ void CTeamHeaderScript::begin()
 void CTeamHeaderScript::tick()
 {
 	int CurTime = CheckTime();
+
+	m_UIPosTime += DT;
+
+	SetHeaderPos();
 
 	SetTimer(CurTime);
 	CheckScore();
@@ -217,4 +224,37 @@ void CTeamHeaderScript::InitTeamName()
 	m_RedTeamName->TextRender()->SetFontColor(255, 255, 255, 255);
 	m_RedTeamName->TextRender()->SetOffsetPos(Vec3(184.f, -26.f, 0.f));
 	GetOwner()->AddChild(m_RedTeamName);
+}
+
+
+void CTeamHeaderScript::SetHeaderPos()
+{
+	m_UIPosTime += DT;
+
+	Vec3 vPos = Transform()->GetRelativePos();
+
+	float BtwTime = 1.f - m_UIPosTime;
+
+	if (m_UIPosTime < 0.15f)
+	{
+		vPos.y -= 1300.f * DT * BtwTime;
+		if (vPos.y <= 324.f)
+			vPos.y = 324.f;
+
+		Transform()->SetRelativePos(vPos);
+	}
+	else if (m_UIPosTime >= 0.15f && m_UIPosTime < 1.f)
+	{
+		vPos.y -= 200.f * DT * BtwTime;
+		if (vPos.y <= 324.f)
+			vPos.y = 324.f;
+
+		Transform()->SetRelativePos(vPos);
+	}
+	else
+	{
+		vPos.y = 324.f;
+		Transform()->SetRelativePos(vPos);
+		m_UIPosTime = 0.f;
+	}
 }
