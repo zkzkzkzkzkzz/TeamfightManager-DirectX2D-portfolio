@@ -119,9 +119,9 @@ void CNextBtnScript::LBtnClicked()
 	{
 		CGameObject* gamer = CTGMgr::GetInst()->G_ShortlistSlot[i]->GetScript<CLineUpSlotScript>()->GetGamerFromSlot();
 
-		CTGMgr::GetInst()->G_ParticipatingPlayer.push_back(gamer);
-
 		GETGAMER(gamer)->SetGamerTeam(TEAM::BLUE);
+
+		CTGMgr::GetInst()->G_ParticipatingPlayer.push_back(gamer);
 	}
 
 	CLevelMgr::GetInst()->ChangeLevel(new CBanpickLevel, LEVEL_STATE::PLAY);

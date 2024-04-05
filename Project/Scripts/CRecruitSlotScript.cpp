@@ -179,7 +179,7 @@ void CRecruitSlotScript::begin()
 	GetOwner()->GetParent()->AddChild(pNewObj);
 	m_DoneText.push_back(pNewObj);
 
-	CGameObject* temp = CTGMgr::GetInst()->G_RecruitList.find(L"Gosu")->second;
+	CGameObject* temp = CTGMgr::GetInst()->G_Gamer.find(L"Gosu")->second;
 
 	// 13
 	CGameObject* GosuText = new CGameObject;
@@ -196,7 +196,7 @@ void CRecruitSlotScript::begin()
 	GosuText = new CGameObject;
 	GosuText->AddComponent(new CTransform);
 	GosuText->AddComponent(new CTextRender);
-	GosuText->TextRender()->SetString(ToWString(std::to_string(GETGAMER(temp)->GetATK())));
+	GosuText->TextRender()->SetString(L"30");
 	GosuText->TextRender()->SetFont(L"Galmuri14");
 	GosuText->TextRender()->SetFontSize(20.f);
 	GosuText->TextRender()->SetFontColor(255, 255, 255, 255);
@@ -207,7 +207,7 @@ void CRecruitSlotScript::begin()
 	GosuText = new CGameObject;
 	GosuText->AddComponent(new CTransform);
 	GosuText->AddComponent(new CTextRender);
-	GosuText->TextRender()->SetString(ToWString(std::to_string((GETGAMER(temp)->GetATK()))));
+	GosuText->TextRender()->SetString(L"30");
 	GosuText->TextRender()->SetFont(L"Galmuri14");
 	GosuText->TextRender()->SetFontSize(20.f);
 	GosuText->TextRender()->SetFontColor(255, 255, 255, 255);

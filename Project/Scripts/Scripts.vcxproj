@@ -174,6 +174,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CArrowScript.h" />
     <ClInclude Include="CAttackState.h" />
     <ClInclude Include="CBanpickLevel.h" />
+    <ClInclude Include="CBanPickUIScript.h" />
     <ClInclude Include="CBTMgr.h" />
     <ClInclude Include="CChampScript.h" />
     <ClInclude Include="CCursorScript.h" />
@@ -200,6 +201,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="CSquadBtnScript.h" />
     <ClInclude Include="CTeamHeaderScript.h" />
     <ClInclude Include="CBlueTeamSlotScript.h" />
+    <ClInclude Include="CTeamSlotIconScript.h" />
+    <ClInclude Include="CTeamSlotScript.h" />
     <ClInclude Include="CTGMgr.h" />
     <ClInclude Include="CTraceState.h" />
     <ClInclude Include="CTrainningBtnScript.h" />
@@ -218,6 +221,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CArrowScript.cpp" />
     <ClCompile Include="CAttackState.cpp" />
     <ClCompile Include="CBanpickLevel.cpp" />
+    <ClCompile Include="CBanPickUIScript.cpp" />
     <ClCompile Include="CBTMgr.cpp" />
     <ClCompile Include="CChampScript.cpp" />
     <ClCompile Include="CCursorScript.cpp" />
@@ -244,6 +248,8 @@ call CodeGen.exe</Command>
     <ClCompile Include="CSquadBtnScript.cpp" />
     <ClCompile Include="CTeamHeaderScript.cpp" />
     <ClCompile Include="CBlueTeamSlotScript.cpp" />
+    <ClCompile Include="CTeamSlotIconScript.cpp" />
+    <ClCompile Include="CTeamSlotScript.cpp" />
     <ClCompile Include="CTGMgr.cpp" />
     <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="CTrainningBtnScript.cpp" />

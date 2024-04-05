@@ -27,6 +27,7 @@ CTeamHeaderScript::CTeamHeaderScript()
 	, m_BlueTeamName(nullptr)
 	, m_RedTeamName(nullptr)
 	, m_UIPosTime(0.f)
+	, m_bUIPos(false)
 {
 }
 
@@ -46,6 +47,7 @@ CTeamHeaderScript::CTeamHeaderScript(const CTeamHeaderScript& _Origin)
 	, m_BlueTeamName(nullptr)
 	, m_RedTeamName(nullptr)
 	, m_UIPosTime(0.f)
+	, m_bUIPos(false)
 {
 }
 
@@ -76,9 +78,8 @@ void CTeamHeaderScript::tick()
 {
 	int CurTime = CheckTime();
 
-	m_UIPosTime += DT;
-
-	SetHeaderPos();
+	if (!m_bUIPos)
+		SetHeaderPos();
 
 	SetTimer(CurTime);
 	CheckScore();
@@ -256,5 +257,6 @@ void CTeamHeaderScript::SetHeaderPos()
 		vPos.y = 324.f;
 		Transform()->SetRelativePos(vPos);
 		m_UIPosTime = 0.f;
+		m_bUIPos = true;
 	}
 }

@@ -18,6 +18,10 @@ enum class BATTLE_STATE
 class CBanpickLevel :
     public CLevel
 {
+private:
+    vector<CGameObject*> m_BlueTeam;
+    vector<CGameObject*> m_RedTeam;
+
 public:
     void InitUI();
 

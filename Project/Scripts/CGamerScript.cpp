@@ -38,17 +38,27 @@ CGamerScript::CGamerScript(UINT _ScriptType)
 
 CGamerScript::CGamerScript(const CGamerScript& _Origin)
 	: CScript(GAMERSCRIPT)
-	, m_GamerName{}
+	, m_GamerName(_Origin.m_GamerName)
 	, m_GamerLevel(_Origin.m_GamerLevel)
 	, m_GamerATK(_Origin.m_GamerATK)
 	, m_GamerDEF(_Origin.m_GamerDEF)
-	, m_Tex(_Origin.m_Tex)
-	, m_Team(TEAM::NONE)
+	, m_Tex(nullptr)
+	, m_Team(_Origin.m_Team)
 	, m_SelectedChamp(nullptr)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerTeam", &m_Team);
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerATK", &m_GamerATK);
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerDEF", &m_GamerDEF);
+
+	if (nullptr != _Origin.m_SelectedChamp)
+	{
+		m_SelectedChamp = _Origin.m_SelectedChamp->Clone();
+	}
+
+	if (nullptr != _Origin.m_Tex)
+	{
+		m_Tex = _Origin.m_Tex;
+	}
 }
 
 CGamerScript::~CGamerScript()

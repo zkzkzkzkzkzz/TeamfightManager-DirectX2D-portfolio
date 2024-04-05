@@ -25,6 +25,7 @@ private:
     CGameObject*    m_BlueTeamName;
     CGameObject*    m_RedTeamName;
 
+    bool m_bUIPos;
     float m_UIPosTime;
 
     virtual void SaveToFile(FILE* _File) override {}

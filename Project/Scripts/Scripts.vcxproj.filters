@@ -103,9 +103,6 @@
     <Filter Include="02. Scripts\ChampScript\Archer\Arrow">
       <UniqueIdentifier>{84126677-88a8-464d-8120-3a5aeb211ce6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. GameManager\BTMgrScript">
-      <UniqueIdentifier>{ddf5eb84-e74c-41e1-b4fe-e995e976399b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. Scripts\EffectScript">
       <UniqueIdentifier>{d4e87bc9-e3f0-412b-a156-a3b447437380}</UniqueIdentifier>
     </Filter>
@@ -150,6 +147,18 @@
     </Filter>
     <Filter Include="02. Scripts\BanpickScript">
       <UniqueIdentifier>{3da97210-f80d-47fc-98b7-061d4a56acab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\BanpickScript\TeamSlotScript">
+      <UniqueIdentifier>{c9a78260-cad6-493f-bf46-9519f33e91a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. GameManager\BTMgrScript">
+      <UniqueIdentifier>{ddf5eb84-e74c-41e1-b4fe-e995e976399b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\BanpickScript\BanpickUIScript">
+      <UniqueIdentifier>{00522756-817c-4987-9205-201b14c071a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\BanpickScript\TeamSlotScript\SlotIcon">
+      <UniqueIdentifier>{6ffb807c-4748-4dc6-968c-3fb16288f12c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +288,13 @@
     <ClInclude Include="CBanpickLevel.h">
       <Filter>04. Level\BanpickLevel</Filter>
     </ClInclude>
+    <ClInclude Include="CTeamSlotScript.h">
+      <Filter>02. Scripts\BanpickScript\TeamSlotScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CBanPickUIScript.h">
+      <Filter>02. Scripts\BanpickScript\BanpickUIScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CTeamSlotIconScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -407,5 +423,12 @@
     <ClCompile Include="CBanpickLevel.cpp">
       <Filter>04. Level\BanpickLevel</Filter>
     </ClCompile>
+    <ClCompile Include="CTeamSlotScript.cpp">
+      <Filter>02. Scripts\BanpickScript\TeamSlotScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CBanPickUIScript.cpp">
+      <Filter>02. Scripts\BanpickScript\BanpickUIScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CTeamSlotIconScript.cpp" />
   </ItemGroup>
 </Project>
