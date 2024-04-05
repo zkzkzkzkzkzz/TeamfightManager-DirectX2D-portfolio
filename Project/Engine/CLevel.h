@@ -13,11 +13,11 @@ private:
     LEVEL_STATE     m_State;
 
 public:
-    void begin();
-    void tick();
-    void finaltick();
+    virtual void begin();
+    virtual void tick();
+    virtual void finaltick();
 
-    void clear();
+    virtual void clear();
 
 public:
     void AddObject(CGameObject* _Object, int _LayerIdx, bool _bChildMove = true);

@@ -294,7 +294,9 @@
     <ClInclude Include="CBanPickUIScript.h">
       <Filter>02. Scripts\BanpickScript\BanpickUIScript</Filter>
     </ClInclude>
-    <ClInclude Include="CTeamSlotIconScript.h" />
+    <ClInclude Include="CTeamSlotIconScript.h">
+      <Filter>02. Scripts\BanpickScript\TeamSlotScript\SlotIcon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -429,6 +431,8 @@
     <ClCompile Include="CBanPickUIScript.cpp">
       <Filter>02. Scripts\BanpickScript\BanpickUIScript</Filter>
     </ClCompile>
-    <ClCompile Include="CTeamSlotIconScript.cpp" />
+    <ClCompile Include="CTeamSlotIconScript.cpp">
+      <Filter>02. Scripts\BanpickScript\TeamSlotScript\SlotIcon</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

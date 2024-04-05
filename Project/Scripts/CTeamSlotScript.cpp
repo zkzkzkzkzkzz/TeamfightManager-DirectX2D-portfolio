@@ -50,22 +50,22 @@ void CTeamSlotScript::SetSlotPos()
 	if (m_UIPosTime < 0.15f)
 	{
 		vPos.x += 1000.f * DT * BtwTime;
-		if (vPos.x >= -564.f)
-			vPos.x = -564.f;
+		if (vPos.x >= -562.f)
+			vPos.x = -562.f;
 
 		Transform()->SetRelativePos(vPos);
 	}
 	else if (m_UIPosTime >= 0.15f && m_UIPosTime < 1.f)
 	{
 		vPos.x += 100.f * DT * BtwTime;
-		if (vPos.x >= -564.f)
-			vPos.x = -564.f;
+		if (vPos.x >= -562.f)
+			vPos.x = -562.f;
 
 		Transform()->SetRelativePos(vPos);
 	}
 	else
 	{
-		vPos.x = -564.f;
+		vPos.x = -562.f;
 		Transform()->SetRelativePos(vPos);
 		m_UIPosTime = 0.f;
 		m_bUIPos = true;

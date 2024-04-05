@@ -26,15 +26,15 @@ public:
 
 	static map<wstring, CGameObject*> G_Champ;	// 챔피언 목록
 
-	static list<CGameObject*> G_TeamBlue;
-	static list<CGameObject*> G_TeamRed;
-
 	static int G_Time;		// 현재 경기 시간
 
 	static int G_BlueKillScore;
 	static int G_RedKillScore;
 
+	static int G_LevelChange;
+
 public:
+	static void CloneTGMgr();
 	static void ResetInGameTime();
 };
 

@@ -41,22 +41,22 @@ void CBanPickUIScript::SetSlotPos()
 	if (m_UIPosTime < 0.13f)
 	{
 		vPos.y += 4500.f * DT * BtwTime;
-		if (vPos.y >= 0.f)
-			vPos.y = 0.f;
+		if (vPos.y >= -24.f)
+			vPos.y = -24.f;
 
 		Transform()->SetRelativePos(vPos);
 	}
 	else if (m_UIPosTime >= 0.13f && m_UIPosTime < 1.f)
 	{
-		vPos.y += 660.f * DT * BtwTime;
-		if (vPos.y >= 0.f)
-			vPos.y = 0.f;
+		vPos.y += 680.f * DT * BtwTime;
+		if (vPos.y >= -24.f)
+			vPos.y = -24.f;
 
 		Transform()->SetRelativePos(vPos);
 	}
 	else
 	{
-		vPos.y = 0.f;
+		vPos.y = -24.f;
 		Transform()->SetRelativePos(vPos);
 		m_UIPosTime = 0.f;
 		m_bUIPos = true;

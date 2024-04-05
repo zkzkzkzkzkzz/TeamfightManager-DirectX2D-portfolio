@@ -11,6 +11,7 @@
 #include "CGamerScript.h"
 #include "CTeamHeaderScript.h"
 #include "CTeamSlotScript.h"
+#include "CCursorScript.h"
 
 CBanpickLevel::CBanpickLevel()
 	: m_BlueTeam{}
@@ -55,7 +56,7 @@ void CBanpickLevel::begin()
 
 	for (size_t i = 0; i < CTGMgr::GetInst()->G_ParticipatingPlayer.size(); ++i)
 	{
-		Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BlueTeamCard_1.prefab")->Instatiate();
+		Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BlueTeamCard_2.prefab")->Instatiate();
 		Obj->GetScript<CTeamSlotScript>()->SetGamerToSlot(CTGMgr::GetInst()->G_ParticipatingPlayer[i]);
 
 		if (0 == i)
@@ -68,8 +69,9 @@ void CBanpickLevel::begin()
 
 	Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BanPickUI_2.prefab")->Instatiate();
 	Obj->Transform()->SetRelativePos(Vec3(0.f, -800.f, 3000.f));
-	Obj->Transform()->SetRelativeScale(Vec3(1280.f, 800.f, 1.f));
+	Obj->Transform()->SetRelativeScale(Vec3(1280.f, 720.f, 1.f));
 	AddObject(Obj, 2);
+
 
 	CLevel::begin();
 }
@@ -89,7 +91,6 @@ void CBanpickLevel::InitUI()
 	GetLayer(0)->SetName(L"Default");
 	GetLayer(1)->SetName(L"Light");
 	GetLayer(2)->SetName(L"Background");
-	GetLayer(3)->SetName(L"Gamer");
 	GetLayer(4)->SetName(L"Cursor");
 	GetLayer(31)->SetName(L"UI");
 
@@ -124,4 +125,11 @@ void CBanpickLevel::InitUI()
 	pLight->Light2D()->SetLightType(LIGHT_TYPE::DIRECTIONAL);
 	pLight->Light2D()->SetAmbient(Vec3(1.f, 1.f, 1.f));
 	AddObject(pLight, 1);
+
+	CGameObject* pCursor = new CGameObject;
+	pCursor->SetName(L"Cursor");
+	pCursor->AddComponent(new CTransform);
+	pCursor->AddComponent(new CMeshRender);
+	pCursor->AddComponent(new CCursorScript);
+	AddObject(pCursor, 4);
 }
