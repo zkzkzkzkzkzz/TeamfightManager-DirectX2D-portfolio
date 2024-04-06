@@ -9,11 +9,11 @@
 #include <Engine\CGameObject.h>
 #include <Engine\components.h>
 
-#include "CBanpickLevel.h"
 #include "CEffectScript.h"
 
 CChampSlotScript::CChampSlotScript()
 	: CScript(CHAMPSLOTSCRIPT)
+	, m_list(CHAMP_LIST::END)
 	, m_Champ(nullptr)
 	, m_TeamColor(TEAM::NONE)
 	, m_SlotState(SLOT_STATE::NONE)
@@ -30,6 +30,7 @@ CChampSlotScript::CChampSlotScript()
 
 CChampSlotScript::CChampSlotScript(const CChampSlotScript& _Origin)
 	: CScript(CHAMPSLOTSCRIPT)
+	, m_list(CHAMP_LIST::END)
 	, m_Champ(nullptr)
 	, m_TeamColor(TEAM::NONE)
 	, m_SlotState(SLOT_STATE::NONE)
@@ -56,13 +57,14 @@ void CChampSlotScript::begin()
 	m_Level = (CBanpickLevel*)CLevelMgr::GetInst()->GetCurrentLevel();
 
 	m_EffectObj = new CGameObject;
+	m_EffectObj->SetName(L"SlotAnimObj");
 	m_EffectObj->AddComponent(new CTransform);
 	m_EffectObj->AddComponent(new CMeshRender);
 	m_EffectObj->AddComponent(new CAnimator2D);
 
 	Vec3 vPos = Transform()->GetRelativePos();
 
-	m_EffectObj->Transform()->SetRelativePos(Vec3(vPos.x, vPos.y, vPos.z - 10.f));
+	m_EffectObj->Transform()->SetRelativePos(Vec3(vPos.x, vPos.y - 25.f, 1500.f));
 	m_EffectObj->Transform()->SetRelativeScale(Transform()->GetRelativeScale());
 	m_EffectObj->Transform()->SetRelativeRotation(Transform()->GetRelativeRotation());
 	m_EffectObj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
@@ -72,6 +74,8 @@ void CChampSlotScript::begin()
 	m_EffectObj->Animator2D()->LoadAnimation(L"animdata\\ChampSlotAnim.txt");
 	m_EffectObj->Animator2D()->Play(L"ChampSlotIdle");
 	GamePlayStatic::SpawnGameObject(m_EffectObj, 6);
+
+	InitChampToSlot();
 }
 
 void CChampSlotScript::tick()
@@ -164,7 +168,7 @@ void CChampSlotScript::LBtnClicked()
 	else if ((BANPICK_STATE::BLUEBAN == m_Level->GetCurBanPickState() && SLOT_STATE::NONE == m_SlotState))
 	{
 		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale(), Transform()->GetRelativeRotation()
-					, L"BanAnim", 0.2, false, Vec3(0.f, 0.f, -10.f));
+					, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
 	}
 }
 
@@ -182,4 +186,124 @@ void CChampSlotScript::SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const
 
 	GETEFFECT(effect)->SetEffectInfo(_Pos, _Scale, _Rotation, _anim, _time, _repeat);
 	GamePlayStatic::SpawnGameObject(effect, 6);
+}
+
+void CChampSlotScript::InitChampToSlot()
+{
+	CGameObject* text = new CGameObject;
+
+	switch (m_list)
+	{
+	case CHAMP_LIST::ARCHER:
+		CreateChamp();
+		m_Champ->SetName(L"Slot_Archer");
+		m_Champ->Transform()->SetRelativePos(Vec3(0.f, 11.f, -10.f));
+		m_Champ->Transform()->SetRelativeScale(Vec3(60.f, 75.f, 1.f));
+		m_Champ->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+
+		text->AddComponent(new CTransform);
+		text->AddComponent(new CTextRender);
+		text->TextRender()->SetString(L"Archer");
+		text->TextRender()->SetFont(L"Galmuri14");
+		text->TextRender()->SetFontSize(15.f);
+		text->TextRender()->SetFontColor(255, 255, 255, 255);
+		text->TextRender()->SetOffsetPos(Vec3(-28.f, 29.f, 0.f));
+		GetOwner()->AddChild(text);
+		break;
+	case CHAMP_LIST::FIGHTER:
+		CreateChamp();
+		m_Champ->SetName(L"Slot_Fighter");
+		m_Champ->Transform()->SetRelativePos(Vec3(0.f, 12.f, -10.f));
+		m_Champ->Transform()->SetRelativeScale(Vec3(50.f, 75.f, 1.f));
+		m_Champ->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+
+		text->AddComponent(new CTransform);
+		text->AddComponent(new CTextRender);
+		text->TextRender()->SetString(L"Fighter");
+		text->TextRender()->SetFont(L"Galmuri14");
+		text->TextRender()->SetFontSize(15.f);
+		text->TextRender()->SetFontColor(255, 255, 255, 255);
+		text->TextRender()->SetOffsetPos(Vec3(-28.f, 29.f, 0.f));
+		GetOwner()->AddChild(text);
+		break;
+	case CHAMP_LIST::KNIGHT:
+		CreateChamp();
+		m_Champ->SetName(L"Slot_Knight");
+		m_Champ->Transform()->SetRelativePos(Vec3(0.f, 13.f, -10.f));
+		m_Champ->Transform()->SetRelativeScale(Vec3(80.f, 77.f, 1.f));
+		m_Champ->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+
+		text->AddComponent(new CTransform);
+		text->AddComponent(new CTextRender);
+		text->TextRender()->SetString(L"Knight");
+		text->TextRender()->SetFont(L"Galmuri14");
+		text->TextRender()->SetFontSize(15.f);
+		text->TextRender()->SetFontColor(255, 255, 255, 255);
+		text->TextRender()->SetOffsetPos(Vec3(-25.f, 29.f, 0.f));
+		GetOwner()->AddChild(text);
+		break;
+	case CHAMP_LIST::MONK:
+		CreateChamp();
+		m_Champ->SetName(L"Slot_Monk");
+		m_Champ->Transform()->SetRelativePos(Vec3(0.f, 13.f, -10.f));
+		m_Champ->Transform()->SetRelativeScale(Vec3(50.f, 75.f, 1.f));
+		m_Champ->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 3);
+
+		text->AddComponent(new CTransform);
+		text->AddComponent(new CTextRender);
+		text->TextRender()->SetString(L"Monk");
+		text->TextRender()->SetFont(L"Galmuri14");
+		text->TextRender()->SetFontSize(15.f);
+		text->TextRender()->SetFontColor(255, 255, 255, 255);
+		text->TextRender()->SetOffsetPos(Vec3(-18.f, 29.f, -10.f));
+		GetOwner()->AddChild(text);
+		break;
+	case CHAMP_LIST::NINJA:
+		CreateChamp();
+		m_Champ->SetName(L"Slot_Ninja");
+		m_Champ->Transform()->SetRelativePos(Vec3(-5.f, 9.f, -10.f));
+		m_Champ->Transform()->SetRelativeScale(Vec3(65.f, 70.f, 1.f));
+		m_Champ->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 4);
+
+		text->AddComponent(new CTransform);
+		text->AddComponent(new CTextRender);
+		text->TextRender()->SetString(L"Ninja");
+		text->TextRender()->SetFont(L"Galmuri14");
+		text->TextRender()->SetFontSize(15.f);
+		text->TextRender()->SetFontColor(255, 255, 255, 255);
+		text->TextRender()->SetOffsetPos(Vec3(-18.f, 29.f, -10.f));
+		GetOwner()->AddChild(text);
+		break;
+	case CHAMP_LIST::PRIEST:
+		CreateChamp();
+		m_Champ->SetName(L"Slot_Priest");
+		m_Champ->Transform()->SetRelativePos(Vec3(0.f, 13.f, -10.f));
+		m_Champ->Transform()->SetRelativeScale(Vec3(45.f, 75.f, 1.f));
+		m_Champ->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 5);
+
+		text->AddComponent(new CTransform);
+		text->AddComponent(new CTextRender);
+		text->TextRender()->SetString(L"Priest");
+		text->TextRender()->SetFont(L"Galmuri14");
+		text->TextRender()->SetFontSize(15.f);
+		text->TextRender()->SetFontColor(255, 255, 255, 255);
+		text->TextRender()->SetOffsetPos(Vec3(-23.f, 29.f, -10.f));
+		GetOwner()->AddChild(text);
+		break;
+	case CHAMP_LIST::END:
+		break;
+	default:
+		break;
+	}
+}
+
+void CChampSlotScript::CreateChamp()
+{
+	m_Champ = new CGameObject;
+	m_Champ->AddComponent(new CTransform);
+	m_Champ->AddComponent(new CMeshRender);
+	m_Champ->AddComponent(new CAnimator2D);
+	m_Champ->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	m_Champ->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"material\\BanPickChampIcon.mtrl"));
+	GetOwner()->AddChild(m_Champ);
 }

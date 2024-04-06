@@ -15,12 +15,25 @@ enum class BANPICK_STATE
     END,
 };
 
+enum class CHAMP_LIST
+{
+    ARCHER,
+    FIGHTER,
+    KNIGHT,
+    MONK,
+    NINJA,
+    PRIEST,
+    END,
+};
+
 class CBanpickLevel :
     public CLevel
 {
 private:
     vector<CGameObject*> m_BlueTeam;
     vector<CGameObject*> m_RedTeam;
+
+    vector<CGameObject*> m_ChampList;
 
     BANPICK_STATE m_CurState;
 
@@ -29,6 +42,7 @@ public:
     BANPICK_STATE GetCurBanPickState() { return m_CurState; }
 
     void InitUI();
+    void InitChampList();
 
 public:
     virtual void begin() override;

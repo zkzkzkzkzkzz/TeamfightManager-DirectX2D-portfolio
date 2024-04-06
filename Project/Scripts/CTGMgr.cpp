@@ -19,7 +19,6 @@ vector<CGameObject*> CTGMgr::G_PlayableGamer;
 
 map<wstring, CGameObject*> CTGMgr::G_Gamer;			// 선수 목록
 map<wstring, CGameObject*> CTGMgr::G_RecruitList;	// 영입 가능 선수 목록
-map<wstring, CGameObject*> CTGMgr::G_Champ;	// 챔피언 목록
 
 int CTGMgr::G_Time = 60;
 
@@ -59,11 +58,6 @@ void CTGMgr::CloneTGMgr()
 	for (const auto& pair : G_RecruitList)
 	{
 		G_RecruitList[pair.first] = new CGameObject(*pair.second);
-	}
-
-	for (const auto& pair : G_Champ)
-	{
-		G_Champ[pair.first] = new CGameObject(*pair.second);
 	}
 }
 

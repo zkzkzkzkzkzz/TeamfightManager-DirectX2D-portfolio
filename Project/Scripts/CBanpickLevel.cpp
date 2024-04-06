@@ -11,11 +11,13 @@
 #include "CGamerScript.h"
 #include "CTeamHeaderScript.h"
 #include "CTeamSlotScript.h"
+#include "CChampSlotScript.h"
 #include "CCursorScript.h"
 
 CBanpickLevel::CBanpickLevel()
 	: m_BlueTeam{}
 	, m_RedTeam{}
+	, m_ChampList{}
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -33,6 +35,7 @@ CBanpickLevel::CBanpickLevel()
 CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	: m_BlueTeam{}
 	, m_RedTeam{}
+	, m_ChampList{}
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -88,7 +91,7 @@ void CBanpickLevel::begin()
 	Obj->Transform()->SetRelativeScale(Vec3(1280.f, 720.f, 1.f));
 	AddObject(Obj, 2);
 
-	m_CurState = BANPICK_STATE::BLUEBAN;
+	m_CurState = BANPICK_STATE::BLUEPICK1;
 
 	CLevel::begin();
 }
@@ -163,4 +166,9 @@ void CBanpickLevel::InitUI()
 	{
 		AddObject(CTGMgr::GetInst()->G_ShortlistSlot[i], 30);
 	}
+}
+
+void CBanpickLevel::InitChampList()
+{
+
 }

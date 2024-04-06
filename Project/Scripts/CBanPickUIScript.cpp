@@ -1,6 +1,15 @@
 #include "pch.h"
 #include "CBanPickUIScript.h"
 
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
+#include <Engine\CGameObject.h>
+#include <Engine\CAssetMgr.h>
+#include <Engine\CPrefab.h>
+
+#include "CBanpickLevel.h"
+#include "CChampSlotScript.h"
+
 CBanPickUIScript::CBanPickUIScript()
 	: CScript(BANPICKUISCRIPT)
 	, m_bUIPos(false)
@@ -21,6 +30,14 @@ CBanPickUIScript::~CBanPickUIScript()
 
 void CBanPickUIScript::begin()
 {
+	for (size_t i = 0; i < (UINT)CHAMP_LIST::END; ++i)
+	{
+		CGameObject* Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BanPickChampSlot_2.prefab")->Instatiate();
+		Obj->GetScript<CChampSlotScript>()->SetChampList((CHAMP_LIST)i);
+
+		Obj->Transform()->SetRelativePos(Vec3(-367.f + (80.f * i), 122.f, -10.f));
+		GetOwner()->AddChild(Obj);
+	}
 }
 
 void CBanPickUIScript::tick()

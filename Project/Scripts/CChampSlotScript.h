@@ -2,7 +2,7 @@
 #include <Engine\CScript.h>
 
 #include "CGamerScript.h"
-
+#include "CBanpickLevel.h"
 enum class SLOT_STATE
 {
     NONE,
@@ -12,16 +12,17 @@ enum class SLOT_STATE
 };
 
 class CGameObject;
-class CBanpickLevel;
 
 class CChampSlotScript :
     public CScript
 {
 private:
+    CHAMP_LIST      m_list;
     CGameObject*    m_Champ;        // 현재 슬롯에 배치할 챔피언
     TEAM            m_TeamColor;    // 자신을 클릭한 선수의 팀
     SLOT_STATE      m_SlotState;    // 슬롯 상태
     CBanpickLevel*  m_Level;
+
 
     bool    m_bMouseOn;
     bool    m_bMouseOn_Prev;
@@ -37,6 +38,9 @@ private:
     virtual void LoadFromFile(FILE* _File) override {}
 
 public:
+    void SetChampList(CHAMP_LIST _list) { m_list = _list; }
+    CHAMP_LIST GetChampList() { return m_list; }
+
     void SetSlotChamp(CGameObject* _champ) { m_Champ = _champ; }
     CGameObject* GetSlotChamp() { return m_Champ; }
 
@@ -54,6 +58,9 @@ public:
     void LBtnClicked();
 
     void SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat = false, Vec3 _offset = Vec3(0.f, 0.f, 0.f));
+
+    void InitChampToSlot();
+    void CreateChamp();
 
 public:
     virtual void begin() override;

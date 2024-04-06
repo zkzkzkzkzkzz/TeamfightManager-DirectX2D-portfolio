@@ -24,8 +24,6 @@ public:
 	static map<wstring, CGameObject*> G_Gamer;			// 선수 목록
 	static map<wstring, CGameObject*> G_RecruitList;	// 영입 가능 선수 목록
 
-	static map<wstring, CGameObject*> G_Champ;	// 챔피언 목록
-
 	static int G_Time;		// 현재 경기 시간
 
 	static int G_BlueKillScore;
