@@ -25,7 +25,6 @@ int CTGMgr::G_Time = 60;
 
 int CTGMgr::G_BlueKillScore = 0;
 int CTGMgr::G_RedKillScore = 0;
-int CTGMgr::G_LevelChange = 0;
 
 CTGMgr::CTGMgr()
 {
@@ -33,24 +32,6 @@ CTGMgr::CTGMgr()
 
 CTGMgr::~CTGMgr()
 {
-	if (0 == G_LevelChange)
-	{
-		//Delete_Map(G_Gamer);
-
-		//G_RecruitList.clear();
-		//G_ParticipatingPlayer.clear();
-		//G_PlayableGamer.clear();
-	}
-	else
-	{
-		Delete_Map(G_Gamer);
-		Delete_Map(G_RecruitList);
-		Delete_Vec(G_ParticipatingPlayer);
-		Delete_Vec(G_PlayableGamer);
-	}
-
-	Delete_Vec(G_ShortlistSlot);
-	Delete_Map(G_Champ);
 }
 
 void CTGMgr::CloneTGMgr()
@@ -84,8 +65,6 @@ void CTGMgr::CloneTGMgr()
 	{
 		G_Champ[pair.first] = new CGameObject(*pair.second);
 	}
-
-	++G_LevelChange;
 }
 
 void CTGMgr::ResetInGameTime()

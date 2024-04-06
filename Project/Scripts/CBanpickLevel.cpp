@@ -17,7 +17,15 @@ CBanpickLevel::CBanpickLevel()
 	: m_BlueTeam{}
 	, m_RedTeam{}
 {
-	CTGMgr::CloneTGMgr();
+	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
+	{
+		pair.second->DisconnectWithLayer();
+	}
+
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_ShortlistSlot.size(); ++i)
+	{
+		CTGMgr::GetInst()->G_ShortlistSlot[i]->DisconnectWithLayer();
+	}
 
 	InitUI();
 }
@@ -26,7 +34,15 @@ CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	: m_BlueTeam{}
 	, m_RedTeam{}
 {
-	CTGMgr::CloneTGMgr();
+	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
+	{
+		pair.second->DisconnectWithLayer();
+	}
+
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_ShortlistSlot.size(); ++i)
+	{
+		CTGMgr::GetInst()->G_ShortlistSlot[i]->DisconnectWithLayer();
+	}
 
 	InitUI();
 }
@@ -67,11 +83,12 @@ void CBanpickLevel::begin()
 		AddObject(Obj, 2);
 	}
 
-	Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BanPickUI_2.prefab")->Instatiate();
+	Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BanPickUI_4.prefab")->Instatiate();
 	Obj->Transform()->SetRelativePos(Vec3(0.f, -800.f, 3000.f));
 	Obj->Transform()->SetRelativeScale(Vec3(1280.f, 720.f, 1.f));
 	AddObject(Obj, 2);
 
+	m_CurState = BANPICK_STATE::BLUEBAN;
 
 	CLevel::begin();
 }
@@ -92,6 +109,8 @@ void CBanpickLevel::InitUI()
 	GetLayer(1)->SetName(L"Light");
 	GetLayer(2)->SetName(L"Background");
 	GetLayer(4)->SetName(L"Cursor");
+	GetLayer(6)->SetName(L"Effect");
+	GetLayer(30)->SetName(L"GameInfo");
 	GetLayer(31)->SetName(L"UI");
 
 	// Main Camera 생성
@@ -104,6 +123,7 @@ void CBanpickLevel::InitUI()
 	pCamObj->Camera()->SetCameraPriority(0);
 	pCamObj->Camera()->LayerCheckAll();
 	pCamObj->Camera()->LayerCheck(2, false);
+	pCamObj->Camera()->LayerCheck(30, false);
 	AddObject(pCamObj, 0);
 
 	// BG Camera 생성
@@ -132,4 +152,15 @@ void CBanpickLevel::InitUI()
 	pCursor->AddComponent(new CMeshRender);
 	pCursor->AddComponent(new CCursorScript);
 	AddObject(pCursor, 4);
+
+	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
+	{
+		AddObject(pair.second, 30);
+		pair.second->SetActive(false);
+	}
+
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_ShortlistSlot.size(); ++i)
+	{
+		AddObject(CTGMgr::GetInst()->G_ShortlistSlot[i], 30);
+	}
 }

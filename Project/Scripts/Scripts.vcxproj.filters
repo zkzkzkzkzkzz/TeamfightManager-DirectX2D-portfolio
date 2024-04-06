@@ -10,69 +10,6 @@
     <Filter Include="02. Scripts">
       <UniqueIdentifier>{96953730-5348-40a8-96e1-47666a7bacb7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Scripts\TitleScript">
-      <UniqueIdentifier>{60bb191f-b7a9-444c-93fe-01edb9c848bd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\LobbyScript">
-      <UniqueIdentifier>{6c2b9246-94c2-4203-8275-268db08c390f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\LobbyScript\Header">
-      <UniqueIdentifier>{61f70624-ad29-4af7-bcb2-5182165fcf38}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\LobbyScript\LobbyBtn">
-      <UniqueIdentifier>{ceb8e4be-456f-45d6-b639-e6f3b8118797}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\LobbyScript\LobbyBtn\TeamBtn">
-      <UniqueIdentifier>{aa2c7b24-3146-4941-a4fd-5fc00a78988a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn">
-      <UniqueIdentifier>{85a1d934-e5d4-4484-bfeb-dedf34a2de59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment">
-      <UniqueIdentifier>{be2ee4fb-848e-43c8-8c68-1b913c9aaa45}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\LobbyScript\LobbyBtn\MgrBtn">
-      <UniqueIdentifier>{00a228d6-6efb-4346-857a-8f80bca5b6b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\LobbyScript\ProceedBtn">
-      <UniqueIdentifier>{90da0ae1-41ef-4560-b4ad-d7868a7f753c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\CursorScript">
-      <UniqueIdentifier>{99a9f93d-a61d-485b-96d6-be2b603f0be4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\GamerScript">
-      <UniqueIdentifier>{593f2374-5628-4423-bc56-10d00b6ec860}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript">
-      <UniqueIdentifier>{3a5c03c0-357d-4f9f-86cd-7d5d65ca3d61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Archer">
-      <UniqueIdentifier>{efa33184-1e50-400a-9347-81e48f380c73}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Fighter">
-      <UniqueIdentifier>{047374f3-fdfa-44d0-8e3d-c16fcd9e521e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Knight">
-      <UniqueIdentifier>{b91eea17-d7ed-49e3-bd46-de8887e58cec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Monk">
-      <UniqueIdentifier>{7bc7d6d9-d001-49b6-ac18-27a62a91f290}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Ninja">
-      <UniqueIdentifier>{40620a4b-f972-47d6-a5d4-f1a88703c5f1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Priest">
-      <UniqueIdentifier>{3e24d682-2633-4ec8-8b44-81e123d864f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Pyromancer">
-      <UniqueIdentifier>{795f03de-4e1f-4e4b-b083-cbd9c0cb71f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Swordman">
-      <UniqueIdentifier>{468837fb-96f0-4176-95f0-141f207705c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Pythoness">
-      <UniqueIdentifier>{e89466ea-9995-472b-8fea-e57d49f90f68}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. GameManager">
       <UniqueIdentifier>{328e6181-5b8b-451a-bae4-c8e26e6d8940}</UniqueIdentifier>
     </Filter>
@@ -100,65 +37,134 @@
     <Filter Include="03. State\06.Dead">
       <UniqueIdentifier>{9dc6e769-79bd-49e7-b3b1-bed035464a86}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Scripts\ChampScript\Archer\Arrow">
-      <UniqueIdentifier>{84126677-88a8-464d-8120-3a5aeb211ce6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\EffectScript">
-      <UniqueIdentifier>{d4e87bc9-e3f0-412b-a156-a3b447437380}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\ChampScript\Ninja\NinjaClone">
-      <UniqueIdentifier>{f1cda386-c6f0-481e-ac85-128c81986192}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\BattleScript">
-      <UniqueIdentifier>{197bc30c-2581-4ca1-b9c1-92fe08d3ec8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\BattleScript\BlueTeamSlot">
-      <UniqueIdentifier>{dfc928a4-f376-40fb-8bd6-c0fac329824d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\BattleScript\TeamHeader">
-      <UniqueIdentifier>{01652f24-d9a1-4891-a55a-652f043c0e24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\BattleScript\RedTeamSlot">
-      <UniqueIdentifier>{6f7e87ea-5074-454e-ad90-40e778a90197}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\EntryScript">
-      <UniqueIdentifier>{19e2a769-c6b0-443f-94e1-e7f6f9d416f3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\EntryScript\LineUpBGScript">
-      <UniqueIdentifier>{8f2355ac-41c4-4cd2-bdc8-83e6d9417fed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\EntryScript\LineUpTeamScript">
-      <UniqueIdentifier>{80b0df7a-243b-4856-87db-d74776b3a998}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\EntryScript\DraftArrowScript">
-      <UniqueIdentifier>{509ccd91-ec77-4e36-81ea-1ee3ba045d6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\EntryScript\SlotScript">
-      <UniqueIdentifier>{2f934cfa-0e7d-4b22-8d24-8d3a738c37d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\EntryScript\NextBtnScript">
-      <UniqueIdentifier>{574c2c6a-1362-4cf5-a743-3d159799a105}</UniqueIdentifier>
-    </Filter>
     <Filter Include="04. Level">
       <UniqueIdentifier>{64d6d2a8-e8ba-4b4c-8cc1-324cf13003b7}</UniqueIdentifier>
     </Filter>
     <Filter Include="04. Level\BanpickLevel">
       <UniqueIdentifier>{8b32a22e-2505-4116-b27d-599da159c43e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Scripts\BanpickScript">
-      <UniqueIdentifier>{3da97210-f80d-47fc-98b7-061d4a56acab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="02. Scripts\BanpickScript\TeamSlotScript">
-      <UniqueIdentifier>{c9a78260-cad6-493f-bf46-9519f33e91a2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. GameManager\BTMgrScript">
       <UniqueIdentifier>{ddf5eb84-e74c-41e1-b4fe-e995e976399b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Scripts\BanpickScript\BanpickUIScript">
+    <Filter Include="02. Scripts\01.TitleScript">
+      <UniqueIdentifier>{60bb191f-b7a9-444c-93fe-01edb9c848bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\02.LobbyScript">
+      <UniqueIdentifier>{6c2b9246-94c2-4203-8275-268db08c390f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\02.LobbyScript\Header">
+      <UniqueIdentifier>{61f70624-ad29-4af7-bcb2-5182165fcf38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\02.LobbyScript\LobbyBtn">
+      <UniqueIdentifier>{ceb8e4be-456f-45d6-b639-e6f3b8118797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn">
+      <UniqueIdentifier>{aa2c7b24-3146-4941-a4fd-5fc00a78988a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn">
+      <UniqueIdentifier>{85a1d934-e5d4-4484-bfeb-dedf34a2de59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment">
+      <UniqueIdentifier>{be2ee4fb-848e-43c8-8c68-1b913c9aaa45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\02.LobbyScript\LobbyBtn\MgrBtn">
+      <UniqueIdentifier>{00a228d6-6efb-4346-857a-8f80bca5b6b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\02.LobbyScript\ProceedBtn">
+      <UniqueIdentifier>{90da0ae1-41ef-4560-b4ad-d7868a7f753c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\03.GamerScript">
+      <UniqueIdentifier>{593f2374-5628-4423-bc56-10d00b6ec860}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\04.EntryScript">
+      <UniqueIdentifier>{19e2a769-c6b0-443f-94e1-e7f6f9d416f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\04.EntryScript\LineUpBGScript">
+      <UniqueIdentifier>{8f2355ac-41c4-4cd2-bdc8-83e6d9417fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\04.EntryScript\LineUpTeamScript">
+      <UniqueIdentifier>{80b0df7a-243b-4856-87db-d74776b3a998}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\04.EntryScript\DraftArrowScript">
+      <UniqueIdentifier>{509ccd91-ec77-4e36-81ea-1ee3ba045d6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\04.EntryScript\SlotScript">
+      <UniqueIdentifier>{2f934cfa-0e7d-4b22-8d24-8d3a738c37d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\04.EntryScript\NextBtnScript">
+      <UniqueIdentifier>{574c2c6a-1362-4cf5-a743-3d159799a105}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\00.CursorScript">
+      <UniqueIdentifier>{99a9f93d-a61d-485b-96d6-be2b603f0be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\06.BanpickScript">
+      <UniqueIdentifier>{3da97210-f80d-47fc-98b7-061d4a56acab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\06.BanpickScript\TeamSlotScript">
+      <UniqueIdentifier>{c9a78260-cad6-493f-bf46-9519f33e91a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\06.BanpickScript\TeamSlotScript\SlotIcon">
+      <UniqueIdentifier>{6ffb807c-4748-4dc6-968c-3fb16288f12c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\06.BanpickScript\BanpickUIScript">
       <UniqueIdentifier>{00522756-817c-4987-9205-201b14c071a1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. Scripts\BanpickScript\TeamSlotScript\SlotIcon">
-      <UniqueIdentifier>{6ffb807c-4748-4dc6-968c-3fb16288f12c}</UniqueIdentifier>
+    <Filter Include="02. Scripts\07.BattleScript">
+      <UniqueIdentifier>{197bc30c-2581-4ca1-b9c1-92fe08d3ec8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\07.BattleScript\BlueTeamSlot">
+      <UniqueIdentifier>{dfc928a4-f376-40fb-8bd6-c0fac329824d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\07.BattleScript\TeamHeader">
+      <UniqueIdentifier>{01652f24-d9a1-4891-a55a-652f043c0e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\07.BattleScript\RedTeamSlot">
+      <UniqueIdentifier>{6f7e87ea-5074-454e-ad90-40e778a90197}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript">
+      <UniqueIdentifier>{3a5c03c0-357d-4f9f-86cd-7d5d65ca3d61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Archer">
+      <UniqueIdentifier>{efa33184-1e50-400a-9347-81e48f380c73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Archer\Arrow">
+      <UniqueIdentifier>{84126677-88a8-464d-8120-3a5aeb211ce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Fighter">
+      <UniqueIdentifier>{047374f3-fdfa-44d0-8e3d-c16fcd9e521e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Knight">
+      <UniqueIdentifier>{b91eea17-d7ed-49e3-bd46-de8887e58cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Monk">
+      <UniqueIdentifier>{7bc7d6d9-d001-49b6-ac18-27a62a91f290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Ninja">
+      <UniqueIdentifier>{40620a4b-f972-47d6-a5d4-f1a88703c5f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Ninja\NinjaClone">
+      <UniqueIdentifier>{f1cda386-c6f0-481e-ac85-128c81986192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Priest">
+      <UniqueIdentifier>{3e24d682-2633-4ec8-8b44-81e123d864f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Pyromancer">
+      <UniqueIdentifier>{795f03de-4e1f-4e4b-b083-cbd9c0cb71f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Swordman">
+      <UniqueIdentifier>{468837fb-96f0-4176-95f0-141f207705c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.ChampScript\Pythoness">
+      <UniqueIdentifier>{e89466ea-9995-472b-8fea-e57d49f90f68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\99.EffectScript">
+      <UniqueIdentifier>{d4e87bc9-e3f0-412b-a156-a3b447437380}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\06.BanpickScript\BanpickUIScript\01.ChampSlot">
+      <UniqueIdentifier>{5e933d83-fba5-4918-9265-3b22f9a85a11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\06.BanpickScript\BanpickUIScript\02.BansSlot">
+      <UniqueIdentifier>{b4b9d860-ed6c-42e2-abce-32b8ca1a9aa2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -172,52 +178,52 @@
       <Filter>ScriptMgr</Filter>
     </ClInclude>
     <ClInclude Include="CNewBtnScript.h">
-      <Filter>02. Scripts\TitleScript</Filter>
+      <Filter>02. Scripts\01.TitleScript</Filter>
     </ClInclude>
     <ClInclude Include="CEndBtnScript.h">
-      <Filter>02. Scripts\TitleScript</Filter>
+      <Filter>02. Scripts\01.TitleScript</Filter>
     </ClInclude>
     <ClInclude Include="CLobbyHdScript.h">
-      <Filter>02. Scripts\LobbyScript\Header</Filter>
+      <Filter>02. Scripts\02.LobbyScript\Header</Filter>
     </ClInclude>
     <ClInclude Include="CRecruitmentBtnScript.h">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
     </ClInclude>
     <ClInclude Include="CTrainningBtnScript.h">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
     </ClInclude>
     <ClInclude Include="CSquadBtnScript.h">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
     </ClInclude>
     <ClInclude Include="CCursorScript.h">
-      <Filter>02. Scripts\CursorScript</Filter>
+      <Filter>02. Scripts\00.CursorScript</Filter>
     </ClInclude>
     <ClInclude Include="CProceedBtnScript.h">
-      <Filter>02. Scripts\LobbyScript\ProceedBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\ProceedBtn</Filter>
     </ClInclude>
     <ClInclude Include="CLobbyBtnScript.h">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn</Filter>
     </ClInclude>
     <ClInclude Include="CMgrBtnScript.h">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\MgrBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\MgrBtn</Filter>
     </ClInclude>
     <ClInclude Include="CRecruitmentScript.h">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
     </ClInclude>
     <ClInclude Include="CRecruitSlotScript.h">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
     </ClInclude>
     <ClInclude Include="CGamerScript.h">
-      <Filter>02. Scripts\GamerScript</Filter>
+      <Filter>02. Scripts\03.GamerScript</Filter>
     </ClInclude>
     <ClInclude Include="CTGMgr.h">
       <Filter>01. GameManager\TGMgrScript</Filter>
     </ClInclude>
     <ClInclude Include="CChampScript.h">
-      <Filter>02. Scripts\ChampScript</Filter>
+      <Filter>02. Scripts\08.ChampScript</Filter>
     </ClInclude>
     <ClInclude Include="CArcherScript.h">
-      <Filter>02. Scripts\ChampScript\Archer</Filter>
+      <Filter>02. Scripts\08.ChampScript\Archer</Filter>
     </ClInclude>
     <ClInclude Include="CIdleState.h">
       <Filter>03. State\01.Idle</Filter>
@@ -238,64 +244,70 @@
       <Filter>03. State\05.Ultimate</Filter>
     </ClInclude>
     <ClInclude Include="CArrowScript.h">
-      <Filter>02. Scripts\ChampScript\Archer\Arrow</Filter>
+      <Filter>02. Scripts\08.ChampScript\Archer\Arrow</Filter>
     </ClInclude>
     <ClInclude Include="CBTMgr.h">
       <Filter>01. GameManager\BTMgrScript</Filter>
     </ClInclude>
     <ClInclude Include="CFighterScript.h">
-      <Filter>02. Scripts\ChampScript\Fighter</Filter>
+      <Filter>02. Scripts\08.ChampScript\Fighter</Filter>
     </ClInclude>
     <ClInclude Include="CEffectScript.h">
-      <Filter>02. Scripts\EffectScript</Filter>
+      <Filter>02. Scripts\99.EffectScript</Filter>
     </ClInclude>
     <ClInclude Include="CKnightScript.h">
-      <Filter>02. Scripts\ChampScript\Knight</Filter>
+      <Filter>02. Scripts\08.ChampScript\Knight</Filter>
     </ClInclude>
     <ClInclude Include="CMonkScript.h">
-      <Filter>02. Scripts\ChampScript\Monk</Filter>
+      <Filter>02. Scripts\08.ChampScript\Monk</Filter>
     </ClInclude>
     <ClInclude Include="CNinjaScript.h">
-      <Filter>02. Scripts\ChampScript\Ninja</Filter>
+      <Filter>02. Scripts\08.ChampScript\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="CNinjaCloneScript.h">
-      <Filter>02. Scripts\ChampScript\Ninja\NinjaClone</Filter>
+      <Filter>02. Scripts\08.ChampScript\Ninja\NinjaClone</Filter>
     </ClInclude>
     <ClInclude Include="CPriestScript.h">
-      <Filter>02. Scripts\ChampScript\Priest</Filter>
+      <Filter>02. Scripts\08.ChampScript\Priest</Filter>
     </ClInclude>
     <ClInclude Include="CTeamHeaderScript.h">
-      <Filter>02. Scripts\BattleScript\TeamHeader</Filter>
+      <Filter>02. Scripts\07.BattleScript\TeamHeader</Filter>
     </ClInclude>
     <ClInclude Include="CBlueTeamSlotScript.h">
-      <Filter>02. Scripts\BattleScript\BlueTeamSlot</Filter>
+      <Filter>02. Scripts\07.BattleScript\BlueTeamSlot</Filter>
     </ClInclude>
     <ClInclude Include="CLineUpBGScript.h">
-      <Filter>02. Scripts\EntryScript\LineUpBGScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\LineUpBGScript</Filter>
     </ClInclude>
     <ClInclude Include="CLineUpTeamScript.h">
-      <Filter>02. Scripts\EntryScript\LineUpTeamScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\LineUpTeamScript</Filter>
     </ClInclude>
     <ClInclude Include="CDraftArrowScript.h">
-      <Filter>02. Scripts\EntryScript\DraftArrowScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\DraftArrowScript</Filter>
     </ClInclude>
     <ClInclude Include="CLineUpSlotScript.h">
-      <Filter>02. Scripts\EntryScript\SlotScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\SlotScript</Filter>
     </ClInclude>
     <ClInclude Include="CNextBtnScript.h">
-      <Filter>02. Scripts\EntryScript\NextBtnScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\NextBtnScript</Filter>
     </ClInclude>
     <ClInclude Include="CBanpickLevel.h">
       <Filter>04. Level\BanpickLevel</Filter>
     </ClInclude>
     <ClInclude Include="CTeamSlotScript.h">
-      <Filter>02. Scripts\BanpickScript\TeamSlotScript</Filter>
+      <Filter>02. Scripts\06.BanpickScript\TeamSlotScript</Filter>
     </ClInclude>
     <ClInclude Include="CBanPickUIScript.h">
-      <Filter>02. Scripts\BanpickScript\BanpickUIScript</Filter>
+      <Filter>02. Scripts\06.BanpickScript\BanpickUIScript</Filter>
     </ClInclude>
     <ClInclude Include="CTeamSlotIconScript.h">
-      <Filter>02. Scripts\BanpickScript\TeamSlotScript\SlotIcon</Filter>
+      <Filter>02. Scripts\06.BanpickScript\TeamSlotScript\SlotIcon</Filter>
+    </ClInclude>
+    <ClInclude Include="CBansSlotScript.h">
+      <Filter>02. Scripts\06.BanpickScript\BanpickUIScript\02.BansSlot</Filter>
+    </ClInclude>
+    <ClInclude Include="CChampSlotScript.h">
+      <Filter>02. Scripts\06.BanpickScript\BanpickUIScript\01.ChampSlot</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -309,52 +321,52 @@
       <Filter>ScriptMgr</Filter>
     </ClCompile>
     <ClCompile Include="CNewBtnScript.cpp">
-      <Filter>02. Scripts\TitleScript</Filter>
+      <Filter>02. Scripts\01.TitleScript</Filter>
     </ClCompile>
     <ClCompile Include="CEndBtnScript.cpp">
-      <Filter>02. Scripts\TitleScript</Filter>
+      <Filter>02. Scripts\01.TitleScript</Filter>
     </ClCompile>
     <ClCompile Include="CLobbyHdScript.cpp">
-      <Filter>02. Scripts\LobbyScript\Header</Filter>
+      <Filter>02. Scripts\02.LobbyScript\Header</Filter>
     </ClCompile>
     <ClCompile Include="CRecruitmentBtnScript.cpp">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
     </ClCompile>
     <ClCompile Include="CTrainningBtnScript.cpp">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
     </ClCompile>
     <ClCompile Include="CSquadBtnScript.cpp">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn</Filter>
     </ClCompile>
     <ClCompile Include="CCursorScript.cpp">
-      <Filter>02. Scripts\CursorScript</Filter>
+      <Filter>02. Scripts\00.CursorScript</Filter>
     </ClCompile>
     <ClCompile Include="CProceedBtnScript.cpp">
-      <Filter>02. Scripts\LobbyScript\ProceedBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\ProceedBtn</Filter>
     </ClCompile>
     <ClCompile Include="CLobbyBtnScript.cpp">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn</Filter>
     </ClCompile>
     <ClCompile Include="CMgrBtnScript.cpp">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\MgrBtn</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\MgrBtn</Filter>
     </ClCompile>
     <ClCompile Include="CRecruitmentScript.cpp">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
     </ClCompile>
     <ClCompile Include="CRecruitSlotScript.cpp">
-      <Filter>02. Scripts\LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
+      <Filter>02. Scripts\02.LobbyScript\LobbyBtn\TeamBtn\TeamChildBtn\Recruitment</Filter>
     </ClCompile>
     <ClCompile Include="CGamerScript.cpp">
-      <Filter>02. Scripts\GamerScript</Filter>
+      <Filter>02. Scripts\03.GamerScript</Filter>
     </ClCompile>
     <ClCompile Include="CTGMgr.cpp">
       <Filter>01. GameManager\TGMgrScript</Filter>
     </ClCompile>
     <ClCompile Include="CChampScript.cpp">
-      <Filter>02. Scripts\ChampScript</Filter>
+      <Filter>02. Scripts\08.ChampScript</Filter>
     </ClCompile>
     <ClCompile Include="CArcherScript.cpp">
-      <Filter>02. Scripts\ChampScript\Archer</Filter>
+      <Filter>02. Scripts\08.ChampScript\Archer</Filter>
     </ClCompile>
     <ClCompile Include="CIdleState.cpp">
       <Filter>03. State\01.Idle</Filter>
@@ -375,64 +387,70 @@
       <Filter>03. State\05.Ultimate</Filter>
     </ClCompile>
     <ClCompile Include="CArrowScript.cpp">
-      <Filter>02. Scripts\ChampScript\Archer\Arrow</Filter>
+      <Filter>02. Scripts\08.ChampScript\Archer\Arrow</Filter>
     </ClCompile>
     <ClCompile Include="CBTMgr.cpp">
       <Filter>01. GameManager\BTMgrScript</Filter>
     </ClCompile>
     <ClCompile Include="CFighterScript.cpp">
-      <Filter>02. Scripts\ChampScript\Fighter</Filter>
+      <Filter>02. Scripts\08.ChampScript\Fighter</Filter>
     </ClCompile>
     <ClCompile Include="CEffectScript.cpp">
-      <Filter>02. Scripts\EffectScript</Filter>
+      <Filter>02. Scripts\99.EffectScript</Filter>
     </ClCompile>
     <ClCompile Include="CKnightScript.cpp">
-      <Filter>02. Scripts\ChampScript\Knight</Filter>
+      <Filter>02. Scripts\08.ChampScript\Knight</Filter>
     </ClCompile>
     <ClCompile Include="CMonkScript.cpp">
-      <Filter>02. Scripts\ChampScript\Monk</Filter>
+      <Filter>02. Scripts\08.ChampScript\Monk</Filter>
     </ClCompile>
     <ClCompile Include="CNinjaScript.cpp">
-      <Filter>02. Scripts\ChampScript\Ninja</Filter>
+      <Filter>02. Scripts\08.ChampScript\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="CNinjaCloneScript.cpp">
-      <Filter>02. Scripts\ChampScript\Ninja\NinjaClone</Filter>
+      <Filter>02. Scripts\08.ChampScript\Ninja\NinjaClone</Filter>
     </ClCompile>
     <ClCompile Include="CPriestScript.cpp">
-      <Filter>02. Scripts\ChampScript\Priest</Filter>
+      <Filter>02. Scripts\08.ChampScript\Priest</Filter>
     </ClCompile>
     <ClCompile Include="CTeamHeaderScript.cpp">
-      <Filter>02. Scripts\BattleScript\TeamHeader</Filter>
+      <Filter>02. Scripts\07.BattleScript\TeamHeader</Filter>
     </ClCompile>
     <ClCompile Include="CBlueTeamSlotScript.cpp">
-      <Filter>02. Scripts\BattleScript\BlueTeamSlot</Filter>
+      <Filter>02. Scripts\07.BattleScript\BlueTeamSlot</Filter>
     </ClCompile>
     <ClCompile Include="CLineUpBGScript.cpp">
-      <Filter>02. Scripts\EntryScript\LineUpBGScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\LineUpBGScript</Filter>
     </ClCompile>
     <ClCompile Include="CLineUpTeamScript.cpp">
-      <Filter>02. Scripts\EntryScript\LineUpTeamScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\LineUpTeamScript</Filter>
     </ClCompile>
     <ClCompile Include="CDraftArrowScript.cpp">
-      <Filter>02. Scripts\EntryScript\DraftArrowScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\DraftArrowScript</Filter>
     </ClCompile>
     <ClCompile Include="CLineUpSlotScript.cpp">
-      <Filter>02. Scripts\EntryScript\SlotScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\SlotScript</Filter>
     </ClCompile>
     <ClCompile Include="CNextBtnScript.cpp">
-      <Filter>02. Scripts\EntryScript\NextBtnScript</Filter>
+      <Filter>02. Scripts\04.EntryScript\NextBtnScript</Filter>
     </ClCompile>
     <ClCompile Include="CBanpickLevel.cpp">
       <Filter>04. Level\BanpickLevel</Filter>
     </ClCompile>
     <ClCompile Include="CTeamSlotScript.cpp">
-      <Filter>02. Scripts\BanpickScript\TeamSlotScript</Filter>
+      <Filter>02. Scripts\06.BanpickScript\TeamSlotScript</Filter>
     </ClCompile>
     <ClCompile Include="CBanPickUIScript.cpp">
-      <Filter>02. Scripts\BanpickScript\BanpickUIScript</Filter>
+      <Filter>02. Scripts\06.BanpickScript\BanpickUIScript</Filter>
     </ClCompile>
     <ClCompile Include="CTeamSlotIconScript.cpp">
-      <Filter>02. Scripts\BanpickScript\TeamSlotScript\SlotIcon</Filter>
+      <Filter>02. Scripts\06.BanpickScript\TeamSlotScript\SlotIcon</Filter>
+    </ClCompile>
+    <ClCompile Include="CBansSlotScript.cpp">
+      <Filter>02. Scripts\06.BanpickScript\BanpickUIScript\02.BansSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CChampSlotScript.cpp">
+      <Filter>02. Scripts\06.BanpickScript\BanpickUIScript\01.ChampSlot</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 #include <Engine\CLevel.h>
 
-enum class BATTLE_STATE
+enum class BANPICK_STATE
 {
     NONE,
     BLUEBAN,
@@ -22,7 +22,12 @@ private:
     vector<CGameObject*> m_BlueTeam;
     vector<CGameObject*> m_RedTeam;
 
+    BANPICK_STATE m_CurState;
+
 public:
+    void SetBanPickState(BANPICK_STATE _state) { m_CurState = _state; }
+    BANPICK_STATE GetCurBanPickState() { return m_CurState; }
+
     void InitUI();
 
 public:

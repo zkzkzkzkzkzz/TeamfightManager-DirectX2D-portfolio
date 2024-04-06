@@ -31,8 +31,6 @@ public:
 	static int G_BlueKillScore;
 	static int G_RedKillScore;
 
-	static int G_LevelChange;
-
 public:
 	static void CloneTGMgr();
 	static void ResetInGameTime();
