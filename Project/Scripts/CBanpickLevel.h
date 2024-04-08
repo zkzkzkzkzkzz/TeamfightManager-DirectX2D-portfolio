@@ -33,8 +33,6 @@ private:
     vector<CGameObject*> m_BlueTeam;
     vector<CGameObject*> m_RedTeam;
 
-    vector<CGameObject*> m_ChampList;
-
     BANPICK_STATE m_CurState;
 
 public:
@@ -42,7 +40,6 @@ public:
     BANPICK_STATE GetCurBanPickState() { return m_CurState; }
 
     void InitUI();
-    void InitChampList();
 
 public:
     virtual void begin() override;

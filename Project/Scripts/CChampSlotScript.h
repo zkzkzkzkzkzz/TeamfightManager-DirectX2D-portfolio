@@ -34,6 +34,8 @@ private:
     bool    m_EffectSpawn;
     float   m_EffectTime;
 
+    CGameObject* m_ToolTip;
+
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
 
@@ -59,8 +61,10 @@ public:
 
     void SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat = false, Vec3 _offset = Vec3(0.f, 0.f, 0.f));
 
+    void InitEffectObj();
     void InitChampToSlot();
     void CreateChamp();
+    void ShowChampInfo();
 
 public:
     virtual void begin() override;

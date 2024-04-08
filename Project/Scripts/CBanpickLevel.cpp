@@ -14,10 +14,16 @@
 #include "CChampSlotScript.h"
 #include "CCursorScript.h"
 
+#include "CIdleState.h"
+#include "CTraceState.h"
+#include "CAttackState.h"
+#include "CSkillState.h"
+#include "CUltimateState.h"
+#include "CDeadState.h"
+
 CBanpickLevel::CBanpickLevel()
 	: m_BlueTeam{}
 	, m_RedTeam{}
-	, m_ChampList{}
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -35,7 +41,6 @@ CBanpickLevel::CBanpickLevel()
 CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	: m_BlueTeam{}
 	, m_RedTeam{}
-	, m_ChampList{}
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -86,12 +91,32 @@ void CBanpickLevel::begin()
 		AddObject(Obj, 2);
 	}
 
-	Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BanPickUI_4.prefab")->Instatiate();
+	Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BanPickUI_5.prefab")->Instatiate();
 	Obj->Transform()->SetRelativePos(Vec3(0.f, -800.f, 3000.f));
 	Obj->Transform()->SetRelativeScale(Vec3(1280.f, 720.f, 1.f));
 	AddObject(Obj, 2);
 
 	m_CurState = BANPICK_STATE::BLUEPICK1;
+
+	Ptr<CFSM> pFSM = new CFSM(false);
+
+	pFSM->AddState(L"Idle", new CIdleState);
+	pFSM->AddState(L"Trace", new CTraceState);
+	pFSM->AddState(L"Attack", new CAttackState);
+	pFSM->AddState(L"Skill", new CSkillState);
+	pFSM->AddState(L"Ultimate", new CUltimateState);
+	pFSM->AddState(L"Dead", new CDeadState);
+
+	CAssetMgr::GetInst()->AddAsset<CFSM>(L"ChampFSM", pFSM.Get());
+
+	pFSM = new CFSM(false);
+
+	pFSM->AddState(L"Idle", new CIdleState);
+	pFSM->AddState(L"Trace", new CTraceState);
+	pFSM->AddState(L"Attack", new CAttackState);
+	pFSM->AddState(L"Dead", new CDeadState);
+
+	CAssetMgr::GetInst()->AddAsset<CFSM>(L"SummonFSM", pFSM.Get());
 
 	CLevel::begin();
 }
@@ -112,6 +137,7 @@ void CBanpickLevel::InitUI()
 	GetLayer(1)->SetName(L"Light");
 	GetLayer(2)->SetName(L"Background");
 	GetLayer(4)->SetName(L"Cursor");
+	GetLayer(5)->SetName(L"Champ");
 	GetLayer(6)->SetName(L"Effect");
 	GetLayer(30)->SetName(L"GameInfo");
 	GetLayer(31)->SetName(L"UI");
@@ -166,9 +192,4 @@ void CBanpickLevel::InitUI()
 	{
 		AddObject(CTGMgr::GetInst()->G_ShortlistSlot[i], 30);
 	}
-}
-
-void CBanpickLevel::InitChampList()
-{
-
 }
