@@ -166,6 +166,9 @@
     <Filter Include="02. Scripts\06.BanpickScript\BanpickUIScript\02.BansSlot">
       <UniqueIdentifier>{b4b9d860-ed6c-42e2-abce-32b8ca1a9aa2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scripts\06.BanpickScript\BanpickUIScript\03.MiddleBan">
+      <UniqueIdentifier>{988696e1-0b1e-40a3-a7e4-e2b66ea8a390}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -309,6 +312,9 @@
     <ClInclude Include="CChampSlotScript.h">
       <Filter>02. Scripts\06.BanpickScript\BanpickUIScript\01.ChampSlot</Filter>
     </ClInclude>
+    <ClInclude Include="CMiddleBanScript.h">
+      <Filter>02. Scripts\06.BanpickScript\BanpickUIScript\03.MiddleBan</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -451,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="CChampSlotScript.cpp">
       <Filter>02. Scripts\06.BanpickScript\BanpickUIScript\01.ChampSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CMiddleBanScript.cpp">
+      <Filter>02. Scripts\06.BanpickScript\BanpickUIScript\03.MiddleBan</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

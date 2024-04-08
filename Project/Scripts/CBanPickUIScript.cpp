@@ -4,10 +4,12 @@
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 #include <Engine\CGameObject.h>
+#include <Engine\components.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CPrefab.h>
 
 #include "CBanpickLevel.h"
+#include "CMiddleBanScript.h"
 #include "CChampSlotScript.h"
 
 CBanPickUIScript::CBanPickUIScript()
@@ -38,6 +40,13 @@ void CBanPickUIScript::begin()
 		Obj->Transform()->SetRelativePos(Vec3(-367.f + (80.f * i), 122.f, -10.f));
 		GetOwner()->AddChild(Obj);
 	}
+
+	CGameObject* MiddleBan = new CGameObject;
+	MiddleBan->SetName(L"MiddleBan");
+	MiddleBan->AddComponent(new CTransform);
+	MiddleBan->AddComponent(new CMeshRender);
+	MiddleBan->AddComponent(new CMiddleBanScript);
+	GetOwner()->AddChild(MiddleBan);
 }
 
 void CBanPickUIScript::tick()

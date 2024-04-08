@@ -168,6 +168,7 @@ void CChampSlotScript::LBtnClicked()
 	{
 		m_EffectObj->Animator2D()->Stop();
 		m_EffectObj->Animator2D()->Play(L"ChampSlotIdle");
+		m_Level->SetBanPickState(BANPICK_STATE::REDPICK1);
 	}
 	else if ((BANPICK_STATE::BLUEBAN == m_Level->GetCurBanPickState() || BANPICK_STATE::REDBAN == m_Level->GetCurBanPickState())
 		&& SLOT_STATE::NONE == m_SlotState)

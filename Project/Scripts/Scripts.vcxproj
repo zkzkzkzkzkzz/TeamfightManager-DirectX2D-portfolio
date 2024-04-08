@@ -191,6 +191,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CLineUpTeamScript.h" />
     <ClInclude Include="CLobbyBtnScript.h" />
     <ClInclude Include="CMgrBtnScript.h" />
+    <ClInclude Include="CMiddleBanScript.h" />
     <ClInclude Include="CMonkScript.h" />
     <ClInclude Include="CNextBtnScript.h" />
     <ClInclude Include="CNinjaCloneScript.h" />
@@ -240,6 +241,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CLineUpTeamScript.cpp" />
     <ClCompile Include="CLobbyBtnScript.cpp" />
     <ClCompile Include="CMgrBtnScript.cpp" />
+    <ClCompile Include="CMiddleBanScript.cpp" />
     <ClCompile Include="CMonkScript.cpp" />
     <ClCompile Include="CNextBtnScript.cpp" />
     <ClCompile Include="CNinjaCloneScript.cpp" />
