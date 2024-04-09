@@ -107,6 +107,7 @@ public:
     virtual void SetChampATK(int _atk) { m_InGameStatus.HP = _atk; }
     virtual void SetChampMoveSpeed(float _speed) { m_Info.MOV = _speed; }
     virtual void SetChampATKSpeed(float _speed) { m_Info.ATKSpeed = _speed; }
+    virtual void SetPlayingGamer(CGameObject* _Gamer) { m_PlayingGamer = _Gamer; }
 
     virtual int GetChampMaxHP() { return m_Info.MaxHP; }
     virtual int GetInGameChampHP() { return m_InGameStatus.HP; }
@@ -116,6 +117,7 @@ public:
     virtual int GetChampATKRange() { return m_Info.ATKRange; }
     virtual float GetChampMoveSpeed() { return m_Info.MOV; }
     virtual CHAMP_TYPE GetChampType() { return m_Info.Type; }
+    virtual CGameObject* GetPlayingGamer() { return m_PlayingGamer; }
 
     virtual bool IsAttack() { return m_bAttack; }
     virtual bool DoUltimate() { return m_InGameStatus.bUltimate; }
@@ -128,6 +130,7 @@ public:
     virtual void SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat = false, Vec3 _offset = Vec3(0.f, 0.f, 0.f));
     virtual void SpawnShadow();
     virtual void CheckShadow();
+    virtual void CheckPlayingGamer();
 
 public:
     virtual void InitChampInfo() {}     // 챔프 정보 설정
@@ -166,5 +169,7 @@ public:
 
     friend class CBTMgr;
     friend class CGamerScript;
+    friend class CBlueTeamSlotScript;
+    friend class CRedTeamSlotScript;
 };
 

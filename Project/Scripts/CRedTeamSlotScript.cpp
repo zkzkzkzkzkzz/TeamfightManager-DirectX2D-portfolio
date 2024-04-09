@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CBlueTeamSlotScript.h"
+#include "CRedTeamSlotScript.h"
 
 #include <Engine\CEngine.h>
 #include <Engine\CLevelMgr.h>
@@ -12,8 +12,8 @@
 #include "CGamerScript.h"
 #include "CChampScript.h"
 
-CBlueTeamSlotScript::CBlueTeamSlotScript()
-	: CScript(BLUETEAMSLOTSCRIPT)
+CRedTeamSlotScript::CRedTeamSlotScript()
+	: CScript(REDTEAMSLOTSCRIPT)
 	, m_SlotTex(nullptr)
 	, m_KDAText(nullptr)
 	, m_InfoText(nullptr)
@@ -37,8 +37,8 @@ CBlueTeamSlotScript::CBlueTeamSlotScript()
 {
 }
 
-CBlueTeamSlotScript::CBlueTeamSlotScript(const CBlueTeamSlotScript& _Origin)
-	: CScript(BLUETEAMSLOTSCRIPT)
+CRedTeamSlotScript::CRedTeamSlotScript(const CRedTeamSlotScript& _Origin)
+	: CScript(REDTEAMSLOTSCRIPT)
 	, m_SlotTex(_Origin.m_SlotTex)
 	, m_KDAText(nullptr)
 	, m_InfoText(nullptr)
@@ -62,11 +62,11 @@ CBlueTeamSlotScript::CBlueTeamSlotScript(const CBlueTeamSlotScript& _Origin)
 {
 }
 
-CBlueTeamSlotScript::~CBlueTeamSlotScript()
+CRedTeamSlotScript::~CRedTeamSlotScript()
 {
 }
 
-void CBlueTeamSlotScript::begin()
+void CRedTeamSlotScript::begin()
 {
 	m_Level = (CBanpickLevel*)CLevelMgr::GetInst()->GetCurrentLevel();
 
@@ -79,8 +79,8 @@ void CBlueTeamSlotScript::begin()
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"InGameUIMtrl"));
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	m_SlotTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\IngameUI\\data_ui_bg_0.png"
-														, L"texture\\Champ\\IngameUI\\data_ui_bg_0.png");
+	m_SlotTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Champ\\IngameUI\\data_ui_bg_1.png"
+													, L"texture\\Champ\\IngameUI\\data_ui_bg_1.png");
 
 	m_InfoText = new CGameObject;
 	m_InfoText->SetName(L"Info");
@@ -111,14 +111,13 @@ void CBlueTeamSlotScript::begin()
 	InitInGameInfo();
 }
 
-void CBlueTeamSlotScript::tick()
+void CRedTeamSlotScript::tick()
 {
 	m_CurList = GETGAMER(m_CurGamer)->GetSelectedChamp();
 	if (nullptr == m_CurChamp)
 	{
 		FindChampFromList();
 	}
-
 
 	if (BANPICK_STATE::BATTLE == m_Level->GetCurBanPickState() && !m_bUIPos)
 	{
@@ -136,14 +135,48 @@ void CBlueTeamSlotScript::tick()
 	render();
 }
 
-void CBlueTeamSlotScript::render()
+void CRedTeamSlotScript::render()
 {
 	if (nullptr != m_SlotTex)
 		MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_SlotTex);
 }
 
 
-void CBlueTeamSlotScript::CheckInGameInfo()
+void CRedTeamSlotScript::OpenSlot()
+{
+	m_UIPosTime += DT;
+
+	Vec3 vPos = Transform()->GetRelativePos();
+
+	float BtwTime = 1.f - m_UIPosTime;
+
+	if (m_UIPosTime < 0.15f)
+	{
+		vPos.x -= 750.f * DT * BtwTime;
+		if (vPos.x <= -121.f)
+			vPos.x = -121.f;
+
+		Transform()->SetRelativePos(vPos);
+	}
+	else if (m_UIPosTime >= 0.15f && m_UIPosTime < 1.f)
+	{
+		vPos.x -= 100.f * DT * BtwTime;
+		if (vPos.x <= -121.f)
+			vPos.x = -121.f;
+
+		Transform()->SetRelativePos(vPos);
+	}
+	else
+	{
+		vPos.x = -121.f;
+		Transform()->SetRelativePos(vPos);
+		m_UIPosTime = 0.f;
+		m_bUIPos = true;
+	}
+}
+
+
+void CRedTeamSlotScript::CheckInGameInfo()
 {
 	Kill = GETCHAMP(m_CurChamp)->m_InGameStatus.KillPoint;
 	Dead = GETCHAMP(m_CurChamp)->m_InGameStatus.DeathPoint;
@@ -152,7 +185,7 @@ void CBlueTeamSlotScript::CheckInGameInfo()
 	Heal = GETCHAMP(m_CurChamp)->m_InGameStatus.TotalHeal;
 }
 
-void CBlueTeamSlotScript::RenderInGameInfo()
+void CRedTeamSlotScript::RenderInGameInfo()
 {
 	m_KillText->TextRender()->SetString(ToWString(std::to_string(Kill)));
 	m_DeadText->TextRender()->SetString(ToWString(std::to_string(Dead)));
@@ -161,7 +194,7 @@ void CBlueTeamSlotScript::RenderInGameInfo()
 	m_HealText->TextRender()->SetString(ToWString(std::to_string(Heal)));
 }
 
-void CBlueTeamSlotScript::FindChampFromList()
+void CRedTeamSlotScript::FindChampFromList()
 {
 	switch (m_CurList)
 	{
@@ -195,44 +228,9 @@ void CBlueTeamSlotScript::FindChampFromList()
 	m_DealText->SetActive(true);
 	m_DamagedText->SetActive(true);
 	m_HealText->SetActive(true);
-	//GamePlayStatic::SpawnGameObject(m_CurChamp, 30);
 }
 
-void CBlueTeamSlotScript::OpenSlot()
-{
-	m_UIPosTime += DT;
-
-	Vec3 vPos = Transform()->GetRelativePos();
-
-	float BtwTime = 1.f - m_UIPosTime;
-
-	if (m_UIPosTime < 0.15f)
-	{
-		vPos.x += 750.f * DT * BtwTime;
-		if (vPos.x >= 121.f)
-			vPos.x = 121.f;
-
-		Transform()->SetRelativePos(vPos);
-	}
-	else if (m_UIPosTime >= 0.15f && m_UIPosTime < 1.f)
-	{
-		vPos.x += 100.f * DT * BtwTime;
-		if (vPos.x >= 121.f)
-			vPos.x = 121.f;
-
-		Transform()->SetRelativePos(vPos);
-	}
-	else
-	{
-		vPos.x = 121.f;
-		Transform()->SetRelativePos(vPos);
-		m_UIPosTime = 0.f;
-		m_bUIPos = true;
-	}
-}
-
-
-void CBlueTeamSlotScript::InitInGameInfo()
+void CRedTeamSlotScript::InitInGameInfo()
 {
 	m_KillText = new CGameObject;
 	m_KillText->SetName(L"Kill");

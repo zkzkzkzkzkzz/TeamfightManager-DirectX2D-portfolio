@@ -11,6 +11,7 @@
 #include <Engine\CAssetMgr.h>
 
 #include "CBTMgr.h"
+#include "CGamerScript.h"
 #include "CEffectScript.h"
 #include "CIdleState.h"
 #include "CTraceState.h"
@@ -110,7 +111,10 @@ void CArcherScript::render()
 void CArcherScript::InitChampInfo()
 {
 	SetChampInfo(100, 42, 5, 0.67f, 120, 3, CHAMP_TYPE::MARKSMAN);	// 기본 정보 설정
-	InitChampStatus(0, 0);	// 인게임 정보 설정
+
+	int atk = GETGAMER(m_PlayingGamer)->GetATK();
+	int def = GETGAMER(m_PlayingGamer)->GetDEF();
+	InitChampStatus(atk, def);	// 인게임 정보 설정
 
 	m_State = CHAMP_STATE::IDLE;
 	m_bRespawn = false;
@@ -138,13 +142,6 @@ void CArcherScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 	}
 	
 	m_InGameStatus.RespawnTime = 0.f;
-	
-	m_InGameStatus.TotalDeal = 0;
-	m_InGameStatus.TotalDamage = 0;
-	m_InGameStatus.TotalHeal = 0;
-	m_InGameStatus.KillPoint = 0;
-	m_InGameStatus.DeathPoint = 0;
-	m_InGameStatus.AssistPoint = 0;
 }
 
 void CArcherScript::InitChampAnim()

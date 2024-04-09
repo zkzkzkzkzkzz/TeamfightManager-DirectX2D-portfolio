@@ -5,28 +5,28 @@
 
 class CGameObject;
 
-class CBlueTeamSlotScript :
+class CRedTeamSlotScript :
     public CScript
 {
 private:
     Ptr<CTexture>   m_SlotTex;
 
-    CGameObject*    m_KDAText;
-    CGameObject*    m_InfoText;
+    CGameObject* m_KDAText;
+    CGameObject* m_InfoText;
 
-    CGameObject*    m_CurGamer; // 현재 슬롯에 배치된 선수
+    CGameObject* m_CurGamer; // 현재 슬롯에 배치된 선수
 
     CHAMP_LIST      m_CurList;
     CGameObject*    m_CurChamp;
-
+    
     CBanpickLevel* m_Level;
 
-    CGameObject*    m_KillText;
-    CGameObject*    m_DeadText;
-    CGameObject*    m_DealText;
-    CGameObject*    m_DamagedText;
-    CGameObject*    m_HealText;
-    CGameObject*    m_AssistText;
+    CGameObject* m_KillText;
+    CGameObject* m_DeadText;
+    CGameObject* m_DealText;
+    CGameObject* m_DamagedText;
+    CGameObject* m_HealText;
+    CGameObject* m_AssistText;
     int Kill;
     int Dead;
     int Deal;
@@ -55,9 +55,9 @@ public:
     void render();
 
 public:
-    CLONE(CBlueTeamSlotScript);
-    CBlueTeamSlotScript();
-    CBlueTeamSlotScript(const CBlueTeamSlotScript& _Origin);
-    ~CBlueTeamSlotScript();
+    CLONE(CRedTeamSlotScript);
+    CRedTeamSlotScript();
+    CRedTeamSlotScript(const CRedTeamSlotScript& _Origin);
+    ~CRedTeamSlotScript();
 };
 

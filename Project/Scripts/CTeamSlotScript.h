@@ -1,6 +1,9 @@
 #pragma once
 #include <Engine\CScript.h>
 
+#include "CBanpickLevel.h"
+#include "CChampScript.h"
+
 class CGameObject;
 
 class CTeamSlotScript :
@@ -12,6 +15,10 @@ private:
 
     bool m_bUIPos;
     float m_UIPosTime;
+
+    CGameObject* m_SubSlot;
+
+    CBanpickLevel* m_Level;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}

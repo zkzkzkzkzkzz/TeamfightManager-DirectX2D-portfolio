@@ -3,11 +3,16 @@
 
 #include <ctime>
 #include <Engine\CTimeMgr.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CTexture.h>
 
 #include "CBTMgr.h"
+#include "CGamerScript.h"
+#include "CBanpickLevel.h"
+
 
 CChampScript::CChampScript()
 	: CScript(CHAMPSCRIPT)
@@ -73,6 +78,13 @@ void CChampScript::begin()
 	vSpawnPos.z += vSpawnPos.y;
 
 	Transform()->SetRelativePos(vSpawnPos);
+
+	CBanpickLevel* pLevel = (CBanpickLevel*)CLevelMgr::GetInst()->GetCurrentLevel();
+
+	if (BANPICK_STATE::BATTLE == pLevel->GetCurBanPickState())
+	{
+		CheckPlayingGamer();
+	}
 }
 
 void CChampScript::tick()
@@ -143,7 +155,7 @@ void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target, int _Extr
 		&& L"NinjaClone" != Target->GetName())
 	{
 		GETCHAMP(Attacker)->m_InGameStatus.KillPoint += 1;
-		GETCHAMP(Target)->m_InGameStatus.DeathPoint -= 1;
+		GETCHAMP(Target)->m_InGameStatus.DeathPoint += 1;
 		GETCHAMP(Target)->SetChampState(CHAMP_STATE::DEAD);
 
 		TEAM team = GETCHAMP(Attacker)->GetTeamColor();
@@ -255,4 +267,107 @@ void CChampScript::CheckShadow()
 		GETCHAMP(GetOwner())->m_Shadow->SetActive(true);
 	else if (nullptr != GETCHAMP(GetOwner())->m_Shadow && CHAMP_STATE::DEAD == GETCHAMP(GetOwner())->GetChampState())
 		GETCHAMP(GetOwner())->m_Shadow->SetActive(false);
+}
+
+void CChampScript::CheckPlayingGamer()
+{
+	CLevel* pLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+	
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_ParticipatingPlayer.size(); ++i)
+	{
+		CHAMP_LIST list = GETGAMER(CTGMgr::GetInst()->G_ParticipatingPlayer[i])->GetSelectedChamp();
+
+		switch (list)
+		{
+		case CHAMP_LIST::ARCHER:
+			if (nullptr != pLevel->FindObjectByName(L"Archer"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Archer"))->SetPlayingGamer(CTGMgr::GetInst()->G_ParticipatingPlayer[i]);
+			}
+			break;
+		case CHAMP_LIST::FIGHTER:
+			if (nullptr != pLevel->FindObjectByName(L"Fighter"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Fighter"))->SetPlayingGamer(CTGMgr::GetInst()->G_ParticipatingPlayer[i]);
+			}
+			break;
+		case CHAMP_LIST::KNIGHT:
+			if (nullptr != pLevel->FindObjectByName(L"Knight"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Knight"))->SetPlayingGamer(CTGMgr::GetInst()->G_ParticipatingPlayer[i]);
+			}
+			break;
+		case CHAMP_LIST::MONK:
+			if (nullptr != pLevel->FindObjectByName(L"Monk"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Monk"))->SetPlayingGamer(CTGMgr::GetInst()->G_ParticipatingPlayer[i]);
+			}
+			break;
+		case CHAMP_LIST::NINJA:
+			if (nullptr != pLevel->FindObjectByName(L"Ninja"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Ninja"))->SetPlayingGamer(CTGMgr::GetInst()->G_ParticipatingPlayer[i]);
+			}
+			break;
+		case CHAMP_LIST::PRIEST:
+			if (nullptr != pLevel->FindObjectByName(L"Priest"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Priest"))->SetPlayingGamer(CTGMgr::GetInst()->G_ParticipatingPlayer[i]);
+			}
+			break;
+		case CHAMP_LIST::END:
+			break;
+		default:
+			break;
+		}
+	}
+
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_TeamGorilla.size(); ++i)
+	{
+		CHAMP_LIST list = GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[i])->GetSelectedChamp();
+
+		switch (list)
+		{
+		case CHAMP_LIST::ARCHER:
+			if (nullptr != pLevel->FindObjectByName(L"Archer"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Archer"))->SetPlayingGamer(CTGMgr::GetInst()->G_TeamGorilla[i]);
+			}
+			break;
+		case CHAMP_LIST::FIGHTER:
+			if (nullptr != pLevel->FindObjectByName(L"Fighter"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Fighter"))->SetPlayingGamer(CTGMgr::GetInst()->G_TeamGorilla[i]);
+			}
+			break;
+		case CHAMP_LIST::KNIGHT:
+			if (nullptr != pLevel->FindObjectByName(L"Knight"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Knight"))->SetPlayingGamer(CTGMgr::GetInst()->G_TeamGorilla[i]);
+			}
+			break;
+		case CHAMP_LIST::MONK:
+			if (nullptr != pLevel->FindObjectByName(L"Monk"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Monk"))->SetPlayingGamer(CTGMgr::GetInst()->G_TeamGorilla[i]);
+			}
+			break;
+		case CHAMP_LIST::NINJA:
+			if (nullptr != pLevel->FindObjectByName(L"Ninja"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Ninja"))->SetPlayingGamer(CTGMgr::GetInst()->G_TeamGorilla[i]);
+			}
+			break;
+		case CHAMP_LIST::PRIEST:
+			if (nullptr != pLevel->FindObjectByName(L"Priest"))
+			{
+				GETCHAMP(pLevel->FindObjectByName(L"Priest"))->SetPlayingGamer(CTGMgr::GetInst()->G_TeamGorilla[i]);
+			}
+			break;
+		case CHAMP_LIST::END:
+			break;
+		default:
+			break;
+		}
+	}
 }

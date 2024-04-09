@@ -202,6 +202,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CProceedBtnScript.h" />
     <ClInclude Include="CRecruitmentScript.h" />
     <ClInclude Include="CRecruitSlotScript.h" />
+    <ClInclude Include="CRedTeamSlotScript.h" />
     <ClInclude Include="CSkillState.h" />
     <ClInclude Include="CSquadBtnScript.h" />
     <ClInclude Include="CTeamHeaderScript.h" />
@@ -254,6 +255,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CProceedBtnScript.cpp" />
     <ClCompile Include="CRecruitmentScript.cpp" />
     <ClCompile Include="CRecruitSlotScript.cpp" />
+    <ClCompile Include="CRedTeamSlotScript.cpp" />
     <ClCompile Include="CSkillState.cpp" />
     <ClCompile Include="CSquadBtnScript.cpp" />
     <ClCompile Include="CTeamHeaderScript.cpp" />

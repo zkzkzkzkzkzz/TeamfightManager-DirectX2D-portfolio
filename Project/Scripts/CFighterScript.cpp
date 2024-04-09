@@ -11,6 +11,7 @@
 #include <Engine\CAssetMgr.h>
 
 #include "CBTMgr.h"
+#include "CGamerScript.h"
 #include "CEffectScript.h"
 
 CFighterScript::CFighterScript()
@@ -107,7 +108,10 @@ void CFighterScript::render()
 void CFighterScript::InitChampInfo()
 {
 	SetChampInfo(190, 10, 40, 1.18f, 35, 7, CHAMP_TYPE::WARRIOR);	// 기본 정보 설정
-	InitChampStatus(0, 0);	// 인게임 정보 설정
+
+	int atk = GETGAMER(m_PlayingGamer)->GetATK();
+	int def = GETGAMER(m_PlayingGamer)->GetDEF();
+	InitChampStatus(atk, def);	// 인게임 정보 설정
 
 	m_State = CHAMP_STATE::IDLE;
 	m_bRespawn = false;
@@ -131,13 +135,6 @@ void CFighterScript::InitChampStatus(int _GamerATK, int _GamerDEF)
 	m_InGameStatus.bUltimate = false;
 
 	m_InGameStatus.RespawnTime = 0.f;
-
-	m_InGameStatus.TotalDeal = 0;
-	m_InGameStatus.TotalDamage = 0;
-	m_InGameStatus.TotalHeal = 0;
-	m_InGameStatus.KillPoint = 0;
-	m_InGameStatus.DeathPoint = 0;
-	m_InGameStatus.AssistPoint = 0;
 }
 
 void CFighterScript::InitChampAnim()

@@ -104,7 +104,6 @@ void CBattleStadiumScript::tick()
 	if (BANPICK_STATE::BATTLE == m_Level->GetCurBanPickState() && m_bUIPos && m_BattleStartTime > 1.f)
 	{
 		m_BTMgr->SetActive(true);
-		CTGMgr::GetInst()->G_Time = 60;
 
 		if (!m_BlueSpawn)
 			CreateBlueTeamChamp();
@@ -124,7 +123,7 @@ void CBattleStadiumScript::OpenStadium()
 
 	if (m_UIPosTime < 0.13f)
 	{
-		vPos.y -= 6000.f * DT * BtwTime;
+		vPos.y -= 7000.f * DT * BtwTime;
 		if (vPos.y <= 0.f)
 			vPos.y = 0.f;
 
@@ -157,7 +156,7 @@ void CBattleStadiumScript::CloseStadium()
 
 	if (m_UIPosTime < 0.13f)
 	{
-		vPos.y += 6000.f * DT * BtwTime;
+		vPos.y += 7000.f * DT * BtwTime;
 		if (vPos.y >= 1000.f)
 			vPos.y = 1000.f;
 

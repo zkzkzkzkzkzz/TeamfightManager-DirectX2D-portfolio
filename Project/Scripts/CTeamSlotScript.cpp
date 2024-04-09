@@ -1,12 +1,16 @@
 #include "pch.h"
 #include "CTeamSlotScript.h"
 
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
 #include <Engine\CGameObject.h>
 #include <Engine\components.h>
 #include <Engine\CAssetMgr.h>
 
 #include "CGamerScript.h"
 #include "CChampSlotScript.h"
+#include "CBlueTeamSlotScript.h"
+#include "CRedTeamSlotScript.h"
 
 CTeamSlotScript::CTeamSlotScript()
 	: CScript(TEAMSLOTSCRIPT)
@@ -14,6 +18,8 @@ CTeamSlotScript::CTeamSlotScript()
 	, m_Team(TEAM::NONE)
 	, m_bUIPos(false)
 	, m_UIPosTime(0.f)
+	, m_SubSlot(nullptr)
+	, m_Level(nullptr)
 {
 }
 
@@ -23,6 +29,8 @@ CTeamSlotScript::CTeamSlotScript(const CTeamSlotScript& _Origin)
 	, m_Team(TEAM::NONE)
 	, m_bUIPos(false)
 	, m_UIPosTime(0.f)
+	, m_SubSlot(nullptr)
+	, m_Level(nullptr)
 {
 }
 
@@ -32,14 +40,32 @@ CTeamSlotScript::~CTeamSlotScript()
 
 void CTeamSlotScript::begin()
 {
+	m_Level = (CBanpickLevel*)CLevelMgr::GetInst()->GetCurrentLevel();
+
 	SetSlotInfo();
 
 	m_Team = GETGAMER(m_Gamer)->GetGamerTeam();
 
 	if (TEAM::BLUE == m_Team)
+	{
 		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+
+		m_SubSlot = new CGameObject;
+		m_SubSlot->AddComponent(new CBlueTeamSlotScript);
+		m_SubSlot->GetScript<CBlueTeamSlotScript>()->SetGamer(m_Gamer);
+		GetOwner()->AddChild(m_SubSlot);
+		m_SubSlot->SetActive(false);
+	}
 	else
+	{
 		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+
+		m_SubSlot = new CGameObject;
+		m_SubSlot->AddComponent(new CRedTeamSlotScript);
+		m_SubSlot->GetScript<CRedTeamSlotScript>()->SetGamer(m_Gamer);
+		GetOwner()->AddChild(m_SubSlot);
+		m_SubSlot->SetActive(false);
+	}
 }
 
 void CTeamSlotScript::tick()
@@ -52,25 +78,9 @@ void CTeamSlotScript::tick()
 			SetRedSlotPos();
 	}
 
-	CHAMP_LIST list = GETGAMER(m_Gamer)->GetSelectedChamp();
-	switch (list)
+	if (m_bUIPos && BANPICK_STATE::BATTLE == m_Level->GetCurBanPickState())
 	{
-	case CHAMP_LIST::ARCHER:
-		break;
-	case CHAMP_LIST::FIGHTER:
-		break;
-	case CHAMP_LIST::KNIGHT:
-		break;
-	case CHAMP_LIST::MONK:
-		break;
-	case CHAMP_LIST::NINJA:
-		break;
-	case CHAMP_LIST::PRIEST:
-		break;
-	case CHAMP_LIST::END:
-		break;
-	default:
-		break;
+		m_SubSlot->SetActive(true);
 	}
 }
 

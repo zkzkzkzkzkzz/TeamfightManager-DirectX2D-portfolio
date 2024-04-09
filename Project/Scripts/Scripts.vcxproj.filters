@@ -327,6 +327,9 @@
     <ClInclude Include="CBattleStadiumScript.h">
       <Filter>02. Scripts\06.BattleScript\BattleStadiumScript</Filter>
     </ClInclude>
+    <ClInclude Include="CRedTeamSlotScript.h">
+      <Filter>02. Scripts\06.BattleScript\RedTeamSlot</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -478,6 +481,9 @@
     </ClCompile>
     <ClCompile Include="CBattleStadiumScript.cpp">
       <Filter>02. Scripts\06.BattleScript\BattleStadiumScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CRedTeamSlotScript.cpp">
+      <Filter>02. Scripts\06.BattleScript\RedTeamSlot</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
