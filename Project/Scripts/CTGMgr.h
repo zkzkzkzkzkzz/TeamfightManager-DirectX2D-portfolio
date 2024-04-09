@@ -21,6 +21,8 @@ public:
 	static vector<CGameObject*>	G_PlayableGamer;
 	static vector<CGameObject*> G_TeamGorilla;
 
+	static vector<CGameObject*>	G_ChampSlot;
+
 	static map<wstring, CGameObject*> G_Gamer;			// 선수 목록
 	static map<wstring, CGameObject*> G_RecruitList;	// 영입 가능 선수 목록
 

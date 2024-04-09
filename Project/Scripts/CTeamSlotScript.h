@@ -7,7 +7,8 @@ class CTeamSlotScript :
     public CScript
 {
 private:
-    CGameObject* m_Gamer;
+    CGameObject*    m_Gamer;
+    TEAM            m_Team;
 
     bool m_bUIPos;
     float m_UIPosTime;
@@ -19,7 +20,8 @@ public:
     void SetGamerToSlot(CGameObject* _Gamer) { m_Gamer = _Gamer; }
     CGameObject* GetGamerFromSlot() { return m_Gamer; }
 
-    void SetSlotPos();
+    void SetBlueSlotPos();
+    void SetRedSlotPos();
     void SetSlotInfo();
 
 public:

@@ -73,6 +73,13 @@ void CChampSlotScript::tick()
 	{
 		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 3);
 	}
+	else if (SLOT_STATE::PICK == m_SlotState)
+	{
+		if (TEAM::BLUE == m_TeamColor)
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+		else if (TEAM::RED == m_TeamColor)
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+	}
 }
 
 
@@ -176,13 +183,23 @@ void CChampSlotScript::LBtnClicked()
 			, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
 
 		SetSlotState(SLOT_STATE::BAN);
+		m_Level->SetEnemyTime(0.f);
+		m_Level->SetBanPickState(BANPICK_STATE::REDBAN);
 	}
 	else if ((BANPICK_STATE::BLUEPICK1 == m_Level->GetCurBanPickState() || BANPICK_STATE::BLUEPICK2 == m_Level->GetCurBanPickState())
 		&& SLOT_STATE::NONE == m_SlotState)
 	{
 		m_EffectObj->Animator2D()->Stop();
 		m_EffectObj->Animator2D()->Play(L"ChampSlotIdle");
-		m_Level->SetBanPickState(BANPICK_STATE::REDPICK1);
+
+		m_TeamColor = TEAM::BLUE;
+		SetSlotState(SLOT_STATE::PICK);
+		m_Level->SetEnemyTime(0.f);
+
+		if (BANPICK_STATE::BLUEPICK1 == m_Level->GetCurBanPickState())
+			m_Level->SetBanPickState(BANPICK_STATE::REDPICK1);
+		else if (BANPICK_STATE::BLUEPICK2 == m_Level->GetCurBanPickState())
+			m_Level->SetBanPickState(BANPICK_STATE::REDPICK2);
 	}
 }
 

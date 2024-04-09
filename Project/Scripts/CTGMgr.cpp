@@ -18,6 +18,8 @@ vector<CGameObject*> CTGMgr::G_ParticipatingPlayer;
 vector<CGameObject*> CTGMgr::G_PlayableGamer;
 vector<CGameObject*> CTGMgr::G_TeamGorilla;
 
+vector<CGameObject*> CTGMgr::G_ChampSlot;
+
 map<wstring, CGameObject*> CTGMgr::G_Gamer;			// 선수 목록
 map<wstring, CGameObject*> CTGMgr::G_RecruitList;	// 영입 가능 선수 목록
 

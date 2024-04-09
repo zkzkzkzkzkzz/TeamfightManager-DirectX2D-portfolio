@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CBanpickLevel.h"
 
+#include <Engine\CTimeMgr.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 #include <Engine\CLayer.h>
@@ -13,6 +14,7 @@
 #include "CTeamSlotScript.h"
 #include "CChampSlotScript.h"
 #include "CCursorScript.h"
+#include "CEffectScript.h"
 
 #include "CIdleState.h"
 #include "CTraceState.h"
@@ -24,6 +26,8 @@
 CBanpickLevel::CBanpickLevel()
 	: m_BlueTeam{}
 	, m_RedTeam{}
+	, m_BanPickSlot{}
+	, m_EnemyTime(0.f)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -35,12 +39,19 @@ CBanpickLevel::CBanpickLevel()
 		CTGMgr::GetInst()->G_ShortlistSlot[i]->DisconnectWithLayer();
 	}
 
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_TeamGorilla.size(); ++i)
+	{
+		CTGMgr::GetInst()->G_TeamGorilla[i]->DisconnectWithLayer();
+	}
+
 	InitUI();
 }
 
 CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	: m_BlueTeam{}
 	, m_RedTeam{}
+	, m_BanPickSlot{}
+	, m_EnemyTime(0.f)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -82,12 +93,30 @@ void CBanpickLevel::begin()
 	{
 		Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BlueTeamCard_2.prefab")->Instatiate();
 		Obj->GetScript<CTeamSlotScript>()->SetGamerToSlot(CTGMgr::GetInst()->G_ParticipatingPlayer[i]);
+		GETGAMER(CTGMgr::GetInst()->G_ParticipatingPlayer[i])->SetGamerTeam(TEAM::BLUE);
+		
 
 		if (0 == i)
 			Obj->Transform()->SetRelativePos(Vec3(-700.f, 210.f, 1000.f));
 		else
 			Obj->Transform()->SetRelativePos(Vec3(-700.f, 49.f, 1000.f));
-	
+
+		m_BanPickSlot.push_back(Obj);
+		AddObject(Obj, 2);
+	}
+
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_TeamGorilla.size(); ++i)
+	{
+		Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\RedTeamCard_2.prefab")->Instatiate();
+		Obj->GetScript<CTeamSlotScript>()->SetGamerToSlot(CTGMgr::GetInst()->G_TeamGorilla[i]);
+		GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[i])->SetGamerTeam(TEAM::RED);
+
+		if (0 == i)
+			Obj->Transform()->SetRelativePos(Vec3(700.f, 210.f, 1000.f));
+		else
+			Obj->Transform()->SetRelativePos(Vec3(700.f, 49.f, 1000.f));
+
+		m_BanPickSlot.push_back(Obj);
 		AddObject(Obj, 2);
 	}
 
@@ -125,6 +154,35 @@ void CBanpickLevel::tick()
 {
 	CLevel::tick();
 
+	m_EnemyTime += DT;
+
+	if (BANPICK_STATE::REDBAN == m_CurState && m_EnemyTime > 3.f
+		&& !CTGMgr::GetInst()->G_ChampSlot.empty())
+	{
+		SpawnEffect(CTGMgr::GetInst()->G_ChampSlot[1]->Transform()->GetRelativePos()
+			, CTGMgr::GetInst()->G_ChampSlot[1]->Transform()->GetRelativeScale()
+			, CTGMgr::GetInst()->G_ChampSlot[1]->Transform()->GetRelativeRotation()
+			, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
+
+		CTGMgr::GetInst()->G_ChampSlot[1]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::BAN);
+		m_CurState = BANPICK_STATE::BLUEPICK1;
+	}
+	else if ((BANPICK_STATE::REDPICK1 == m_CurState || BANPICK_STATE::REDPICK2 == m_CurState) && m_EnemyTime > 2.f
+		&& !CTGMgr::GetInst()->G_ChampSlot.empty())
+	{
+		if (BANPICK_STATE::REDPICK1 == m_CurState)
+		{
+			CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->SetSlotTeamColor(TEAM::RED);
+			CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::PICK);
+			m_CurState = BANPICK_STATE::BLUEPICK2;
+		}
+		else if (BANPICK_STATE::REDPICK2 == m_CurState)
+		{
+			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->SetSlotTeamColor(TEAM::RED);
+			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::PICK);
+			m_CurState = BANPICK_STATE::READY;
+		}
+	}
 }
 
 void CBanpickLevel::finaltick()
@@ -193,4 +251,25 @@ void CBanpickLevel::InitUI()
 	{
 		AddObject(CTGMgr::GetInst()->G_ShortlistSlot[i], 30);
 	}
+
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_TeamGorilla.size(); ++i)
+	{
+		AddObject(CTGMgr::GetInst()->G_TeamGorilla[i], 30);
+	}
+}
+
+void CBanpickLevel::SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat, Vec3 _offset)
+{
+	CGameObject* effect = new CGameObject;
+	effect->AddComponent(new CTransform);
+	effect->AddComponent(new CMeshRender);
+	effect->AddComponent(new CAnimator2D);
+	effect->AddComponent(new CEffectScript);
+
+	_Pos.x += _offset.x;
+	_Pos.y += _offset.y;
+	_Pos.z += _offset.z;
+
+	GETEFFECT(effect)->SetEffectInfo(_Pos, _Scale, _Rotation, _anim, _time, _repeat);
+	GamePlayStatic::SpawnGameObject(effect, 6);
 }

@@ -38,6 +38,7 @@ void CBanPickUIScript::begin()
 		Obj->GetScript<CChampSlotScript>()->SetChampList((CHAMP_LIST)i);
 
 		Obj->Transform()->SetRelativePos(Vec3(-367.f + (80.f * i), 122.f, -10.f));
+		CTGMgr::GetInst()->G_ChampSlot.push_back(Obj);
 		GetOwner()->AddChild(Obj);
 	}
 

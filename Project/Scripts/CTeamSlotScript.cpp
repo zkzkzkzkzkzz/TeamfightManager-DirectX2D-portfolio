@@ -10,6 +10,7 @@
 CTeamSlotScript::CTeamSlotScript()
 	: CScript(TEAMSLOTSCRIPT)
 	, m_Gamer(nullptr)
+	, m_Team(TEAM::NONE)
 	, m_bUIPos(false)
 	, m_UIPosTime(0.f)
 {
@@ -18,6 +19,7 @@ CTeamSlotScript::CTeamSlotScript()
 CTeamSlotScript::CTeamSlotScript(const CTeamSlotScript& _Origin)
 	: CScript(TEAMSLOTSCRIPT)
 	, m_Gamer(nullptr)
+	, m_Team(TEAM::NONE)
 	, m_bUIPos(false)
 	, m_UIPosTime(0.f)
 {
@@ -30,16 +32,28 @@ CTeamSlotScript::~CTeamSlotScript()
 void CTeamSlotScript::begin()
 {
 	SetSlotInfo();
+
+	m_Team = GETGAMER(m_Gamer)->GetGamerTeam();
+
+	if (TEAM::BLUE == m_Team)
+		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	else
+		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 2);
 }
 
 void CTeamSlotScript::tick()
 {
 	if (!m_bUIPos)
-		SetSlotPos();
+	{
+		if (TEAM::BLUE == m_Team)
+			SetBlueSlotPos();
+		else
+			SetRedSlotPos();
+	}
 }
 
 
-void CTeamSlotScript::SetSlotPos()
+void CTeamSlotScript::SetBlueSlotPos()
 {
 	m_UIPosTime += DT;
 
@@ -49,7 +63,7 @@ void CTeamSlotScript::SetSlotPos()
 
 	if (m_UIPosTime < 0.15f)
 	{
-		vPos.x += 1000.f * DT * BtwTime;
+		vPos.x += 750.f * DT * BtwTime;
 		if (vPos.x >= -562.f)
 			vPos.x = -562.f;
 
@@ -66,6 +80,39 @@ void CTeamSlotScript::SetSlotPos()
 	else
 	{
 		vPos.x = -562.f;
+		Transform()->SetRelativePos(vPos);
+		m_UIPosTime = 0.f;
+		m_bUIPos = true;
+	}
+}
+
+void CTeamSlotScript::SetRedSlotPos()
+{
+	m_UIPosTime += DT;
+
+	Vec3 vPos = Transform()->GetRelativePos();
+
+	float BtwTime = 1.f - m_UIPosTime;
+
+	if (m_UIPosTime < 0.15f)
+	{
+		vPos.x -= 750.f * DT * BtwTime;
+		if (vPos.x <= 562.f)
+			vPos.x = 562.f;
+
+		Transform()->SetRelativePos(vPos);
+	}
+	else if (m_UIPosTime >= 0.15f && m_UIPosTime < 1.f)
+	{
+		vPos.x -= 100.f * DT * BtwTime;
+		if (vPos.x <= 562.f)
+			vPos.x = 562.f;
+
+		Transform()->SetRelativePos(vPos);
+	}
+	else
+	{
+		vPos.x = 562.f;
 		Transform()->SetRelativePos(vPos);
 		m_UIPosTime = 0.f;
 		m_bUIPos = true;
