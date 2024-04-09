@@ -2,6 +2,7 @@
 #include "CBanpickLevel.h"
 
 #include <Engine\CTimeMgr.h>
+#include <Engine\CCollisionMgr.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 #include <Engine\CLayer.h>
@@ -14,6 +15,8 @@
 #include "CTeamSlotScript.h"
 #include "CBansSlotScript.h"
 #include "CChampSlotScript.h"
+#include "CBattleStartBtnScript.h"
+#include "CBattleStadiumScript.h"
 #include "CCursorScript.h"
 #include "CEffectScript.h"
 
@@ -126,6 +129,18 @@ void CBanpickLevel::begin()
 	Obj->Transform()->SetRelativeScale(Vec3(1280.f, 720.f, 1.f));
 	AddObject(Obj, 2);
 
+	Obj = new CGameObject;
+	Obj->SetName(L"BattleStartBtn");
+	Obj->AddComponent(new CTransform);
+	Obj->AddComponent(new CMeshRender);
+	Obj->AddComponent(new CBattleStartBtnScript);
+	AddObject(Obj, 2);
+	Obj->SetActive(false);
+
+	Obj = new CGameObject;
+	Obj->AddComponent(new CBattleStadiumScript);
+	AddObject(Obj, 2);
+
 	m_CurState = BANPICK_STATE::BLUEBAN;
 
 	Ptr<CFSM> pFSM = new CFSM(false);
@@ -147,6 +162,9 @@ void CBanpickLevel::begin()
 	pFSM->AddState(L"Dead", new CDeadState);
 
 	CAssetMgr::GetInst()->AddAsset<CFSM>(L"SummonFSM", pFSM.Get());
+
+	CCollisionMgr::GetInst()->LayerCheck(3, 3);
+	CCollisionMgr::GetInst()->LayerCheck(3, 5);
 
 	CLevel::begin();
 }
@@ -176,14 +194,24 @@ void CBanpickLevel::tick()
 		{
 			CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->SetSlotTeamColor(TEAM::RED);
 			CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::PICK);
+			GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[0])->SetSelectedChamp(CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->GetChampList());
 			m_CurState = BANPICK_STATE::BLUEPICK2;
 		}
 		else if (BANPICK_STATE::REDPICK2 == m_CurState)
 		{
 			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->SetSlotTeamColor(TEAM::RED);
 			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::PICK);
-			m_CurState = BANPICK_STATE::READY;
+			GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[1])->SetSelectedChamp(CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->GetChampList());
+
+			if (m_EnemyTime > 4.f)
+			{
+				m_CurState = BANPICK_STATE::READY;
+			}
 		}
+	}
+	else if(BANPICK_STATE::READY == m_CurState)
+	{
+		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"BattleStartBtn")->SetActive(true);
 	}
 }
 
@@ -197,8 +225,9 @@ void CBanpickLevel::InitUI()
 	GetLayer(0)->SetName(L"Default");
 	GetLayer(1)->SetName(L"Light");
 	GetLayer(2)->SetName(L"Background");
+	GetLayer(3)->SetName(L"Champ");
 	GetLayer(4)->SetName(L"Cursor");
-	GetLayer(5)->SetName(L"Champ");
+	GetLayer(5)->SetName(L"Projectile");
 	GetLayer(6)->SetName(L"Effect");
 	GetLayer(30)->SetName(L"GameInfo");
 	GetLayer(31)->SetName(L"UI");
@@ -213,6 +242,8 @@ void CBanpickLevel::InitUI()
 	pCamObj->Camera()->SetCameraPriority(0);
 	pCamObj->Camera()->LayerCheckAll();
 	pCamObj->Camera()->LayerCheck(2, false);
+	pCamObj->Camera()->LayerCheck(5, false);
+	pCamObj->Camera()->LayerCheck(7, false);
 	pCamObj->Camera()->LayerCheck(30, false);
 	AddObject(pCamObj, 0);
 
@@ -225,6 +256,28 @@ void CBanpickLevel::InitUI()
 	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	pCamObj->Camera()->SetCameraPriority(1);
 	pCamObj->Camera()->LayerCheck(2, true);
+	AddObject(pCamObj, 0);
+
+	// Champ Camera 생성
+	pCamObj = new CGameObject;
+	pCamObj->SetName(L"ChampCamera");
+	pCamObj->AddComponent(new CTransform);
+	pCamObj->AddComponent(new CCamera);
+	pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Camera()->SetCameraPriority(2);
+	pCamObj->Camera()->LayerCheck(3, true);
+	AddObject(pCamObj, 0);
+
+	// Projectile Camera 생성
+	pCamObj = new CGameObject;
+	pCamObj->SetName(L"ProjectileCamera");
+	pCamObj->AddComponent(new CTransform);
+	pCamObj->AddComponent(new CCamera);
+	pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Camera()->SetCameraPriority(3);
+	pCamObj->Camera()->LayerCheck(5, true);
 	AddObject(pCamObj, 0);
 
 	// 광원 추가
@@ -259,6 +312,7 @@ void CBanpickLevel::InitUI()
 		AddObject(CTGMgr::GetInst()->G_TeamGorilla[i], 30);
 	}
 }
+
 
 void CBanpickLevel::SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat, Vec3 _offset)
 {

@@ -6,6 +6,7 @@
 #include <Engine\CAssetMgr.h>
 
 #include "CGamerScript.h"
+#include "CChampSlotScript.h"
 
 CTeamSlotScript::CTeamSlotScript()
 	: CScript(TEAMSLOTSCRIPT)
@@ -49,6 +50,27 @@ void CTeamSlotScript::tick()
 			SetBlueSlotPos();
 		else
 			SetRedSlotPos();
+	}
+
+	CHAMP_LIST list = GETGAMER(m_Gamer)->GetSelectedChamp();
+	switch (list)
+	{
+	case CHAMP_LIST::ARCHER:
+		break;
+	case CHAMP_LIST::FIGHTER:
+		break;
+	case CHAMP_LIST::KNIGHT:
+		break;
+	case CHAMP_LIST::MONK:
+		break;
+	case CHAMP_LIST::NINJA:
+		break;
+	case CHAMP_LIST::PRIEST:
+		break;
+	case CHAMP_LIST::END:
+		break;
+	default:
+		break;
 	}
 }
 

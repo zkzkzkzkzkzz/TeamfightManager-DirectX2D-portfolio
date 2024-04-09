@@ -198,9 +198,15 @@ void CChampSlotScript::LBtnClicked()
 		m_Level->SetEnemyTime(0.f);
 
 		if (BANPICK_STATE::BLUEPICK1 == m_Level->GetCurBanPickState())
+		{
+			GETGAMER(CTGMgr::GetInst()->G_ParticipatingPlayer[0])->SetSelectedChamp(m_list);
 			m_Level->SetBanPickState(BANPICK_STATE::REDPICK1);
+		}
 		else if (BANPICK_STATE::BLUEPICK2 == m_Level->GetCurBanPickState())
+		{
+			GETGAMER(CTGMgr::GetInst()->G_ParticipatingPlayer[1])->SetSelectedChamp(m_list);
 			m_Level->SetBanPickState(BANPICK_STATE::REDPICK2);
+		}
 	}
 }
 

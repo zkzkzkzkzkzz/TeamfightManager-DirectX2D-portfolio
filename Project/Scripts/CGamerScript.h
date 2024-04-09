@@ -3,6 +3,8 @@
 #include <Engine/CScript.h>
 #include "CChampScript.h"
 
+#include "CBanpickLevel.h"
+
 #define GETGAMER(TYPE) TYPE->GetScript<CGamerScript>()
 
 enum class GAMER_LEVEL
@@ -22,7 +24,7 @@ class CGamerScript :
 protected:
     GAMER_LEVEL     m_GamerLevel;       // 해당 선수의 레벨
     TEAM            m_Team;             // 소속 팀
-    CGameObject*    m_SelectedChamp;    // 선수가 플레이 중인 챔피언
+    CHAMP_LIST      m_SelectedChamp;    // 선수가 플레이 중인 챔피언
 
     wstring m_GamerName;    // 선수 이름
 
@@ -46,8 +48,8 @@ public:
     void SetGamerName(const wstring& _name) { m_GamerName = _name; }
     wstring GetGamerName() { return m_GamerName; }
 
-    void SetSelectedChamp(CGameObject* _Champ) { m_SelectedChamp = _Champ; }
-    CGameObject* GetSelectedChamp() { return m_SelectedChamp; }
+    void SetSelectedChamp(CHAMP_LIST _Champ) { m_SelectedChamp = _Champ; }
+    CHAMP_LIST GetSelectedChamp() { return m_SelectedChamp; }
 
     void SetGamerTeam(TEAM _color) { m_Team = _color; }
     TEAM GetGamerTeam() { return m_Team; }

@@ -14,7 +14,7 @@ CGamerScript::CGamerScript()
 	, m_GamerDEF(0)
 	, m_Tex(nullptr)
 	, m_Team(TEAM::NONE)
-	, m_SelectedChamp(nullptr)
+	, m_SelectedChamp(CHAMP_LIST::END)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerTeam", &m_Team);
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerATK", &m_GamerATK);
@@ -29,7 +29,7 @@ CGamerScript::CGamerScript(UINT _ScriptType)
 	, m_GamerDEF(0)
 	, m_Tex(nullptr)
 	, m_Team(TEAM::NONE)
-	, m_SelectedChamp(nullptr)
+	, m_SelectedChamp(CHAMP_LIST::END)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerTeam", &m_Team);
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerATK", &m_GamerATK);
@@ -44,17 +44,12 @@ CGamerScript::CGamerScript(const CGamerScript& _Origin)
 	, m_GamerDEF(_Origin.m_GamerDEF)
 	, m_Tex(nullptr)
 	, m_Team(_Origin.m_Team)
-	, m_SelectedChamp(nullptr)
+	, m_SelectedChamp(_Origin.m_SelectedChamp)
 {
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerTeam", &m_Team);
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerATK", &m_GamerATK);
 	AddScriptParam(SCRIPT_PARAM::INT, "GamerDEF", &m_GamerDEF);
-
-	if (nullptr != _Origin.m_SelectedChamp)
-	{
-		m_SelectedChamp = _Origin.m_SelectedChamp->Clone();
-	}
-
+	
 	if (nullptr != _Origin.m_Tex)
 	{
 		m_Tex = _Origin.m_Tex;

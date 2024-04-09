@@ -176,6 +176,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="CBanpickLevel.h" />
     <ClInclude Include="CBanPickUIScript.h" />
     <ClInclude Include="CBansSlotScript.h" />
+    <ClInclude Include="CBattleStadiumScript.h" />
+    <ClInclude Include="CBattleStartBtnScript.h" />
     <ClInclude Include="CBTMgr.h" />
     <ClInclude Include="CChampScript.h" />
     <ClInclude Include="CChampSlotScript.h" />
@@ -226,6 +228,8 @@ call CodeGen.exe</Command>
     <ClCompile Include="CBanpickLevel.cpp" />
     <ClCompile Include="CBanPickUIScript.cpp" />
     <ClCompile Include="CBansSlotScript.cpp" />
+    <ClCompile Include="CBattleStadiumScript.cpp" />
+    <ClCompile Include="CBattleStartBtnScript.cpp" />
     <ClCompile Include="CBTMgr.cpp" />
     <ClCompile Include="CChampScript.cpp" />
     <ClCompile Include="CChampSlotScript.cpp" />

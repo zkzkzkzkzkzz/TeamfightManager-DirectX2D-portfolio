@@ -56,7 +56,7 @@ void CBanPickUIScript::begin()
 
 void CBanPickUIScript::tick()
 {
-	if (!m_bUIPos && BANPICK_STATE::READY != m_Level->GetCurBanPickState())
+	if (!m_bUIPos && BANPICK_STATE::BLUEBAN == m_Level->GetCurBanPickState())
 		OpenSlot();
 	else if (m_bUIPos && BANPICK_STATE::READY == m_Level->GetCurBanPickState())
 		CloseSlot();
