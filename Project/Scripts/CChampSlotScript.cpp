@@ -10,6 +10,7 @@
 #include <Engine\components.h>
 
 #include "CEffectScript.h"
+#include "CBansSlotScript.h"
 
 CChampSlotScript::CChampSlotScript()
 	: CScript(CHAMPSLOTSCRIPT)
@@ -146,7 +147,6 @@ void CChampSlotScript::OnHovered()
 		&& SLOT_STATE::NONE == m_SlotState)
 	{
 		m_EffectObj->Animator2D()->Play(L"ChampSlotAnim");
-		ShowChampInfo();
 
 		if (nullptr != m_ToolTip)
 		{
@@ -176,11 +176,12 @@ void CChampSlotScript::OnUnHovered()
 
 void CChampSlotScript::LBtnClicked()
 {
-	if ((BANPICK_STATE::BLUEBAN == m_Level->GetCurBanPickState() || BANPICK_STATE::REDBAN == m_Level->GetCurBanPickState())
-		&& SLOT_STATE::NONE == m_SlotState)
+	if (BANPICK_STATE::BLUEBAN == m_Level->GetCurBanPickState() && SLOT_STATE::NONE == m_SlotState)
 	{
 		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale(), Transform()->GetRelativeRotation()
 			, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
+
+		m_Level->FindObjectByName(L"BanSlot1")->GetScript<CBansSlotScript>()->SetBanChampSlot(GetOwner());
 
 		SetSlotState(SLOT_STATE::BAN);
 		m_Level->SetEnemyTime(0.f);
@@ -449,9 +450,4 @@ void CChampSlotScript::CreateChamp()
 	m_Champ->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	m_Champ->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"material\\BanPickChampIcon.mtrl"));
 	GetOwner()->AddChild(m_Champ);
-}
-
-void CChampSlotScript::ShowChampInfo()
-{
-
 }

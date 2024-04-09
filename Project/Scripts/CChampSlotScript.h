@@ -64,7 +64,6 @@ public:
     void InitEffectObj();
     void InitChampToSlot();
     void CreateChamp();
-    void ShowChampInfo();
 
 public:
     virtual void begin() override;

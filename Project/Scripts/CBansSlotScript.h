@@ -1,20 +1,30 @@
 #pragma once
 #include <Engine\CScript.h>
 
+#include "CGamerScript.h"
+#include "CBanpickLevel.h"
+
 class CGameObject;
 
 class CBansSlotScript :
     public CScript
 {
 private:
-    CGameObject*    m_BanChamp;
+    CGameObject*    m_BanSlot;
+    CGameObject*    m_Champ;
+    CGameObject*    m_Text;
+    CBanpickLevel*  m_Level;
+
+    bool m_IsSpawn;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
 
 public:
-    void SetBanChamp(CGameObject* _champ) { m_BanChamp = _champ; }
-    CGameObject* GetBanChamp() { return m_BanChamp; }
+    void SetBanChampSlot(CGameObject* _champ) { m_BanSlot = _champ; }
+    CGameObject* GetBanChampSlot() { return m_BanSlot; }
+
+    void SetChampToBanSlot();
 
 public:
     virtual void begin() override;

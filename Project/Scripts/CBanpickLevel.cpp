@@ -12,6 +12,7 @@
 #include "CGamerScript.h"
 #include "CTeamHeaderScript.h"
 #include "CTeamSlotScript.h"
+#include "CBansSlotScript.h"
 #include "CChampSlotScript.h"
 #include "CCursorScript.h"
 #include "CEffectScript.h"
@@ -164,6 +165,7 @@ void CBanpickLevel::tick()
 			, CTGMgr::GetInst()->G_ChampSlot[1]->Transform()->GetRelativeRotation()
 			, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
 
+		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"BanSlot2")->GetScript<CBansSlotScript>()->SetBanChampSlot(CTGMgr::GetInst()->G_ChampSlot[1]);
 		CTGMgr::GetInst()->G_ChampSlot[1]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::BAN);
 		m_CurState = BANPICK_STATE::BLUEPICK1;
 	}
