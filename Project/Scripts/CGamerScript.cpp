@@ -156,7 +156,6 @@ void CGamerScript::IsPlayableGamer()
 		{
 			(iter->second)->SetActive(false);
 		}
-
 	}
 }
 

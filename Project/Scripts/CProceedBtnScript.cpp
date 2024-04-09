@@ -14,6 +14,7 @@
 #include <Engine\CFontMgr.h>
 
 #include "CLineUpSlotScript.h"
+#include "CGamerScript.h"
 
 CProceedBtnScript::CProceedBtnScript()
     : CScript(PROCEEDBTNSCRIPT)
@@ -252,6 +253,7 @@ void CProceedBtnScript::SpawnLineUpUI()
 	{
 		CGameObject* slot = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\LineUpTeamSlot1.prefab")->Instatiate();
 		slot->GetScript<CLineUpSlotScript>()->SetGamerToSlot(CTGMgr::GetInst()->G_PlayableGamer[i]);
+		GETGAMER(CTGMgr::GetInst()->G_PlayableGamer[i])->SetGamerTeam(TEAM::BLUE);
 
 		if (i < 2)
 		{
@@ -267,6 +269,20 @@ void CProceedBtnScript::SpawnLineUpUI()
 			slot->Transform()->SetRelativePos(Vec3(44.f, 26.f, 50.f));
 			CTGMgr::GetInst()->G_ShortlistSlot.push_back(slot);
 		}
+
+		GamePlayStatic::SpawnGameObject(slot, 2);
+	}
+
+	for (size_t i = 0; i < CTGMgr::GetInst()->G_TeamGorilla.size(); ++i)
+	{
+		CGameObject* slot = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\LineUpTeamSlot1.prefab")->Instatiate();
+		slot->GetScript<CLineUpSlotScript>()->SetGamerToSlot(CTGMgr::GetInst()->G_TeamGorilla[i]);
+		GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[i])->SetGamerTeam(TEAM::RED);
+
+		if (0 == i)
+			slot->Transform()->SetRelativePos(Vec3(264.f, 26.f, 50.f));
+		else
+			slot->Transform()->SetRelativePos(Vec3(436.f, 26.f, 50.f));
 
 		GamePlayStatic::SpawnGameObject(slot, 2);
 	}

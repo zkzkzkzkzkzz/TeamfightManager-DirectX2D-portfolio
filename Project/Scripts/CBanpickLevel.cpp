@@ -96,7 +96,7 @@ void CBanpickLevel::begin()
 	Obj->Transform()->SetRelativeScale(Vec3(1280.f, 720.f, 1.f));
 	AddObject(Obj, 2);
 
-	m_CurState = BANPICK_STATE::BLUEPICK1;
+	m_CurState = BANPICK_STATE::BLUEBAN;
 
 	Ptr<CFSM> pFSM = new CFSM(false);
 
@@ -124,6 +124,7 @@ void CBanpickLevel::begin()
 void CBanpickLevel::tick()
 {
 	CLevel::tick();
+
 }
 
 void CBanpickLevel::finaltick()

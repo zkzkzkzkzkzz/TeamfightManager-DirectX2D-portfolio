@@ -68,6 +68,11 @@ void CChampSlotScript::tick()
 	m_EffectTime += DT;
 
 	CheckMousePos();
+
+	if (SLOT_STATE::BAN == m_SlotState)
+	{
+		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 3);
+	}
 }
 
 
@@ -129,7 +134,8 @@ void CChampSlotScript::CheckMousePos()
 
 void CChampSlotScript::OnHovered()
 {
-	if ((BANPICK_STATE::BLUEPICK1 == m_Level->GetCurBanPickState() || BANPICK_STATE::BLUEPICK2 == m_Level->GetCurBanPickState())
+	if ((BANPICK_STATE::BLUEPICK1 == m_Level->GetCurBanPickState() || BANPICK_STATE::BLUEPICK2 == m_Level->GetCurBanPickState()
+		|| BANPICK_STATE::BLUEBAN == m_Level->GetCurBanPickState())
 		&& SLOT_STATE::NONE == m_SlotState)
 	{
 		m_EffectObj->Animator2D()->Play(L"ChampSlotAnim");
@@ -163,18 +169,20 @@ void CChampSlotScript::OnUnHovered()
 
 void CChampSlotScript::LBtnClicked()
 {
-	if ((BANPICK_STATE::BLUEPICK1 == m_Level->GetCurBanPickState() || BANPICK_STATE::BLUEPICK2 == m_Level->GetCurBanPickState())
+	if ((BANPICK_STATE::BLUEBAN == m_Level->GetCurBanPickState() || BANPICK_STATE::REDBAN == m_Level->GetCurBanPickState())
+		&& SLOT_STATE::NONE == m_SlotState)
+	{
+		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale(), Transform()->GetRelativeRotation()
+			, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
+
+		SetSlotState(SLOT_STATE::BAN);
+	}
+	else if ((BANPICK_STATE::BLUEPICK1 == m_Level->GetCurBanPickState() || BANPICK_STATE::BLUEPICK2 == m_Level->GetCurBanPickState())
 		&& SLOT_STATE::NONE == m_SlotState)
 	{
 		m_EffectObj->Animator2D()->Stop();
 		m_EffectObj->Animator2D()->Play(L"ChampSlotIdle");
 		m_Level->SetBanPickState(BANPICK_STATE::REDPICK1);
-	}
-	else if ((BANPICK_STATE::BLUEBAN == m_Level->GetCurBanPickState() || BANPICK_STATE::REDBAN == m_Level->GetCurBanPickState())
-		&& SLOT_STATE::NONE == m_SlotState)
-	{
-		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale(), Transform()->GetRelativeRotation()
-					, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
 	}
 }
 

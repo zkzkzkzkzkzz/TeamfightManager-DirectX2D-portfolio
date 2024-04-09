@@ -19,6 +19,7 @@
 #include "CLevelSaveLoad.h"
 
 #include <Scripts\CTGMgr.h>
+
 #include <Scripts\CLobbyHdScript.h>
 #include <Scripts\CLobbyBtnScript.h>
 #include <Scripts\CTrainningBtnScript.h>
@@ -29,16 +30,14 @@
 #include <Scripts\CMgrBtnScript.h>
 #include <Scripts\CRecruitmentScript.h>
 #include <Scripts\CRecruitSlotScript.h>
+
 #include <Scripts\CGamerScript.h>
-#include <Scripts\CJoongSooScript.h>
-#include <Scripts\CGosuScript.h>
 
 
 bool compare(CGameObject* a, CGameObject* b)
 {
 	return a->Transform()->GetRelativePos().z > b->Transform()->GetRelativePos().z;
 }
-
 
 void LobbyLevel::CreateTempLevel()
 {
@@ -54,28 +53,64 @@ void LobbyLevel::CreateTempLevel()
 	pTempLevel->GetLayer(31)->SetName(L"UI");
 
 	CGameObject* gamer = new CGameObject;
+	gamer->SetName(L"Chobo");
 	gamer->AddComponent(new CTransform);
 	gamer->AddComponent(new CMeshRender);
 	gamer->AddComponent(new CGamerScript);
-	gamer->SetName(L"Chobo");
-	pTempLevel->AddObject(gamer, 2);
+	GETGAMER(gamer)->SetGamerLevel(GAMER_LEVEL::CHOBO);
+	GETGAMER(gamer)->SetGamerName(L"Chobo");
+	GETGAMER(gamer)->SetTexture(L"texture\\Avatar\\Gamer\\custom\\character_custom0.png");
+	GETGAMER(gamer)->InsertGamerList();
+	GETGAMER(gamer)->SetPlayableGamer();
+	pTempLevel->AddObject(gamer, 3);
 
 	gamer = new CGameObject;
-	gamer->AddComponent(new CTransform);
-	gamer->AddComponent(new CMeshRender);
-	gamer->AddComponent(new CJoongSooScript);
 	gamer->SetName(L"JoongSoo");
-	pTempLevel->AddObject(gamer, 2);
-
-	gamer = new CGameObject;
 	gamer->AddComponent(new CTransform);
 	gamer->AddComponent(new CMeshRender);
-	gamer->AddComponent(new CGosuScript);
-	gamer->SetName(L"GaeGosu");
-	pTempLevel->AddObject(gamer, 2);
+	gamer->AddComponent(new CGamerScript);
+	GETGAMER(gamer)->SetGamerLevel(GAMER_LEVEL::JOONGSOO);
+	GETGAMER(gamer)->SetGamerName(L"JoongSoo");
+	GETGAMER(gamer)->SetTexture(L"texture\\Avatar\\Gamer\\custom\\character_custom1.png");
+	GETGAMER(gamer)->InsertGamerList();
+	GETGAMER(gamer)->SetPlayableGamer();
+	pTempLevel->AddObject(gamer, 3);
 
+	gamer = new CGameObject;
+	gamer->SetName(L"Gosu");
+	gamer->AddComponent(new CTransform);
+	gamer->AddComponent(new CMeshRender);
+	gamer->AddComponent(new CGamerScript);
+	GETGAMER(gamer)->SetGamerLevel(GAMER_LEVEL::GOSU);
+	GETGAMER(gamer)->SetGamerName(L"Gosu");
+	GETGAMER(gamer)->SetTexture(L"texture\\Avatar\\Gamer\\custom\\character_custom2.png");
+	GETGAMER(gamer)->InsertGamerList();
+	GETGAMER(gamer)->InsertRecruitList();
+	pTempLevel->AddObject(gamer, 3);
+	
+	gamer = new CGameObject;
+	gamer->SetName(L"Banana");
+	gamer->AddComponent(new CTransform);
+	gamer->AddComponent(new CMeshRender);
+	gamer->AddComponent(new CGamerScript);
+	GETGAMER(gamer)->SetGamerLevel(GAMER_LEVEL::CHOBO);
+	GETGAMER(gamer)->SetGamerName(L"Banana");
+	GETGAMER(gamer)->SetTexture(L"texture\\Avatar\\Gamer\\custom\\character_custom3.png");
+	CTGMgr::GetInst()->G_TeamGorilla.push_back(gamer);
+	pTempLevel->AddObject(gamer, 3);
+	gamer->SetActive(false);
 
-
+	gamer = new CGameObject;
+	gamer->SetName(L"Vanana");
+	gamer->AddComponent(new CTransform);
+	gamer->AddComponent(new CMeshRender);
+	gamer->AddComponent(new CGamerScript);
+	GETGAMER(gamer)->SetGamerLevel(GAMER_LEVEL::CHOBO);
+	GETGAMER(gamer)->SetGamerName(L"Vanana");
+	GETGAMER(gamer)->SetTexture(L"texture\\Avatar\\Gamer\\custom\\character_custom4.png");
+	CTGMgr::GetInst()->G_TeamGorilla.push_back(gamer);
+	pTempLevel->AddObject(gamer, 3);
+	gamer->SetActive(false);
 
 	CGameObject* pCursor = new CGameObject;
 	pCursor->SetName(L"Cursor");
@@ -94,6 +129,7 @@ void LobbyLevel::CreateTempLevel()
 	pCamObj->Camera()->SetCameraPriority(0);
 	pCamObj->Camera()->LayerCheckAll();
 	pCamObj->Camera()->LayerCheck(2, false);
+	pCamObj->Camera()->LayerCheck(3, false);
 	pTempLevel->AddObject(pCamObj, 0);
 
 	// BG Camera 생성
@@ -105,6 +141,17 @@ void LobbyLevel::CreateTempLevel()
 	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 	pCamObj->Camera()->SetCameraPriority(1);
 	pCamObj->Camera()->LayerCheck(2, true);
+	pTempLevel->AddObject(pCamObj, 0);
+
+	// Gamer Camera 생성
+	pCamObj = new CGameObject;
+	pCamObj->SetName(L"GamerCamera");
+	pCamObj->AddComponent(new CTransform);
+	pCamObj->AddComponent(new CCamera);
+	pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Camera()->SetCameraPriority(2);
+	pCamObj->Camera()->LayerCheck(3, true);
 	pTempLevel->AddObject(pCamObj, 0);
 
 
@@ -122,7 +169,7 @@ void LobbyLevel::CreateTempLevel()
 	house->SetName(L"House");
 	house->AddComponent(new CTransform);
 	house->AddComponent(new CMeshRender);
-	house->Transform()->SetRelativePos(Vec3(0.f, -32.f, 400.f));
+	house->Transform()->SetRelativePos(Vec3(0.f, -32.f, 4000.f));
 	house->Transform()->SetRelativeScale(Vec3(167.f * 2.5f, 128.f * 2.5f, 1.f));
 	house->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	house->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HouseMtrl"));
@@ -136,7 +183,7 @@ void LobbyLevel::CreateTempLevel()
 	LobbySky->SetName(L"LobbySky");
 	LobbySky->AddComponent(new CTransform);
 	LobbySky->AddComponent(new CMeshRender);
-	LobbySky->Transform()->SetRelativePos(Vec3(0.f, 96.f, 500.f));
+	LobbySky->Transform()->SetRelativePos(Vec3(0.f, 96.f, 5000.f));
 	LobbySky->Transform()->SetRelativeScale(Vec3(1280.f, 768.f, 1.f));
 	LobbySky->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	LobbySky->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbySkyMtrl"));
@@ -150,7 +197,7 @@ void LobbyLevel::CreateTempLevel()
 	LobbyGround->SetName(L"LobbyGround");
 	LobbyGround->AddComponent(new CTransform);
 	LobbyGround->AddComponent(new CMeshRender);
-	LobbyGround->Transform()->SetRelativePos(Vec3(0.f, -288.f, 350.f));
+	LobbyGround->Transform()->SetRelativePos(Vec3(0.f, -288.f, 3500.f));
 	LobbyGround->Transform()->SetRelativeScale(Vec3(480.f * 3.f, 64.f * 3.f, 1.f));
 	LobbyGround->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	LobbyGround->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyGroundMtrl"));
@@ -165,7 +212,7 @@ void LobbyLevel::CreateTempLevel()
 	Header->AddComponent(new CTransform);
 	Header->AddComponent(new CMeshRender);
 	Header->AddComponent(new CLobbyHdScript);
-	Header->Transform()->SetRelativePos(Vec3(0.f, 330.f, 330.f));
+	Header->Transform()->SetRelativePos(Vec3(0.f, 330.f, 1000.f));
 	Header->Transform()->SetRelativeScale(Vec3(1280.f, 74.f, 1.f));
 	Header->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Header->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderMtrl"));
@@ -252,7 +299,7 @@ void LobbyLevel::CreateTempLevel()
 	LobbyBtn->AddComponent(new CTransform);
 	LobbyBtn->AddComponent(new CMeshRender);
 	LobbyBtn->AddComponent(new CLobbyBtnScript);
-	LobbyBtn->Transform()->SetRelativePos(Vec3(-523.f, -330.f, 250.f));
+	LobbyBtn->Transform()->SetRelativePos(Vec3(-523.f, -330.f, 500.f));
 	LobbyBtn->Transform()->SetRelativeScale(Vec3(180.f, 57.f, 1.f));
 	LobbyBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	LobbyBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyBtnMtrl"));
@@ -306,7 +353,7 @@ void LobbyLevel::CreateTempLevel()
 	MgrBtn->AddComponent(new CTransform);
 	MgrBtn->AddComponent(new CMeshRender);
 	MgrBtn->AddComponent(new CMgrBtnScript);
-	MgrBtn->Transform()->SetRelativePos(Vec3(-330.f, -330.f, 250.f));
+	MgrBtn->Transform()->SetRelativePos(Vec3(-330.f, -330.f, 500.f));
 	MgrBtn->Transform()->SetRelativeScale(Vec3(180.f, 57.f, 1.f));
 	MgrBtn->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	MgrBtn->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"LobbyBtnMtrl"));
@@ -389,6 +436,6 @@ void LobbyLevel::CreateTempLevel()
 	}
 
 	// 레벨 플레이
-	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
+	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
 
 }

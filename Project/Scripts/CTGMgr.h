@@ -17,10 +17,10 @@ public:
 	static int G_SecondSlot;
 
 	static vector<CGameObject*> G_ShortlistSlot;
-
 	static vector<CGameObject*> G_ParticipatingPlayer;
-
 	static vector<CGameObject*>	G_PlayableGamer;
+	static vector<CGameObject*> G_TeamGorilla;
+
 	static map<wstring, CGameObject*> G_Gamer;			// 선수 목록
 	static map<wstring, CGameObject*> G_RecruitList;	// 영입 가능 선수 목록
 

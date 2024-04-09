@@ -147,7 +147,14 @@ void CLineUpSlotScript::CheckMousePos()
 	bool bLBtnTap = KEY_TAP(LBTN);
 	bool bLbtnReleased = KEY_RELEASED(LBTN);
 
-	if (m_bMouseOn)
+	bool isAlly = false;
+
+	if (TEAM::BLUE == GETGAMER(m_Gamer)->GetGamerTeam())
+	{
+		isAlly = true;
+	}
+
+	if (m_bMouseOn && isAlly)
 	{
 		if (m_bMouseOn_Prev != m_bMouseOn)
 			OnHovered();
@@ -192,36 +199,59 @@ void CLineUpSlotScript::CheckMousePos()
 void CLineUpSlotScript::OnHovered()
 {
 	if (!m_SelectSlot)
-		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+	{
+		TEAM team = GETGAMER(m_Gamer)->GetGamerTeam();
+
+		if (TEAM::BLUE == team)
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+		else if (TEAM::RED == team)
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 3);
+	}
 }
 
 void CLineUpSlotScript::OnUnHovered()
 {
 	if (!m_SelectSlot)
-		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	{
+		TEAM team = GETGAMER(m_Gamer)->GetGamerTeam();
+
+		if (TEAM::BLUE == team)
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+		else if (TEAM::RED == team)
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 3);
+	}
 }
 
 void CLineUpSlotScript::LBtnClicked()
 {
 	if (m_bMouseOn)
 	{
-		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 2);
-		m_SelectSlot = true;
-
-		GetSlotIndex();
-
-		if (-1 != CTGMgr::GetInst()->G_FirstSlot && -1 != CTGMgr::GetInst()->G_SecondSlot)
+		if (TEAM::BLUE == GETGAMER(m_Gamer)->GetGamerTeam())
 		{
-			SwapSlot();
-			CTGMgr::GetInst()->G_FirstSlot = -1;
-			CTGMgr::GetInst()->G_SecondSlot = -1;
-			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
-			m_SelectSlot = false;
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 2);
+			m_SelectSlot = true;
+
+			GetSlotIndex();
+
+			if (-1 != CTGMgr::GetInst()->G_FirstSlot && -1 != CTGMgr::GetInst()->G_SecondSlot)
+			{
+				SwapSlot();
+				CTGMgr::GetInst()->G_FirstSlot = -1;
+				CTGMgr::GetInst()->G_SecondSlot = -1;
+				MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+				m_SelectSlot = false;
+			}
 		}
 	}
 	else
 	{
-		MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+		TEAM team = GETGAMER(m_Gamer)->GetGamerTeam();
+
+		if (TEAM::BLUE == team)
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+		else if (TEAM::RED == team)
+			MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 3);
+
 		m_SelectSlot = false;
 	}
 }
