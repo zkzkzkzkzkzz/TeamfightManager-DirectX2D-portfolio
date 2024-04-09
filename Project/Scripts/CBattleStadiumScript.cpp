@@ -14,7 +14,9 @@
 CBattleStadiumScript::CBattleStadiumScript()
 	: CScript(BATTLESTADIUMSCRIPT)
 	, m_bUIPos(false)
+	, m_bClose(false)
 	, m_UIPosTime(0.f)
+	, m_CloseTime(0.f)
 	, m_BlueSpawn(false)
 	, m_RedSpawn(false)
 	, m_BattleStartTime(0.f)
@@ -26,7 +28,9 @@ CBattleStadiumScript::CBattleStadiumScript()
 CBattleStadiumScript::CBattleStadiumScript(const CBattleStadiumScript& _Origin)
 	: CScript(BATTLESTADIUMSCRIPT)
 	, m_bUIPos(false)
+	, m_bClose(false)
 	, m_UIPosTime(0.f)
+	, m_CloseTime(0.f)
 	, m_BlueSpawn(false)
 	, m_RedSpawn(false)
 	, m_BattleStartTime(0.f)
@@ -95,10 +99,17 @@ void CBattleStadiumScript::begin()
 void CBattleStadiumScript::tick()
 {
 	m_BattleStartTime += DT;
+	m_CloseTime += DT;
+
+	if (BANPICK_STATE::DONE == m_Level->GetCurBanPickState() && !m_bClose)
+	{
+		m_CloseTime = 0.f;
+		m_bClose = true;
+	}
 
 	if (BANPICK_STATE::BATTLE == m_Level->GetCurBanPickState() && !m_bUIPos)
 		OpenStadium();
-	else if (BANPICK_STATE::DONE == m_Level->GetCurBanPickState() && m_bUIPos)
+	else if (BANPICK_STATE::DONE == m_Level->GetCurBanPickState() && m_bUIPos && m_CloseTime > 1.f)
 		CloseStadium();
 
 	if (BANPICK_STATE::BATTLE == m_Level->GetCurBanPickState() && m_bUIPos && m_BattleStartTime > 1.f)
@@ -177,6 +188,7 @@ void CBattleStadiumScript::CloseStadium()
 		m_UIPosTime = 0.f;
 		m_BattleStartTime = 0.f;
 		m_bUIPos = false;
+		m_Level->SetBanPickState(BANPICK_STATE::RESULT);
 	}
 }
 

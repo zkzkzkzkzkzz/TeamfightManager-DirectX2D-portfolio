@@ -209,9 +209,16 @@ void CBanpickLevel::tick()
 			}
 		}
 	}
-	else if(BANPICK_STATE::READY == m_CurState)
+	else if (BANPICK_STATE::READY == m_CurState)
 	{
 		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"BattleStartBtn")->SetActive(true);
+	}
+	else if (BANPICK_STATE::BATTLE == m_CurState)
+	{
+		if (CTGMgr::GetInst()->G_Time <= 0)
+		{
+			m_CurState = BANPICK_STATE::DONE;
+		}
 	}
 }
 

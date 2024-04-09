@@ -273,7 +273,7 @@ void CRedTeamSlotScript::InitInGameInfo()
 	m_DealText->TextRender()->SetFont(L"Galmuri14");
 	m_DealText->TextRender()->SetFontSize(14.f);
 	m_DealText->TextRender()->SetFontColor(255, 255, 255, 255);
-	m_DealText->TextRender()->SetOffsetPos(Vec3(3.f, 6.f, -10.f));
+	m_DealText->TextRender()->SetOffsetPos(Vec3(-4.f, 6.f, -10.f));
 	GetOwner()->AddChild(m_DealText);
 
 	m_DamagedText = new CGameObject;
@@ -284,7 +284,7 @@ void CRedTeamSlotScript::InitInGameInfo()
 	m_DamagedText->TextRender()->SetFont(L"Galmuri14");
 	m_DamagedText->TextRender()->SetFontSize(14.f);
 	m_DamagedText->TextRender()->SetFontColor(255, 255, 255, 255);
-	m_DamagedText->TextRender()->SetOffsetPos(Vec3(3.f, 31.f, -10.f));
+	m_DamagedText->TextRender()->SetOffsetPos(Vec3(-4.f, 31.f, -10.f));
 	GetOwner()->AddChild(m_DamagedText);
 
 	m_HealText = new CGameObject;
@@ -295,7 +295,7 @@ void CRedTeamSlotScript::InitInGameInfo()
 	m_HealText->TextRender()->SetFont(L"Galmuri14");
 	m_HealText->TextRender()->SetFontSize(14.f);
 	m_HealText->TextRender()->SetFontColor(255, 255, 255, 255);
-	m_HealText->TextRender()->SetOffsetPos(Vec3(3.f, 55.f, -10.f));
+	m_HealText->TextRender()->SetOffsetPos(Vec3(-4.f, 55.f, -10.f));
 	GetOwner()->AddChild(m_HealText);
 
 	m_KillText->SetActive(false);

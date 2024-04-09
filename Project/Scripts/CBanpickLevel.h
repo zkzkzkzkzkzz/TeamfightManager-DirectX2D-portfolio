@@ -13,6 +13,7 @@ enum class BANPICK_STATE
     READY,
     BATTLE,
     DONE,
+    RESULT,
     END,
 };
 

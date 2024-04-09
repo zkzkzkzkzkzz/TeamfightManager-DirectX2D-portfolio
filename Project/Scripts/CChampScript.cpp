@@ -5,6 +5,7 @@
 #include <Engine\CTimeMgr.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
+#include <Engine\CLayer.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CAssetMgr.h>
 #include <Engine\CTexture.h>
@@ -89,43 +90,56 @@ void CChampScript::begin()
 
 void CChampScript::tick()
 {
-	switch (m_State)
+	CBanpickLevel* pLevel = (CBanpickLevel*)CLevelMgr::GetInst()->GetCurrentLevel();
+	if (BANPICK_STATE::BATTLE == pLevel->GetCurBanPickState())
 	{
-	case CHAMP_STATE::IDLE:
-		this->EnterIdleState();
-		break;
-	case CHAMP_STATE::TRACE:
-		EnterTraceState();
-		break;
-	case CHAMP_STATE::ATTACK:
-		EnterAttackState();
-		break;
-	case CHAMP_STATE::SKILL:
-		EnterSkillState();
-		break;
-	case CHAMP_STATE::ULTIMATE:
-		EnterUltimateState();
-		break;
-	case CHAMP_STATE::DEAD:
-		EnterDeadState();
-		break;
-	case CHAMP_STATE::END:
-		break;
-	default:
-		break;
+		switch (m_State)
+		{
+		case CHAMP_STATE::IDLE:
+			this->EnterIdleState();
+			break;
+		case CHAMP_STATE::TRACE:
+			EnterTraceState();
+			break;
+		case CHAMP_STATE::ATTACK:
+			EnterAttackState();
+			break;
+		case CHAMP_STATE::SKILL:
+			EnterSkillState();
+			break;
+		case CHAMP_STATE::ULTIMATE:
+			EnterUltimateState();
+			break;
+		case CHAMP_STATE::DEAD:
+			EnterDeadState();
+			break;
+		case CHAMP_STATE::END:
+			break;
+		default:
+			break;
+		}
+
+		Vec3 vPos = Transform()->GetRelativePos();
+		vPos.z = 300.f + vPos.y;
+		Transform()->SetRelativePos(vPos);
+
+		if (L"BTMgr" == GetOwner()->GetName())
+		{
+			CBTMgr::tick();
+		}
+
+		CheckShadow();
+		render();
 	}
-
-	Vec3 vPos = Transform()->GetRelativePos();
-	vPos.z = 300.f + vPos.y;
-	Transform()->SetRelativePos(vPos);
-
-	if (L"BTMgr" == GetOwner()->GetName())
+	else if (BANPICK_STATE::DONE == pLevel->GetCurBanPickState())
 	{
-		CBTMgr::tick();
-	}
+		vector<CGameObject*> champs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 
-	CheckShadow();
-	render();
+		for (size_t i = 0; i < champs.size(); ++i)
+		{
+			GamePlayStatic::DestroyGameObject(champs[i]);
+		}
+	}
 }
 
 void CChampScript::render()
@@ -154,6 +168,11 @@ void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target, int _Extr
 		&& CHAMP_STATE::DEAD != GETCHAMP(Target)->GetChampState()
 		&& L"NinjaClone" != Target->GetName())
 	{
+		if (L"NinjaClone" == Attacker->GetName())
+		{
+			Attacker = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"Ninja");
+		}
+
 		GETCHAMP(Attacker)->m_InGameStatus.KillPoint += 1;
 		GETCHAMP(Target)->m_InGameStatus.DeathPoint += 1;
 		GETCHAMP(Target)->SetChampState(CHAMP_STATE::DEAD);
@@ -164,7 +183,6 @@ void CChampScript::Damaged(CGameObject* Attacker, CGameObject* Target, int _Extr
 			++CTGMgr::G_BlueKillScore;
 		else if (TEAM::RED == team)
 			++CTGMgr::G_RedKillScore;
-
 	}
 }
 

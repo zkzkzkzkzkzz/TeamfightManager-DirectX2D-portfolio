@@ -2,11 +2,14 @@
 #include "CBTMgr.h"
 
 #include <Engine\CTimeMgr.h>
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
 #include <Engine\CGameObject.h>
 #include <Engine\CTransform.h>
 
 #include "CChampScript.h"
 #include "CEffectScript.h"
+#include "CBanpickLevel.h"
 
 list<CGameObject*> CBTMgr::G_Respawn;
 float CBTMgr::m_CurTime = 0;
@@ -21,32 +24,37 @@ CBTMgr::~CBTMgr()
 
 void CBTMgr::tick()
 {
-    m_CurTime += DT;
+    CBanpickLevel* pLevel = (CBanpickLevel*)CLevelMgr::GetInst()->GetCurrentLevel();
 
-    if (1.f <= m_CurTime)
+    if (BANPICK_STATE::BATTLE == pLevel->GetCurBanPickState())
     {
-        CTGMgr::G_Time -= 1;
-        m_CurTime = 0.f;
-        if (CTGMgr::G_Time <= 0)
-            CTGMgr::G_Time = 0;
-    }
+        m_CurTime += DT;
 
-    list<CGameObject*>::iterator iter = G_Respawn.begin();
-
-    while (iter != G_Respawn.end())
-    {
-        float* rtime = &(GETCHAMP((*iter))->m_InGameStatus.RespawnTime);
-        *rtime += DT;
-
-        if (*rtime >= RESPAWNTIME)
+        if (1.f <= m_CurTime)
         {
-            SpawnChamp((*iter));
-            GETCHAMP((*iter))->InitChampInfo();
-            iter = G_Respawn.erase(iter);
+            CTGMgr::G_Time -= 1;
+            m_CurTime = 0.f;
+            if (CTGMgr::G_Time <= 0)
+                CTGMgr::G_Time = 0;
         }
-        else
+
+        list<CGameObject*>::iterator iter = G_Respawn.begin();
+
+        while (iter != G_Respawn.end())
         {
-            ++iter;
+            float* rtime = &(GETCHAMP((*iter))->m_InGameStatus.RespawnTime);
+            *rtime += DT;
+
+            if (*rtime >= RESPAWNTIME)
+            {
+                SpawnChamp((*iter));
+                GETCHAMP((*iter))->InitChampInfo();
+                iter = G_Respawn.erase(iter);
+            }
+            else
+            {
+                ++iter;
+            }
         }
     }
 }

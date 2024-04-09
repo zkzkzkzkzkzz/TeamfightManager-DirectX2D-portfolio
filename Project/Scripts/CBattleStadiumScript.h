@@ -18,6 +18,8 @@ private:
 
     bool m_bUIPos;
     float m_UIPosTime;
+    bool m_bClose;
+    float m_CloseTime;
 
     virtual void SaveToFile(FILE* _File) override {}
     virtual void LoadFromFile(FILE* _File) override {}
