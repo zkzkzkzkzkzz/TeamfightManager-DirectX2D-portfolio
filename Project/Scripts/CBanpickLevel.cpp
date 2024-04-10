@@ -17,6 +17,7 @@
 #include "CChampSlotScript.h"
 #include "CBattleStartBtnScript.h"
 #include "CBattleStadiumScript.h"
+#include "CBattleResultScript.h"
 #include "CCursorScript.h"
 #include "CEffectScript.h"
 
@@ -138,7 +139,13 @@ void CBanpickLevel::begin()
 	Obj->SetActive(false);
 
 	Obj = new CGameObject;
+	Obj->SetName(L"SkyBG");
+	Obj->AddComponent(new CTransform);
+	Obj->AddComponent(new CMeshRender);
 	Obj->AddComponent(new CBattleStadiumScript);
+	AddObject(Obj, 2);
+
+	Obj = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\MatchResult_3.prefab")->Instatiate();
 	AddObject(Obj, 2);
 
 	m_CurState = BANPICK_STATE::BLUEBAN;

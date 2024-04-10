@@ -175,6 +175,12 @@
     <Filter Include="02. Scripts\06.BattleScript\BattleStadiumScript">
       <UniqueIdentifier>{7adc18a9-21f3-48b6-a883-71bde213cc97}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scripts\06.BattleScript\BattleResultScript">
+      <UniqueIdentifier>{262c5da4-76a8-4431-83c5-9a3202d45c30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\06.BattleScript\BattleResultScript\BattleEndBtn">
+      <UniqueIdentifier>{9b5e1166-72da-452a-b8a2-070f10df2552}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -330,6 +336,12 @@
     <ClInclude Include="CRedTeamSlotScript.h">
       <Filter>02. Scripts\06.BattleScript\RedTeamSlot</Filter>
     </ClInclude>
+    <ClInclude Include="CBattleResultScript.h">
+      <Filter>02. Scripts\06.BattleScript\BattleResultScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CBattleEndBtnScript.h">
+      <Filter>02. Scripts\06.BattleScript\BattleResultScript\BattleEndBtn</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -484,6 +496,12 @@
     </ClCompile>
     <ClCompile Include="CRedTeamSlotScript.cpp">
       <Filter>02. Scripts\06.BattleScript\RedTeamSlot</Filter>
+    </ClCompile>
+    <ClCompile Include="CBattleResultScript.cpp">
+      <Filter>02. Scripts\06.BattleScript\BattleResultScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CBattleEndBtnScript.cpp">
+      <Filter>02. Scripts\06.BattleScript\BattleResultScript\BattleEndBtn</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

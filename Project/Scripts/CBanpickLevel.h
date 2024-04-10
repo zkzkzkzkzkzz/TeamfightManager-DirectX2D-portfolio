@@ -49,7 +49,6 @@ public:
     float GetEnemyTime() { return m_EnemyTime; }
 
     void InitUI();
-    void InitBattleStadium();
 
 public:
     virtual void begin() override;

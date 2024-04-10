@@ -48,9 +48,6 @@ void CBattleStadiumScript::begin()
 {
 	m_Level = (CBanpickLevel*)CLevelMgr::GetInst()->GetCurrentLevel();
 
-	GetOwner()->SetName(L"SkyBG");
-	GetOwner()->AddComponent(new CTransform);
-	GetOwner()->AddComponent(new CMeshRender);
 	Transform()->SetRelativePos(Vec3(0.f, 1000.f, 5000.f));
 	Transform()->SetRelativeScale(Vec3(1800.f, 800.f, 1.f));
 	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
@@ -86,14 +83,12 @@ void CBattleStadiumScript::begin()
 	Stadium->AddChild(waterfall);
 
 	waterfall = waterfall->Clone();
-	waterfall->Transform()->SetRelativePos(Vec3(147.f, -345.f, -100.f));
+	waterfall->Transform()->SetRelativePos(Vec3(147.f, -345.f, 50.f));
 	Stadium->AddChild(waterfall);
 	
 	m_BTMgr = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BTMgr.prefab")->Instatiate();
 	GamePlayStatic::SpawnGameObject(m_BTMgr, 3);
 	m_BTMgr->SetActive(false);
-
-	m_Level->AddObject(GetOwner(), 2);
 }
 
 void CBattleStadiumScript::tick()
@@ -109,7 +104,7 @@ void CBattleStadiumScript::tick()
 
 	if (BANPICK_STATE::BATTLE == m_Level->GetCurBanPickState() && !m_bUIPos)
 		OpenStadium();
-	else if (BANPICK_STATE::DONE == m_Level->GetCurBanPickState() && m_bUIPos && m_CloseTime > 1.f)
+	else if (BANPICK_STATE::DONE == m_Level->GetCurBanPickState() && m_bUIPos && m_CloseTime > 2.f)
 		CloseStadium();
 
 	if (BANPICK_STATE::BATTLE == m_Level->GetCurBanPickState() && m_bUIPos && m_BattleStartTime > 1.f)
