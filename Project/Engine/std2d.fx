@@ -48,10 +48,7 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
     // vColor는 샘플링 이후의 픽셀이 가진 색상 값을 나타낸다
     // float4 vColor = g_tex_0.Sample(g_sam_0, _in.vUV);
     
-    // 흑백
-    // float Aver = (vColor.r + vColor.g + vColor.b) / 3.f;
-    // vColor.rgb = float3(Aver, Aver, Aver);    
-    // vColor.a = 1.f;
+
     
     float4 vColor = float4(1.f, 0.f, 1.f, 1.f);
     

@@ -41,6 +41,8 @@ private:
 
     BANPICK_STATE m_CurState;
 
+    bool m_bChangeBGM;
+
 public:
     void SetBanPickState(BANPICK_STATE _state) { m_CurState = _state; }
     BANPICK_STATE GetCurBanPickState() { return m_CurState; }

@@ -33,6 +33,7 @@ CBanpickLevel::CBanpickLevel()
 	, m_RedTeam{}
 	, m_BanPickSlot{}
 	, m_EnemyTime(0.f)
+	, m_bChangeBGM(false)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -57,6 +58,7 @@ CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	, m_RedTeam{}
 	, m_BanPickSlot{}
 	, m_EnemyTime(0.f)
+	, m_bChangeBGM(false)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -173,6 +175,8 @@ void CBanpickLevel::begin()
 	CCollisionMgr::GetInst()->LayerCheck(3, 3);
 	CCollisionMgr::GetInst()->LayerCheck(3, 5);
 
+	GamePlayStatic::Play2DBGM(L"sound\\Banpick.wav", 1.f);
+
 	CLevel::begin();
 }
 
@@ -222,6 +226,12 @@ void CBanpickLevel::tick()
 	}
 	else if (BANPICK_STATE::BATTLE == m_CurState)
 	{
+		if (!m_bChangeBGM)
+		{
+			GamePlayStatic::Play2DBGM(L"sound\\Battle.wav", 1.f);
+			m_bChangeBGM = true;
+		}
+
 		if (CTGMgr::GetInst()->G_Time <= 0)
 		{
 			m_CurState = BANPICK_STATE::DONE;

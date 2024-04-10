@@ -420,22 +420,14 @@ void LobbyLevel::CreateTempLevel()
 	pLogo->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Lobby\\league_icon_custom.png",
 																			L"texture\\Lobby\\league_icon_custom.png"));
 
-	//Ptr<CMaterial> pGamer = CAssetMgr::GetInst()->FindAsset<CMaterial>(L"GamerMtrl");
-	//pGamer->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Avatar\\Gamer\\custom\\character_custom0.png",
-	//																		L"texture\\Avatar\\Gamer\\custom\\character_custom0.png"));
-	//pGamer->SetTexParam(TEX_PARAM::TEX_1, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Avatar\\Gamer\\custom\\character_custom1.png",
-	//																		L"texture\\Avatar\\Gamer\\custom\\character_custom1.png"));	
-	//pGamer->SetTexParam(TEX_PARAM::TEX_2, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Avatar\\Gamer\\custom\\character_custom2.png",
-	//																		L"texture\\Avatar\\Gamer\\custom\\character_custom2.png"));
-
-	sort(vecUI.begin(), vecUI.end(), compare);
-
 	for (size_t i = 0; i < vecUI.size(); ++i)
 	{
 		pTempLevel->AddObject(vecUI[i], 2);
 	}
 
+	GamePlayStatic::Play2DBGM(L"sound\\Lobby.wav", 1.f);
+
 	// 레벨 플레이
-	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
+	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
 
 }
