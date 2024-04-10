@@ -63,12 +63,12 @@ void CBTMgr::RegistRespawnPool(CGameObject* _Obj)
 {
     TEAM team = GETCHAMP(_Obj)->GetTeamColor();
 
-    Vec3 vSpawnPos = Vec3(0.f, 0.f, 300.f);
+    Vec3 vSpawnPos = Vec3(0.f, 0.f, 4000.f);
 
     if (TEAM::BLUE == team)
-        vSpawnPos = Vec3(-290.f, 0.f, 300.f);
+        vSpawnPos = Vec3(-290.f, 0.f, 4000.f);
     else
-        vSpawnPos = Vec3(290.f, 0.f, 300.f);
+        vSpawnPos = Vec3(290.f, 0.f, 4000.f);
 
     vSpawnPos.x += (float)(rand() % 50);
     vSpawnPos.y += (float)(rand() % 40);

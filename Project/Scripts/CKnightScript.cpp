@@ -266,6 +266,7 @@ void CKnightScript::EnterAttackState()
 {
 	if (!m_bAttack)
 	{
+		GamePlayStatic::Play2DSound(L"sound\\Heavy_Sword_Swing.wav", 1, 2.f, true);
 		Animator2D()->FindAnim(L"KnightAttack")->Reset();
 		Animator2D()->Play(L"KnightAttack", false);
 		m_bAttack = true;
@@ -295,6 +296,7 @@ void CKnightScript::EnterSkillState()
 					, Transform()->GetRelativeRotation(), L"KnightSkillEffect", 0.8f);
 
 		m_InGameStatus.DEF += 50.f;
+		GamePlayStatic::Play2DSound(L"sound\\Buff2.wav", 1, 2.f, true);
 	}
 	else
 	{
@@ -333,6 +335,8 @@ void CKnightScript::EnterUltimateState()
 				GETCHAMP(pTarget[i])->SetChampDEF(def);
 			}
 		}
+
+		GamePlayStatic::Play2DSound(L"sound\\Buff2.wav", 1, 2.f, true);
 	}
 	else
 	{

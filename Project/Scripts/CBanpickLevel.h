@@ -42,6 +42,7 @@ private:
     BANPICK_STATE m_CurState;
 
     bool m_bChangeBGM;
+    bool m_bPickSound;
 
 public:
     void SetBanPickState(BANPICK_STATE _state) { m_CurState = _state; }

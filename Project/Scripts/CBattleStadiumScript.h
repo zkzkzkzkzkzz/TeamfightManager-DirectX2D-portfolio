@@ -9,6 +9,11 @@ class CBattleStadiumScript :
     public CScript
 {
 private:
+    CGameObject* m_TopWall;
+    CGameObject* m_BottomWall;
+    CGameObject* m_RightWall;
+    CGameObject* m_LeftWall;
+
     CBanpickLevel* m_Level;
     CGameObject* m_BTMgr;
 
@@ -30,6 +35,8 @@ public:
 
     void CreateBlueTeamChamp();
     void CreateRedTeamChamp();
+
+    void InitWallCollider();
 
 public:
     virtual void begin() override;

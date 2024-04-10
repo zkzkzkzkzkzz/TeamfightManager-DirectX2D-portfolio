@@ -276,6 +276,7 @@ void CFighterScript::EnterAttackState()
 {
 	if (!m_bAttack)
 	{
+		GamePlayStatic::Play2DSound(L"sound\\Punch_Impact_2.wav", 1, 2.f, true);
 		Animator2D()->FindAnim(L"FighterAttack")->Reset();
 		Animator2D()->Play(L"FighterAttack", false);
 		m_bAttack = true;
@@ -300,11 +301,14 @@ void CFighterScript::EnterSkillState()
 		m_SkillDelay = 0.f;
 		m_SkillActive = true;
 		m_InGameStatus.bSkillPlay = true;
+
+		GamePlayStatic::Play2DSound(L"sound\\Punch_Impact_1.wav", 1, 2.f, true);
 	}
 	else
 	{
 		if (m_SkillDelay > 0.6f)
 		{
+			GamePlayStatic::Play2DSound(L"sound\\Punch_Impact_2.wav", 1, 2.f, true);
 			m_SkillActive = false;
 			m_InGameStatus.CoolTime_Skill = 0.f;
 			m_InGameStatus.bSkillPlay = false;
@@ -331,6 +335,7 @@ void CFighterScript::EnterUltimateState()
 	{
 		if (m_UltiActive && m_UltiDelay > 1.1f)
 		{
+			GamePlayStatic::Play2DSound(L"sound\\Explosion_Tiny_06.wav", 1, 2.f, true);
 			vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 			TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
 

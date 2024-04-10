@@ -180,6 +180,11 @@ void CArrowScript::BeginOverlap(CCollider2D* _Collider, CGameObject* _OtherObj, 
 		m_Target->GetScript<CChampScript>()->Damaged(m_Shooter, m_Target);
 		GamePlayStatic::DestroyGameObject(GetOwner());
 	}
+	else if (2 == _OtherObj->GetLayerIdx())
+	{
+		GamePlayStatic::DestroyGameObject(GetOwner());
+	}
+
 }
 
 void CArrowScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CCollider2D* _OtherCollider)

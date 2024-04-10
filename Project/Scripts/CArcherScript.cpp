@@ -425,6 +425,7 @@ void CArcherScript::BackStepMoving()
 
 void CArcherScript::SpawnArrow()
 {
+	GamePlayStatic::Play2DSound(L"sound\\Arrow_Flying_Past.wav", 1, 2.f, true);
 	CGameObject* arrow = new CGameObject;
 	arrow->SetName(L"Arrow");
 	arrow->AddComponent(new CTransform);

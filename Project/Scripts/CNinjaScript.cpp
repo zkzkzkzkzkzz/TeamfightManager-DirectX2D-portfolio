@@ -301,6 +301,7 @@ void CNinjaScript::EnterAttackState()
 
 	if (m_bAttack && m_DealActive && m_DealDelay > 0.5f)
 	{
+		GamePlayStatic::Play2DSound(L"sound\\Dagger8.wav", 1, 2.f, true);
 		Damaged(GetOwner(), m_Target);
 		m_DealActive = false;
 	}
@@ -318,6 +319,8 @@ void CNinjaScript::EnterSkillState()
 
 		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
 			, Transform()->GetRelativeRotation(), L"NinjaSkill1Effect", 0.8f, false, Vec3(0.f, 30.f, 0.f));
+
+		GamePlayStatic::Play2DSound(L"sound\\Dirtfootstep.wav", 1, 2.f, true);
 	}
 	else
 	{
@@ -376,6 +379,7 @@ void CNinjaScript::EnterSkillState()
 		}
 		else if (m_Skill2Active && m_Skill2Delay > 0.5f)
 		{
+			GamePlayStatic::Play2DSound(L"sound\\Dagger8.wav", 1, 2.f, true);
 			Damaged(GetOwner(), m_Target, 30);
 			m_Skill1Active = false;
 			m_Skill2Active = false;

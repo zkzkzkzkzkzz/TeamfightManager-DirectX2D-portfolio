@@ -181,6 +181,8 @@ void CChampSlotScript::LBtnClicked()
 		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale(), Transform()->GetRelativeRotation()
 			, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
 
+		GamePlayStatic::Play2DSound(L"sound\\ban.wav", 1, 3.f);
+
 		m_Level->FindObjectByName(L"BanSlot1")->GetScript<CBansSlotScript>()->SetBanChampSlot(GetOwner());
 
 		SetSlotState(SLOT_STATE::BAN);
@@ -193,6 +195,7 @@ void CChampSlotScript::LBtnClicked()
 		m_EffectObj->Animator2D()->Stop();
 		m_EffectObj->Animator2D()->Play(L"ChampSlotIdle");
 
+		GamePlayStatic::Play2DSound(L"sound\\pick.wav", 1, 3.f);
 		m_TeamColor = TEAM::BLUE;
 		SetSlotState(SLOT_STATE::PICK);
 		m_Level->SetEnemyTime(0.f);

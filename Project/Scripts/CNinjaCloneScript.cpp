@@ -298,6 +298,7 @@ void CNinjaCloneScript::EnterAttackState()
 
 	if (m_bAttack && m_DealActive && m_DealDelay > 0.5f)
 	{
+		GamePlayStatic::Play2DSound(L"sound\\Dagger8.wav", 1, 2.f, true);
 		Damaged(GetOwner(), m_Target);
 		m_DealActive = false;
 	}

@@ -22,6 +22,10 @@ CBattleStadiumScript::CBattleStadiumScript()
 	, m_BattleStartTime(0.f)
 	, m_Level(nullptr)
 	, m_BTMgr(nullptr)
+	, m_TopWall(nullptr)
+	, m_BottomWall(nullptr)
+	, m_RightWall(nullptr)
+	, m_LeftWall(nullptr)
 {
 }
 
@@ -36,6 +40,10 @@ CBattleStadiumScript::CBattleStadiumScript(const CBattleStadiumScript& _Origin)
 	, m_BattleStartTime(0.f)
 	, m_Level(nullptr)
 	, m_BTMgr(nullptr)
+	, m_TopWall(nullptr)
+	, m_BottomWall(nullptr)
+	, m_RightWall(nullptr)
+	, m_LeftWall(nullptr)
 {
 }
 
@@ -74,7 +82,7 @@ void CBattleStadiumScript::begin()
 	waterfall->AddComponent(new CTransform);
 	waterfall->AddComponent(new CMeshRender);
 	waterfall->AddComponent(new CAnimator2D);
-	waterfall->Transform()->SetRelativePos(Vec3(-147.f, -345.f, -100.f));
+	waterfall->Transform()->SetRelativePos(Vec3(-147.f, -345.f, 50.f));
 	waterfall->Transform()->SetRelativeScale(Vec3(70.f, 222.f, 1.f));
 	waterfall->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	waterfall->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"StadiumMtrl"));
@@ -86,6 +94,8 @@ void CBattleStadiumScript::begin()
 	waterfall->Transform()->SetRelativePos(Vec3(147.f, -345.f, 50.f));
 	Stadium->AddChild(waterfall);
 	
+	InitWallCollider();
+
 	m_BTMgr = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\BTMgr.prefab")->Instatiate();
 	GamePlayStatic::SpawnGameObject(m_BTMgr, 3);
 	m_BTMgr->SetActive(false);
@@ -279,4 +289,51 @@ void CBattleStadiumScript::CreateRedTeamChamp()
 	}
 
 	m_RedSpawn = true;
+}
+
+void CBattleStadiumScript::InitWallCollider()
+{
+	m_TopWall = new CGameObject;
+	m_TopWall->SetName(L"TopWallCol");
+	m_TopWall->AddComponent(new CTransform);
+	m_TopWall->AddComponent(new CCollider2D);
+	m_TopWall->Transform()->SetRelativePos(Vec3(0.f, 195.f, 0.f));
+	m_TopWall->Collider2D()->SetColliderType(COLLIDER2D_TYPE::RECT);
+	m_TopWall->Collider2D()->SetAbsolute(false);
+	m_TopWall->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	m_TopWall->Collider2D()->SetOffsetScale(Vec2(1000.f, 100.f));
+	GamePlayStatic::SpawnGameObject(m_TopWall, 2);
+
+	m_BottomWall = new CGameObject;
+	m_BottomWall->SetName(L"BottomWallCol");
+	m_BottomWall->AddComponent(new CTransform);
+	m_BottomWall->AddComponent(new CCollider2D);
+	m_BottomWall->Transform()->SetRelativePos(Vec3(0.f, -355.f, 0.f));
+	m_BottomWall->Collider2D()->SetColliderType(COLLIDER2D_TYPE::RECT);
+	m_BottomWall->Collider2D()->SetAbsolute(false);
+	m_BottomWall->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	m_BottomWall->Collider2D()->SetOffsetScale(Vec2(1000.f, 100.f));
+	GamePlayStatic::SpawnGameObject(m_BottomWall, 2);
+
+	m_LeftWall = new CGameObject;
+	m_LeftWall->SetName(L"LeftWallCol");
+	m_LeftWall->AddComponent(new CTransform);
+	m_LeftWall->AddComponent(new CCollider2D);
+	m_LeftWall->Transform()->SetRelativePos(Vec3(-426.f, -80.f, 0.f));
+	m_LeftWall->Collider2D()->SetColliderType(COLLIDER2D_TYPE::RECT);
+	m_LeftWall->Collider2D()->SetAbsolute(false);
+	m_LeftWall->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	m_LeftWall->Collider2D()->SetOffsetScale(Vec2(100.f, 500.f));
+	GamePlayStatic::SpawnGameObject(m_LeftWall, 2);
+
+	m_RightWall = new CGameObject;
+	m_RightWall->SetName(L"RightWallCol");
+	m_RightWall->AddComponent(new CTransform);
+	m_RightWall->AddComponent(new CCollider2D);
+	m_RightWall->Transform()->SetRelativePos(Vec3(427.f, -80.f, 0.f));
+	m_RightWall->Collider2D()->SetColliderType(COLLIDER2D_TYPE::RECT);
+	m_RightWall->Collider2D()->SetAbsolute(false);
+	m_RightWall->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
+	m_RightWall->Collider2D()->SetOffsetScale(Vec2(100.f, 500.f));
+	GamePlayStatic::SpawnGameObject(m_RightWall, 2);
 }

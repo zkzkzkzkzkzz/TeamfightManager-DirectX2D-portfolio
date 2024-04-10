@@ -67,12 +67,12 @@ CChampScript::~CChampScript()
 
 void CChampScript::begin()
 {
-	Vec3 vSpawnPos = Vec3(0.f, 0.f, 300.f);
+	Vec3 vSpawnPos = Vec3(0.f, 0.f, 4000.f);
 
 	if (TEAM::BLUE == m_Team)
-		vSpawnPos = Vec3(-290.f, 0.f, 300.f);
+		vSpawnPos = Vec3(-290.f, 0.f, 4000.f);
 	else
-		vSpawnPos = Vec3(290.f, 0.f, 300.f);
+		vSpawnPos = Vec3(290.f, 0.f, 4000.f);
 
 	vSpawnPos.x += (float)(rand() % 50);
 	vSpawnPos.y += (float)(rand() % 200) - 200.f;
@@ -84,6 +84,7 @@ void CChampScript::begin()
 
 	if (BANPICK_STATE::BATTLE == pLevel->GetCurBanPickState())
 	{
+		GamePlayStatic::Play2DSound(L"sound\\Body_Drop.wav", 1, 2.f, true);
 		CheckPlayingGamer();
 	}
 }
@@ -120,7 +121,7 @@ void CChampScript::tick()
 		}
 
 		Vec3 vPos = Transform()->GetRelativePos();
-		vPos.z = 300.f + vPos.y;
+		vPos.z = 4000.f + vPos.y;
 		Transform()->SetRelativePos(vPos);
 
 		if (L"BTMgr" == GetOwner()->GetName())
@@ -132,6 +133,15 @@ void CChampScript::tick()
 		render();
 	}
 	else if (BANPICK_STATE::DONE == pLevel->GetCurBanPickState())
+	{
+		vector<CGameObject*> champs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
+
+		for (size_t i = 0; i < champs.size(); ++i)
+		{
+			GETCHAMP(champs[i])->SetChampState(CHAMP_STATE::IDLE);
+		}
+	}
+	else if (BANPICK_STATE::RESULT == pLevel->GetCurBanPickState())
 	{
 		vector<CGameObject*> champs = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 
@@ -252,6 +262,18 @@ void CChampScript::Overlap(CCollider2D* _Collider, CGameObject* _OtherObj, CColl
 		else if (vPos.y >= vOtherPos.y)
 			vOtherPos.y -= DT * 10.f;
 	}	
+	else if (2 == _OtherObj->GetLayerIdx() && 3 == _Collider->GetOwner()->GetLayerIdx())
+	{
+		if (vPos.x < vOtherPos.x)
+			vPos.x -= DT * 10.f;
+		else if (vPos.x >= vOtherPos.x)
+			vPos.x += DT * 10.f;
+
+		if (vPos.y < vOtherPos.y)
+			vPos.y -= DT * 10.f;
+		else if (vPos.y >= vOtherPos.y)
+			vPos.y += DT * 10.f;
+	}
 	
 	_OtherObj->Transform()->SetRelativePos(vOtherPos);
 }

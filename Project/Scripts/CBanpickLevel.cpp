@@ -34,6 +34,7 @@ CBanpickLevel::CBanpickLevel()
 	, m_BanPickSlot{}
 	, m_EnemyTime(0.f)
 	, m_bChangeBGM(false)
+	, m_bPickSound(false)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -59,6 +60,7 @@ CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	, m_BanPickSlot{}
 	, m_EnemyTime(0.f)
 	, m_bChangeBGM(false)
+	, m_bPickSound(false)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -174,6 +176,8 @@ void CBanpickLevel::begin()
 
 	CCollisionMgr::GetInst()->LayerCheck(3, 3);
 	CCollisionMgr::GetInst()->LayerCheck(3, 5);
+	CCollisionMgr::GetInst()->LayerCheck(2, 3);
+	CCollisionMgr::GetInst()->LayerCheck(2, 5);
 
 	GamePlayStatic::Play2DBGM(L"sound\\Banpick.wav", 1.f);
 
@@ -193,6 +197,7 @@ void CBanpickLevel::tick()
 			, CTGMgr::GetInst()->G_ChampSlot[1]->Transform()->GetRelativeScale()
 			, CTGMgr::GetInst()->G_ChampSlot[1]->Transform()->GetRelativeRotation()
 			, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
+		GamePlayStatic::Play2DSound(L"sound\\ban.wav", 1, 3.f);
 
 		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"BanSlot2")->GetScript<CBansSlotScript>()->SetBanChampSlot(CTGMgr::GetInst()->G_ChampSlot[1]);
 		CTGMgr::GetInst()->G_ChampSlot[1]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::BAN);
@@ -206,6 +211,8 @@ void CBanpickLevel::tick()
 			CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->SetSlotTeamColor(TEAM::RED);
 			CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::PICK);
 			GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[0])->SetSelectedChamp(CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->GetChampList());
+			GamePlayStatic::Play2DSound(L"sound\\pick.wav", 1, 3.f);
+			
 			m_CurState = BANPICK_STATE::BLUEPICK2;
 		}
 		else if (BANPICK_STATE::REDPICK2 == m_CurState)
@@ -213,6 +220,12 @@ void CBanpickLevel::tick()
 			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->SetSlotTeamColor(TEAM::RED);
 			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::PICK);
 			GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[1])->SetSelectedChamp(CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->GetChampList());
+			
+			if (!m_bPickSound)
+			{
+				GamePlayStatic::Play2DSound(L"sound\\pick.wav", 1, 3.f);
+				m_bPickSound = true;
+			}
 
 			if (m_EnemyTime > 4.f)
 			{
@@ -228,7 +241,7 @@ void CBanpickLevel::tick()
 	{
 		if (!m_bChangeBGM)
 		{
-			GamePlayStatic::Play2DBGM(L"sound\\Battle.wav", 1.f);
+			GamePlayStatic::Play2DBGM(L"sound\\Battle.wav", 0.8f);
 			m_bChangeBGM = true;
 		}
 

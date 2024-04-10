@@ -300,6 +300,8 @@ void CPriestScript::EnterAttackState()
 
 		m_healactive = true;
 		m_healdelay = 0.f;
+
+		GamePlayStatic::Play2DSound(L"sound\\healing.wav", 1, 2.f, true);
 	}
 
 
@@ -339,6 +341,8 @@ void CPriestScript::EnterSkillState()
 				GETCHAMP(pTarget[i])->SetChampATKSpeed(ATKSpeed);
 			}
 		}
+
+		GamePlayStatic::Play2DSound(L"sound\\Buff2.wav", 1, 2.f, true);
 	}
 	else
 	{

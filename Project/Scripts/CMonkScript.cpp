@@ -281,6 +281,7 @@ void CMonkScript::EnterAttackState()
 		m_InGameStatus.CoolTime_Attack = 0.f;
 		m_DealActive = true;
 		m_DealDelay = 0.f;
+		GamePlayStatic::Play2DSound(L"sound\\Swing_2.wav", 1, 2.f, true);
 	}
 
 	if (m_bAttack && m_DealActive && m_DealDelay > 0.4f)
@@ -319,6 +320,8 @@ void CMonkScript::EnterSkillState()
 				GETCHAMP(pTarget[i])->SetChampHP(HP);
 			}
 		}
+
+		GamePlayStatic::Play2DSound(L"sound\\healing.wav", 1, 2.f, true);
 	}
 	else
 	{
@@ -359,6 +362,8 @@ void CMonkScript::EnterUltimateState()
 			int Speed = GETCHAMP(pTarget[i])->GetChampMoveSpeed() + 0.3f;
 			GETCHAMP(pTarget[i])->SetChampMoveSpeed(Speed);
 		}
+
+		GamePlayStatic::Play2DSound(L"sound\\Buff2.wav", 1, 2.f, true);
 	}
 	else
 	{
