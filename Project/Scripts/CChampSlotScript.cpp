@@ -185,6 +185,10 @@ void CChampSlotScript::LBtnClicked()
 
 		m_Level->FindObjectByName(L"BanSlot1")->GetScript<CBansSlotScript>()->SetBanChampSlot(GetOwner());
 
+		CGameObject* Gray = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\GrayFilter.prefab")->Instatiate();
+		Gray->Transform()->SetRelativePos(Vec3(33.f, 125.f, 10.f));
+		GetOwner()->GetParent()->AddChild(Gray);
+
 		SetSlotState(SLOT_STATE::BAN);
 		m_Level->SetEnemyTime(0.f);
 		m_Level->SetBanPickState(BANPICK_STATE::REDBAN);

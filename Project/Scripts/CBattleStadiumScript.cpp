@@ -299,7 +299,7 @@ void CBattleStadiumScript::InitWallCollider()
 	m_TopWall->AddComponent(new CCollider2D);
 	m_TopWall->Transform()->SetRelativePos(Vec3(0.f, 195.f, 0.f));
 	m_TopWall->Collider2D()->SetColliderType(COLLIDER2D_TYPE::RECT);
-	m_TopWall->Collider2D()->SetAbsolute(false);
+	m_TopWall->Collider2D()->SetAbsolute(true);
 	m_TopWall->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
 	m_TopWall->Collider2D()->SetOffsetScale(Vec2(1000.f, 100.f));
 	GamePlayStatic::SpawnGameObject(m_TopWall, 2);
@@ -310,7 +310,7 @@ void CBattleStadiumScript::InitWallCollider()
 	m_BottomWall->AddComponent(new CCollider2D);
 	m_BottomWall->Transform()->SetRelativePos(Vec3(0.f, -355.f, 0.f));
 	m_BottomWall->Collider2D()->SetColliderType(COLLIDER2D_TYPE::RECT);
-	m_BottomWall->Collider2D()->SetAbsolute(false);
+	m_BottomWall->Collider2D()->SetAbsolute(true);
 	m_BottomWall->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
 	m_BottomWall->Collider2D()->SetOffsetScale(Vec2(1000.f, 100.f));
 	GamePlayStatic::SpawnGameObject(m_BottomWall, 2);
@@ -321,7 +321,7 @@ void CBattleStadiumScript::InitWallCollider()
 	m_LeftWall->AddComponent(new CCollider2D);
 	m_LeftWall->Transform()->SetRelativePos(Vec3(-426.f, -80.f, 0.f));
 	m_LeftWall->Collider2D()->SetColliderType(COLLIDER2D_TYPE::RECT);
-	m_LeftWall->Collider2D()->SetAbsolute(false);
+	m_LeftWall->Collider2D()->SetAbsolute(true);
 	m_LeftWall->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
 	m_LeftWall->Collider2D()->SetOffsetScale(Vec2(100.f, 500.f));
 	GamePlayStatic::SpawnGameObject(m_LeftWall, 2);
@@ -332,7 +332,7 @@ void CBattleStadiumScript::InitWallCollider()
 	m_RightWall->AddComponent(new CCollider2D);
 	m_RightWall->Transform()->SetRelativePos(Vec3(427.f, -80.f, 0.f));
 	m_RightWall->Collider2D()->SetColliderType(COLLIDER2D_TYPE::RECT);
-	m_RightWall->Collider2D()->SetAbsolute(false);
+	m_RightWall->Collider2D()->SetAbsolute(true);
 	m_RightWall->Collider2D()->SetOffsetPos(Vec2(0.f, 0.f));
 	m_RightWall->Collider2D()->SetOffsetScale(Vec2(100.f, 500.f));
 	GamePlayStatic::SpawnGameObject(m_RightWall, 2);

@@ -199,6 +199,10 @@ void CBanpickLevel::tick()
 			, L"BanAnim", 0.2, false, Vec3(0.f, -25.f, -10.f));
 		GamePlayStatic::Play2DSound(L"sound\\ban.wav", 1, 3.f);
 
+		CGameObject* Gray = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\GrayFilter.prefab")->Instatiate();
+		Gray->Transform()->SetRelativePos(Vec3(-280.f, 125.f, 10.f));
+		CTGMgr::GetInst()->G_ChampSlot[1]->GetParent()->AddChild(Gray);
+
 		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"BanSlot2")->GetScript<CBansSlotScript>()->SetBanChampSlot(CTGMgr::GetInst()->G_ChampSlot[1]);
 		CTGMgr::GetInst()->G_ChampSlot[1]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::BAN);
 		m_CurState = BANPICK_STATE::BLUEPICK1;

@@ -60,8 +60,6 @@ CNinjaCloneScript::~CNinjaCloneScript()
 
 void CNinjaCloneScript::begin()
 {
-	//CChampScript::begin();
-
 	CGameObject* pOwner = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"Ninja");
 	
 	Vec3 clonePos = pOwner->Transform()->GetRelativePos();
