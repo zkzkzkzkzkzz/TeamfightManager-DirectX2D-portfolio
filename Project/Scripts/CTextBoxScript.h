@@ -28,6 +28,10 @@ private:
 
     CGameObject* m_TextEffect;
 
+    CGameObject* m_Effect;
+
+    float m_TextTime;
+
     bool    m_bMouseOn;
     bool    m_bMouseOn_Prev;
     bool    m_bMouseLBtnDown;
@@ -40,9 +44,10 @@ public:
     TEXT_INDEX GetTextIdx() { return m_idx; }
 
     void SetTextByIndex();
+    void SpawnEffect(Vec3 _Pos, Vec3 _Scale, Vec3 _Rotation, const wstring& _anim, float _time, bool _repeat = false, Vec3 _offset = Vec3(0.f, 0.f, 0.f));
+
 
     void CheckMousePos();
-
     void LBtnClicked();
 
 public:

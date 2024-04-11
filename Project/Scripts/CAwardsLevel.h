@@ -3,14 +3,22 @@
 
 #include "CTextBoxScript.h"
 
+class CGameObject;
+
 class CAwardsLevel :
     public CLevel
 {
 private:
     TEXT_INDEX m_idx;
 
+    UINT m_ParticleCount;
+    float m_ParticleTime;
+    bool m_SpawnParticle;
+    vector<CGameObject*> m_Particle;
+
 public:
     void InitUI();
+    void SpawnParticle();
 
 public:
     virtual void begin() override;

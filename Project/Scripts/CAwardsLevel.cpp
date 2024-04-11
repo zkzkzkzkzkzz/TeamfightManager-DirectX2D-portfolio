@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CAwardsLevel.h"
 
+#include <Engine\CTimeMgr.h>
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLayer.h>
 #include <Engine\CGameObject.h>
@@ -12,12 +13,20 @@
 
 CAwardsLevel::CAwardsLevel()
 	: m_idx(TEXT_INDEX::NONE)
+	, m_Particle{}
+	, m_ParticleTime(0.f)
+	, m_SpawnParticle(false)
+	, m_ParticleCount(0)
 {
 	InitUI();
 }
 
 CAwardsLevel::CAwardsLevel(const CAwardsLevel& _Origin)
 	: m_idx(_Origin.m_idx)
+	, m_Particle{}
+	, m_ParticleTime(0.f)
+	, m_SpawnParticle(false)
+	, m_ParticleCount(0)
 {
 	InitUI();
 }
@@ -75,6 +84,27 @@ void CAwardsLevel::tick()
 		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"JoongSoo")->SetActive(true);
 		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"Gosu")->SetActive(true);
 	}
+	else if (TEXT_INDEX::TEXT3 == m_idx || TEXT_INDEX::TEXT4 == m_idx)
+	{
+		m_ParticleTime += DT;
+
+		if (!m_SpawnParticle && m_ParticleTime > 1.f)
+		{
+			SpawnParticle();
+			m_SpawnParticle = true;
+			m_ParticleTime = 0.f;
+		}
+		else if (m_SpawnParticle && m_ParticleTime > 2.f)
+		{
+			for (size_t i = 0; i < m_Particle.size(); ++i)
+			{
+				GamePlayStatic::DestroyGameObject(m_Particle[i]);
+			}
+
+			m_SpawnParticle = false;
+			m_ParticleTime = 0.f;
+		}
+	}
 }
 
 void CAwardsLevel::finaltick()
@@ -120,6 +150,7 @@ void CAwardsLevel::InitUI()
 	pCamObj->Camera()->SetCameraPriority(0);
 	pCamObj->Camera()->LayerCheckAll();
 	pCamObj->Camera()->LayerCheck(2, false);
+	pCamObj->Camera()->LayerCheck(6, false);
 	pCamObj->Camera()->LayerCheck(7, false);
 	AddObject(pCamObj, 0);
 
@@ -134,6 +165,17 @@ void CAwardsLevel::InitUI()
 	pCamObj->Camera()->LayerCheck(2, true);
 	AddObject(pCamObj, 0);
 
+	// Effect Camera 생성
+	pCamObj = new CGameObject;
+	pCamObj->SetName(L"EffectCamera");
+	pCamObj->AddComponent(new CTransform);
+	pCamObj->AddComponent(new CCamera);
+	pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
+	pCamObj->Camera()->SetCameraPriority(2);
+	pCamObj->Camera()->LayerCheck(6, true);
+	AddObject(pCamObj, 0);
+
 	// Awards Camera 생성
 	pCamObj = new CGameObject;
 	pCamObj->SetName(L"AwardsCamera");
@@ -141,7 +183,7 @@ void CAwardsLevel::InitUI()
 	pCamObj->AddComponent(new CCamera);
 	pCamObj->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
 	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
-	pCamObj->Camera()->SetCameraPriority(2);
+	pCamObj->Camera()->SetCameraPriority(3);
 	pCamObj->Camera()->LayerCheck(7, true);
 	AddObject(pCamObj, 0);
 
@@ -161,4 +203,42 @@ void CAwardsLevel::InitUI()
 	pCursor->AddComponent(new CCursorScript);
 	AddObject(pCursor, 4);
 
+}
+
+void CAwardsLevel::SpawnParticle()
+{
+	// Particle  생성
+	CGameObject* pParticleObj = new CGameObject;
+	pParticleObj->SetName(L"Particle");
+	pParticleObj->AddComponent(new CTransform);
+	pParticleObj->AddComponent(new CParticleSystem);
+	pParticleObj->Transform()->SetRelativePos(Vec3(-300.f, 0.f, 100.f));
+	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle1.png"
+																					, L"texture\\particle\\Particle1.png"));
+	AddObject(pParticleObj, 7);
+	m_Particle.push_back(pParticleObj);
+
+	pParticleObj = pParticleObj->Clone();
+	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle2.png"
+																					, L"texture\\particle\\Particle2.png"));
+	AddObject(pParticleObj, 7);
+	m_Particle.push_back(pParticleObj);
+
+	pParticleObj = pParticleObj->Clone();
+	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle3.png"
+																					, L"texture\\particle\\Particle3.png"));
+	AddObject(pParticleObj, 7);
+	m_Particle.push_back(pParticleObj);
+
+	pParticleObj = pParticleObj->Clone();
+	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle4.png"
+																					, L"texture\\particle\\Particle4.png"));
+	AddObject(pParticleObj, 7);
+	m_Particle.push_back(pParticleObj);
+
+	pParticleObj = pParticleObj->Clone();
+	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle5.png"
+																					, L"texture\\particle\\Particle5.png"));
+	AddObject(pParticleObj, 7);
+	m_Particle.push_back(pParticleObj);
 }

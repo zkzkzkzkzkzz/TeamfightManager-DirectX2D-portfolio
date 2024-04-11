@@ -4,7 +4,6 @@
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 
-
 CAvatarScript::CAvatarScript()
 	: CScript(AVATARSCRIPT)
 	, m_idx(TEXT_INDEX::NONE)

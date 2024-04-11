@@ -3,6 +3,7 @@
 
 #include "CTextBoxScript.h"
 
+
 class CAvatarScript :
     public CScript
 {
