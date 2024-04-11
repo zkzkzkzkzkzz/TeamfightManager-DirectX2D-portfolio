@@ -23,6 +23,9 @@ private:
     Ptr<CTexture>   m_ParticleTex;
 
 public:
+    void SetParticleTex(Ptr<CTexture> _Tex) { m_ParticleTex = _Tex; }
+
+public:
     virtual void UpdateData() override;
     virtual void finaltick() override;
     virtual void render() override;

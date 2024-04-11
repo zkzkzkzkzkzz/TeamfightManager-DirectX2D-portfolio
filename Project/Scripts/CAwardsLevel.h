@@ -11,9 +11,14 @@ class CAwardsLevel :
 private:
     TEXT_INDEX m_idx;
 
-    UINT m_ParticleCount;
+    float m_LVChangeTime;
+
+    bool m_bBGM;
+    float m_BGMTime;
+
+    int m_ParticleCount;
+    bool m_ParticleSpawn;
     float m_ParticleTime;
-    bool m_SpawnParticle;
     vector<CGameObject*> m_Particle;
 
 public:

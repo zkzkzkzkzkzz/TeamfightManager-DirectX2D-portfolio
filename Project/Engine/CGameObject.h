@@ -43,6 +43,7 @@ public:
     GET_COMPONENT(TileMap, TILEMAP);
     GET_COMPONENT(StateMachine, STATEMACHINE);
     GET_COMPONENT(TextRender, GAMETEXT);
+    GET_COMPONENT(ParticleSystem, PARTICLESYSTEM);
     
 public:
     void AddComponent(CComponent* _Component);

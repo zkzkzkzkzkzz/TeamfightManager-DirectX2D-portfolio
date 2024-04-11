@@ -13,6 +13,8 @@ CParticleSystem::CParticleSystem()
 	: CRenderComponent(COMPONENT_TYPE::PARTICLESYSTEM)
 	, m_ParticleBuffer(nullptr)
 	, m_MaxParticleCount(2000)
+	, m_ParticleTex(nullptr)
+	, m_Time(0.f)
 {
 	// 전용 메쉬와 전용 머테리얼 사용
 	SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"PointMesh"));
@@ -40,23 +42,23 @@ CParticleSystem::CParticleSystem()
 
 	// SpawnCount를 전달할 구조화 버퍼
 	m_SpawnCountBuffer = new CStructuredBuffer;
-	m_SpawnCountBuffer->Create(sizeof(tSpawnCount), 1, SB_TYPE::READ_WRITE, true);
+	m_SpawnCountBuffer->Create(sizeof(tSpawnCount), 15, SB_TYPE::READ_WRITE, true);
 
 	// 파티클 모듈값 세팅
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::SPAWN] = 1;
 
 	m_Module.SpaceType = 1;
-	m_Module.vSpawnColor = Vec4(0.2f, 0.5f, 0.8f, 1.f);
-	m_Module.vSpawnMinScale = Vec4(50.f, 20.f, 1.f, 1.f);
-	m_Module.vSpawnMaxScale = Vec4(50.f, 20.f, 1.f, 1.f);
-	m_Module.MinMass = 1.f;
-	m_Module.MaxMass = 1.f;
-	m_Module.MinLife = 3.f;
-	m_Module.MaxLife = 3.f;
+	m_Module.vSpawnColor = Vec4(1.f, 1.f, 1.f, 1.f);
+	m_Module.vSpawnMinScale = Vec4(40.f, 40.f, 1.f, 1.f);
+	m_Module.vSpawnMaxScale = Vec4(60.f, 60.f, 1.f, 1.f);
+	m_Module.MinMass = 2.f;
+	m_Module.MaxMass = 2.f;
+	m_Module.MinLife = 2.f;
+	m_Module.MaxLife = 2.f;
 	m_Module.SpawnShape = 1;
-	m_Module.Radius = 100.f;
-	m_Module.vSpawnBoxScale = Vec4(300.f, 300.f, 0.f, 0.f);
-	m_Module.SpawnRate = 50;
+	m_Module.Radius = 90.f;
+	m_Module.vSpawnBoxScale = Vec4(270.f, 270.f, 0.f, 0.f);
+	m_Module.SpawnRate = 2;
 
 	// Add Velocity
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = 1;
@@ -66,12 +68,12 @@ CParticleSystem::CParticleSystem()
 
 	// Scale
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::SCALE] = 0;
-	m_Module.vScaleRatio = Vec3(0.1f, 0.1f, 0.1f);
+	m_Module.vScaleRatio = Vec3(4.f, 4.f, 4.f);
 
 	// Noise Force
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::NOISE_FORCE] = 1;
-	m_Module.NoiseForceScale = 10.f;
-	m_Module.NoiseForceTerm = 0.3f;
+	m_Module.NoiseForceScale = 300.f;
+	m_Module.NoiseForceTerm = 0.5f;
 
 	// Drag Module
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::DRAG] = 1;
@@ -82,11 +84,9 @@ CParticleSystem::CParticleSystem()
 
 	// Render 
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::RENDER] = 1;
-	m_Module.VelocityAlignment = 1; // 속도에 따른 방향 정렬
-	m_Module.AlphaBasedLife = 1;
-	m_Module.AlphaMaxAge = 2.f;
-
-	m_ParticleTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\ray.png", L"texture\\particle\\ray.png");
+	m_Module.VelocityAlignment = 0; // 속도에 따른 방향 정렬
+	m_Module.AlphaBasedLife = 0;
+	m_Module.AlphaMaxAge = 1.f;
 }
 
 CParticleSystem::CParticleSystem(const CParticleSystem& _OriginParticle)

@@ -6,6 +6,8 @@
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 
+#include "CAwardsLevel.h"
+
 CBattleEndBtnScript::CBattleEndBtnScript()
 	: CScript(BATTLEENDBTNSCRIPT)
 	, m_Level(nullptr)
@@ -108,5 +110,5 @@ void CBattleEndBtnScript::LBtnClicked()
 {
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
 
-	DestroyWindow(CEngine::GetInst()->GetMainWind());
+	CLevelMgr::GetInst()->ChangeLevel(new CAwardsLevel, LEVEL_STATE::PLAY);
 }

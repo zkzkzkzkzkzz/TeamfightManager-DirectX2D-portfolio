@@ -409,6 +409,11 @@ void CAssetMgr::CreateDefaultGameMaterial()
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
 	AddAsset<CMaterial>(L"ShadowMtrl", pMtrl);
+
+	// 알파블렌드 머테리얼
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"EffectShader"));
+	AddAsset<CMaterial>(L"AlphaMtrl", pMtrl);	
 }
 
 void CAssetMgr::CreateTitleLevelMaterial()

@@ -202,6 +202,9 @@
     <Filter Include="02. Scripts\08.AwardsScript\04.AvatarScript">
       <UniqueIdentifier>{6b432d34-5a64-44bb-898d-4673ad86cb17}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Level\00.TitleLevel">
+      <UniqueIdentifier>{726e4128-6970-440c-a67c-ceb9cce143a3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -381,6 +384,9 @@
     <ClInclude Include="CAvatarScript.h">
       <Filter>02. Scripts\08.AwardsScript\04.AvatarScript</Filter>
     </ClInclude>
+    <ClInclude Include="CTitleLevel.h">
+      <Filter>04. Level\00.TitleLevel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -559,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="CAvatarScript.cpp">
       <Filter>02. Scripts\08.AwardsScript\04.AvatarScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleLevel.cpp">
+      <Filter>04. Level\00.TitleLevel</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

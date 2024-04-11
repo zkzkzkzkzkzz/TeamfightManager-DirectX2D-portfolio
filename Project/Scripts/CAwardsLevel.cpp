@@ -8,25 +8,20 @@
 #include <Engine\components.h>
 #include <Engine\CAssetMgr.h>
 
+#include "CTitleLevel.h"
 #include "CCursorScript.h"
 #include "CEffectScript.h"
 
 CAwardsLevel::CAwardsLevel()
 	: m_idx(TEXT_INDEX::NONE)
-	, m_Particle{}
-	, m_ParticleTime(0.f)
-	, m_SpawnParticle(false)
-	, m_ParticleCount(0)
+	, m_bBGM(false)
+	, m_BGMTime(0.f)
 {
 	InitUI();
 }
 
 CAwardsLevel::CAwardsLevel(const CAwardsLevel& _Origin)
 	: m_idx(_Origin.m_idx)
-	, m_Particle{}
-	, m_ParticleTime(0.f)
-	, m_SpawnParticle(false)
-	, m_ParticleCount(0)
 {
 	InitUI();
 }
@@ -68,6 +63,7 @@ void CAwardsLevel::begin()
 	AddObject(Gosu, 7);
 	Gosu->SetActive(false);
 
+
 	CLevel::begin();
 }
 
@@ -75,7 +71,16 @@ void CAwardsLevel::tick()
 {
 	CLevel::tick();
 
+	m_BGMTime += DT;
+	m_LVChangeTime += DT;
+
 	m_idx = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"TextBox")->GetScript<CTextBoxScript>()->GetTextIdx();
+
+	if (!m_bBGM && m_BGMTime > 1.f)
+	{
+		GamePlayStatic::Play2DBGM(L"sound\\Awards.wav", 1.f);
+		m_bBGM = true;
+	}
 
 	if (TEXT_INDEX::TEXT2 == m_idx)
 	{
@@ -86,23 +91,49 @@ void CAwardsLevel::tick()
 	}
 	else if (TEXT_INDEX::TEXT3 == m_idx || TEXT_INDEX::TEXT4 == m_idx)
 	{
-		m_ParticleTime += DT;
+		//m_ParticleTime += DT;
+		//if (!m_ParticleSpawn && m_ParticleTime > 1.f)
+		//{
+		//	SpawnParticle();
+		//	m_ParticleTime = 0.f;
+		//	m_ParticleSpawn = true;
+		//	++m_ParticleCount;
+		//}
+		//else if (m_ParticleSpawn && m_ParticleTime > 2.f)
+		//{
+		//	for (size_t i = 0; i < m_Particle.size(); ++i)
+		//	{
+		//		GamePlayStatic::DestroyGameObject(m_Particle[i]);
+		//	}
 
-		if (!m_SpawnParticle && m_ParticleTime > 1.f)
+		//	m_ParticleTime = 0.f;
+		//	m_ParticleSpawn = false;
+		//}
+		m_LVChangeTime = 0.f;
+	}
+	else if (TEXT_INDEX::END == m_idx)
+	{
+		if (m_LVChangeTime > 2.f)
 		{
-			SpawnParticle();
-			m_SpawnParticle = true;
-			m_ParticleTime = 0.f;
-		}
-		else if (m_SpawnParticle && m_ParticleTime > 2.f)
-		{
-			for (size_t i = 0; i < m_Particle.size(); ++i)
+			Vec3 ambient = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"Light2D")->Light2D()->GetAmbient();
+
+			ambient.x -= DT * 0.5f;
+			ambient.y -= DT * 0.5f;
+			ambient.z -= DT * 0.5f;
+
+			if (ambient.x < 0.f)
+				ambient.x = 0.f;
+			if (ambient.y < 0.f)
+				ambient.y = 0.f;
+			if (ambient.z < 0.f)
+				ambient.z = 0.f;
+
+			CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"Light2D")->Light2D()->SetAmbient(ambient);
+
+			if (Vec3(0.f, 0.f, 0.f) == ambient && m_LVChangeTime > 5.f)
 			{
-				GamePlayStatic::DestroyGameObject(m_Particle[i]);
+				CLevelMgr::GetInst()->ChangeLevel(new CTitleLevel, LEVEL_STATE::PLAY);
 			}
-
-			m_SpawnParticle = false;
-			m_ParticleTime = 0.f;
 		}
 	}
 }
@@ -202,43 +233,65 @@ void CAwardsLevel::InitUI()
 	pCursor->AddComponent(new CMeshRender);
 	pCursor->AddComponent(new CCursorScript);
 	AddObject(pCursor, 4);
-
 }
 
 void CAwardsLevel::SpawnParticle()
 {
-	// Particle  생성
-	CGameObject* pParticleObj = new CGameObject;
-	pParticleObj->SetName(L"Particle");
-	pParticleObj->AddComponent(new CTransform);
-	pParticleObj->AddComponent(new CParticleSystem);
-	pParticleObj->Transform()->SetRelativePos(Vec3(-300.f, 0.f, 100.f));
-	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle1.png"
-																					, L"texture\\particle\\Particle1.png"));
-	AddObject(pParticleObj, 7);
-	m_Particle.push_back(pParticleObj);
+	CGameObject* particle = new CGameObject;
+	particle->SetName(L"Particle");
+	particle->AddComponent(new CTransform);
+	particle->AddComponent(new CParticleSystem);
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle1.png", L"texture\\particle\\Particle1.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7);
+	m_Particle.push_back(particle);
 
-	pParticleObj = pParticleObj->Clone();
-	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle2.png"
-																					, L"texture\\particle\\Particle2.png"));
-	AddObject(pParticleObj, 7);
-	m_Particle.push_back(pParticleObj);
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle2.png", L"texture\\particle\\Particle2.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7);
+	m_Particle.push_back(particle);
 
-	pParticleObj = pParticleObj->Clone();
-	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle3.png"
-																					, L"texture\\particle\\Particle3.png"));
-	AddObject(pParticleObj, 7);
-	m_Particle.push_back(pParticleObj);
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle3.png", L"texture\\particle\\Particle3.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7); 
+	m_Particle.push_back(particle);
 
-	pParticleObj = pParticleObj->Clone();
-	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle4.png"
-																					, L"texture\\particle\\Particle4.png"));
-	AddObject(pParticleObj, 7);
-	m_Particle.push_back(pParticleObj);
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle4.png", L"texture\\particle\\Particle4.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7); 
+	m_Particle.push_back(particle);
 
-	pParticleObj = pParticleObj->Clone();
-	pParticleObj->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle5.png"
-																					, L"texture\\particle\\Particle5.png"));
-	AddObject(pParticleObj, 7);
-	m_Particle.push_back(pParticleObj);
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle5.png", L"texture\\particle\\Particle5.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7); 
+	m_Particle.push_back(particle);
+
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle1.png", L"texture\\particle\\Particle1.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7);
+	m_Particle.push_back(particle);
+
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle2.png", L"texture\\particle\\Particle2.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7);
+	m_Particle.push_back(particle);
+
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle3.png", L"texture\\particle\\Particle3.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7);
+	m_Particle.push_back(particle);
+
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle4.png", L"texture\\particle\\Particle4.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7);
+	m_Particle.push_back(particle);
+
+	particle = particle->Clone();
+	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle5.png", L"texture\\particle\\Particle5.png"));
+	GamePlayStatic::SpawnGameObject(particle, 7);
+	m_Particle.push_back(particle);
+
+	for (size_t i = 0; i < m_Particle.size(); ++i)
+	{
+		m_Particle[i]->Transform()->SetRelativePos(Vec3(100.f, -100.f, 100.f));
+	}
 }

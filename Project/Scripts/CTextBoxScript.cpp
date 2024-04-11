@@ -108,14 +108,17 @@ void CTextBoxScript::begin()
 	m_Mouse->SetActive(false);
 
 	m_Effect = new CGameObject;
+	m_Effect->SetName(L"SpotLight");
 	m_Effect->AddComponent(new CTransform);
 	m_Effect->AddComponent(new CMeshRender);
 	m_Effect->AddComponent(new CAnimator2D);
 	m_Effect->Transform()->SetRelativePos(Vec3(13.f, 146.f, 4500.f));
 	m_Effect->Transform()->SetRelativeScale(Vec3(684.f, 442.f, 1.f));
 	m_Effect->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	m_Effect->MeshRender()->SetMaterial(GetOwner()->MeshRender()->GetDynamicMaterial());
-	m_Effect->Animator2D()->LoadAnimation(L"animdata\\AwardsLight.txt");
+	m_Effect->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaMtrl"));
+	m_Effect->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
+	Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Awards\\awards_light.png", L"texture\\Awards\\awards_light.png");
+	m_Effect->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_Effect, 6);
 	m_Effect->SetActive(false);
 }
@@ -161,7 +164,6 @@ void CTextBoxScript::SetTextByIndex()
 		m_Text->TextRender()->SetString(L"The Amateur League champion team is...        ! Congratulations!");
 		m_SubText->SetActive(true);
 		m_Effect->SetActive(true);
-		m_Effect->Animator2D()->Play(L"AwardsLight");
 		break;
 	case TEXT_INDEX::TEXT4:
 		m_TextEffect = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_TextEffect.prefab")->Instatiate();
