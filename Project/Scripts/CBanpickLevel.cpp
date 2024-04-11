@@ -4,7 +4,6 @@
 #include <Engine\CTimeMgr.h>
 #include <Engine\CCollisionMgr.h>
 #include <Engine\CLevelMgr.h>
-#include <Engine\CLevel.h>
 #include <Engine\CLayer.h>
 #include <Engine\CGameObject.h>
 #include <Engine\components.h>

@@ -40,9 +40,6 @@
     <Filter Include="04. Level">
       <UniqueIdentifier>{64d6d2a8-e8ba-4b4c-8cc1-324cf13003b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. Level\BanpickLevel">
-      <UniqueIdentifier>{8b32a22e-2505-4116-b27d-599da159c43e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01. GameManager\BTMgrScript">
       <UniqueIdentifier>{ddf5eb84-e74c-41e1-b4fe-e995e976399b}</UniqueIdentifier>
     </Filter>
@@ -181,6 +178,18 @@
     <Filter Include="02. Scripts\06.BattleScript\BattleResultScript\BattleEndBtn">
       <UniqueIdentifier>{9b5e1166-72da-452a-b8a2-070f10df2552}</UniqueIdentifier>
     </Filter>
+    <Filter Include="04. Level\01.BanpickLevel">
+      <UniqueIdentifier>{8b32a22e-2505-4116-b27d-599da159c43e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Level\02.AwardsLevel">
+      <UniqueIdentifier>{75f4ec93-577f-4297-8744-f8ba032979d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.AwardsScript">
+      <UniqueIdentifier>{04d5e2e5-5c57-438e-9302-c9a910856536}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.AwardsScript\01.CurtainScript">
+      <UniqueIdentifier>{038e1e16-0a97-40fb-8a9a-53971fac19d2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -307,7 +316,7 @@
       <Filter>02. Scripts\04.EntryScript\NextBtnScript</Filter>
     </ClInclude>
     <ClInclude Include="CBanpickLevel.h">
-      <Filter>04. Level\BanpickLevel</Filter>
+      <Filter>04. Level\01.BanpickLevel</Filter>
     </ClInclude>
     <ClInclude Include="CTeamSlotScript.h">
       <Filter>02. Scripts\05.BanpickScript\TeamSlotScript</Filter>
@@ -341,6 +350,12 @@
     </ClInclude>
     <ClInclude Include="CBattleEndBtnScript.h">
       <Filter>02. Scripts\06.BattleScript\BattleResultScript\BattleEndBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="CAwardsLevel.h">
+      <Filter>04. Level\02.AwardsLevel</Filter>
+    </ClInclude>
+    <ClInclude Include="CCurtainScript.h">
+      <Filter>02. Scripts\08.AwardsScript\01.CurtainScript</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -468,7 +483,7 @@
       <Filter>02. Scripts\04.EntryScript\NextBtnScript</Filter>
     </ClCompile>
     <ClCompile Include="CBanpickLevel.cpp">
-      <Filter>04. Level\BanpickLevel</Filter>
+      <Filter>04. Level\01.BanpickLevel</Filter>
     </ClCompile>
     <ClCompile Include="CTeamSlotScript.cpp">
       <Filter>02. Scripts\05.BanpickScript\TeamSlotScript</Filter>
@@ -502,6 +517,12 @@
     </ClCompile>
     <ClCompile Include="CBattleEndBtnScript.cpp">
       <Filter>02. Scripts\06.BattleScript\BattleResultScript\BattleEndBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="CAwardsLevel.cpp">
+      <Filter>04. Level\02.AwardsLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="CCurtainScript.cpp">
+      <Filter>02. Scripts\08.AwardsScript\01.CurtainScript</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

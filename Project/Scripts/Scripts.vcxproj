@@ -173,6 +173,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CArcherScript.h" />
     <ClInclude Include="CArrowScript.h" />
     <ClInclude Include="CAttackState.h" />
+    <ClInclude Include="CAwardsLevel.h" />
     <ClInclude Include="CBanpickLevel.h" />
     <ClInclude Include="CBanPickUIScript.h" />
     <ClInclude Include="CBansSlotScript.h" />
@@ -184,6 +185,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CChampScript.h" />
     <ClInclude Include="CChampSlotScript.h" />
     <ClInclude Include="CCursorScript.h" />
+    <ClInclude Include="CCurtainScript.h" />
     <ClInclude Include="CDeadState.h" />
     <ClInclude Include="CDraftArrowScript.h" />
     <ClInclude Include="CEffectScript.h" />
@@ -228,6 +230,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CArcherScript.cpp" />
     <ClCompile Include="CArrowScript.cpp" />
     <ClCompile Include="CAttackState.cpp" />
+    <ClCompile Include="CAwardsLevel.cpp" />
     <ClCompile Include="CBanpickLevel.cpp" />
     <ClCompile Include="CBanPickUIScript.cpp" />
     <ClCompile Include="CBansSlotScript.cpp" />
@@ -239,6 +242,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CChampScript.cpp" />
     <ClCompile Include="CChampSlotScript.cpp" />
     <ClCompile Include="CCursorScript.cpp" />
+    <ClCompile Include="CCurtainScript.cpp" />
     <ClCompile Include="CDeadState.cpp" />
     <ClCompile Include="CDraftArrowScript.cpp" />
     <ClCompile Include="CEffectScript.cpp" />
