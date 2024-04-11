@@ -190,6 +190,15 @@
     <Filter Include="02. Scripts\08.AwardsScript\01.CurtainScript">
       <UniqueIdentifier>{038e1e16-0a97-40fb-8a9a-53971fac19d2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scripts\08.AwardsScript\03.MCScript">
+      <UniqueIdentifier>{1c901e33-9532-49e8-a3fe-a37b6dd98185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.AwardsScript\02.TextBoxScript">
+      <UniqueIdentifier>{d6a661cd-661e-499b-b3e7-c52885be4736}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scripts\08.AwardsScript\02.TextBoxScript\TextEffectScript">
+      <UniqueIdentifier>{23205c42-30f4-4594-98bf-8bf098628234}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -357,6 +366,15 @@
     <ClInclude Include="CCurtainScript.h">
       <Filter>02. Scripts\08.AwardsScript\01.CurtainScript</Filter>
     </ClInclude>
+    <ClInclude Include="CMCScript.h">
+      <Filter>02. Scripts\08.AwardsScript\03.MCScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CTextBoxScript.h">
+      <Filter>02. Scripts\08.AwardsScript\02.TextBoxScript</Filter>
+    </ClInclude>
+    <ClInclude Include="CTextEffectScript.h">
+      <Filter>02. Scripts\08.AwardsScript\02.TextBoxScript\TextEffectScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -523,6 +541,15 @@
     </ClCompile>
     <ClCompile Include="CCurtainScript.cpp">
       <Filter>02. Scripts\08.AwardsScript\01.CurtainScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CMCScript.cpp">
+      <Filter>02. Scripts\08.AwardsScript\03.MCScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CTextBoxScript.cpp">
+      <Filter>02. Scripts\08.AwardsScript\02.TextBoxScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CTextEffectScript.cpp">
+      <Filter>02. Scripts\08.AwardsScript\02.TextBoxScript\TextEffectScript</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

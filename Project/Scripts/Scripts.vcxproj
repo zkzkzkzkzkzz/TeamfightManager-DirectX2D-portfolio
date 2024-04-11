@@ -196,6 +196,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CLineUpBGScript.h" />
     <ClInclude Include="CLineUpTeamScript.h" />
     <ClInclude Include="CLobbyBtnScript.h" />
+    <ClInclude Include="CMCScript.h" />
     <ClInclude Include="CMgrBtnScript.h" />
     <ClInclude Include="CMiddleBanScript.h" />
     <ClInclude Include="CMonkScript.h" />
@@ -213,6 +214,8 @@ call CodeGen.exe</Command>
     <ClInclude Include="CBlueTeamSlotScript.h" />
     <ClInclude Include="CTeamSlotIconScript.h" />
     <ClInclude Include="CTeamSlotScript.h" />
+    <ClInclude Include="CTextBoxScript.h" />
+    <ClInclude Include="CTextEffectScript.h" />
     <ClInclude Include="CTGMgr.h" />
     <ClInclude Include="CTraceState.h" />
     <ClInclude Include="CTrainningBtnScript.h" />
@@ -253,6 +256,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CLineUpBGScript.cpp" />
     <ClCompile Include="CLineUpTeamScript.cpp" />
     <ClCompile Include="CLobbyBtnScript.cpp" />
+    <ClCompile Include="CMCScript.cpp" />
     <ClCompile Include="CMgrBtnScript.cpp" />
     <ClCompile Include="CMiddleBanScript.cpp" />
     <ClCompile Include="CMonkScript.cpp" />
@@ -270,6 +274,8 @@ call CodeGen.exe</Command>
     <ClCompile Include="CBlueTeamSlotScript.cpp" />
     <ClCompile Include="CTeamSlotIconScript.cpp" />
     <ClCompile Include="CTeamSlotScript.cpp" />
+    <ClCompile Include="CTextBoxScript.cpp" />
+    <ClCompile Include="CTextEffectScript.cpp" />
     <ClCompile Include="CTGMgr.cpp" />
     <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="CTrainningBtnScript.cpp" />
