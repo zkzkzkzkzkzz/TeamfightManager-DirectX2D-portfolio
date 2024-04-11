@@ -199,6 +199,9 @@
     <Filter Include="02. Scripts\08.AwardsScript\02.TextBoxScript\TextEffectScript">
       <UniqueIdentifier>{23205c42-30f4-4594-98bf-8bf098628234}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. Scripts\08.AwardsScript\04.AvatarScript">
+      <UniqueIdentifier>{6b432d34-5a64-44bb-898d-4673ad86cb17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -375,6 +378,9 @@
     <ClInclude Include="CTextEffectScript.h">
       <Filter>02. Scripts\08.AwardsScript\02.TextBoxScript\TextEffectScript</Filter>
     </ClInclude>
+    <ClInclude Include="CAvatarScript.h">
+      <Filter>02. Scripts\08.AwardsScript\04.AvatarScript</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -550,6 +556,9 @@
     </ClCompile>
     <ClCompile Include="CTextEffectScript.cpp">
       <Filter>02. Scripts\08.AwardsScript\02.TextBoxScript\TextEffectScript</Filter>
+    </ClCompile>
+    <ClCompile Include="CAvatarScript.cpp">
+      <Filter>02. Scripts\08.AwardsScript\04.AvatarScript</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,11 +1,15 @@
 #pragma once
 #include <Engine\CScript.h>
 
+#include "CTextBoxScript.h"
 
 class CCurtainScript :
     public CScript
 {
 private:
+    TEXT_INDEX m_idx;
+
+    bool m_bTime;
     float m_Time;
     bool m_bUIPos;
     float m_UIPosTime;
@@ -16,6 +20,9 @@ private:
 public:
     void OpenLeftCurtain();
     void OpenRightCurtain();
+
+    void CloseLeftCurtain();
+    void CloseRightCurtain();
 
 public:
     virtual void begin() override;

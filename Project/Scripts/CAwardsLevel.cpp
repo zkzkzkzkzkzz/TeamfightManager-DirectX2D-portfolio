@@ -11,11 +11,13 @@
 #include "CEffectScript.h"
 
 CAwardsLevel::CAwardsLevel()
+	: m_idx(TEXT_INDEX::NONE)
 {
 	InitUI();
 }
 
 CAwardsLevel::CAwardsLevel(const CAwardsLevel& _Origin)
+	: m_idx(_Origin.m_idx)
 {
 	InitUI();
 }
@@ -41,19 +43,19 @@ void CAwardsLevel::begin()
 	CGameObject* Mc = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_MC_1.prefab")->Instatiate();
 	AddObject(Mc, 7);
 
-	CGameObject* Manager = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_Manager.prefab")->Instatiate();
+	CGameObject* Manager = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_Manager_1.prefab")->Instatiate();
 	AddObject(Manager, 7);
 	Manager->SetActive(false);
 
-	CGameObject* Chobo = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_Chobo.prefab")->Instatiate();
+	CGameObject* Chobo = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_Chobo_1.prefab")->Instatiate();
 	AddObject(Chobo, 7);
 	Chobo->SetActive(false);
 
-	CGameObject* JoongSoo = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_JoongSoo.prefab")->Instatiate();
+	CGameObject* JoongSoo = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_JoongSoo_2.prefab")->Instatiate();
 	AddObject(JoongSoo, 7);
 	JoongSoo->SetActive(false);
 
-	CGameObject* Gosu = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_Gosu.prefab")->Instatiate();
+	CGameObject* Gosu = CAssetMgr::GetInst()->FindAsset<CPrefab>(L"prefab\\Awards_Gosu_2.prefab")->Instatiate();
 	AddObject(Gosu, 7);
 	Gosu->SetActive(false);
 
@@ -63,6 +65,16 @@ void CAwardsLevel::begin()
 void CAwardsLevel::tick()
 {
 	CLevel::tick();
+
+	m_idx = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"TextBox")->GetScript<CTextBoxScript>()->GetTextIdx();
+
+	if (TEXT_INDEX::TEXT2 == m_idx)
+	{
+		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"Manager")->SetActive(true);
+		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"Chobo")->SetActive(true);
+		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"JoongSoo")->SetActive(true);
+		CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"Gosu")->SetActive(true);
+	}
 }
 
 void CAwardsLevel::finaltick()

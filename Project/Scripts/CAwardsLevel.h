@@ -1,10 +1,14 @@
 #pragma once
 #include <Engine\CLevel.h>
 
+#include "CTextBoxScript.h"
 
 class CAwardsLevel :
     public CLevel
 {
+private:
+    TEXT_INDEX m_idx;
+
 public:
     void InitUI();
 
