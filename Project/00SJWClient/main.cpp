@@ -34,7 +34,7 @@
 
 #include "TitleLevel.h"
 
-//#define _RELEASE_GAME
+#define _RELEASE_GAME
 
 
 #define MAX_LOADSTRING 100
@@ -72,23 +72,25 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg;
 
+    // 임시 레벨 생성
+    CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
+    CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;
+
     // CEngine 초기화 실패 -> 프로그램 종료
+    // 1280 768
     if (FAILED(CEngine::GetInst()->init(hWnd, Vec2(1280, 768))))
     {
         MessageBox(nullptr, L"CEngine 초기화 실패", L"초기화 실패", MB_OK);
         return 0;
     }
 
-    // 임시 레벨 생성
-    CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
-    CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;
 
+    CCreateTempLevel::CreateTempLevel();
     //TitleLevel::CreateTempLevel();
 
 #ifndef _RELEASE_GAME
     // 임시레벨 생성
     //CCreateTempLevel::Init();
-    CCreateTempLevel::CreateTempLevel();
 
     // EditorObjectManager 초기화
     CEditorObjMgr::GetInst()->init();
@@ -185,7 +187,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
       return FALSE;
    }
 
-   //ShowCursor(FALSE);
+   ShowCursor(FALSE);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 

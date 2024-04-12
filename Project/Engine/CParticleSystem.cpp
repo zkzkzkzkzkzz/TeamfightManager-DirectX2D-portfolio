@@ -42,23 +42,23 @@ CParticleSystem::CParticleSystem()
 
 	// SpawnCount를 전달할 구조화 버퍼
 	m_SpawnCountBuffer = new CStructuredBuffer;
-	m_SpawnCountBuffer->Create(sizeof(tSpawnCount), 15, SB_TYPE::READ_WRITE, true);
+	m_SpawnCountBuffer->Create(sizeof(tSpawnCount), 1, SB_TYPE::READ_WRITE, true);
 
 	// 파티클 모듈값 세팅
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::SPAWN] = 1;
 
 	m_Module.SpaceType = 1;
 	m_Module.vSpawnColor = Vec4(1.f, 1.f, 1.f, 1.f);
-	m_Module.vSpawnMinScale = Vec4(40.f, 40.f, 1.f, 1.f);
+	m_Module.vSpawnMinScale = Vec4(60.f, 60.f, 1.f, 1.f);
 	m_Module.vSpawnMaxScale = Vec4(60.f, 60.f, 1.f, 1.f);
 	m_Module.MinMass = 2.f;
 	m_Module.MaxMass = 2.f;
-	m_Module.MinLife = 2.f;
-	m_Module.MaxLife = 2.f;
-	m_Module.SpawnShape = 1;
-	m_Module.Radius = 90.f;
+	m_Module.MinLife = 0.7f;
+	m_Module.MaxLife = 0.8f;
+	m_Module.SpawnShape = 0;
+	m_Module.Radius = 100.f;
 	m_Module.vSpawnBoxScale = Vec4(270.f, 270.f, 0.f, 0.f);
-	m_Module.SpawnRate = 2;
+	m_Module.SpawnRate = 1;
 
 	// Add Velocity
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = 1;
@@ -72,8 +72,8 @@ CParticleSystem::CParticleSystem()
 
 	// Noise Force
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::NOISE_FORCE] = 1;
-	m_Module.NoiseForceScale = 300.f;
-	m_Module.NoiseForceTerm = 0.5f;
+	m_Module.NoiseForceScale = 160.f;
+	m_Module.NoiseForceTerm = 0.3f;
 
 	// Drag Module
 	m_Module.arrModuleCheck[(UINT)PARTICLE_MODULE::DRAG] = 1;
@@ -136,7 +136,8 @@ void CParticleSystem::finaltick()
 	if ((1.f / m_Module.SpawnRate) < m_Time)
 	{
 		// 누적 시간을 스폰 간격으로 나눈 값
-		float fSpawnCount = m_Time / (1.f / m_Module.SpawnRate);
+		//float fSpawnCount = m_Time / (1.f / m_Module.SpawnRate);
+		int fSpawnCount = 3;
 
 		// 스폰 간격을 제외한 잔량을 남은 누적시간으로 설정
 		m_Time -= (1.f / m_Module.SpawnRate) * floorf(fSpawnCount);

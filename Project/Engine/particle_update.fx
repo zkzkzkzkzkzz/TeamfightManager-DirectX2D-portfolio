@@ -28,16 +28,19 @@ void CS_ParticleUpdate(uint3 id :SV_DispatchThreadID)
         
         while (0 < SpawnCount)
         {
+            // Atomic 함수 
             int AliveCount = SpawnCount;
-            uint Origin = 0;
+            int Exchange = SpawnCount - 1;
+            int Origin = 0;
         
             // InterlockedExchange 함수를 써서 SpawnCount를 교체, 수정하면
             // 초기 시도인 스레드가 여러 스레드 성공 이후에 진입하는 경우가 있음
             // 이때 SpawnCount를 오히려 늘려버리는 현상이 발생할 수 있으므로
             // InterlockedCompareExchange 함수를 통해서 예상한 값과 일치할 경우에만
             // 교체를 하도록 하는 함수를 사용한다
-            InterlockedCompareExchange(SpawnCount, AliveCount, SpawnCount - 1, Origin);
-        
+            //InterlockedCompareExchange(SpawnCount, AliveCount, SpawnCount - 1, Origin);
+            InterlockedExchange(SpawnCount, Exchange, Origin);
+            
             if (AliveCount == Origin)
             {
                 Particle.Active = 1;
@@ -52,8 +55,8 @@ void CS_ParticleUpdate(uint3 id :SV_DispatchThreadID)
                 vUV.y = sin(vUV.x * 20.f * PI) * 0.2f + g_time * 0.1f;
                 
                 float4 vRand = g_NoiseTex.SampleLevel(g_sam_0, vUV, 0);
-                float4 vRand1 = g_NoiseTex.SampleLevel(g_sam_0, vUV - float2(0.1f, 0.1f), 0);
-                float4 vRand2 = g_NoiseTex.SampleLevel(g_sam_0, vUV - float2(0.2f, 0.2f), 0);
+                float4 vRand1 = g_NoiseTex.SampleLevel(g_sam_0, vUV - float2(0.1f, 0.6f), 0);
+                float4 vRand2 = g_NoiseTex.SampleLevel(g_sam_0, vUV - float2(0.7f, 0.3f), 0);
                 
                 // SpawnShape가 Sphere일 경우
                 if(0 == Module.SpawnShape)

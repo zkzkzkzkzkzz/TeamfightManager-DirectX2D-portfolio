@@ -79,8 +79,8 @@ float4 PS_Std2D(VS_OUT _in) : SV_Target
             {
                 vColor = g_tex_0.Sample(g_sam_1, _in.vUV);
             
-                float fAlpha = 1.f;
-                if (fAlpha < 0.1f)
+                //float fAlpha = 1.f;
+                if (vColor.a < 0.1f)
                 {
                     // 픽셀 셰이더를 중간에 폐기 처리
                     discard; // clip(-1)로도 동일하게 작동 가능

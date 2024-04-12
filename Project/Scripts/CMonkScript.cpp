@@ -311,13 +311,15 @@ void CMonkScript::EnterSkillState()
 		{
 			if (team == GETCHAMP(pTarget[i])->GetTeamColor())
 			{
-				int HP = GETCHAMP(pTarget[i])->GetInGameChampHP() + 25;
-				if (GETCHAMP(pTarget[i])->GetChampMaxHP() <= HP)
-				{
-					HP = GETCHAMP(pTarget[i])->GetChampMaxHP();
-				}
+				//int HP = GETCHAMP(pTarget[i])->GetInGameChampHP() + 25;
+				//if (GETCHAMP(pTarget[i])->GetChampMaxHP() <= HP)
+				//{
+				//	HP = GETCHAMP(pTarget[i])->GetChampMaxHP();
+				//}
 				
-				GETCHAMP(pTarget[i])->SetChampHP(HP);
+				Healed(GetOwner(), pTarget[i]);
+
+				//GETCHAMP(pTarget[i])->SetChampHP(HP);
 			}
 		}
 

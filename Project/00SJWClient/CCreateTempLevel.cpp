@@ -26,6 +26,7 @@
 #include <Scripts\CTGMgr.h>
 
 #include <Scripts\CBanpickLevel.h>
+#include <Scripts\CAwardsLevel.h>
 
 #include "TitleLevel.h"
 #include "LobbyLevel.h"
@@ -58,7 +59,7 @@ void CCreateTempLevel::CreateTempLevel()
 	CLevel* pLevel = CLevelSaveLoad::LoadLevel(L"level\\TitleLV3.lv");
 	pLevel->FindObjectByName(L"NewGameBtn")->GetScript<CNewBtnScript>()->SetCallBack(TestFunc);
 
-	GamePlayStatic::Play2DBGM(L"sound\\Title.wav", 2.f);
+	GamePlayStatic::Play2DBGM(L"sound\\Title.wav", 1.f);
 	CLevelMgr::GetInst()->ChangeLevel(pLevel, LEVEL_STATE::PLAY);
 
 	//TitleLevel::CreateTempLevel();
@@ -66,6 +67,7 @@ void CCreateTempLevel::CreateTempLevel()
 	//BattleLevel::CreateTempLevel();
 
 	//CLevelMgr::GetInst()->ChangeLevel(new CBanpickLevel, LEVEL_STATE::STOP);
+	//CLevelMgr::GetInst()->ChangeLevel(new CAwardsLevel, LEVEL_STATE::STOP);
 }
 
 void TestFunc()

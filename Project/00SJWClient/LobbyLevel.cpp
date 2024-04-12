@@ -212,7 +212,7 @@ void LobbyLevel::CreateTempLevel()
 	Header->AddComponent(new CTransform);
 	Header->AddComponent(new CMeshRender);
 	Header->AddComponent(new CLobbyHdScript);
-	Header->Transform()->SetRelativePos(Vec3(0.f, 330.f, 1000.f));
+	Header->Transform()->SetRelativePos(Vec3(0.f, 348.f, 1000.f));
 	Header->Transform()->SetRelativeScale(Vec3(1280.f, 74.f, 1.f));
 	Header->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	Header->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"HeaderMtrl"));

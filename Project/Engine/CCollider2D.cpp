@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CCollider2D.h"
 
+#include "CKeyMgr.h"
 #include "CTransform.h"
 #include "CScript.h"
 
@@ -52,6 +53,11 @@ void CCollider2D::finaltick()
 	}
 
 	//return;
+
+	if (KEY_TAP(I))
+	{
+		m_IsDebug ? m_IsDebug = false : m_IsDebug = true;
+	}
 
 	if (m_IsDebug)
 	{

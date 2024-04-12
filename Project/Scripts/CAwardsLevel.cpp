@@ -98,13 +98,14 @@ void CAwardsLevel::tick()
 		//	m_ParticleTime = 0.f;
 		//	m_ParticleSpawn = true;
 		//	++m_ParticleCount;
+
+		//	if (5 <= m_ParticleCount)
+		//	{
+		//		m_ParticleCount = 0;
+		//	}
 		//}
 		//else if (m_ParticleSpawn && m_ParticleTime > 2.f)
-		//{
-		//	for (size_t i = 0; i < m_Particle.size(); ++i)
-		//	{
-		//		GamePlayStatic::DestroyGameObject(m_Particle[i]);
-		//	}
+		//{		
 
 		//	m_ParticleTime = 0.f;
 		//	m_ParticleSpawn = false;
@@ -265,33 +266,39 @@ void CAwardsLevel::SpawnParticle()
 	GamePlayStatic::SpawnGameObject(particle, 7); 
 	m_Particle.push_back(particle);
 
-	particle = particle->Clone();
-	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle1.png", L"texture\\particle\\Particle1.png"));
-	GamePlayStatic::SpawnGameObject(particle, 7);
-	m_Particle.push_back(particle);
-
-	particle = particle->Clone();
-	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle2.png", L"texture\\particle\\Particle2.png"));
-	GamePlayStatic::SpawnGameObject(particle, 7);
-	m_Particle.push_back(particle);
-
-	particle = particle->Clone();
-	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle3.png", L"texture\\particle\\Particle3.png"));
-	GamePlayStatic::SpawnGameObject(particle, 7);
-	m_Particle.push_back(particle);
-
-	particle = particle->Clone();
-	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle4.png", L"texture\\particle\\Particle4.png"));
-	GamePlayStatic::SpawnGameObject(particle, 7);
-	m_Particle.push_back(particle);
-
-	particle = particle->Clone();
-	particle->ParticleSystem()->SetParticleTex(CAssetMgr::GetInst()->Load<CTexture>(L"texture\\particle\\Particle5.png", L"texture\\particle\\Particle5.png"));
-	GamePlayStatic::SpawnGameObject(particle, 7);
-	m_Particle.push_back(particle);
-
-	for (size_t i = 0; i < m_Particle.size(); ++i)
+	if (0 == m_ParticleCount)
 	{
-		m_Particle[i]->Transform()->SetRelativePos(Vec3(100.f, -100.f, 100.f));
+		for (size_t i = 0; i < m_Particle.size(); ++i)
+		{
+			m_Particle[i]->Transform()->SetRelativePos(Vec3(100.f, -100.f, 100.f));
+		}
+	}
+	else if (1 == m_ParticleCount)
+	{
+		for (size_t i = 0; i < m_Particle.size(); ++i)
+		{
+			m_Particle[i]->Transform()->SetRelativePos(Vec3(-200.f, -50.f, 100.f));
+		}
+	}
+	else if (2 == m_ParticleCount)
+	{
+		for (size_t i = 0; i < m_Particle.size(); ++i)
+		{
+			m_Particle[i]->Transform()->SetRelativePos(Vec3(0.f, 60.f, 100.f));
+		}
+	}
+	else if (3 == m_ParticleCount)
+	{
+		for (size_t i = 0; i < m_Particle.size(); ++i)
+		{
+			m_Particle[i]->Transform()->SetRelativePos(Vec3(-400.f, -100.f, 100.f));
+		}
+	}
+	else if (4 == m_ParticleCount)
+	{
+		for (size_t i = 0; i < m_Particle.size(); ++i)
+		{
+			m_Particle[i]->Transform()->SetRelativePos(Vec3(400.f, -40.f, 100.f));
+		}
 	}
 }

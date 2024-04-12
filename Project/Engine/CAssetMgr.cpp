@@ -6,6 +6,7 @@
 #include "CMaterial.h"
 
 CAssetMgr::CAssetMgr()
+	: m_vecAssetFileName{}
 {
 
 }
@@ -30,7 +31,7 @@ void CAssetMgr::AddAsset(const wstring& _strKey, CAsset* _Asset)
 
 Ptr<CTexture> CAssetMgr::CreateTexture(const wstring& _strKey, UINT _Width, UINT _Height, DXGI_FORMAT _Format, UINT _Flag, D3D11_USAGE _Usage)
 {
-	// »ı¼ºÇÏ·Á´Â ÅØ½ºÃ³¿Í µ¿ÀÏÇÑ Å°ÀÇ ÅØ½ºÃ³°¡ ÀÌ¹Ì AssetMgr¿¡ ÀÖÀ» °æ¿ì
+	// ìƒì„±í•˜ë ¤ëŠ” í…ìŠ¤ì²˜ì™€ ë™ì¼í•œ í‚¤ì˜ í…ìŠ¤ì²˜ê°€ ì´ë¯¸ AssetMgrì— ìˆì„ ê²½ìš°
 	Ptr<CTexture> pTex = FindAsset<CTexture>(_strKey);
 	assert(!pTex.Get());
 
@@ -38,7 +39,7 @@ Ptr<CTexture> CAssetMgr::CreateTexture(const wstring& _strKey, UINT _Width, UINT
 
 	if (FAILED(pTex->Create(_Width, _Height, _Format, _Flag, _Usage)))
 	{
-		MessageBox(nullptr, L"ÅØ½ºÃ³ »ı¼º ½ÇÆĞ", L"¸®¼Ò½º »ı¼º ½ÇÆĞ", MB_OK);
+		MessageBox(nullptr, L"í…ìŠ¤ì²˜ ìƒì„± ì‹¤íŒ¨", L"ë¦¬ì†ŒìŠ¤ ìƒì„± ì‹¤íŒ¨", MB_OK);
 		return nullptr;
 	}
 
@@ -50,7 +51,7 @@ Ptr<CTexture> CAssetMgr::CreateTexture(const wstring& _strKey, UINT _Width, UINT
 
 Ptr<CTexture> CAssetMgr::CreateTexture(const wstring& _strKey, ComPtr<ID3D11Texture2D> _tex2D)
 {
-	// »ı¼ºÇÏ·Á´Â ÅØ½ºÃ³¿Í µ¿ÀÏÇÑ Å°ÀÇ ÅØ½ºÃ³°¡ ÀÌ¹Ì AssetMgr¿¡ ÀÖÀ» °æ¿ì
+	// ìƒì„±í•˜ë ¤ëŠ” í…ìŠ¤ì²˜ì™€ ë™ì¼í•œ í‚¤ì˜ í…ìŠ¤ì²˜ê°€ ì´ë¯¸ AssetMgrì— ìˆì„ ê²½ìš°
 	Ptr<CTexture> pTex = FindAsset<CTexture>(_strKey);
 	assert(!pTex.Get());
 
@@ -58,7 +59,7 @@ Ptr<CTexture> CAssetMgr::CreateTexture(const wstring& _strKey, ComPtr<ID3D11Text
 
 	if (FAILED(pTex->Create(_tex2D)))
 	{
-		MessageBox(nullptr, L"ÅØ½ºÃ³ »ı¼º ½ÇÆĞ", L"¸®¼Ò½º »ı¼º ½ÇÆĞ", MB_OK);
+		MessageBox(nullptr, L"í…ìŠ¤ì²˜ ìƒì„± ì‹¤íŒ¨", L"ë¦¬ì†ŒìŠ¤ ìƒì„± ì‹¤íŒ¨", MB_OK);
 		return nullptr;
 	}
 

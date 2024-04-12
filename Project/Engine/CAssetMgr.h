@@ -21,8 +21,11 @@ class CAssetMgr :
 private:
 	map<wstring, Ptr<CAsset>>   m_mapAsset[(UINT)ASSET_TYPE::END];
 
+	vector<wstring> m_vecAssetFileName;
+
 private:
 	void InitSound();
+	void InitContent();
 	void CreateDefaultMesh();
 	void CreateDefaultGraphicsShader();
 	void CreateDefaultComputeShader();
@@ -32,6 +35,9 @@ private:
 	void CreateTitleLevelMaterial();
 	void CreateLobbyLevelMaterial();
 	void CreateInGameObjectMaterial();
+
+	void FindFileName(const wstring& _Directory);  
+	ASSET_TYPE GetAssetTypeByExt(const path& _relativePath);
 
 public:
 	void init();

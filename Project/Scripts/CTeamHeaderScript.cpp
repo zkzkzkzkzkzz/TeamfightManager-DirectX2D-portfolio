@@ -239,22 +239,22 @@ void CTeamHeaderScript::SetHeaderPos()
 	if (m_UIPosTime < 0.15f)
 	{
 		vPos.y -= 1300.f * DT * BtwTime;
-		if (vPos.y <= 324.f)
-			vPos.y = 324.f;
+		if (vPos.y <= 343.f)
+			vPos.y = 343.f;
 
 		Transform()->SetRelativePos(vPos);
 	}
 	else if (m_UIPosTime >= 0.15f && m_UIPosTime < 1.f)
 	{
 		vPos.y -= 200.f * DT * BtwTime;
-		if (vPos.y <= 324.f)
-			vPos.y = 324.f;
+		if (vPos.y <= 343.f)
+			vPos.y = 343.f;
 
 		Transform()->SetRelativePos(vPos);
 	}
 	else
 	{
-		vPos.y = 324.f;
+		vPos.y = 343.f;
 		Transform()->SetRelativePos(vPos);
 		m_UIPosTime = 0.f;
 		m_bUIPos = true;

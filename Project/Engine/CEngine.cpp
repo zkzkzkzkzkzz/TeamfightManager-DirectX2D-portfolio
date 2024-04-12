@@ -71,7 +71,7 @@ void CEngine::progress()
 
 	// Level Update
 	CLevelMgr::GetInst()->tick();
-	CTimeMgr::GetInst()->render();
+	//CTimeMgr::GetInst()->render();
 
 	// GC
 	CGC::GetInst()->tick();
