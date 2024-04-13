@@ -21,6 +21,10 @@ private:
     CGameObject*    m_Arrow;
     Ptr<CTexture>   m_AnimImg;
 
+    CGameObject* m_MainText;
+    CGameObject* m_SubText;
+
+
     float   m_Time;
     float   m_Duration;
 
@@ -53,14 +57,17 @@ public:
     void MoveArrow();
     void ResetArrow();
 
+    void SpawnLineUpUI();
+
 public:
     virtual void begin() override;
     virtual void tick() override;
     void render();
 
 public:
-    CLONE_DISABLE(CProceedBtnScript);
+    CLONE(CProceedBtnScript);
     CProceedBtnScript();
+    CProceedBtnScript(const CProceedBtnScript& _Origin);
     ~CProceedBtnScript();
 };
 

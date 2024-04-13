@@ -23,10 +23,8 @@
 #include <Engine\CPrefab.h>
 #include <Scripts\CNewBtnScript.h>
 #include <Scripts\CEndBtnScript.h>
-#include <Scripts\CTGMgr.h>
 
-#include <Scripts\CBanpickLevel.h>
-#include <Scripts\CAwardsLevel.h>
+#include <Scripts\CTGMgr.h>
 
 #include "TitleLevel.h"
 #include "LobbyLevel.h"

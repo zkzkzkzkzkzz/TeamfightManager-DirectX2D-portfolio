@@ -22,8 +22,11 @@ VS_OUT VS_GrayFilter(VS_IN _in)
 {
     VS_OUT output = (VS_OUT) 0.f;
     
-    // 로컬 스페이스에 2배를 하면 전체화면의 해상도와 같다
-    output.vPosition = float4(_in.vPos * 2.f, 1.f);
+    //// 로컬 스페이스에 2배를 하면 전체화면의 해상도와 같다
+    //output.vPosition = float4(_in.vPos * 2.f, 1.f);
+    //output.vUV = _in.vUV;
+    
+    output.vPosition = mul(float4(_in.vPos, 1.f), g_matWVP);
     output.vUV = _in.vUV;
     
     return output;
@@ -32,8 +35,8 @@ VS_OUT VS_GrayFilter(VS_IN _in)
 float4 PS_GrayFilter(VS_OUT _in) : SV_Target
 {
     float4 vColor = (float4) 0.f;
-            
-    vColor = g_postprocess.Sample(g_sam_0, _in.vUV);
+    float2 vScreenUV = _in.vPosition.xy / g_RenderResolution;
+    vColor = g_postprocess.Sample(g_sam_0, vScreenUV);
     
     float aver = (vColor.r + vColor.g + vColor.b) / 3.f;
     

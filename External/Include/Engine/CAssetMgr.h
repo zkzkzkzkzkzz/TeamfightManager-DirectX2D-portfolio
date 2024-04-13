@@ -21,8 +21,11 @@ class CAssetMgr :
 private:
 	map<wstring, Ptr<CAsset>>   m_mapAsset[(UINT)ASSET_TYPE::END];
 
+	vector<wstring> m_vecAssetFileName;
+
 private:
 	void InitSound();
+	void InitContent();
 	void CreateDefaultMesh();
 	void CreateDefaultGraphicsShader();
 	void CreateDefaultComputeShader();
@@ -31,6 +34,10 @@ private:
 	void CreateDefaultGameMaterial();
 	void CreateTitleLevelMaterial();
 	void CreateLobbyLevelMaterial();
+	void CreateInGameObjectMaterial();
+
+	void FindFileName(const wstring& _Directory);  
+	ASSET_TYPE GetAssetTypeByExt(const path& _relativePath);
 
 public:
 	void init();
@@ -159,7 +166,7 @@ Ptr<T> CAssetMgr::Load(const wstring& _strKey, const wstring& _strRelativePath)
 
 	if (FAILED(pAsset->Load(strFilePath)))
 	{
-		MessageBox(nullptr, L"에셋 로딩 실패", L"에셋 로드 실패", MB_OK);
+		MessageBox(nullptr, L"Asset Load Failed", L"Asset Load Failed", MB_OK);
 		pAsset = nullptr;
 		return nullptr;
 	}

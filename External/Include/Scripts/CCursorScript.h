@@ -18,8 +18,9 @@ public:
     virtual void LoadFromFile(FILE* _File) {};
 
 public:
-    CLONE_DISABLE(CCursorScript);
+    CLONE(CCursorScript);
     CCursorScript();
+    CCursorScript(const CCursorScript& _Origin);
     ~CCursorScript();
 };
 

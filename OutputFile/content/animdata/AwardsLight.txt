@@ -1,0 +1,23 @@
+[ANIM_NAME]
+AwardsLight
+
+[ATLAS_TEXTURE]
+awards_light.png
+texture\Awards\awards_light.png
+
+[FRAME_COUNT]
+1
+
+[FRAME_NUM]
+0
+[LEFT_TOP]
+0.000000 0.000000
+[CUT_SIZE]
+1.000000 1.000000
+[OFFSET]
+0.000000 0.000000
+[BACKGROUND]
+1.000000 1.000000
+[DURATION]
+1.000000
+

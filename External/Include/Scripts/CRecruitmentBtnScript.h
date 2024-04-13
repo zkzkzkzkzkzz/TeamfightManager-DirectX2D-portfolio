@@ -23,6 +23,8 @@ private:
     float   m_Time;
     float   m_Duration;
 
+    CGameObject* m_BtnText;
+
     // 콜백 (전역함수 포인터) 
     BtnCallBack     m_CallBackFunc;
 
@@ -54,6 +56,8 @@ public:
 
     void OpenBtn();
     void CloseBtn();
+
+    void ActiveRecruitUI();
 
 public:
     virtual void begin() override;

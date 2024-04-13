@@ -29,10 +29,10 @@ private:
     bool                    m_Active;
 
 public:
-    void begin();
-    void tick();
+    virtual void begin();
+    virtual void tick();
     virtual void finaltick();
-    void render();
+    virtual void render();
 
     GET_COMPONENT(Transform, TRANSFORM);
     GET_COMPONENT(MeshRender, MESHRENDER);
@@ -43,6 +43,7 @@ public:
     GET_COMPONENT(TileMap, TILEMAP);
     GET_COMPONENT(StateMachine, STATEMACHINE);
     GET_COMPONENT(TextRender, GAMETEXT);
+    GET_COMPONENT(ParticleSystem, PARTICLESYSTEM);
     
 public:
     void AddComponent(CComponent* _Component);

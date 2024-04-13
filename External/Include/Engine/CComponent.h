@@ -37,6 +37,7 @@ public:
     GET_OTHER_COMPONENT(TileMap);
     GET_OTHER_COMPONENT(StateMachine);
     GET_OTHER_COMPONENT(TextRender);
+    GET_OTHER_COMPONENT(ParticleSystem);
 
 
     virtual void SaveToFile(FILE* _File) = 0;

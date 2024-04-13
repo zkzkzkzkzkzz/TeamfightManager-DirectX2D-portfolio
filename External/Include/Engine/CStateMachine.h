@@ -17,7 +17,9 @@ public:
     void SetFSM(Ptr<CFSM> _FSM)
     {
         m_FSM = _FSM;
-        m_FSM_Inst = nullptr;
+        m_FSM_Inst = m_FSM->GetFSMInstance();
+        m_FSM_Inst->SetStateMachine(this);
+        //m_FSM_Inst = nullptr;
     }
 
     Ptr<CFSM> GetFSM()
@@ -29,6 +31,7 @@ public:
     }
 
     void AddBlackboardData(const wstring& _strKey, BB_DATA _Type, void* _pData);
+    void SetBlackboardData(const wstring& _strKey, BB_DATA _Type, void* _Data);
     void* GetBlackboardData(const wstring& _strKey);
 
 public:

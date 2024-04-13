@@ -35,6 +35,7 @@ CBanpickLevel::CBanpickLevel()
 	, m_bChangeBGM(false)
 	, m_bPickSound(false)
 	, pSound(nullptr)
+	, TextSpawn(false)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -62,6 +63,7 @@ CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	, m_bChangeBGM(false)
 	, m_bPickSound(false)
 	, pSound(nullptr)
+	, TextSpawn(false)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -238,15 +240,19 @@ void CBanpickLevel::tick()
 			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::PICK);
 			GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[1])->SetSelectedChamp(CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->GetChampList());
 			
-			CGameObject* Text = new CGameObject;
-			Text->AddComponent(new CTransform);
-			Text->AddComponent(new CTextRender);
-			Text->TextRender()->SetString(L"2");
-			Text->TextRender()->SetFont(L"Galmuri14");
-			Text->TextRender()->SetFontColor(255, 255, 255, 255);
-			Text->TextRender()->SetFontSize(13.f);
-			Text->TextRender()->SetOffsetPos(Vec3(22.f, -44.f, -10.f));
-			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->GetOwner()->AddChild(Text);
+			if (!TextSpawn)
+			{
+				CGameObject* Text = new CGameObject;
+				Text->AddComponent(new CTransform);
+				Text->AddComponent(new CTextRender);
+				Text->TextRender()->SetString(L"2");
+				Text->TextRender()->SetFont(L"Galmuri14");
+				Text->TextRender()->SetFontColor(255, 255, 255, 255);
+				Text->TextRender()->SetFontSize(13.f);
+				Text->TextRender()->SetOffsetPos(Vec3(22.f, -44.f, -10.f));
+				CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->GetOwner()->AddChild(Text);
+				TextSpawn = true;
+			}
 
 			if (!m_bPickSound)
 			{
