@@ -207,7 +207,7 @@ void CChampScript::Healed(CGameObject* Attacker, CGameObject* Target, int _Extra
 		heal = GETCHAMP(Target)->GetChampMaxHP();
 	}
 
-	GETCHAMP(Target)->m_InGameStatus.TotalHeal += heal;
+	GETCHAMP(Attacker)->m_InGameStatus.TotalHeal += heal;
 	GETCHAMP(Target)->m_InGameStatus.HP = heal;
 }
 

@@ -302,7 +302,7 @@ void CMonkScript::EnterSkillState()
 		m_InGameStatus.bSkillPlay = true;
 
 		SpawnEffect(Transform()->GetRelativePos(), Transform()->GetRelativeScale()
-					, Transform()->GetRelativeRotation(), L"MonkSkillEffect", 0.9f);
+					, Transform()->GetRelativeRotation(), L"MonkSkillEffect", 0.9f, false, Vec3(0.f, 0.f, -10.f));
 
 		vector<CGameObject*> pTarget = CLevelMgr::GetInst()->GetCurrentLevel()->GetLayer(3)->GetParentObjects();
 		TEAM team = GETCHAMP(GetOwner())->GetTeamColor();
@@ -310,16 +310,8 @@ void CMonkScript::EnterSkillState()
 		for (size_t i = 0; i < pTarget.size(); ++i)
 		{
 			if (team == GETCHAMP(pTarget[i])->GetTeamColor())
-			{
-				//int HP = GETCHAMP(pTarget[i])->GetInGameChampHP() + 25;
-				//if (GETCHAMP(pTarget[i])->GetChampMaxHP() <= HP)
-				//{
-				//	HP = GETCHAMP(pTarget[i])->GetChampMaxHP();
-				//}
-				
+			{				
 				Healed(GetOwner(), pTarget[i]);
-
-				//GETCHAMP(pTarget[i])->SetChampHP(HP);
 			}
 		}
 
