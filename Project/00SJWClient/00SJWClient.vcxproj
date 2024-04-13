@@ -260,8 +260,8 @@
     <ResourceCompile Include="00SJWClient.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="00SJWClient.ico" />
-    <Image Include="small.ico" />
+    <Image Include="..\..\OutputFile\content\texture\TFMIcon.ico" />
+    <Image Include="TFMIcon.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

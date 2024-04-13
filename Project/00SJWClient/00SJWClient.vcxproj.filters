@@ -293,10 +293,10 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
+    <Image Include="..\..\OutputFile\content\texture\TFMIcon.ico">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="00SJWClient.ico">
+    <Image Include="TFMIcon.ico">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
