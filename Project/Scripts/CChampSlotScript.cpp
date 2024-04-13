@@ -208,11 +208,31 @@ void CChampSlotScript::LBtnClicked()
 		{
 			GETGAMER(CTGMgr::GetInst()->G_ParticipatingPlayer[0])->SetSelectedChamp(m_list);
 			m_Level->SetBanPickState(BANPICK_STATE::REDPICK1);
+			
+			CGameObject* Text = new CGameObject;
+			Text->AddComponent(new CTransform);
+			Text->AddComponent(new CTextRender);
+			Text->TextRender()->SetString(L"1");
+			Text->TextRender()->SetFont(L"Galmuri14");
+			Text->TextRender()->SetFontColor(255, 255, 255, 255);
+			Text->TextRender()->SetFontSize(13.f);
+			Text->TextRender()->SetOffsetPos(Vec3(24.f, -44.f, -10.f));
+			GetOwner()->AddChild(Text);
 		}
 		else if (BANPICK_STATE::BLUEPICK2 == m_Level->GetCurBanPickState())
 		{
 			GETGAMER(CTGMgr::GetInst()->G_ParticipatingPlayer[1])->SetSelectedChamp(m_list);
 			m_Level->SetBanPickState(BANPICK_STATE::REDPICK2);
+
+			CGameObject* Text = new CGameObject;
+			Text->AddComponent(new CTransform);
+			Text->AddComponent(new CTextRender);
+			Text->TextRender()->SetString(L"2");
+			Text->TextRender()->SetFont(L"Galmuri14");
+			Text->TextRender()->SetFontColor(255, 255, 255, 255);
+			Text->TextRender()->SetFontSize(13.f);
+			Text->TextRender()->SetOffsetPos(Vec3(22.f, -44.f, -10.f));
+			GetOwner()->AddChild(Text);
 		}
 	}
 }

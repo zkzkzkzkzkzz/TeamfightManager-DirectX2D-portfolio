@@ -34,6 +34,7 @@ CBanpickLevel::CBanpickLevel()
 	, m_EnemyTime(0.f)
 	, m_bChangeBGM(false)
 	, m_bPickSound(false)
+	, pSound(nullptr)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -60,6 +61,7 @@ CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	, m_EnemyTime(0.f)
 	, m_bChangeBGM(false)
 	, m_bPickSound(false)
+	, pSound(nullptr)
 {
 	for (const auto& pair : CTGMgr::GetInst()->G_Gamer)
 	{
@@ -70,6 +72,8 @@ CBanpickLevel::CBanpickLevel(const CBanpickLevel& _Origin)
 	{
 		CTGMgr::GetInst()->G_ShortlistSlot[i]->DisconnectWithLayer();
 	}
+
+	pSound = _Origin.pSound;
 
 	InitUI();
 }
@@ -216,6 +220,16 @@ void CBanpickLevel::tick()
 			GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[0])->SetSelectedChamp(CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->GetChampList());
 			GamePlayStatic::Play2DSound(L"sound\\pick.wav", 1, 3.f);
 			
+			CGameObject* Text = new CGameObject;
+			Text->AddComponent(new CTransform);
+			Text->AddComponent(new CTextRender);
+			Text->TextRender()->SetString(L"1");
+			Text->TextRender()->SetFont(L"Galmuri14");
+			Text->TextRender()->SetFontColor(255, 255, 255, 255);
+			Text->TextRender()->SetFontSize(13.f);
+			Text->TextRender()->SetOffsetPos(Vec3(24.f, -44.f, -10.f));
+			CTGMgr::GetInst()->G_ChampSlot[3]->GetScript<CChampSlotScript>()->GetOwner()->AddChild(Text);
+
 			m_CurState = BANPICK_STATE::BLUEPICK2;
 		}
 		else if (BANPICK_STATE::REDPICK2 == m_CurState)
@@ -224,6 +238,16 @@ void CBanpickLevel::tick()
 			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->SetSlotState(SLOT_STATE::PICK);
 			GETGAMER(CTGMgr::GetInst()->G_TeamGorilla[1])->SetSelectedChamp(CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->GetChampList());
 			
+			CGameObject* Text = new CGameObject;
+			Text->AddComponent(new CTransform);
+			Text->AddComponent(new CTextRender);
+			Text->TextRender()->SetString(L"2");
+			Text->TextRender()->SetFont(L"Galmuri14");
+			Text->TextRender()->SetFontColor(255, 255, 255, 255);
+			Text->TextRender()->SetFontSize(13.f);
+			Text->TextRender()->SetOffsetPos(Vec3(22.f, -44.f, -10.f));
+			CTGMgr::GetInst()->G_ChampSlot[4]->GetScript<CChampSlotScript>()->GetOwner()->AddChild(Text);
+
 			if (!m_bPickSound)
 			{
 				GamePlayStatic::Play2DSound(L"sound\\pick.wav", 1, 3.f);
@@ -244,12 +268,14 @@ void CBanpickLevel::tick()
 	{
 		if (!m_bChangeBGM)
 		{
+			pSound = CAssetMgr::GetInst()->FindAsset<CSound>(L"sound\\Battle.wav");
 			GamePlayStatic::Play2DBGM(L"sound\\Battle.wav", 0.8f);
 			m_bChangeBGM = true;
 		}
 
 		if (CTGMgr::GetInst()->G_Time <= 0)
 		{
+			pSound->Stop();
 			m_CurState = BANPICK_STATE::DONE;
 		}
 	}

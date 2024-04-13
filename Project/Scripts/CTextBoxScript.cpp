@@ -112,8 +112,8 @@ void CTextBoxScript::begin()
 	m_Effect->AddComponent(new CTransform);
 	m_Effect->AddComponent(new CMeshRender);
 	m_Effect->AddComponent(new CAnimator2D);
-	m_Effect->Transform()->SetRelativePos(Vec3(13.f, 146.f, 4500.f));
-	m_Effect->Transform()->SetRelativeScale(Vec3(684.f, 442.f, 1.f));
+	m_Effect->Transform()->SetRelativePos(Vec3(13.f, 160.f, 4500.f));
+	m_Effect->Transform()->SetRelativeScale(Vec3(684.f, 454.f, 1.f));
 	m_Effect->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 	m_Effect->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaMtrl"));
 	m_Effect->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 0);
