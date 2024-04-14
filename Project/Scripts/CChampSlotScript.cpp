@@ -208,7 +208,7 @@ void CChampSlotScript::LBtnClicked()
 		{
 			GETGAMER(CTGMgr::GetInst()->G_ParticipatingPlayer[0])->SetSelectedChamp(m_list);
 			m_Level->SetBanPickState(BANPICK_STATE::REDPICK1);
-			
+
 			CGameObject* Text = new CGameObject;
 			Text->AddComponent(new CTransform);
 			Text->AddComponent(new CTextRender);

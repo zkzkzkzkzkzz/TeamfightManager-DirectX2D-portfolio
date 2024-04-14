@@ -425,7 +425,7 @@ void LobbyLevel::CreateTempLevel()
 		pTempLevel->AddObject(vecUI[i], 2);
 	}
 
-	GamePlayStatic::Play2DBGM(L"sound\\Lobby.wav", 1.f);
+	GamePlayStatic::Play2DBGM(L"sound\\Lobby.wav", 0.7f);
 
 	// 레벨 플레이
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::PLAY);
